@@ -37,7 +37,7 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="catetgorytable" class="table table-bordered table-striped">
+                            <table id="categorytable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Rendering engine</th>

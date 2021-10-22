@@ -156,7 +156,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="admin/form/category/add" method="POST">
+                <form action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-check">
@@ -184,7 +184,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="admin/form/category/add" method="POST">
+                <form action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-group">
