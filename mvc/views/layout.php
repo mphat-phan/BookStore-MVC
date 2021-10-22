@@ -1,3 +1,4 @@
 Hello mọi người
 Tui là Quang
-Tui là yea
+Tui là game over yea
+Tui là Kỳ
