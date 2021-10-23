@@ -1,7 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost/Bookstore/');
+  define ('URL', 'http://localhost:88/Bookstore/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +39,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php require dirname(__FILE__) .'\menu.php'?>
+  <?php //require dirname(__FILE__) .'\menu.php'?>
 
   <!-- Content Wrapper. Contains page content -->
   <?php require dirname(__FILE__) ."\admin\pages\\".$data['Page']."\\index.php"?>
