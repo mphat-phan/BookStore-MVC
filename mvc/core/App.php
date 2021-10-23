@@ -17,10 +17,10 @@ class App{
             
             unset($arr[0]);
         }
-        elseif(!file_exists("mvc/controllers/".$arr[0].".php")){
+        else if( isset($arr[0])){
             $this->controller = "Error";
             require_once "mvc/controllers/". $this->controller .".php";
-        }
+        }        
         require_once "mvc/controllers/". $this->controller .".php";
      
 

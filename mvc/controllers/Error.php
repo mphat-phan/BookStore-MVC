@@ -1,11 +1,8 @@
 <?php
-echo "Hello";
 class Error extends Controller{
     
     function index(){
-        
-        echo "Hello";
-
+        $this->view("404");
     }
 }
 ?>
