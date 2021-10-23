@@ -1,23 +1,31 @@
 <?php
-class App{
 
-    protected $controller="admin";
-    protected $action="dashboard";    
+class App{
+    
+    protected $controller="Author";
+    protected $action="index";   
 	protected $params = array();
 	
     function __construct(){
  
         $arr = $this->UrlProcess();
- 
+        
         // Controller
-        if( file_exists("mvc/controllers/".$arr[0].".php") ){
+        if(file_exists("mvc/controllers/".$arr[0].".php")){
             $this->controller = $arr[0];			
 			//echo $arr[0];
+            
             unset($arr[0]);
         }
+        elseif(!file_exists("mvc/controllers/".$arr[0].".php")){
+            $this->controller = "Error";
+            require_once "mvc/controllers/". $this->controller .".php";
+        }
+        require_once "mvc/controllers/". $this->controller .".php";
+     
 
         //////
-        require_once "mvc/controllers/". $this->controller .".php";
+        
         $this->controller = new $this->controller;
 
 
@@ -29,6 +37,7 @@ class App{
             }
             unset($arr[1]);
         }
+        
 		$_SESSION['action'] = $this->action;
 		
         
