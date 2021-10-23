@@ -42,7 +42,7 @@
   <?php require dirname(__FILE__) .'\menu.php'?>
 
   <!-- Content Wrapper. Contains page content -->
-  <?php require dirname(__FILE__) .'\admin\pages\nhaphang\nhaphang.php'?>
+  <?php require dirname(__FILE__) ."\admin\pages\\".$data['Page']."php"?>
 
   
   
