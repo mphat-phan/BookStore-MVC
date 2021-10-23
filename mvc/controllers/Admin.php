@@ -12,12 +12,10 @@ class admin extends Controller{
 			"Page" => "dashboard"	
 		));
     }
-	function account(){
-		$list = $this->model("AccountModel");
-		$listcus = $this->model("CustomerModel");		
-		$this->view("admin/index", array(
-			"Page" => "account",
-			"Array" => $list->getAllAccount()			
+	function nhaphang(){
+		//$list = $this->model("nhaphang");		
+		$this->view("layout", array(
+			"Page" => "nhaphang",			
 		));
 		
 	}
