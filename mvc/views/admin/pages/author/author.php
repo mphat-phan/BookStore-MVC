@@ -9,7 +9,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Sell</li>
+                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                        <li class="breadcrumb-item active">Tác giả</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +26,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Sell table</h3>
+                            <h3 class="card-title">Author table</h3>
 
                             <button type="button" onclick="" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
@@ -155,7 +156,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="admin/form/category/add" method="POST">
+                <form action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-check">
@@ -183,7 +184,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="admin/form/category/add" method="POST">
+                <form action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-group">
