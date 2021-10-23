@@ -15,7 +15,7 @@ class admin extends Controller{
 	function nhaphang(){
 		//$list = $this->model("nhaphang");		
 		$this->view("layout", array(
-			"Page" => "nhaphang",			
+			"Page" => "nhaphang\\nhaphang",			
 		));
 		
 	}

@@ -1,6 +1,5 @@
 <?php
-class App{
-
+class App{        
     protected $controller="admin";
     protected $action="dashboard";    
 	protected $params = array();
@@ -8,14 +7,18 @@ class App{
     function __construct(){
  
         $arr = $this->UrlProcess();
- 
+        //print_r($arr);
         // Controller
         if( file_exists("mvc/controllers/".$arr[0].".php") ){
             $this->controller = $arr[0];			
 			//echo $arr[0];
             unset($arr[0]);
         }
-
+        else if ( !file_exists("mvc/controllers/".$arr[0].".php") )
+        {
+            $this->controller = 'Error';
+            require_once "mvc/controllers/". $this->controller .".php";    
+        }        
         //////
         require_once "mvc/controllers/". $this->controller .".php";
         $this->controller = new $this->controller;
