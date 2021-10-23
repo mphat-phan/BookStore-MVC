@@ -15,8 +15,11 @@ class App{
 			//echo $arr[0];
             unset($arr[0]);
         }
+
+        //////
         require_once "mvc/controllers/". $this->controller .".php";
         $this->controller = new $this->controller;
+
 
         // Action
         if(isset($arr[1])){
@@ -27,10 +30,14 @@ class App{
             unset($arr[1]);
         }
 		$_SESSION['action'] = $this->action;
-		//params
+		
+        
+        //params
 		$this->params = $arr?array_values($arr):array();
 		//print_r($this->params);
 		
+
+        //Gọi hàm 
 		call_user_func_array(array($this->controller, $this->action), $this->params);
     }
 

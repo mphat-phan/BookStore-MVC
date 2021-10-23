@@ -38,47 +38,6 @@ class admin extends Controller{
 		}
 		
 	}
-	function customer(){
-		
-		$this->view("admin/index", array(
-			"Page" => "customer"
-		));
-	}
-	function order(){
-		
-		$this->view("admin/index", array(
-			"Page" => "order"
-		));
-	}
-	function products(){
-		
-		$this->view("admin/index", array(
-			"Page" => "products"
-		));
-	}
-	function receipt(){
-		
-		$this->view("admin/index", array(
-			"Page" => "receipt"
-		));
-	}
-	function revenue(){
-		
-		$this->view("admin/index", array(
-			"Page" => "revenue"
-		));
-	}
-	function staff(){
-		
-		$this->view("admin/index", array(
-			"Page" => "staff"
-		));
-	}
-	function import_export_goods(){
-		
-		$this->view("admin/index", array(
-			"Page" => "import_export_goods"
-		));
-	}
+	
 }
 ?>
