@@ -1,15 +1,11 @@
 <?php
-
-// http://localhost/live/Home/Show/1/2
-
+echo "Hello";
 class Error extends Controller{
-   
-    function dashboard(){
-		//model
-        //$liststaff = $this->model("admin");        		
-		//views
-		$this->view("menu");
-    }   	
-	
+    
+    function index(){
+        
+        echo "Hello";
+
+    }
 }
 ?>

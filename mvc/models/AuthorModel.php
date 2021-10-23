@@ -4,7 +4,7 @@
         function __construct() 
         {
         // Khai báo tên bảng
-        $this->_table_name = 'customer';
+        $this->_table_name = 'author';
          
         // Khai báo tên field id
         $this->_key = 'id';
@@ -12,9 +12,11 @@
         // Gọi hàm khởi tạo cha
         parent::__construct();
         }
+
+
 		public function getAll()
-		{
-            
-		}		
+		{   
+            return $this->selectAll('*');
+		}	
 	}
 ?> 

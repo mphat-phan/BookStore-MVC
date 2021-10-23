@@ -40,64 +40,32 @@
                             <table id="authortable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th>id</th>
+                                        <th>Name</th>
+                                        <th>Detail</th>
                                         <th>#</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    foreach($data['Author'] as $row){
+        
+                                    ?>
                                     <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                        
-                                        <td><a onclick="" href="#" class="btn btn-warning btn-sm" role="button"
+                                        <td><?=$row['id']?></td>
+                                        <td><?=$row['name']?></td>
+                                        <td><?=$row['detail']?></td>
+                                        <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick="" href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
                                         </td>
                                         
                                     </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                        
-                                        <td><a onclick="" href="#" class="btn btn-warning btn-sm" role="button"
-                                                data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick="" href="#" class="btn btn-danger btn-sm" role="button"
-                                                data-toggle="modal" data-target="#DeleteModal">Delete</a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Trident</td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                        
-                                        <td><a onclick="" href="#" class="btn btn-warning btn-sm" role="button"
-                                                data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick="" href="#" class="btn btn-danger btn-sm" role="button"
-                                                data-toggle="modal" data-target="#DeleteModal">Delete</a>
-                                        </td>
-                                        
-                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
                                 </tbody>
                                 
                             </table>
@@ -188,12 +156,12 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Category Name</label>
-                            <input name="txtName" type="text" class="form-control" id="" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Author Name</label>
+                            <input name="txtName" type="text" class="form-control" id="AuthorName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Category Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Author Detail</label>
+                            <input name='txtDetail' type="text" class="form-control" id="AuthorDetail" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -206,3 +174,13 @@
         </div>
     </div>
 </div>
+<script>
+function openModal(e){
+console.log(e.name);
+$inputName = document.querySelector("#AuthorName");
+$inputemail = document.querySelector("#AuthorDetail");
+
+$inputName.value=e.name;
+$inputemail.value=e.detail;
+}    
+</script>
