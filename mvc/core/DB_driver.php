@@ -41,7 +41,7 @@ class DB_driver
         // Lặp qua data
         foreach ($data as $key => $value){
             $field_list .= ",$key";
-            $value_list .= ",'".mysql_escape_string($value)."'";
+            $value_list .= ",'".mysqli_real_escape_string($this->__conn,$value)."'";
         }
  
         // Vì sau vòng lặp các biến $field_list và $value_list sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
@@ -58,7 +58,7 @@ class DB_driver
         $sql = '';
         // Lặp qua data
         foreach ($data as $key => $value){
-            $sql .= "$key = '".mysql_escape_string($value)."',";
+            $sql .= "$key = '".mysqli_real_escape_string($this->__conn,$value)."',";
         }
  
         // Vì sau vòng lặp biến $sql sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
@@ -88,18 +88,11 @@ class DB_driver
         if (!$result){
             die ('Câu truy vấn bị sai');
         }
- 
-        $return = array();
- 
-        // Lặp qua kết quả để đưa vào mảng
-        while ($row = mysqli_fetch_assoc($result)){
-            $return[] = $row;
-        }
- 
+        return $return;
         // Xóa kết quả khỏi bộ nhớ
         mysqli_free_result($result);
- 
         return $return;
+        
     }
  
     // Hàm lấy 1 record dùng trong trường hợp lấy chi tiết tin

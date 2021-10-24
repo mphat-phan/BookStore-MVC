@@ -58,7 +58,7 @@
                                         <td><?=$row['detail']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick="" href="#" class="btn btn-danger btn-sm" role="button"
+                                            <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
                                         </td>
                                         
@@ -81,6 +81,7 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
 </div>
 <div class="modal" id="AddModal">
     <div class="modal-dialog">
@@ -92,7 +93,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="" method="POST">
+                <form action="add" method="POST">
                     
                     <div class="card-body">
                         <div class="form-group">
@@ -105,7 +106,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -124,16 +125,16 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="" method="POST">
+                <form id="formDelete" action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <input type="checkbox" class="form-check-input" id="">
                             <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -152,7 +153,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="" method="POST">
+                <form id="formUpdate" action="" method="POST">
                     
                     <div class="card-body">
                         <div class="form-group">
@@ -165,7 +166,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -180,7 +181,15 @@ console.log(e.name);
 $inputName = document.querySelector("#AuthorName");
 $inputemail = document.querySelector("#AuthorDetail");
 
+$formUpdate = document.querySelector("#formUpdate");
+$formDelete = document.querySelector("#formDelete");
+
+$formUpdate.action = "update/"+e.id;
+$formDelete.action = "delete/"+e.id;
+
 $inputName.value=e.name;
 $inputemail.value=e.detail;
 }    
 </script>
+
+

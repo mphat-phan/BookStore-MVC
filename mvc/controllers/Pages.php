@@ -6,3 +6,6 @@ class Pages extends Controller{
     
 }
 ?>
+<script>
+    window.history.pushState("", "404", "404.php");
+</script>

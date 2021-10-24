@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 class App{
     
     protected $controller="Author";
@@ -37,6 +37,7 @@ class App{
             }
             unset($arr[1]);
         }
+        
         
 		$_SESSION['action'] = $this->action;
 		
