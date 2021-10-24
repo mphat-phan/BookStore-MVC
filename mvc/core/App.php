@@ -1,9 +1,9 @@
 <?php
-
+error_reporting(0);
 class App{
     
     protected $controller="Author";
-    protected $action="index";   
+    protected $action="";   
 	protected $params = array();
 	
     function __construct(){
@@ -17,11 +17,11 @@ class App{
             
             unset($arr[0]);
         }
-        else if( isset($arr[0])){
-            $this->controller = "Error";
-            //require_once "mvc/controllers/". $this->controller .".php";
-        }        
-        require_once "mvc/controllers/". $this->controller .".php";
+        elseif(isset($arr[0])){
+            $this->controller = "Pages";
+        }
+          
+        require "mvc/controllers/".$this->controller.".php";
      
 
         //////
