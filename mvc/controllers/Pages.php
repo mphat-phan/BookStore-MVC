@@ -1,7 +1,7 @@
 <?php
 class Pages extends Controller{
     function __construct(){
-        $this->view("404");
+        $this->view("pages/404");
     }
     
 }
