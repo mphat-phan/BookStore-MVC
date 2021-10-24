@@ -19,7 +19,7 @@ class App{
         }
         else if( isset($arr[0])){
             $this->controller = "Error";
-            require_once "mvc/controllers/". $this->controller .".php";
+            //require_once "mvc/controllers/". $this->controller .".php";
         }        
         require_once "mvc/controllers/". $this->controller .".php";
      
