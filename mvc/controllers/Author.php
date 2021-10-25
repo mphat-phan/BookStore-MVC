@@ -13,31 +13,41 @@ class Author extends Controller{
 		));
     }
     function add(){
-        if(isset($_POST['submit'])){
-         
+        //if(isset($_POST['submit'])){
+        if(isset($_POST['txtName']) && $_POST['txtDetail']){
+
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
 
             $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
 
-            return $this->author->add($array);
+            $this->author->add($array);
+
+            $this->view("admin/pages/author/authorAjax",array(
+                "Author" => $this->author->getAll()
+            ));
         }
+            
+        //
         
     }
     function update($id){
-        
-        if(isset($_POST['submit'])){
+        if(isset($_POST['txtName']) && $_POST['txtDetail']){
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
             $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
-            return json_encode($this->author->updateByID($array,$id));
+            $this->author->updateByID($array,$id);
+            $this->view("admin/pages/author/authorAjax",array(
+                "Author" => $this->author->getAll()
+            ));
         }
-
     }
     function delete($id){
-        echo $id;
-        if(isset($_POST['submit'])){
-            return $this->author->delete($id);
+        if(isset($_POST['checkDelete'])){
+            $this->author->delete($id);
+            $this->view("admin/pages/author/authorAjax",array(
+                "Author" => $this->author->getAll()
+            ));
         }
     }
 

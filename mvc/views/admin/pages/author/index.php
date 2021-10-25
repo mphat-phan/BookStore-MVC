@@ -56,7 +56,7 @@
                                         <td><?=$row['id']?></td>
                                         <td><?=$row['name']?></td>
                                         <td><?=$row['detail']?></td>
-                                        <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
+                                        <td><a id="hello" onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
@@ -93,20 +93,20 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form action="add" method="POST">
+                <form id="formAdd" action="add" method="post">
                     
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Category Name</label>
-                            <input name="txtName" type="text" class="form-control" id="" placeholder="Enter ">
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Category Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="" placeholder="Enter ">
+                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -129,7 +129,7 @@
                     
                     <div class="card-body">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="">
+                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
                             <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div>
                         <!-- /.card-body -->
@@ -191,5 +191,6 @@ $inputName.value=e.name;
 $inputemail.value=e.detail;
 }    
 </script>
+
 
 

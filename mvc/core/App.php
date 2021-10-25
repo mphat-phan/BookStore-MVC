@@ -3,7 +3,7 @@
 class App{
     
     protected $controller="Author";
-    protected $action="";   
+    protected $action="index";   
 	protected $params = array();
 	
     function __construct(){
@@ -11,21 +11,19 @@ class App{
         $arr = $this->UrlProcess();
         
         // Controller
-        if(file_exists("mvc/controllers/".$arr[0].".php")){
+        if(isset($arr[0])){
+            if(file_exists("mvc/controllers/".$arr[0].".php")){
             $this->controller = $arr[0];			
 			//echo $arr[0];
             
             unset($arr[0]);
-        }
-        elseif(isset($arr[0])){
-            $this->controller = "Pages";
+            }
+            else{
+                $this->controller = "Pages";
+            }
         }
           
         require "mvc/controllers/".$this->controller.".php";
-     
-
-        //////
-        
         $this->controller = new $this->controller;
 
 
