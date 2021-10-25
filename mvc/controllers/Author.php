@@ -12,7 +12,11 @@ class Author extends Controller{
             "Author" => $this->author->getAll()            
 		));        
     }
-
+    function ajax(){
+        $this->view("admin/pages/author/authorAjax",array(
+            "Author" => $this->author->getAll()
+        ));
+    }
     function add(){
         //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && $_POST['txtDetail']){

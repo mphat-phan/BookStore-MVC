@@ -1,21 +1,19 @@
 <?php
-class Category extends Controller{
+class GoodsReceived extends Controller{
     
     function __construct(){
-        $this->category = $this->model("CategoryModel");
+        $this->goodsreceived = $this->model("GoodsReceivedModel");
         
     }
 
     function index(){
         $this->view("layout",array(
-			"Page" => "category",
-            "Category" => $this->category->getAll()            
+			"Page" => "goodsreceived",
+            "Goodsreceived" => $this->goodsreceived->getAll()            
 		));        
     }
     function ajax(){
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Author" => $this->author->getAll()
-        ));
+        
     }
     function add(){
 

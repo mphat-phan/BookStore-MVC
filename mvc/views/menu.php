@@ -36,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a id="dashboard" href="<?php echo constant('URL') ?>Dashboard" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a id="" href="" class="nav-link">
                         <i class="nav-icon fas fa-book-open"></i>
                         <p>
                             Quản lý sản phẩm
@@ -53,19 +53,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="product" href="<?php echo constant('URL') ?>Product" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sản phẩm</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="category" href="<?php echo constant('URL') ?>Category" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Thể loại</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="author" href="<?php echo constant('URL') ?>Author" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tác giả</p>
                             </a>
@@ -73,7 +73,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a id="order" href="<?php echo constant('URL') ?>Order" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Quản lý hóa đơn
@@ -81,7 +81,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a id="employee" href="<?php echo constant('URL') ?>Employee" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Quản lý nhân viên
@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a id="goodsreceived" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
                         <i class="nav-icon fas fa-truck-loading"></i>
                         <p>
                             Quản lý nhập hàng
@@ -97,7 +97,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a id="sell" href="<?php echo constant('URL') ?>Sell" class="nav-link">
                         <i class="nav-icon fas fa-shopping-basket"></i>
                         <p>Sell</p>
                     </a>

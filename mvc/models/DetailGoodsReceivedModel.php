@@ -1,10 +1,10 @@
 <?php	
-	class OrderDetailModel extends DB_business
+	class DetailGoodsReceivedModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'orderDetail';
+                  $this->_table_name = 'detailGoodsReceived';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';

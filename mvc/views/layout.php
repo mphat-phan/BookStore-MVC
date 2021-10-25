@@ -50,6 +50,8 @@
     <!-- Content Wrapper. Contains page content -->
     <?php require dirname(__FILE__) ."\admin\pages\\".$data['Page']."\\index.php"?>
 
+    
+
 
 
 
