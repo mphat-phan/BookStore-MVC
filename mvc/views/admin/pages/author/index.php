@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Author table</h3>
 
-                            <button type="button" onclick="" href="#" class="btn btn-primary btn-sm float-right" role="button"
+                            <button type="button" onclick="openModal()" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
@@ -36,7 +36,7 @@
                         </div>
 
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div  class="card-body">
                             <table id="authortable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -57,7 +57,7 @@
                                         <td><?=$row['id']?></td>
                                         <td><?=$row['name']?></td>
                                         <td><?=$row['detail']?></td>
-                                        <td><a id="hello" onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
+                                        <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
@@ -94,7 +94,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="formAdd" action="add" method="post">
+                <form id="formAdd" action="" method="post">
                     
                     <div class="card-body">
                         <div class="form-group">
@@ -177,16 +177,19 @@
     </div>
 </div>
 <script>
+
 function openModal(e){
-console.log(e.name);
+$getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
+console.log($getCurrentUrl); 
 $inputName = document.querySelector("#AuthorName");
 $inputemail = document.querySelector("#AuthorDetail");
 
 $formUpdate = document.querySelector("#formUpdate");
 $formDelete = document.querySelector("#formDelete");
-
-$formUpdate.action = "update/"+e.id;
-$formDelete.action = "delete/"+e.id;
+$formAdd = document.querySelector("#formAdd");
+$formAdd.action =  $getCurrentUrl+"/add";
+$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
+$formDelete.action = $getCurrentUrl+"/delete/"+e.id;
 
 $inputName.value=e.name;
 $inputemail.value=e.detail;

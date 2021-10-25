@@ -56,7 +56,7 @@
                                         <td><?=$row['detail']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick="" href="#" class="btn btn-danger btn-sm" role="button"
+                                            <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
                                         </td>
                                         
@@ -79,3 +79,12 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <script>
+
+$(function () {
+$("#authortable").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#authortable_wrapper .col-md-6:eq(0)');
+});
+</script>

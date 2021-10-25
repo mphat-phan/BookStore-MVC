@@ -4,14 +4,14 @@ $(document).ready(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-         
+        
         $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $(".content-wrapper").html(data);
+                $("#content").html(data);
             }
         });
        
@@ -20,14 +20,13 @@ $(document).ready(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-         
         $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $(".content-wrapper").html(data);
+                $("#content").html(data);
             }
         });
        
@@ -43,7 +42,7 @@ $(document).ready(function () {
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $(".content-wrapper").html(data);
+                $("#content").html(data);
             }
         });
        
