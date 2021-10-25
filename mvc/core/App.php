@@ -33,7 +33,15 @@ class App{
 				//echo $arr[1];
                 $this->action = $arr[1];				
             }
+            else
+            {
+                $this->action = "pages";
+            }            
             unset($arr[1]);
+        }        
+        else
+        {
+            $this->action = "index";
         }
         
         

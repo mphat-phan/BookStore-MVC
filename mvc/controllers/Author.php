@@ -8,9 +8,8 @@ class Author extends Controller{
     function index(){
         $this->view("layout",array(
 			"Page" => "author",
-            "Author" => $this->author->getAll()
-    
-		));
+            "Author" => $this->author->getAll()            
+		));        
     }
     function add(){
         //if(isset($_POST['submit'])){
@@ -50,6 +49,8 @@ class Author extends Controller{
             ));
         }
     }
-
+    function pages() {
+        $this->view("pages/404");
+    }
 }
 ?>

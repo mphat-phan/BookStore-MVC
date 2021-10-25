@@ -49,6 +49,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                    //print_r($data['Author']);
                                     foreach($data['Author'] as $row){
         
                                     ?>
