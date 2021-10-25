@@ -32,7 +32,12 @@
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
                                 data-toggle="modal" data-target="#">Import</button>
                         </div>
-
+                        <?php
+                        if(isset($data['msg'])){
+                            echo '<div class="alert alert-'.$data['color'].'" role="alert">'.$data['msg'].'</div>';
+                        }
+                        ?>
+                        
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="authortable" class="table table-bordered table-striped">
