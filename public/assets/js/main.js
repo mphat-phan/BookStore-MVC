@@ -80,6 +80,18 @@ $(document).ready(function () {
        
     })
     //////////////
+    $("#dashboard").click(function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost/Bookstore/Dashboard/ajax",
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
     $("#author").click(function(e) {
 
         e.preventDefault();
