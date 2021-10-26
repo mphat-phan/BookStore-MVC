@@ -43,6 +43,7 @@ class Author extends Controller{
     }
 
     function update($id){
+        
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];

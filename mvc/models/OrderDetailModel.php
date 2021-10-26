@@ -4,10 +4,10 @@
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'orderDetail';
+                  $this->_table_name = 'orderdetail';
                   
                   // Khai báo tên field id
-                  $this->_key = 'id';
+                  $this->_key = 'orderID';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -16,6 +16,9 @@
             {   
                   return $this->selectAll('*');
             }	
+            public function getOrderDetailByOrderID($id){
+                  return $this->select_by_id('*', $id);
+            }
             public function add($data){
                   return $this->add_new($data);
             }

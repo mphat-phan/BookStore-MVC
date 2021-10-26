@@ -1,10 +1,10 @@
 <?php	
-	class ProductModel extends DB_business
+	class CompanyModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'product';
+                  $this->_table_name = 'company';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';
@@ -20,6 +20,7 @@
                   return $this->add_new($data);
             }
             public function updateByID($data,$id){
+                
                   return $this->update_by_id($data, $id);
             }
             public function delete($id){

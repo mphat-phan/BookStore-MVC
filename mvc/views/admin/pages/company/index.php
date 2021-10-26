@@ -1,4 +1,3 @@
-
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -11,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Nhà xuất bản</li>
                     </ol>
                 </div>
             </div>
@@ -27,9 +26,9 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">Company table</h3>
 
-                            <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
+                            <button type="button" onclick='openModal("")' href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
@@ -38,12 +37,13 @@
 
                         <!-- /.card-header -->
                         <div  class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="companytable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
-                                        <th>Detail</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
                                         <th>#</th>
 
                                     </tr>
@@ -51,13 +51,14 @@
                                 <tbody>
                                     <?php
                                     //print_r($data['Author']);
-                                    foreach($data['Author'] as $row){
+                                    foreach($data['Company'] as $row){
         
                                     ?>
                                     <tr>
                                         <td><?=$row['id']?></td>
                                         <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
+                                        <td><?=$row['email']?></td>
+                                        <td><?=$row['address']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
@@ -99,13 +100,18 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Company Name</label>
+                            <input name="txtName" type="text" class="form-control formUpdateInput" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Company Email</label>
+                            <input name='txtEmail' type="text" class="form-control formUpdateInput" placeholder="Enter ">
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Company Address</label>
+                            <input name='txtAddress' type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                        </div>
+                        
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -159,12 +165,16 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Company Name</label>
+                            <input name="txtName" type="text" class="form-control" id="CompanyName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Company Email</label>
+                            <input name='txtEmail' type="email" class="form-control" id="CompanyEmail" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Company Address</label>
+                            <input name='txtAddress' type="text" class="form-control" id="CompanyAddress" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -185,7 +195,8 @@ $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
 //update model
 const x = document.forms["formUpdate"];
 x.elements[0].value= e.name;
-x.elements[1].value= e.detail;
+x.elements[1].value= e.email;
+x.elements[2].value= e.address;
 
 //action
 $formUpdate = document.querySelector("#formUpdate");
@@ -197,6 +208,7 @@ $formDelete.action = $getCurrentUrl+"/delete/"+e.id;
 
 }    
 </script>
+
 
 
 

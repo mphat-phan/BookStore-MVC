@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Category table</h3>
 
-                            <button type="button" onclick="openModal()" href="#" class="btn btn-primary btn-sm float-right" role="button"
+                            <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
@@ -158,12 +158,12 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" type="text" class="form-control" id="AuthorName" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Category Name</label>
+                            <input name="txtName" type="text" class="form-control" id="CategoryName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="AuthorDetail" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Category Detail</label>
+                            <input name='txtDetail' type="text" class="form-control" id="CategoryDetail" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

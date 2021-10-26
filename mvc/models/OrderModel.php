@@ -4,7 +4,7 @@
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'order';
+                  $this->_table_name = 'ordertb';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';
@@ -15,7 +15,8 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
-            }	
+            }
+            
             public function add($data){
                   return $this->add_new($data);
             }

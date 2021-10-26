@@ -1,3 +1,4 @@
+
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -9,8 +10,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Quản lý nhân viên</li>
+                        
                     </ol>
                 </div>
             </div>
@@ -26,9 +27,9 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">Employee table</h3>
 
-                            <button type="button" onclick="openModal()" href="#" class="btn btn-primary btn-sm float-right" role="button"
+                            <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
@@ -42,7 +43,12 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
-                                        <th>Detail</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
+                                        <th>Birth</th>
+                                        <th>Auth</th>
+                                        <th>Join Date</th>
                                         <th>#</th>
 
                                     </tr>
@@ -50,13 +56,18 @@
                                 <tbody>
                                     <?php
                                     //print_r($data['Author']);
-                                    foreach($data['Author'] as $row){
+                                    foreach($data['Employee'] as $row){
         
                                     ?>
                                     <tr>
                                         <td><?=$row['id']?></td>
                                         <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
+                                        <td><?=$row['phone']?></td>
+                                        <td><?=$row['address']?></td>
+                                        <td><?=$row['email']?></td>
+                                        <td><?=$row['birth']?></td>
+                                        <td><?=$row['auth']?></td>
+                                        <td><?=$row['joindate']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
@@ -98,13 +109,34 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Category Name</label>
-                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Employee Name</label>
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter " require>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Category Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Employee Phone</label>
+                            <input name="txtPhone" type="text" class="form-control" id="txtName" placeholder="Enter " require>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Address</label>
+                            <input name="txtAddress" type="text" class="form-control" id="txtName" placeholder="Enter " require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Email</label>
+                            <input name="txtEmail" type="email" class="form-control" id="txtName" placeholder="Enter " require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Birth</label>
+                            <input name="txtBirth" type="date" class="form-control" id="txtName" placeholder="Enter " require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Auth</label>
+                            <input name="txtAuth" type="number" class="form-control" id="txtName" placeholder="Enter " require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Join Date</label>
+                            <input name="txtJoindate" type="date" class="form-control" id="txtName" placeholder="Enter " require>
+                        </div>
+                        
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -158,12 +190,32 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Employee Name</label>
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                            <label for="exampleInputEmail1">Employee Phone</label>
+                            <input name="txtPhone" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Address</label>
+                            <input name="txtAddress" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Email</label>
+                            <input name="txtEmail" type="email" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Birth</label>
+                            <input name="txtBirth" type="date" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Auth</label>
+                            <input name="txtAuth" type="number" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Join Date</label>
+                            <input name="txtJoindate" type="date" class="form-control" id="txtName" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -184,7 +236,12 @@ $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
 //update model
 const x = document.forms["formUpdate"];
 x.elements[0].value= e.name;
-x.elements[1].value= e.detail;
+x.elements[1].value= e.phone;
+x.elements[2].value= e.address;
+x.elements[3].value= e.email;
+x.elements[4].value= e.birth;
+x.elements[5].value= e.auth;
+x.elements[6].value= e.joindate;
 
 //action
 $formUpdate = document.querySelector("#formUpdate");

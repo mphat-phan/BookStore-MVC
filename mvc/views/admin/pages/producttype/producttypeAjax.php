@@ -7,8 +7,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Quản lý nhân viên</li>
-
+                    <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                    <li class="breadcrumb-item active">Loại sản phẩm</li>
                 </ol>
             </div>
         </div>
@@ -24,7 +24,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Employee table</h3>
+                        <h3 class="card-title">Product Type table</h3>
 
                         <button type="button" onclick="openModal('')" href="#"
                             class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
@@ -37,39 +37,28 @@
                         if(isset($data['msg'])){
                             echo '<div class="alert alert-'.$data['color'].'" role="alert">'.$data['msg'].'</div>';
                         }
-                    ?>
+                        ?>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="employeetable" class="table table-bordered table-striped">
+                        <table id="producttypetable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>id</th>
                                     <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Email</th>
-                                    <th>Birth</th>
-                                    <th>Auth</th>
-                                    <th>Join Date</th>
+                                    <th>Detail</th>
                                     <th>#</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    //print_r($data['Author']);
-                                    foreach($data['Employee'] as $row){
+                                    foreach($data['ProductType'] as $row){
         
                                     ?>
                                 <tr>
                                     <td><?=$row['id']?></td>
                                     <td><?=$row['name']?></td>
-                                    <td><?=$row['phone']?></td>
-                                    <td><?=$row['address']?></td>
-                                    <td><?=$row['email']?></td>
-                                    <td><?=$row['birth']?></td>
-                                    <td><?=$row['auth']?></td>
-                                    <td><?=$row['joindate']?></td>
+                                    <td><?=$row['detail']?></td>
                                     <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#"
                                             class="btn btn-warning btn-sm" role="button" data-toggle="modal"
                                             data-target="#UpdateModal">Update</a>
@@ -97,12 +86,11 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-
 <script>
-    $("#employeetable").DataTable({
+    $("#producttypetable").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#employeetable_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#producttypetable_wrapper .col-md-6:eq(0)');
 </script>

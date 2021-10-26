@@ -4,7 +4,6 @@ $(document).ready(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        
         $.ajax({
             type: "POST",
             url: url,
@@ -47,6 +46,40 @@ $(document).ready(function () {
         });
        
     })
+    ///////////
+    $("#formDelete1").submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+         
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#formDelete2").submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+         
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    //////////////
     $("#author").click(function(e) {
 
         e.preventDefault();
@@ -63,7 +96,21 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/Category/ajax";
-        console.log(url);
+     
+        $.ajax({
+            url: url,
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#customer").click(function(e) {
+
+        e.preventDefault();
+        var url = "http://localhost/Bookstore/Customer/ajax";
+     
         $.ajax({
             url: url,
             success: function(data)
@@ -77,7 +124,21 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/Product/ajax";
-        console.log(url);
+  
+        $.ajax({
+            url: url,
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#producttype").click(function(e) {
+
+        e.preventDefault();
+        var url = "http://localhost/Bookstore/ProductType/ajax";
+  
         $.ajax({
             url: url,
             success: function(data)
@@ -91,7 +152,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/Order/ajax";
-        console.log(url);
+
         $.ajax({
             url: url,
             success: function(data)
@@ -105,7 +166,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/GoodsReceived/ajax";
-        console.log(url);
+
         $.ajax({
             url: url,
             success: function(data)
@@ -119,7 +180,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/Employee/ajax";
-        console.log(url);
+  
         $.ajax({
             url: url,
             success: function(data)
@@ -133,7 +194,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         var url = "http://localhost/Bookstore/Sell/ajax";
-        console.log(url);
+  
         $.ajax({
             url: url,
             success: function(data)
@@ -143,5 +204,21 @@ $(document).ready(function () {
         });
        
     })
+    $("#company").click(function(e) {
+
+        e.preventDefault();
+        var url = "http://localhost/Bookstore/Company/ajax";
+  
+        $.ajax({
+            url: url,
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    
 
 });
+

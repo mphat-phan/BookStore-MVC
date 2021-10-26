@@ -65,9 +65,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a id="producttype" href="<?php echo constant('URL') ?>ProductType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Loại sản phẩm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a id="author" href="<?php echo constant('URL') ?>Author" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tác giả</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="company" href="<?php echo constant('URL') ?>Company" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Nhà xuất bản</p>
                             </a>
                         </li>
                     </ul>
@@ -85,6 +97,14 @@
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Quản lý nhân viên
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="customer" href="<?php echo constant('URL') ?>Customer" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Quản lý khách hàng
                         </p>
                     </a>
                 </li>

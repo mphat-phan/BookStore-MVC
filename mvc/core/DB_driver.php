@@ -64,7 +64,7 @@ class DB_driver
  
         // Vì sau vòng lặp biến $sql sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
         $sql = 'UPDATE '.$table. ' SET '.trim($sql, ',').' WHERE '.$where;
- 
+
         return mysqli_query($this->__conn, $sql);
     }
  
