@@ -176,10 +176,8 @@
 </div>
 
 <script>
-
-function openModalOrder(e){
 $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
-
+function openModalOrder(e){
 //update model
 /*
 const x = document.forms["formUpdate"];
@@ -196,11 +194,10 @@ $formDelete = document.querySelector("#formDelete");
 //$formAdd = document.querySelector("#formAdd");
 //$formAdd.action =  $getCurrentUrl+"/add";
 //$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-$formDelete.action = $getCurrentUrl+"/delete/"+e.id;
+$formDelete.action = $getCurrentUrl+"/deleteOrder/"+e.id;
 
 }   
 function openModalOrderDetail(e){
-$getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
 
 //update model
 /*
@@ -217,7 +214,7 @@ $formDelete = document.querySelector("#formDelete");
 //$formAdd = document.querySelector("#formAdd");
 //$formAdd.action =  $getCurrentUrl+"/add";
 //$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-$formDelete.action = $getCurrentUrl+"/delete/"+e.id;
+$formDelete.action = $getCurrentUrl+"/deleteOrderDetail/"+e.orderID;
 
 }    
 function addRowHandlers() {
@@ -229,7 +226,14 @@ function addRowHandlers() {
       return function() {
         var cell = row.getElementsByTagName("td")[0];
         var id = cell.innerHTML;
-        alert("id:" + id);
+        $.ajax({
+            type: "POST",
+            url: $getCurrentUrl+"/chitiethoadon/"+id,
+            success: function(data)
+            {
+                $("#orderdetailtable").html(data);
+            }
+        });
       };
     };
     currentRow.onclick = createClickHandler(currentRow);

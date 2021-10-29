@@ -4,7 +4,7 @@
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'goodsReceived';
+                  $this->_table_name = 'goodsreceived';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';

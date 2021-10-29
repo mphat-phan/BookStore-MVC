@@ -75,6 +75,7 @@ class DB_driver
          
         // Delete
         $sql = "DELETE FROM $table WHERE $where";
+        
         return mysqli_query($this->__conn, $sql);
     }
  

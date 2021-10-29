@@ -26,6 +26,9 @@ class DB_business extends DB_driver
     function delete_by_id($id){
         return $this->remove($this->_table_name, $this->_key.'='.(int)$id);
     }
+    function delete_by_id2($id){
+        return $this->remove($this->_table_name, $this->_key.'='."'".$id."'");
+    }
  
     // Hàm cập nhật theo id
     function update_by_id($data, $id){

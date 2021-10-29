@@ -85,6 +85,37 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a id="" href="" class="nav-link">
+                        <i class="nav-icon fas fa-book-open"></i>
+                        <p>
+                            Quản lý user
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a id="user" href="<?php echo constant('URL') ?>User" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="role" href="<?php echo constant('URL') ?>Role" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Role</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a id="quanlynhaphang" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>
+                            Quản lý nhập hàng
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a id="order" href="<?php echo constant('URL') ?>Order" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
@@ -120,6 +151,14 @@
                     <a id="sell" href="<?php echo constant('URL') ?>Sell" class="nav-link">
                         <i class="nav-icon fas fa-shopping-basket"></i>
                         <p>Sell</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="nhaphang" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>
+                            Nhập hàng
+                        </p>
                     </a>
                 </li>
             </ul>

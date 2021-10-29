@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard 3</title>
+  <title>Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -27,6 +27,9 @@
     href="<?php echo constant('URL') ?>public/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet"
     href="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <style>
+      
+    </style>
 </head>
 <!--
 `body` tag options:
@@ -114,7 +117,8 @@
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#orderdetailtable_wrapper .col-md-6:eq(0)');
-
+      //
+      
       //sanpham
       $("#producttable").DataTable({
         "responsive": true,
@@ -124,6 +128,7 @@
       }).buttons().container().appendTo('#producttable_wrapper .col-md-6:eq(0)');
 
       //nhap hang
+      
       $("#nhaphangtable").DataTable({
         "responsive": true,
         "lengthChange": false,
@@ -176,6 +181,24 @@
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#customertable_wrapper .col-md-6:eq(0)');
+      $("#roletable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#roletable_wrapper .col-md-6:eq(0)');
+      $("#userhasroletable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#userhasroletable_wrapper .col-md-6:eq(0)');
+      $("#usertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
     });
   </script>
 </body>

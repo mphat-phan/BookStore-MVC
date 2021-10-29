@@ -29,14 +29,14 @@ class Product extends Controller{
 
         $target_dir = "http://localhost/Bookstore/public/assets/images/";
         //$target_file = $target_dir . basename($_FILES["ImageInput"]["name"]);
-        if(isset($_POST['txtName'])){
+        if(isset($_POST['txtName']) && $_POST['categorySelect'] && $_POST['companySelect'] && $_POST['authorSelect'] && $_POST['txtDescription'] && $_POST['txtPrice'] && $_POST['txtPageNumber']){
 
             $name = $_POST['txtName'];
             $category= $_POST['categorySelect'];
             $company= $_POST['companySelect'];
             $author= $_POST['authorSelect'];
             $description= $_POST['txtDescription'];
-            $quantity= $_POST['txtQuantity'];
+            $quantity= 0;
             $price= $_POST['txtPrice'];
             $pagenumber= $_POST['txtPageNumber'];
             $image= "";//basename($_FILES["ImageInput"]["name"]);
@@ -72,7 +72,7 @@ class Product extends Controller{
         $target_dir = "public/assets/images/";
         //$target_file = $target_dir . basename($_FILES["ImageInput"]["name"]);
 
-        if(isset($_POST['txtName'])){
+        if(isset($_POST['txtName']) && $_POST['categorySelect'] && $_POST['companySelect'] && $_POST['authorSelect'] && $_POST['txtDescription'] && $_POST['txtPrice'] && $_POST['txtPageNumber']){
             $name = $_POST['txtName'];
             $category= $_POST['categorySelect'];
             $company= $_POST['companySelect'];

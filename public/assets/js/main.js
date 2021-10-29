@@ -15,6 +15,21 @@ $(document).ready(function () {
         });
        
     })
+    $("#formRoleUpdate").submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
     $("#formUpdate").submit(function(e) {
         e.preventDefault();
         var form = $(this);
@@ -47,39 +62,56 @@ $(document).ready(function () {
        
     })
     ///////////
-    $("#formDelete1").submit(function(e) {
-        e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-         
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(), // serializes the form's elements.
-            success: function(data)
-            {
-                $("#content").html(data);
-            }
-        });
-       
-    })
-    $("#formDelete2").submit(function(e) {
-        e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-         
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(), // serializes the form's elements.
-            success: function(data)
-            {
-                $("#content").html(data);
-            }
-        });
-       
-    })
+    
     //////////////
+    $("#user").click(function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost/Bookstore/User/ajax",
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#quanlynhaphang").click(function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost/Bookstore/GoodsReceived/ajax",
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#nhaphang").click(function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost/Bookstore/GoodsReceived/ajax",
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
+    $("#role").click(function(e) {
+
+        e.preventDefault();
+        $.ajax({
+            url: "http://localhost/Bookstore/Role/ajax",
+            success: function(data)
+            {
+                $("#content").html(data);
+            }
+        });
+       
+    })
     $("#dashboard").click(function(e) {
 
         e.preventDefault();
@@ -230,7 +262,11 @@ $(document).ready(function () {
         });
        
     })
+    $("h1").click(function(){
+        alert("Hello");
+    });
     
-
 });
+
+
 

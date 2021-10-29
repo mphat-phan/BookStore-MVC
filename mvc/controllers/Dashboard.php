@@ -11,11 +11,7 @@ class Dashboard extends Controller{
 			"Page" => "dashboard",
 		));        
     }
-    function ajax(){
-        $this->view("admin/pages/dashboard/dashboardAjax",array(
-            "Author" => $this->author->getAll()
-        ));
-    }
+    
     
 }
 ?>

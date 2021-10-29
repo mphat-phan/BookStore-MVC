@@ -191,8 +191,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Product Quantity</label>
-                            <input name='txtQuantity' type="number" min="0" class="form-control" id="txtQuantity"
-                                placeholder="Enter ">
+                            <input name='txtQuantity' type="number" value="0" class="form-control" id="txtQuantity"
+                                placeholder="Enter " disabled>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Product Price</label>

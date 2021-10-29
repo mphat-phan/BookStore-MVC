@@ -1,13 +1,13 @@
 <?php	
-	class DetailGoodsReceivedModel extends DB_business
+	class UserHasRoleModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'detailgoodsreceived';
+                  $this->_table_name = 'userhasrole';
                   
                   // Khai báo tên field id
-                  $this->_key = 'id';
+                  $this->_key = 'username';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -23,10 +23,10 @@
                   return $this->update_by_id($data, $id);
             }
             public function delete($id){
-                  return $this->delete_by_id($id);
+                  return $this->delete_by_id2($id);
 
             }
-            
+
 
 	}
 ?> 

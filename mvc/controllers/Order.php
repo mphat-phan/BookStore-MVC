@@ -13,7 +13,11 @@ class Order extends Controller{
             "OrderDetail" => $this->orderdetail->getOrderDetailByOrderID(1)
 		));        
     }
-    
+    function chitiethoadon($id){
+        $this->view("admin/pages/order/orderdetailAjax",array(
+            "OrderDetail" => $this->orderdetail->getOrderDetailByOrderID($id)
+		));        
+    }
     function ajax(){
         $this->view("admin/pages/order/orderAjax",array(
             "Order" => $this->order->getAll(),
@@ -23,7 +27,7 @@ class Order extends Controller{
     function deleteOrder($id){
         if(isset($_POST['checkDelete'])){
             
-            if($this->order->delete($id)==1){
+            if($this->orderdetail->delete($id)==1 && $this->order->delete($id)==1){
                 $this->view("admin/pages/order/orderAjax",array(
                     "Order" => $this->order->getAll(),
                     "OrderDetail" => $this->orderdetail->getAll(),
@@ -35,7 +39,7 @@ class Order extends Controller{
         }
         $this->view("admin/pages/order/orderAjax",array(
             "Order" => $this->order->getAll(),
-            "OrderDetail" => $this->order->getAll(),
+            "OrderDetail" => $this->orderdetail->getAll(),
             "msg1" => "Delete Failed",
             "color" => "danger"
         ));
@@ -45,7 +49,6 @@ class Order extends Controller{
             
             if($this->orderdetail->delete($id)==1){
                 $this->view("admin/pages/order/orderdetailAjax",array(
-                    "Order" => $this->order->getAll(),
                     "OrderDetail" => $this->orderdetail->getAll(),
                     "msg2" => "Delete Successful",
                     "color" => "success"
@@ -53,8 +56,7 @@ class Order extends Controller{
                 return;
             }
         }
-        $this->view("admin/pages/order/orderAjax",array(
-            "Order" => $this->order->getAll(),
+        $this->view("admin/pages/order/orderdetailAjax",array(
             "OrderDetail" => $this->orderdetail->getAll(),
             "msg2" => "Delete Failed",
             "color" => "danger"
