@@ -7,8 +7,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Quản lý khách hàng</li>
+                        
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">Customer table</h3>
 
                             <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
@@ -37,28 +37,34 @@
                             echo '<div class="alert alert-'.$data['color'].'" role="alert">'.$data['msg'].'</div>';
                         }
                         ?>
-                        
                         <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                        <div  class="card-body">
+                            <table id="customertable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
-                                        <th>Detail</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
+                                        <th>Birth</th>
                                         <th>#</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach($data['Author'] as $row){
+                                    //print_r($data['Author']);
+                                    foreach($data['Customer'] as $row){
         
                                     ?>
                                     <tr>
                                         <td><?=$row['id']?></td>
                                         <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
+                                        <td><?=$row['phone']?></td>
+                                        <td><?=$row['address']?></td>
+                                        <td><?=$row['email']?></td>
+                                        <td><?=$row['birth']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
@@ -85,12 +91,10 @@
     </section>
     <!-- /.content -->
     <script>
-
-$(function () {
-$("#authortable").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#authortable_wrapper .col-md-6:eq(0)');
-});
-
-</script>
+        $("#customertable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#customertable_wrapper .col-md-6:eq(0)');
+    </script>

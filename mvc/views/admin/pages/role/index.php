@@ -10,8 +10,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Quản lý User</li>
+                        <li class="breadcrumb-item active">Role</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">Role table</h3>
 
                             <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
@@ -38,7 +38,7 @@
 
                         <!-- /.card-header -->
                         <div  class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="roletable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -51,7 +51,7 @@
                                 <tbody>
                                     <?php
                                     //print_r($data['Author']);
-                                    foreach($data['Author'] as $row){
+                                    foreach($data['Role'] as $row){
         
                                     ?>
                                     <tr>
@@ -99,11 +99,11 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
+                            <label for="exampleInputEmail1">Role Name</label>
                             <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
+                            <label for="exampleInputEmail1">Role Detail</label>
                             <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->
@@ -159,11 +159,11 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
+                            <label for="exampleInputEmail1">Role Name</label>
                             <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
+                            <label for="exampleInputEmail1">Role Detail</label>
                             <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
                         </div>
                         <!-- /.card-body -->

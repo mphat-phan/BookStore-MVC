@@ -1,13 +1,13 @@
 <?php	
-	class ProductModel extends DB_business
+	class UserModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'product';
+                  $this->_table_name = 'user';
                   
                   // Khai báo tên field id
-                  $this->_key = 'id';
+                  $this->_key = 'username';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -23,7 +23,7 @@
                   return $this->update_by_id($data, $id);
             }
             public function delete($id){
-                  return $this->delete_by_id($id);
+                  return $this->delete_by_id2($id);
 
             }
 

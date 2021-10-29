@@ -1,61 +1,65 @@
 <?php
-class Category extends Controller{
+class Role extends Controller{
     
     function __construct(){
-        $this->category = $this->model("CategoryModel");
+        $this->Role = $this->model("RoleModel");
         
     }
 
     function index(){
         $this->view("layout",array(
-			"Page" => "category",
-            "Category" => $this->category->getAll()            
+			"Page" => "role",
+            "Role" => $this->Role->getAll()            
 		));        
     }
     function ajax(){
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll()
+        $this->view("admin/pages/role/roleAjax",array(
+            "Role" => $this->Role->getAll()
         ));
     }
     function add(){
+        //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
 
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
 
             $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
-            if($this->category->add($array)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
+            if($this->Role->add($array)==1){
+                $this->view("admin/pages/role/roleAjax",array(
+                    "Role" => $this->Role->getAll(),
                     "msg" => "Add Successful",
                     "color" => "success"
                 ));
-                return; 
+                return;
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
+        $this->view("admin/pages/role/roleAjax",array(
+            "Role" => $this->Role->getAll(),
             "msg" => "Add Failed",
             "color" => "danger"
         ));
+
     }
+
     function update($id){
+        
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
             $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
             
-            if($this->category->updateByID($array,$id)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
+            if($this->Role->updateByID($array,$id)==1){
+                $this->view("admin/pages/role/roleAjax",array(
+                    "Role" => $this->Role->getAll(),
                     "msg" => "Update Successful",
                     "color" => "success"
                 ));
                 return;
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
+        $this->view("admin/pages/role/roleAjax",array(
+            "Role" => $this->Role->getAll(),
             "msg" => "Update Failed",
             "color" => "danger"
         ));
@@ -63,17 +67,17 @@ class Category extends Controller{
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
-            if($this->category->delete($id)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
+            if($this->Role->delete($id)==1){
+                $this->view("admin/pages/role/roleAjax",array(
+                    "Role" => $this->Role->getAll(),
                     "msg" => "Delete Successful",
                     "color" => "success"
                 ));
                 return;
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
+        $this->view("admin/pages/role/roleAjax",array(
+            "Role" => $this->Role->getAll(),
             "msg" => "Delete Failed",
             "color" => "danger"
         ));

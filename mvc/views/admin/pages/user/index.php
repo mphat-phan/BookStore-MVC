@@ -10,8 +10,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Quản lý User</li>
+                        <li class="breadcrumb-item active">User</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">User table</h3>
 
                             <button type="button" onclick="openModal('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
@@ -38,12 +38,12 @@
 
                         <!-- /.card-header -->
                         <div  class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="usertable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>Name</th>
-                                        <th>Detail</th>
+                                        
+                                        <th>Username</th>
+                                        <th>Password</th>
                                         <th>#</th>
 
                                     </tr>
@@ -51,17 +51,27 @@
                                 <tbody>
                                     <?php
                                     //print_r($data['Author']);
-                                    foreach($data['Author'] as $row){
-        
+                                    $UserRole='';
+                                    foreach($data['User'] as $row){
+
                                     ?>
                                     <tr>
-                                        <td><?=$row['id']?></td>
-                                        <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
+                                        
+                                        <td><?=$row['username']?></td>
+                                        <td>***</td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
+                                            <?php
+                                            foreach($data['UserHasRole'] as $UserHasRole){
+                                                if($UserHasRole['username']==$row['username']){
+                                                    $UserRole = $UserHasRole;
+                                                }
+                                            }
+                                            ?>
+                                            <a onclick='openRoleModal(<?php echo json_encode($UserRole)?>)' href="#" class="btn btn-primary btn-sm" role="button"
+                                                data-toggle="modal" data-target="#UpdateRoleModal">Role</a>
                                         </td>
                                         
                                     </tr>
@@ -77,6 +87,7 @@
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
+                
             </div>
             <!-- /.row -->
         </div>
@@ -99,13 +110,14 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                            <label for="exampleInputEmail1">User Name</label>
+                            <input name="txtUserName" type="text" class="form-control" id="txtName" placeholder="Enter ">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
+                            <label for="exampleInputEmail1">User Password</label>
+                            <input name='txtUserPassword' type="password" class="form-control" id="txtDetail" >
                         </div>
+                        
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -159,12 +171,45 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Author Name</label>
-                            <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                            <label for="exampleInputEmail1">User Password</label>
+                            <input name='txtUserPassword' value="" type="password" class="form-control formUpdateInput" placeholder="Enter ">
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Author Detail</label>
-                            <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="UpdateRoleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update Role</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formRoleUpdate" action="" method="POST">
+                    
+                    <div class="card-body">
+                    <div class="form-group">
+                            <label for="sel2">User Role</label>
+                            <select class="form-control" name="roleSelect" id="roleSelect">
+                                <?php
+                                    foreach($data['Role'] as $row){
+        
+                                    ?>
+                                    <option value="<?=$row['id']?>"><?=$row['name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -178,24 +223,35 @@
     </div>
 </div>
 <script>
-
-function openModal(e){
 $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
+function openModal(e){
+
 
 //update model
 const x = document.forms["formUpdate"];
-x.elements[0].value= e.name;
-x.elements[1].value= e.detail;
+x.elements[0].value= e.password;
 
 //action
 $formUpdate = document.querySelector("#formUpdate");
 $formDelete = document.querySelector("#formDelete");
+
+
+
 $formAdd = document.querySelector("#formAdd");
 $formAdd.action =  $getCurrentUrl+"/add";
-$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-$formDelete.action = $getCurrentUrl+"/delete/"+e.id;
+$formUpdate.action = $getCurrentUrl+"/update/"+e.username;
+$formDelete.action = $getCurrentUrl+"/delete/"+e.username;
 
-}    
+}  
+function openRoleModal(e){
+const x = document.forms["formRoleUpdate"];
+x.elements[0].value= e.username;   
+
+$formRoleUpdate = document.querySelector("#formRoleUpdate");
+$formRoleUpdate.action = $getCurrentUrl+"/updateRole/"+e.username;
+
+document.getElementById('roleSelect').value = e.roleID;
+}  
 </script>
 
 
