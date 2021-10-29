@@ -54,9 +54,9 @@
         
                                     ?>
                                     <tr>
-                                        <td><?php echo $row['id']?></td>
-                                        <td><?php echo $row['name']?></td>
-                                        <td><?php echo $row['detail']?></td>
+                                        <td><?=$row['id']?></td>
+                                        <td><?=$row['name']?></td>
+                                        <td><?=$row['detail']?></td>
                                         <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
                                             <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
