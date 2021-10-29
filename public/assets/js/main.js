@@ -262,7 +262,10 @@ $(document).ready(function () {
         });
        
     })
-    $("h1").click(function(){
+    $("h3").click(function(){
+        alert("Hello");
+    });
+    $("input .form-control").keyup(function(){
         alert("Hello");
     });
     

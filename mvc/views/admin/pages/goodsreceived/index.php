@@ -116,7 +116,7 @@ if ($data['Product']->num_rows > 0) {
 <script>
 
 function addRow() {
-    
+        
         var product = JSON.parse('<?php echo json_encode($arr)?>');
         console.log(product[0].name);
         var select = document.createElement('select');
@@ -148,6 +148,7 @@ function addRow() {
                     ele.setAttribute('type', 'text');
                     ele.setAttribute('value', '');
                     ele.className = "form-control";
+                    ele.id = "quantity";
                     ele.onkeyup="evtkeyup()";
                     ele.value = 0;
                     form.appendChild(ele)
@@ -170,9 +171,10 @@ function addRow() {
                     ele.setAttribute('type', 'number');
                     ele.setAttribute('value', '');
                     ele.className = "form-control ";
-            
-                    ele.value = 0;
-                    form.appendChild(ele)
+                    ele.id = "total";
+                    
+                    form.appendChild(ele);
+                    //document.getElementById("total").disabled = false;
                     td.appendChild(form);
                     break
                 case 4:
@@ -191,7 +193,16 @@ function addRow() {
                 
             }
             
+            
         }
+        document.getElementById("total").disabled = true;
+        $a = document.getElementsByClass('.form-control');
+        $a.value=10
+        
+        $a.addEventListener("keyup", function(){
+            alert($a.value);
+        });
+
         
 }
 
