@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    
     $("#formAdd").submit(function(e) {
         e.preventDefault();
         var form = $(this);
@@ -15,6 +15,7 @@ $(document).ready(function () {
         });
        
     })
+
     $("#formRoleUpdate").submit(function(e) {
         e.preventDefault();
         var form = $(this);
@@ -31,6 +32,7 @@ $(document).ready(function () {
        
     })
     $("#formUpdate").submit(function(e) {
+
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
@@ -88,18 +90,7 @@ $(document).ready(function () {
         });
        
     })
-    $("#nhaphang").click(function(e) {
-
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost/Bookstore/GoodsReceived/ajax",
-            success: function(data)
-            {
-                $("#content").html(data);
-            }
-        });
-       
-    })
+    
     $("#role").click(function(e) {
 
         e.preventDefault();
@@ -262,12 +253,13 @@ $(document).ready(function () {
         });
        
     })
-    $("h3").click(function(){
-        alert("Hello");
-    });
-    $("input .form-control").keyup(function(){
-        alert("Hello");
-    });
+    
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
     
 });
 

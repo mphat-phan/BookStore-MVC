@@ -26,7 +26,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Employee table</h3>
 
-                        <button type="button" onclick="openModal('')" href="#"
+                        <button type="button" onclick="openModalEmployee('')" href="#"
                             class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                             data-target="#AddModal">Add</button>
 
@@ -70,10 +70,10 @@
                                     <td><?=$row['birth']?></td>
                                     <td><?=$row['auth']?></td>
                                     <td><?=$row['joindate']?></td>
-                                    <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#"
+                                    <td><a onclick='openModalEmployee(<?php echo json_encode($row)?>)' href="#"
                                             class="btn btn-warning btn-sm" role="button" data-toggle="modal"
                                             data-target="#UpdateModal">Update</a>
-                                        <a onclick='openModal(<?php echo json_encode($row)?>)' href="#"
+                                        <a onclick='openModalEmployee(<?php echo json_encode($row)?>)' href="#"
                                             class="btn btn-danger btn-sm" role="button" data-toggle="modal"
                                             data-target="#DeleteModal">Delete</a>
                                     </td>
@@ -97,12 +97,158 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<div class="modal" id="AddModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAdd" action="" method="post">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Name</label>
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Phone</label>
+                            <input name="txtPhone" type="text" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Address</label>
+                            <input name="txtAddress" type="text" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Email</label>
+                            <input name="txtEmail" type="email" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Birth</label>
+                            <input name="txtBirth" type="date" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Auth</label>
+                            <input name="txtAuth" type="number" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Join Date</label>
+                            <input name="txtJoindate" type="date" class="form-control" id="txtName" placeholder="Enter "
+                                require>
+                        </div>
+
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Delete</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formDelete" action="" method="POST">
+
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="UpdateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formUpdate" action="" method="POST">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Name</label>
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Phone</label>
+                            <input name="txtPhone" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Address</label>
+                            <input name="txtAddress" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Email</label>
+                            <input name="txtEmail" type="email" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Birth</label>
+                            <input name="txtBirth" type="date" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Auth</label>
+                            <input name="txtAuth" type="number" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Employee Join Date</label>
+                            <input name="txtJoindate" type="date" class="form-control" id="txtName"
+                                placeholder="Enter ">
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script>
+    el = document.querySelector('.modal-backdrop');
+    el.classList.remove("modal-backdrop");
+    el = document.querySelector('.modal-open');
+    el.classList.remove("modal-open");
     $("#employeetable").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#employeetable_wrapper .col-md-6:eq(0)');
+</script>
+<script src="http://localhost/Bookstore/public/assets/js/main.js">
 </script>

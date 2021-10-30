@@ -26,7 +26,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Role table</h3>
 
-                        <button type="button" onclick="openModal('')" href="#"
+                        <button type="button" onclick="openModalRole('')" href="#"
                             class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                             data-target="#AddModal">Add</button>
 
@@ -60,10 +60,10 @@
                                     <td><?=$row['id']?></td>
                                     <td><?=$row['name']?></td>
                                     <td><?=$row['detail']?></td>
-                                    <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#"
+                                    <td><a onclick='openModalRole(<?php echo json_encode($row)?>)' href="#"
                                             class="btn btn-warning btn-sm" role="button" data-toggle="modal"
                                             data-target="#UpdateModal">Update</a>
-                                        <a onclick='openModal(<?php echo json_encode($row)?>)' href="#"
+                                        <a onclick='openModalRole(<?php echo json_encode($row)?>)' href="#"
                                             class="btn btn-danger btn-sm" role="button" data-toggle="modal"
                                             data-target="#DeleteModal">Delete</a>
                                     </td>
@@ -87,11 +87,109 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<div class="modal" id="AddModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAdd" action="" method="post">
+                    
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Role Name</label>
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Role Detail</label>
+                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="DeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Delete</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formDelete" action="" method="POST">
+                    
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="UpdateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Update</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formUpdate" action="" method="POST">
+                    
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Role Name</label>
+                            <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Role Detail</label>
+                            <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script>
+    el = document.querySelector('.modal-backdrop');
+    el.classList.remove("modal-backdrop");
+    el = document.querySelector('.modal-open');
+    el.classList.remove("modal-open");
     $("#roletable").DataTable({
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#roletable_wrapper .col-md-6:eq(0)');
+</script>
+<script src="http://localhost/Bookstore/public/assets/js/main.js">
 </script>

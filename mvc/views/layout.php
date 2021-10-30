@@ -18,8 +18,7 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/fontawesome-free/css/all.min.css">
   <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
+  
   <!-- DataTables -->
   <link rel="stylesheet"
     href="<?php echo constant('URL') ?>public/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -27,6 +26,10 @@
     href="<?php echo constant('URL') ?>public/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet"
     href="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Theme style -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
     <style>
       
     </style>
@@ -51,7 +54,11 @@
     <?php require dirname(__FILE__) .'\menu.php'?>
 
     <!-- Content Wrapper. Contains page content -->
+    <div id="maincontent">
+    
     <?php require dirname(__FILE__) ."\admin\pages\\".$data['Page']."\\index.php"?>
+    </div>
+    
 
     
 
@@ -102,6 +109,10 @@
   <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
+  <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
+  <!-- Select2 -->
+<script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
+  
   <script>
     $(function () {
       //hoa don
