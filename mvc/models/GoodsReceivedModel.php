@@ -1,5 +1,5 @@
 <?php	
-	class GoodsReceivedModelModel extends DB_business
+	class GoodsReceivedModel extends DB_business
 	{
             function __construct() 
             {

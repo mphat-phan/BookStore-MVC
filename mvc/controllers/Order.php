@@ -21,7 +21,7 @@ class Order extends Controller{
     function ajax(){
         $this->view("admin/pages/order/orderAjax",array(
             "Order" => $this->order->getAll(),
-            "OrderDetail" => $this->order->getOrderDetailByOrderID(1) 
+            "OrderDetail" => $this->orderdetail->getOrderDetailByOrderID(1) 
         ));
     }
     function deleteOrder($id){

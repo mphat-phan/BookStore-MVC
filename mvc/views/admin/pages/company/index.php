@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Company table</h3>
 
-                            <button type="button" onclick='openModal("")' href="#" class="btn btn-primary btn-sm float-right" role="button"
+                            <button type="button" onclick='openModalCompany("")' href="#" class="btn btn-primary btn-sm float-right" role="button"
                                 data-toggle="modal" data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
@@ -59,9 +59,9 @@
                                         <td><?=$row['name']?></td>
                                         <td><?=$row['email']?></td>
                                         <td><?=$row['address']?></td>
-                                        <td><a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
+                                        <td><a onclick='openModalCompany(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
                                                 data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick='openModal(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
+                                            <a onclick='openModalCompany(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
                                                 data-toggle="modal" data-target="#DeleteModal">Delete</a>
                                         </td>
                                         
@@ -84,8 +84,6 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-
-</div>
 <div class="modal" id="AddModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -187,27 +185,9 @@
         </div>
     </div>
 </div>
-<script>
+</div>
 
-function openModal(e){
-$getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
 
-//update model
-const x = document.forms["formUpdate"];
-x.elements[0].value= e.name;
-x.elements[1].value= e.email;
-x.elements[2].value= e.address;
-
-//action
-$formUpdate = document.querySelector("#formUpdate");
-$formDelete = document.querySelector("#formDelete");
-$formAdd = document.querySelector("#formAdd");
-$formAdd.action =  $getCurrentUrl+"/add";
-$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-$formDelete.action = $getCurrentUrl+"/delete/"+e.id;
-
-}    
-</script>
 
 
 

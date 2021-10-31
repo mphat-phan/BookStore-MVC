@@ -7,6 +7,7 @@ function ValidateEmail() {
         lblError.innerHTML = "Invalid email address.";
     }
 }
+
 function ValidatePhoneNumber() {
     var email = document.getElementById("txtPhone").value;
     var lblError = document.getElementById("lblError");
