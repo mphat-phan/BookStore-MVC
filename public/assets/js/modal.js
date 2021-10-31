@@ -1,5 +1,5 @@
 function openModalAuthor(e){
-    $getCurrentUrl = 'http://localhost/Bookstore/Author';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Author';
     
     //update model
     const x = document.forms["formUpdate"];
@@ -16,7 +16,7 @@ function openModalAuthor(e){
     
 } 
 function openModalCategory(e){
-    $getCurrentUrl = 'http://localhost/Bookstore/Category';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Category';
     
     //update model
     const x = document.forms["formUpdate"];
@@ -34,7 +34,7 @@ function openModalCategory(e){
 }    
 
 function openModalCompany(e){
-    $getCurrentUrl = 'http://localhost/Bookstore/Company';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Company';
     
     //update model
     const x = document.forms["formUpdate"];
@@ -52,7 +52,7 @@ function openModalCompany(e){
     
 }    
 function openModalCustomer(e) {
-    $getCurrentUrl = 'http://localhost/Bookstore/Customer';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Customer';
 
     //update model
     const x = document.forms["formUpdate"];
@@ -72,7 +72,7 @@ function openModalCustomer(e) {
 
 }
 function openModalEmployee(e) {
-    $getCurrentUrl = 'http://localhost/Bookstore/Employee';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Employee';
 
     //update model
     const x = document.forms["formUpdate"];
@@ -94,7 +94,7 @@ function openModalEmployee(e) {
 
 }
 function openModalRole(e){
-    $getCurrentUrl = 'http://localhost/Bookstore/role';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/role';
     
     //update model
     const x = document.forms["formUpdate"];
@@ -112,7 +112,7 @@ function openModalRole(e){
 }  
 function openModalUser(e){
 
-    $getCurrentUrl = 'http://localhost/Bookstore/user';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/user';
     //update model
     const x = document.forms["formUpdate"];
     x.elements[0].value= e.password;
@@ -130,7 +130,7 @@ function openModalUser(e){
     
     }  
     function openRoleModal(e){
-        $getCurrentUrl = 'http://localhost/Bookstore/user';
+        $getCurrentUrl = 'http://localhost:84/Bookstore/user';
     const x = document.forms["formRoleUpdate"];
     x.elements[0].value= e.username;   
     
@@ -140,7 +140,7 @@ function openModalUser(e){
     document.getElementById('roleSelect').value = e.roleID;
 }  
 function openModalProduct(e) {
-    $getCurrentUrl = 'http://localhost/Bookstore/product';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/product';
 
     //update model
     const x = document.forms["formUpdate"];
@@ -164,7 +164,7 @@ function openModalProduct(e) {
     document.getElementById('companySelect').value = e.company;
     document.getElementById('authorSelect').value = e.author;
     
-    document.getElementById('imageChoose').src = "http://localhost/Bookstore/public/assets/images/"+e.image+".jpg";
+    document.getElementById('imageChoose').src = "http://localhost:84/Bookstore/public/assets/images/"+e.image+".jpg";
 
 
 }

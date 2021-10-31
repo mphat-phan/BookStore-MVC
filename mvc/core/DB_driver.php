@@ -90,10 +90,10 @@ class DB_driver
         if (!$result){
             die ('Câu truy vấn bị sai');
         }
-        return $return;
+        return $result;
         // Xóa kết quả khỏi bộ nhớ
         mysqli_free_result($result);
-        return $return;
+        return $result;
         
     }
  

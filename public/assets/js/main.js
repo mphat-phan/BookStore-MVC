@@ -70,7 +70,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/User/ajax",
+            url: "http://localhost:84/Bookstore/User/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -82,7 +82,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/GoodsReceived/ajax",
+            url: "http://localhost:84/Bookstore/GoodsReceived/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -95,7 +95,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/Role/ajax",
+            url: "http://localhost:84/Bookstore/Role/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -107,7 +107,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/Dashboard/ajax",
+            url: "http://localhost:84/Bookstore/Dashboard/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/Author/ajax",
+            url: "http://localhost:84/Bookstore/Author/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -130,7 +130,7 @@ $(document).ready(function () {
     $("#category").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Category/ajax";
+        var url = "http://localhost:84/Bookstore/Category/ajax";
      
         $.ajax({
             url: url,
@@ -144,7 +144,7 @@ $(document).ready(function () {
     $("#customer").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Customer/ajax";
+        var url = "http://localhost:84/Bookstore/Customer/ajax";
      
         $.ajax({
             url: url,
@@ -158,7 +158,7 @@ $(document).ready(function () {
     $("#product").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Product/ajax";
+        var url = "http://localhost:84/Bookstore/Product/ajax";
   
         $.ajax({
             url: url,
@@ -172,7 +172,7 @@ $(document).ready(function () {
     $("#producttype").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/ProductType/ajax";
+        var url = "http://localhost:84/Bookstore/ProductType/ajax";
   
         $.ajax({
             url: url,
@@ -186,7 +186,7 @@ $(document).ready(function () {
     $("#order").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Order/ajax";
+        var url = "http://localhost:84/Bookstore/Order/ajax";
 
         $.ajax({
             url: url,
@@ -200,7 +200,7 @@ $(document).ready(function () {
     $("#goodsreceived").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/GoodsReceived/ajax";
+        var url = "http://localhost:84/Bookstore/GoodsReceived/ajax";
 
         $.ajax({
             url: url,
@@ -214,7 +214,7 @@ $(document).ready(function () {
     $("#employee").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Employee/ajax";
+        var url = "http://localhost:84/Bookstore/Employee/ajax";
   
         $.ajax({
             url: url,
@@ -228,7 +228,7 @@ $(document).ready(function () {
     $("#sell").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Sell/ajax";
+        var url = "http://localhost:84/Bookstore/Sell/ajax";
   
         $.ajax({
             url: url,
@@ -242,7 +242,7 @@ $(document).ready(function () {
     $("#company").click(function(e) {
 
         e.preventDefault();
-        var url = "http://localhost/Bookstore/Company/ajax";
+        var url = "http://localhost:84/Bookstore/Company/ajax";
   
         $.ajax({
             url: url,
@@ -252,7 +252,7 @@ $(document).ready(function () {
             }
         });
        
-    })
+    })    
     
     $('.select2').select2()
 
@@ -260,7 +260,7 @@ $(document).ready(function () {
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })
-    
+
 });
 
 

@@ -194,5 +194,5 @@
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#categorytable_wrapper .col-md-6:eq(0)');
 </script>
-<script src="http://localhost/Bookstore/public/assets/js/main.js">
+<script src="http://localhost:84/Bookstore/public/assets/js/main.js">
 </script>
