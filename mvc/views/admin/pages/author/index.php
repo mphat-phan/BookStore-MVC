@@ -49,27 +49,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    //print_r($data['Author']);
-                                    foreach($data['Author'] as $row){
-        
-                                    ?>
-                                    <tr>
-                                        <td><?=$row['id']?></td>
-                                        <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
-                                        <td><a onclick='openModalAuthor(<?php echo json_encode($row)?>)' href="#"
-                                                class="btn btn-warning btn-sm" role="button" data-toggle="modal"
-                                                data-target="#UpdateModal">Update</a>
-                                            <a onclick='openModalAuthor(<?php echo json_encode($row)?>)' href="#"
-                                                class="btn btn-danger btn-sm" role="button" data-toggle="modal"
-                                                data-target="#DeleteModal">Delete</a>
-                                        </td>
-
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                    
                                 </tbody>
 
                             </table>
@@ -182,3 +162,11 @@
         </div>
     </div>
 </div>
+<script>
+$('#authortable').dataTable({
+  "ajax": {
+    "url": "http://localhost:84/Bookstore/Author/getAll",
+    "type": "POST"
+  }
+});
+</script>

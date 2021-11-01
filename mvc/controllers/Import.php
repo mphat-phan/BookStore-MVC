@@ -5,12 +5,12 @@ class Import extends Controller{
         //$this->goodsreceived = $this->model("GoodsReceivedModel");
         //$this->detailgoodsreceived = $this->model("DetailGoodsReceivedModel");
         $this->product = $this->model("ProductModel");
-        $this->goodsreceived = $this->model("GoodsReceivedModel");
-        $this->detailgoodsreceived = $this->model("DetailGoodsReceivedModel");
+        // $this->goodsreceived = $this->model("GoodsReceivedModel");
+        // $this->detailgoodsreceived = $this->model("DetailGoodsReceivedModel");
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "goodsreceived",
             "Product"=> $this->product->getAll()
             //"Goodsreceived" => $this->goodsreceived->getAll()            

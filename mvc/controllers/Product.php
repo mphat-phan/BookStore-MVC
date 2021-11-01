@@ -5,16 +5,16 @@ class Product extends Controller{
         $this->product = $this->model("ProductModel");
         $this->category = $this->model("CategoryModel");
         $this->author = $this->model("AuthorModel");
-        $this->company = $this->model("CompanyModel");
+        //$this->company = $this->model("CompanyModel");
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "product",
             "Product" => $this->product->getAll(),
             "Category" => $this->category->getAll(),
             "Author" =>$this->author->getAll(),
-            "Company" =>$this->company->getAll()
+            //"Company" =>$this->company->getAll()
 		));        
     }
     function ajax(){

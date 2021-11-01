@@ -102,21 +102,26 @@ class DB_driver
     {
         // Kết nối
         $this->connect();
-         
+        
         $result = mysqli_query($this->__conn, $sql);
  
         if (!$result){
             die ('Câu truy vấn bị sai');
         }
      
-        return $result;
+    
         //$row = mysqli_fetch_array($result);
- 
+        $arr = array();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                array_push($arr, $row);
+            }
+        }
         // Xóa kết quả khỏi bộ nhớ
         mysqli_free_result($result);
  
-        if ($row){
-            return $row;
+        if ($arr){
+            return json_encode($arr);
         }
  
         return false;

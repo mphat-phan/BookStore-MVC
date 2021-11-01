@@ -1,11 +1,12 @@
 <?php
 $arr = array();
 if ($data['Product']->num_rows > 0) {
-    $index = 0;
     while($row = $data['Product']->fetch_assoc()) {
         array_push($arr, $row);
     }
 }
+print_r($arr);
+echo "Hello";
 ?>
 
 <div id="content" class="content-wrapper">
