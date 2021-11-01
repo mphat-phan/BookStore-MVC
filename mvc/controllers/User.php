@@ -5,7 +5,6 @@ class User extends Controller{
         $this->User = $this->model("UserModel");
         $this->UserHasRole = $this->model("UserHasRoleModel");
         $this->Role = $this->model("RoleModel");
-        
     }
 
     function index(){
