@@ -1,5 +1,5 @@
 <?php
-class Company extends Controller{
+class Publisher extends Controller{
     
     function __construct(){
         $this->company = $this->model("CompanyModel");

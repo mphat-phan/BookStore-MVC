@@ -1,10 +1,10 @@
 <?php	
-	class DetailGoodsReceivedModel extends DB_business
+	class PermissionModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'detailgoodsreceived';
+                  $this->_table_name = 'permission';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';
@@ -26,7 +26,5 @@
                   return $this->delete_by_id($id);
 
             }
-            
-
 	}
 ?> 

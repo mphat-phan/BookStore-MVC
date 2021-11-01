@@ -18,7 +18,7 @@ class Author extends Controller{
         ));
     }
     function add(){
-        //if(isset($_POST['submit'])){
+        
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
 
             $name = $_POST['txtName'];

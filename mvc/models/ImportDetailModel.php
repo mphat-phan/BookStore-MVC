@@ -1,13 +1,13 @@
 <?php	
-	class UserHasRoleModel extends DB_business
+	class ImportDetailModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'userhasrole';
+                  $this->_table_name = 'importdetail';
                   
                   // Khai báo tên field id
-                  $this->_key = 'username';
+                  $this->_key = 'importID';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -23,10 +23,10 @@
                   return $this->update_by_id($data, $id);
             }
             public function delete($id){
-                  return $this->delete_by_id2($id);
+                  return $this->delete_by_id($id);
 
             }
-
+            
 
 	}
 ?> 

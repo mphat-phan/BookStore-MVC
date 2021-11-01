@@ -1,13 +1,13 @@
 <?php	
-	class RoleModel extends DB_business
+	class UserPermissionModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'role';
+                  $this->_table_name = 'user_permission';
                   
                   // Khai báo tên field id
-                  $this->_key = 'name';
+                  $this->_key = 'permissionID';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -26,7 +26,5 @@
                   return $this->delete_by_id($id);
 
             }
-
-
 	}
 ?> 

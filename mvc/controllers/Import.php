@@ -1,5 +1,5 @@
 <?php
-class GoodsReceived extends Controller{
+class Import extends Controller{
     
     function __construct(){
         //$this->goodsreceived = $this->model("GoodsReceivedModel");

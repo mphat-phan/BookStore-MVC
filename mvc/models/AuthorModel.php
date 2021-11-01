@@ -26,7 +26,5 @@
                   return $this->delete_by_id($id);
 
             }
-
-
 	}
 ?> 

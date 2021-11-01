@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 29, 2021 at 10:53 AM
+-- Host: localhost:3307
+-- Generation Time: Nov 01, 2021 at 08:21 AM
 -- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bookstore`
+-- Database: `testbookstore`
 --
 
 -- --------------------------------------------------------
@@ -30,50 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `author` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `description` text NOT NULL
+  `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `author`
---
-
-INSERT INTO `author` (`id`, `name`, `description`) VALUES
-(1, 'Stephenie Meyer', ''),
-(2, 'E. L. James', ''),
-(3, 'Aoyama Goushou', ''),
-(4, 'Bộ Giáo Dục và Đào Tạo', ''),
-(5, 'Oxford University Press', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `book`
---
-
-CREATE TABLE `book` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` double NOT NULL,
-  `page_number` int(11) NOT NULL,
-  `authorID` int(11) NOT NULL,
-  `categoryID` int(11) NOT NULL,
-  `subcategoryID` int(11) NOT NULL,
-  `publisherID` int(11) NOT NULL,
-  `image` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `book`
---
-
-INSERT INTO `book` (`id`, `name`, `description`, `quantity`, `price`, `page_number`, `authorID`, `categoryID`, `subcategoryID`, `publisherID`, `image`) VALUES
-(1, 'Twilight', '', 100, 200000, 498, 1, 1, 1, 1, ''),
-(2, 'Fifty Shades of Grey', '', 150, 180000, 514, 2, 1, 1, 2, ''),
-(3, 'Meitantei Conan', '', 200, 20000, 152, 3, 2, 2, 3, ''),
-(4, 'Ngữ Văn 10', '', 300, 20000, 154, 4, 3, 3, 4, ''),
-(5, 'Oxford Essential Dictionary', '', 10, 250000, 536, 5, 4, 4, 5, '');
 
 -- --------------------------------------------------------
 
@@ -84,18 +42,20 @@ INSERT INTO `book` (`id`, `name`, `description`, `quantity`, `price`, `page_numb
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `description` text NOT NULL
+  `detail` text DEFAULT NULL,
+  `parentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `category`
+-- Table structure for table `category_product`
 --
 
-INSERT INTO `category` (`id`, `name`, `description`) VALUES
-(1, 'Văn học', ''),
-(2, 'Sách thiếu nhi', ''),
-(3, 'Giáo khoa - Tham khảo', ''),
-(4, 'Sách nước ngoài', '');
+CREATE TABLE `category_product` (
+  `categoryID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -111,13 +71,6 @@ CREATE TABLE `customer` (
   `birth` date NOT NULL,
   `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `customer`
---
-
-INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `birth`, `username`) VALUES
-(1, 'Hà Khang Kỳ', '0937555204', 'honkhivasabukyisme2392001@gmail.com', '2001-09-23', 'honkhivasabu');
 
 -- --------------------------------------------------------
 
@@ -156,7 +109,7 @@ CREATE TABLE `import` (
 
 CREATE TABLE `importdetail` (
   `importID` int(11) NOT NULL,
-  `bookID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -169,7 +122,7 @@ CREATE TABLE `importdetail` (
 
 CREATE TABLE `orderdetail` (
   `orderID` int(11) NOT NULL,
-  `bookID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -184,8 +137,37 @@ CREATE TABLE `ordertb` (
   `id` int(11) NOT NULL,
   `date` date NOT NULL,
   `total` double NOT NULL,
-  `employeeID` int(11) NOT NULL,
-  `customerID` int(11) NOT NULL
+  `employee_username` varchar(50) DEFAULT NULL,
+  `customer_username` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permission`
+--
+
+CREATE TABLE `permission` (
+  `id` int(11) NOT NULL,
+  `permission` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` double NOT NULL,
+  `pagenumber` int(11) DEFAULT NULL,
+  `image` varchar(50) DEFAULT NULL,
+  `authorID` int(11) DEFAULT NULL,
+  `publisherID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -197,14 +179,14 @@ CREATE TABLE `ordertb` (
 CREATE TABLE `publisher` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `description` text NOT NULL
+  `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `publisher`
 --
 
-INSERT INTO `publisher` (`id`, `name`, `description`) VALUES
+INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
 (1, 'Little, Brown and Company', ''),
 (2, 'Vintage Books', ''),
 (3, 'Shogakukan', ''),
@@ -218,32 +200,9 @@ INSERT INTO `publisher` (`id`, `name`, `description`) VALUES
 --
 
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `subcategory`
---
-
-CREATE TABLE `subcategory` (
-  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `categoryID` int(11) NOT NULL
+  `detail` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `subcategory`
---
-
-INSERT INTO `subcategory` (`id`, `name`, `description`, `categoryID`) VALUES
-(1, 'Tiểu thuyết', '', 1),
-(2, 'Manga', '', 2),
-(3, 'Giáo khoa', '', 3),
-(4, 'Từ điển', '', 4);
 
 -- --------------------------------------------------------
 
@@ -256,13 +215,6 @@ CREATE TABLE `user` (
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`username`, `password`) VALUES
-('honkhivasabu', 'drmfsltd1234');
-
 -- --------------------------------------------------------
 
 --
@@ -271,7 +223,18 @@ INSERT INTO `user` (`username`, `password`) VALUES
 
 CREATE TABLE `userrole` (
   `username` varchar(50) NOT NULL,
-  `roleID` int(11) NOT NULL
+  `rolename` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_permission`
+--
+
+CREATE TABLE `user_permission` (
+  `username` varchar(50) NOT NULL,
+  `permissionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -285,62 +248,73 @@ ALTER TABLE `author`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `book`
---
-ALTER TABLE `book`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `authorID` (`authorID`),
-  ADD KEY `categoryID` (`categoryID`),
-  ADD KEY `publisherID` (`publisherID`),
-  ADD KEY `subcategoryID` (`subcategoryID`);
-
---
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `category_product`
+--
+ALTER TABLE `category_product`
+  ADD PRIMARY KEY (`categoryID`,`productID`),
+  ADD KEY `productID` (`productID`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `import`
 --
 ALTER TABLE `import`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `employeeID` (`employeeID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `importdetail`
 --
 ALTER TABLE `importdetail`
-  ADD PRIMARY KEY (`importID`,`bookID`),
-  ADD KEY `bookID` (`bookID`);
+  ADD PRIMARY KEY (`importID`,`productID`),
+  ADD KEY `productID` (`productID`);
 
 --
 -- Indexes for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  ADD PRIMARY KEY (`orderID`,`bookID`) USING BTREE;
+  ADD PRIMARY KEY (`orderID`,`productID`),
+  ADD KEY `productID` (`productID`);
 
 --
 -- Indexes for table `ordertb`
 --
 ALTER TABLE `ordertb`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customerID` (`customerID`),
-  ADD KEY `employeeID` (`employeeID`);
+  ADD KEY `employee_userID` (`employee_username`),
+  ADD KEY `customer_userID` (`customer_username`);
+
+--
+-- Indexes for table `permission`
+--
+ALTER TABLE `permission`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `authorID` (`authorID`),
+  ADD KEY `publisherID` (`publisherID`);
 
 --
 -- Indexes for table `publisher`
@@ -352,14 +326,7 @@ ALTER TABLE `publisher`
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `subcategory`
---
-ALTER TABLE `subcategory`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `categoryID` (`categoryID`);
+  ADD PRIMARY KEY (`name`);
 
 --
 -- Indexes for table `user`
@@ -371,8 +338,15 @@ ALTER TABLE `user`
 -- Indexes for table `userrole`
 --
 ALTER TABLE `userrole`
-  ADD PRIMARY KEY (`username`),
-  ADD KEY `roleID` (`roleID`);
+  ADD PRIMARY KEY (`username`,`rolename`),
+  ADD KEY `rolename` (`rolename`);
+
+--
+-- Indexes for table `user_permission`
+--
+ALTER TABLE `user_permission`
+  ADD PRIMARY KEY (`username`,`permissionID`),
+  ADD KEY `permissionID` (`permissionID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -382,25 +356,19 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `book`
---
-ALTER TABLE `book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -415,41 +383,21 @@ ALTER TABLE `import`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `ordertb`
+-- AUTO_INCREMENT for table `product`
 --
-ALTER TABLE `ordertb`
+ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `publisher`
---
-ALTER TABLE `publisher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `subcategory`
---
-ALTER TABLE `subcategory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `book`
+-- Constraints for table `category_product`
 --
-ALTER TABLE `book`
-  ADD CONSTRAINT `book_ibfk_1` FOREIGN KEY (`authorID`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `book_ibfk_2` FOREIGN KEY (`categoryID`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `book_ibfk_3` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `book_ibfk_4` FOREIGN KEY (`subcategoryID`) REFERENCES `subcategory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `category_product`
+  ADD CONSTRAINT `category_product_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `category_product_ibfk_2` FOREIGN KEY (`categoryID`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `customer`
@@ -464,44 +412,46 @@ ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `import`
---
-ALTER TABLE `import`
-  ADD CONSTRAINT `import_ibfk_1` FOREIGN KEY (`employeeID`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `importdetail`
 --
 ALTER TABLE `importdetail`
   ADD CONSTRAINT `importdetail_ibfk_1` FOREIGN KEY (`importID`) REFERENCES `import` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `importdetail_ibfk_2` FOREIGN KEY (`bookID`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `importdetail_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  ADD CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`bookID`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `ordertb` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `ordertb` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  ADD CONSTRAINT `ordertb_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ordertb_ibfk_2` FOREIGN KEY (`employeeID`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ordertb_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ordertb_ibfk_2` FOREIGN KEY (`customer_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `subcategory`
+-- Constraints for table `product`
 --
-ALTER TABLE `subcategory`
-  ADD CONSTRAINT `subcategory_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`authorID`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `userrole`
 --
 ALTER TABLE `userrole`
-  ADD CONSTRAINT `userrole_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `userrole_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `userrole_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userrole_ibfk_2` FOREIGN KEY (`rolename`) REFERENCES `role` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_permission`
+--
+ALTER TABLE `user_permission`
+  ADD CONSTRAINT `user_permission_ibfk_1` FOREIGN KEY (`permissionID`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_permission_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

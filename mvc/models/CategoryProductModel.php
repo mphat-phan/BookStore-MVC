@@ -1,13 +1,13 @@
 <?php	
-	class RoleModel extends DB_business
+	class CategoryProductModel extends DB_business
 	{
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'role';
+                  $this->_table_name = 'category_product';
                   
                   // Khai báo tên field id
-                  $this->_key = 'name';
+                  $this->_key = 'categoryID';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
