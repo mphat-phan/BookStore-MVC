@@ -1,8 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost:84/Bookstore/');
-  echo dirname(__FILE__);
+  define ('URL', 'http://localhost/Bookstore/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +57,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div id="maincontent">
     
-    <?php require dirname(__FILE__) .'\admin\pages\\'.$data['Page'].'\\index.php'?>
+    <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'\\index.php'?>
     </div>
     
 

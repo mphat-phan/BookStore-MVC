@@ -7,7 +7,7 @@ class Author extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "author",
             "Author" => $this->author->getAll()            
 		));        
