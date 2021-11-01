@@ -7,7 +7,7 @@ class Customer extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "customer",
             "Customer" => $this->customer->getAll()            
 		));        
@@ -29,19 +29,11 @@ class Customer extends Controller{
 
             $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
             if($this->customer->add($array)==1){
-                $this->view("admin/pages/customer/customerAjax",array(
-                    "Customer" => $this->customer->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/customer/customerAjax",array(
-            "Customer" => $this->customer->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
+        echo 0;
 
     }
 
@@ -57,37 +49,21 @@ class Customer extends Controller{
             $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
             
             if($this->customer->updateByID($array,$id)==1){
-                $this->view("admin/pages/customer/customerAjax",array(
-                    "Customer" => $this->customer->getAll(),
-                    "msg" => "Update Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/customer/customerAjax",array(
-            "Customer" => $this->customer->getAll(),
-            "msg" => "Update Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
             if($this->customer->delete($id)==1){
-                $this->view("admin/pages/customer/customerAjax",array(
-                    "Customer" => $this->customer->getAll(),
-                    "msg" => "Delete Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/customer/customerAjax",array(
-            "Customer" => $this->customer->getAll(),
-            "msg" => "Delete Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function pages() {
         $this->view("pages/404");

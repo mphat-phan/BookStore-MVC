@@ -18,7 +18,10 @@ class Author extends Controller{
         ));
     }
     function getAll(){
-        return $this->author->getAll();
+        $list = $this->author->getAll();
+        $output = json_encode(['data' => $list]);
+        print_r($output);
+ 
     }
     function add(){
         

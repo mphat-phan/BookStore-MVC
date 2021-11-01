@@ -7,7 +7,7 @@ class Role extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "role",
             "Role" => $this->Role->getAll()            
 		));        
@@ -24,21 +24,13 @@ class Role extends Controller{
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
 
-            $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
+            $array = array('name' => $name, "detail" => $detail);
             if($this->Role->add($array)==1){
-                $this->view("admin/pages/role/roleAjax",array(
-                    "Role" => $this->Role->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/role/roleAjax",array(
-            "Role" => $this->Role->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
+        echo 0;
 
     }
 
@@ -47,40 +39,24 @@ class Role extends Controller{
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
-            $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
+            $array = array('name' => $name, "detail" => $detail);
             
             if($this->Role->updateByID($array,$id)==1){
-                $this->view("admin/pages/role/roleAjax",array(
-                    "Role" => $this->Role->getAll(),
-                    "msg" => "Update Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/role/roleAjax",array(
-            "Role" => $this->Role->getAll(),
-            "msg" => "Update Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
             if($this->Role->delete($id)==1){
-                $this->view("admin/pages/role/roleAjax",array(
-                    "Role" => $this->Role->getAll(),
-                    "msg" => "Delete Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/role/roleAjax",array(
-            "Role" => $this->Role->getAll(),
-            "msg" => "Delete Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function pages() {
         $this->view("pages/404");

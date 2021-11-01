@@ -10,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Tác giả</li>
+                        <li class="breadcrumb-item active">Thể loại</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,9 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Author table</h3>
+                            <h3 class="card-title">Category table</h3>
 
-                            <button type="button" onclick="openModalAuthor('')" href="#"
+                            <button type="button" onclick="openModalCategory('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                                 data-target="#AddModal">Add</button>
 
@@ -49,6 +49,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                
+                                    <tr>
+                                    <th>id</th>
+                                        <th>Name</th>
+                                        <th>Detail</th>
+                                        <th>#</th>
+                                    </tr>
                                     
                                 </tbody>
 
@@ -65,6 +72,7 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
     <div class="modal" id="AddModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -79,13 +87,13 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Author Name</label>
-                                <input name="txtName" type="text" class="form-control" id="txtName"
+                                <label for="exampleInputEmail1">Category Name</label>
+                                <input name="txtName" type="text" class="form-control formUpdateInput"
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Author Detail</label>
-                                <input name='txtDetail' type="text" class="form-control" id="txtDetail"
+                                <label for="exampleInputEmail1">Category Detail</label>
+                                <input name='txtDetail' type="text" class="form-control formUpdateInput"
                                     placeholder="Enter ">
                             </div>
                             <!-- /.card-body -->
@@ -141,13 +149,13 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Author Name</label>
-                                <input name="txtName" value="" type="text" class="form-control formUpdateInput"
+                                <label for="exampleInputEmail1">Category Name</label>
+                                <input name="txtName" type="text" class="form-control" id="CategoryName"
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Author Detail</label>
-                                <input name='txtDetail' value="" type="text" class="form-control formUpdateInput"
+                                <label for="exampleInputEmail1">Category Detail</label>
+                                <input name='txtDetail' type="text" class="form-control" id="CategoryDetail"
                                     placeholder="Enter ">
                             </div>
                             <!-- /.card-body -->
@@ -162,11 +170,3 @@
         </div>
     </div>
 </div>
-<script>
-$('#authortable').dataTable({
-  "ajax": {
-    "url": "http://localhost:84/Bookstore/Author/getAll",
-    "type": "POST"
-  }
-});
-</script>

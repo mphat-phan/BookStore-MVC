@@ -48,25 +48,11 @@ class Product extends Controller{
                 
                 //move_uploaded_file($_FILES["ImageInput"]["tmp_name"], $target_file);
 
-                $this->view("admin/pages/product/productAjax",array(
-                    "Product" => $this->product->getAll(),
-                    "Category" => $this->category->getAll(),
-                    "Author" =>$this->author->getAll(),
-                    "Company" =>$this->company->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/product/productAjax",array(
-            "Product" => $this->product->getAll(),
-            "Category" => $this->category->getAll(),
-            "Author" =>$this->author->getAll(),
-            "Company" =>$this->company->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function update($id){
         $target_dir = "public/assets/images/";
@@ -89,50 +75,22 @@ class Product extends Controller{
             if($this->product->updateByID($array,$id)==1){
 
 
-                $this->view("admin/pages/product/productAjax",array(
-                    "Product" => $this->product->getAll(),
-                    "Category" => $this->category->getAll(),
-                    "Author" =>$this->author->getAll(),
-                    "Company" =>$this->company->getAll(),
-                    "msg" => "Update Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
 
-        $this->view("admin/pages/product/productAjax",array(
-            "Product" => $this->product->getAll(),
-            "Category" => $this->category->getAll(),
-            "Author" =>$this->author->getAll(),
-            "Company" =>$this->company->getAll(),
-            "msg" => "update Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
             if($this->product->delete($id)==1){
-                $this->view("admin/pages/product/productAjax",array(
-                    "Product" => $this->product->getAll(),
-                    "Category" => $this->category->getAll(),
-                    "Author" =>$this->author->getAll(),
-                    "Company" =>$this->company->getAll(),
-                    "msg" => "Delete Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/product/productAjax",array(
-            "Product" => $this->product->getAll(),
-            "Category" => $this->category->getAll(),
-            "Author" =>$this->author->getAll(),
-            "Company" =>$this->company->getAll(),
-            "msg" => "Delete Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function pages() {
         $this->view("pages/404");

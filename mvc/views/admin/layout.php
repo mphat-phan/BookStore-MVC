@@ -1,7 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost:84/Bookstore/');
+  define ('URL', 'http://localhost/Bookstore/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,8 +111,6 @@
   <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
   <!-- Select2 -->
 <script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
   

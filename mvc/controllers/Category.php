@@ -21,62 +21,38 @@ class Category extends Controller{
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
 
             $name = $_POST['txtName'];
-            $detail= $_POST['txtDetail'];
+            $detail = $_POST['txtDetail'];
 
-            $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
+            $array = array('name' => $name, "detail" => $detail);
             if($this->category->add($array)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return; 
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function update($id){
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
             $name = $_POST['txtName'];
-            $detail= $_POST['txtDetail'];
-            $array = array('name' => $_POST['txtName'], "detail" => $_POST['txtDetail']);
+            $detail = $_POST['txtDetail'];
+            $array = array('name' => $name, "detail" => $detail);
             
             if($this->category->updateByID($array,$id)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
-                    "msg" => "Update Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
-            "msg" => "Update Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
             if($this->category->delete($id)==1){
-                $this->view("admin/pages/category/categoryAjax",array(
-                    "Category" => $this->category->getAll(),
-                    "msg" => "Delete Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll(),
-            "msg" => "Delete Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function pages() {
         $this->view("pages/404");

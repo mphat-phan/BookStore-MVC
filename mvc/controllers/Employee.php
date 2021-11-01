@@ -7,7 +7,7 @@ class Employee extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "employee",
             "Employee" => $this->employee->getAll()            
 		));        
@@ -31,20 +31,11 @@ class Employee extends Controller{
 
             $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth, 'auth'=>$auth, 'joindate'=>$joindate);
             if($this->employee->add($array)==1){
-                $this->view("admin/pages/employee/employeeAjax",array(
-                    "Employee" => $this->employee->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/employee/employeeAjax",array(
-            "Employee" => $this->employee->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
-
+        echo 0;
     }
 
     function update($id){
@@ -60,37 +51,21 @@ class Employee extends Controller{
             $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth, 'auth'=>$auth, 'joindate'=>$joindate);
             
             if($this->employee->updateByID($array,$id)==1){
-                $this->view("admin/pages/employee/employeeAjax",array(
-                    "Employee" => $this->employee->getAll(),
-                    "msg" => "Update Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/employee/employeeAjax",array(
-            "Employee" => $this->employee->getAll(),
-            "msg" => "Update Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
             
             if($this->employee->delete($id)==1){
-                $this->view("admin/pages/employee/employeeAjax",array(
-                    "Employee" => $this->employee->getAll(),
-                    "msg" => "Delete Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/employee/employeeAjax",array(
-            "Employee" => $this->employee->getAll(),
-            "msg" => "Delete Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function pages() {
         $this->view("pages/404");

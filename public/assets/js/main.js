@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     
     $("#formAdd").submit(function(e) {
@@ -70,7 +71,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:84/Bookstore/User/ajax",
+            url: "http://localhost/Bookstore/User/ajax",
             success: function(data)
             {
                 $("#content").html(data);

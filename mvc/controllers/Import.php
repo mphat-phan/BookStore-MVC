@@ -50,22 +50,14 @@ class Import extends Controller{
                     $total = $detail[$i]->total;
                     $array = array('bookID' => $bookID, "quantity" => $quantity , "price" => $price , "total"=> $total);
                     if($this->detailgoodsreceived->add($array)==1){
-                        echo "Oke";
+                        echo 1;
                     }
                 }
-                $this->view("admin/pages/goodsreceived/goodsreceivedAjax",array(
-                    "Product"=> $this->product->getAll(),
-                    "msg" => "Add Successful",
-                    "color" => "success"
-                ));
+                echo 1;
                 return;
             }
         }
-        $this->view("admin/pages/author/authorAjax",array(
-            "Product"=> $this->product->getAll(),
-            "msg" => "Add Failed",
-            "color" => "danger"
-        ));
+        echo 0;
     }
     function update(){
 
