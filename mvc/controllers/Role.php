@@ -36,27 +36,28 @@ class Role extends Controller{
 
     }
 
-    function update($id){
+    function update($name){
         
-        if(!empty($_POST['txtName']) && isset($_POST['txtName'])){
-            $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
-            $array = array('name' => $name, "detail" => $detail);
+            $array = array("detail" => $detail);
             
-            if($this->role->updateByID($array,$id)==1){
+            if($this->role->updateByID($array,$name)==1){
                 echo 1;
                 return;
             }
-        }
+        
         echo 0;
     }
-    function delete($id){
+    function delete($name){
+        
         if(isset($_POST['checkDelete'])){
-            
-            if($this->role->delete($id)==1){
+            /*
+            if($this->role->delete($name)==1){
                 echo 1;
                 return;
             }
+            */
+
         }
         echo 0;
     }

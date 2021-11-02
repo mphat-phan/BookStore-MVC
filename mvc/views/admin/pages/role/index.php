@@ -42,7 +42,6 @@
                                 class="table table-striped table-bordered dt-responsive nowrap display">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
                                         <th>Name</th>
                                         <th>Detail</th>
                                         <th>#</th>
@@ -52,7 +51,6 @@
 
                                 </tbody>
                                 <tfoot>
-                                    <th>id</th>
                                     <th>Name</th>
                                     <th>Detail</th>
                                     <th>#</th>
@@ -149,7 +147,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Role Name</label>
                                 <input name="txtName" type="text" class="form-control" id=""
-                                    placeholder="Enter ">
+                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Role Detail</label>
@@ -175,10 +173,8 @@
     $(document).ready(function () {
         roletable = $('#roletable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost/Bookstore/role/getall",
-            "columns": [{
-                    "data": "id"
-                },
+            "ajax": "<?php echo constant('URL') ?>role/getall",
+            "columns": [
                 {
                     "data": "name"
                 },
@@ -186,7 +182,7 @@
                     "data": "detail"
                 },
                 {
-                    "data": "id",
+                    "data": "name",
                     //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
                     "render": function (data, type, row, meta) {
 
@@ -258,15 +254,13 @@
     });
     function openModal(e){
         $getCurrentUrl = '<?php echo constant('URL') ?>role';
-        id=$(e).attr('data_id');
+        name=$(e).attr('data_id');
         const x = document.forms["formUpdate"];
-        var name,detail;
         $.ajax({
             type: "POST",
-            url: '<?php echo constant('URL') ?>role/getByID/'+id,
+            url: '<?php echo constant('URL') ?>role/getByID/'+name,
             dataType: 'json',
             success: function(data){
-                console.log(data['data'][0].id);
                 x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].detail;
             }
@@ -275,7 +269,7 @@
         $formDelete = document.querySelector("#formDelete");
         $formAdd = document.querySelector("#formAdd");
         $formAdd.action =  $getCurrentUrl+"/add";
-        $formUpdate.action = $getCurrentUrl+"/update/"+id;
-        $formDelete.action = $getCurrentUrl+"/delete/"+id;
+        $formUpdate.action = $getCurrentUrl+"/update/"+name;
+        $formDelete.action = $getCurrentUrl+"/delete/"+name;
     }
 </script>

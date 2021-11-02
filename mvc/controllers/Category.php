@@ -8,14 +8,8 @@ class Category extends Controller{
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "category",
-            "Category" => $this->category->getAll()            
+			"Page" => "category"        
 		));        
-    }
-    function ajax(){
-        $this->view("admin/pages/category/categoryAjax",array(
-            "Category" => $this->category->getAll()
-        ));
     }
     function getAll(){
         $list = $this->category->getAll();

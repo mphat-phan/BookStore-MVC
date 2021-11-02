@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Category table</h3>
 
-                            <button type="button" onclick="openModalCategory('')" href="#"
+                            <button type="button" onclick="openModal('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                                 data-target="#AddModal">Add</button>
 
@@ -38,7 +38,8 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="categorytable" class="table table-bordered table-striped dt-responsive nowrap display">
+                            <table id="categorytable"
+                                class="table table-bordered table-striped dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -47,7 +48,7 @@
                                         <th>#</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
+                                <tbody>
 
                                 </tbody>
                                 <tfoot>
@@ -85,13 +86,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Name</label>
-                                <input name="txtName" type="text" class="form-control formUpdateInput"
-                                    placeholder="Enter ">
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Detail</label>
-                                <input name='txtDetail' type="text" class="form-control formUpdateInput"
-                                    placeholder="Enter ">
+                                <input name='txtDetail' type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -147,14 +146,12 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Name</label>
-                                <input name="txtName" type="text" class="form-control" id="CategoryName"
-                                    placeholder="Enter ">
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Detail</label>
-                                <input name='txtDetail' type="text" class="form-control" id="CategoryDetail"
-                                    placeholder="Enter ">
-                            </div>                            
+                                <input name='txtDetail' type="text" class="form-control" placeholder="Enter ">
+                            </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -167,58 +164,105 @@
         </div>
     </div>
 </div>
-<script src="http://localhost:84/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    $(document).ready(function () { 
-       alert("Hello")
-       // category ------------------------------------------------------------------------
-    //an thong bao 
-    $("#success-alert").hide();
-    //$('#authortable').destroy();
-    $.fn.dataTable.ext.errMode = 'throw';
-    //var editor;
-    categorytable = $('#categorytable').DataTable( {
-        dom: 'Bfrtip',
-        "ajax": "http://localhost:84/Bookstore/category/getall",
-        "columns": [
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "detail" },
-            {   
-                "data": "id",
-                //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
-                "render": function ( data, type, row, meta ) {
-                   
+    $(document).ready(function () {
+        categorytable = $('#categorytable').DataTable({
+            dom: 'Bfrtip',
+            "ajax": "http://localhost/Bookstore/category/getall",
+            "columns": [{
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "detail"
+                },
+                {
+                    "data": "id",
+                    //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                    "render": function (data, type, row, meta) {
+
                         return (
-                          "<button onclick='openModalCategory(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='"+data+"'>" +
-                            "Update"+
-                          "</button>"+
-                          "<button onclick='openModalCategory(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='"+data+"'>" +
-                          "Delete"+
+                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
                             "</button>"
                         );
-              
-                }
-            }            
-        ],
-           
-    });
-    });
 
-    function openModalCategory(e){
-        $getCurrentUrl = 'http://localhost:84/Bookstore/Category';
+                    }
+                }
+            ],
+
+        });
+
+        $("#formAdd").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    categorytable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formUpdate").submit(function (e) {
+
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    categorytable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formDelete").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Delete");
+                    categorytable.ajax.reload();
+
+                }
+            });
+
+        })
+    });
+    function openModal(e){
+        $getCurrentUrl = '<?php echo constant('URL') ?>category';
         id=$(e).attr('data_id');
         const x = document.forms["formUpdate"];
         var name,detail;
         $.ajax({
             type: "POST",
-            url: 'http://localhost:84/Bookstore/Category/getByID/'+id,
+            url: '<?php echo constant('URL') ?>category/getByID/'+id,
             dataType: 'json',
             success: function(data){
                 console.log(data['data'][0].id);
                 x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].detail;
-                x.elements[2].value = data['data'][0].prarentID;
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
@@ -227,5 +271,5 @@
         $formAdd.action =  $getCurrentUrl+"/add";
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
-    } 
+    }
 </script>
