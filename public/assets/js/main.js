@@ -50,17 +50,7 @@ $(document).ready(function () {
         });
 
     })
-    $("#quanlynhaphang").click(function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost:84/Bookstore/GoodsReceived/ajax",
-            success: function (data) {
-                $("#content").html(data);
-            }
-        });
-
-    })
+ 
 
     $('.select2').select2()
 
