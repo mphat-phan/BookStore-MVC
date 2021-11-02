@@ -19,6 +19,10 @@
             public function add($data){
                   return $this->add_new($data);
             }
+            public function getID($id)
+            {   
+                  return $this->select_by_id('*',$id);
+            }
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
             }

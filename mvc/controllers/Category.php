@@ -17,6 +17,14 @@ class Category extends Controller{
             "Category" => $this->category->getAll()
         ));
     }
+    function getAll(){
+        $list = $this->category->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->category->getID($id);
+        echo $list;
+    }
     function add(){
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
 

@@ -50,28 +50,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    //print_r($data['Author']);
-                                    foreach($data['Category'] as $row){
-        
-                                    ?>
-                                <tr>
-                                    <td><?=$row['id']?></td>
-                                    <td><?=$row['name']?></td>
-                                    <td><?=$row['detail']?></td>
-                                    <td><a onclick='openModalCategory(<?php echo json_encode($row)?>)' href="#"
-                                            class="btn btn-warning btn-sm" role="button" data-toggle="modal"
-                                            data-target="#UpdateModal">Update</a>
-                                        <a onclick='openModalCategory(<?php echo json_encode($row)?>)' href="#"
-                                            class="btn btn-danger btn-sm" role="button" data-toggle="modal"
-                                            data-target="#DeleteModal">Delete</a>
-                                    </td>
-
-                                </tr>
-                                <?php
-                                    }
-                                    ?>
+                            <tbody>                                
                             </tbody>
 
                         </table>
