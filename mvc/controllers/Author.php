@@ -8,14 +8,8 @@ class Author extends Controller{
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "author",
-            "Author" => $this->author->getAll()            
+			"Page" => "author",        
 		));        
-    }
-    function ajax(){
-        $this->view("admin/pages/author/authorAjax",array(
-            "Author" => $this->author->getAll()
-        ));
     }
     function getAll(){
         $list = $this->author->getAll();

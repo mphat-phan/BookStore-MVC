@@ -2,56 +2,62 @@
 class Publisher extends Controller{
     
     function __construct(){
-        $this->company = $this->model("PublisherModel");
+        $this->publisher = $this->model("PublisherModel");
         
     }
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "company",
-            "Company" => $this->company->getAll()            
+			"Page" => "publisher"         
 		));        
     }
-    function ajax(){
-        $this->view("admin/pages/company/companyAjax",array(
-            "Company" => $this->company->getAll()
-        ));
+    function getAll(){
+        $list = $this->publisher->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->publisher->getID($id);
+        echo $list;
     }
     function add(){
-        if(isset($_POST['txtName']) && $_POST['txtEmail'] && $_POST['txtAddress']){
-            $name = $_POST['txtName'];
-            $email= $_POST['txtEmail'];
-            $address= $_POST['txtAddress'];
+        
+        if(!empty($_POST['txtName']) && isset($_POST['txtName'])){
 
-            $array = array('name' => $name, "email" => $email,"address" =>$address);
-            if($this->company->add($array)==1){
+            $name = $_POST['txtName'];
+            $detail= $_POST['txtDetail'];
+
+            $array = array('name' => $name, "detail" => $detail);
+            if($this->publisher->add($array)==1){
                 echo 1;
-                return; 
+                return;
             }
         }
         echo 0;
+
     }
+
     function update($id){
-        if(isset($_POST['txtName']) && $_POST['txtEmail'] && $_POST['txtAddress']){
-
+        
+        if(!empty($_POST['txtName']) && isset($_POST['txtName'])){
+            
             $name = $_POST['txtName'];
-            $email= $_POST['txtEmail'];
-            $address= $_POST['txtAddress'];
+            $detail= $_POST['txtDetail'];
 
-            $array = array('name' => $name, "email" => $email,"address" =>$address);
-
-            if($this->company->updateByID($array,$id)==1){
+            $array = array('name' => $name, "detail" => $detail);
+            
+            if($this->publisher->updateByID($array,$id)==1){
                 echo 1;
-                return; 
-            }
+                return;
+            }            
         }
         echo 0;
     }
     function delete($id){
         if(isset($_POST['checkDelete'])){
-            if($this->company->delete($id)==1){
+            
+            if($this->publisher->delete($id)==1){
                 echo 1;
-                return; 
+                return;
             }
         }
         echo 0;

@@ -16,22 +16,6 @@ class Import extends Controller{
             //"Goodsreceived" => $this->goodsreceived->getAll()            
 		));        
     }
-    function ajax(){
-        if(isset($_POST['obj'])){
-            $detail = json_decode($_POST['obj']);
-            //echo $a[0]->id;
-            for($i = 0 ; $i < count($detail) ; $i++){
-                $bookID = $detail[$i]->id;
-                $quantity = $detail[$i]->quantity;
-                $price = $detail[$i]->price;
-                $total = $detail[$i]->total;
-                $array = array('bookID' => $bookID, "quantity" => $quantity , "price" => $price , "total"=> $total);
-                if($this->detailgoodsreceived->add($array)==1){
-                    echo "Oke";
-                }
-            }
-        }
-    }
     function add(){
         
         if(isset($_POST['txttotal']) && $_POST['txtdate'] && $_POST['txtuser'] && $_POST['obj'] ){

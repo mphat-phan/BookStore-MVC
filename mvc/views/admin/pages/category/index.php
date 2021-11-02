@@ -182,3 +182,10 @@
         </div>
     </div>
 </div>
+<!-- jQuery -->
+<script src="http://localhost/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function () { 
+        alert("Hello")
+    });
+</script>

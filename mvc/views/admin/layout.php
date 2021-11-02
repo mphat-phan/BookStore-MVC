@@ -30,6 +30,10 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <style>
       
     </style>
@@ -112,107 +116,12 @@
   <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
   <!-- Select2 -->
-<script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
+  <script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
   <!-- test -->  
-  <script>
-    $(function () {
-      //hoa don
-      $("#ordertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#ordertable_wrapper .col-md-6:eq(0)');
-      $("#orderdetailtable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#orderdetailtable_wrapper .col-md-6:eq(0)');
-      //
-      
-      //sanpham
-      $("#producttable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#producttable_wrapper .col-md-6:eq(0)');
-
-      //nhap hang
-      
-      $("#nhaphangtable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#nhaphangtable_wrapper .col-md-6:eq(0)');
-      $("#chitietnhaphangtable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#chitietnhaphangtable_wrapper .col-md-6:eq(0)');
-
-      //loai
-      $("#categorytable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#categorytable_wrapper .col-md-6:eq(0)');
-      //author
-      $("#authortable").DataTable({
-        "responsive": true,
-        "lengthChange": true,
-        "autoWidth": true,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#authortable_wrapper .col-md-6:eq(0)');
-      //nhanvien
-      $("#employeetable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#employeetable_wrapper .col-md-6:eq(0)');
-      $("#companytable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#companytable_wrapper .col-md-6:eq(0)');
-      $("#producttypetable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#producttypetable_wrapper .col-md-6:eq(0)');
-      $("#customertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#customertable_wrapper .col-md-6:eq(0)');
-      $("#roletable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#roletable_wrapper .col-md-6:eq(0)');
-      $("#userhasroletable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#userhasroletable_wrapper .col-md-6:eq(0)');
-      $("#usertable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#usertable_wrapper .col-md-6:eq(0)');
-    });
-  </script>
+  <!-- SweetAlert2 -->
+  <script src="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- Toastr -->
+  <script src="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.js"></script>
 </body>
 
 </html>

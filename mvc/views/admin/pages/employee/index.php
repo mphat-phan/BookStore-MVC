@@ -28,7 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Employee table</h3>
 
-                            <button type="button" onclick="openModalEmployee('')" href="#"
+                            <button type="button" onclick="openModal('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                                 data-target="#AddModal">Add</button>
 
@@ -38,49 +38,35 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="employeetable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        <th>Address</th>
                                         <th>Email</th>
+                                        <th>Address</th>
                                         <th>Birth</th>
-                                        <th>Auth</th>
-                                        <th>Join Date</th>
+                                        <th>Joindate</th>
+                                        <th>Username</th>
                                         <th>#</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    //print_r($data['Author']);
-                                    foreach($data['Employee'] as $row){
-        
-                                    ?>
-                                    <tr>
-                                        <td><?=$row['id']?></td>
-                                        <td><?=$row['name']?></td>
-                                        <td><?=$row['phone']?></td>
-                                        <td><?=$row['address']?></td>
-                                        <td><?=$row['email']?></td>
-                                        <td><?=$row['birth']?></td>
-                                        <td><?=$row['auth']?></td>
-                                        <td><?=$row['joindate']?></td>
-                                        <td><a onclick='openModalEmployee(<?php echo json_encode($row)?>)' href="#"
-                                                class="btn btn-warning btn-sm" role="button" data-toggle="modal"
-                                                data-target="#UpdateModal">Update</a>
-                                            <a onclick='openModalEmployee(<?php echo json_encode($row)?>)' href="#"
-                                                class="btn btn-danger btn-sm" role="button" data-toggle="modal"
-                                                data-target="#DeleteModal">Delete</a>
-                                        </td>
 
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
                                 </tbody>
+                                <tfoot>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Birth</th>
+                                    <th>Joindate</th>
+                                    <th>Username</th>
+                                    <th>#</th>
+                                </tfoot>
 
                             </table>
                         </div>
@@ -96,7 +82,7 @@
     </section>
     <!-- /.content -->
     <div class="modal" id="AddModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -110,40 +96,32 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Name</label>
-                                <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter "
-                                    require>
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Phone</label>
-                                <input name="txtPhone" type="text" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Employee Address</label>
-                                <input name="txtAddress" type="text" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
+                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Email</label>
-                                <input name="txtEmail" type="email" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
+                                <input name="txtEmail" type="text" class="form-control" placeholder="Enter ">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Employee Address</label>
+                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Birth</label>
-                                <input name="txtBirth" type="date" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Employee Auth</label>
-                                <input name="txtAuth" type="number" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
+                                <input name="txtBirth" type="date" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Join Date</label>
-                                <input name="txtJoindate" type="date" class="form-control" id="txtName"
-                                    placeholder="Enter " require>
+                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter ">
                             </div>
-
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter ">
+                            </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -184,7 +162,7 @@
         </div>
     </div>
     <div class="modal" id="UpdateModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -198,38 +176,31 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Name</label>
-                                <input name="txtName" type="text" class="form-control" id="txtName"
-                                    placeholder="Enter ">
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Phone</label>
-                                <input name="txtPhone" type="text" class="form-control" id="txtName"
-                                    placeholder="Enter ">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Employee Address</label>
-                                <input name="txtAddress" type="text" class="form-control" id="txtName"
-                                    placeholder="Enter ">
+                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Email</label>
-                                <input name="txtEmail" type="email" class="form-control" id="txtName"
-                                    placeholder="Enter ">
+                                <input name="txtEmail" type="text" class="form-control" placeholder="Enter ">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Employee Address</label>
+                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Birth</label>
-                                <input name="txtBirth" type="date" class="form-control" id="txtName"
-                                    placeholder="Enter ">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Employee Auth</label>
-                                <input name="txtAuth" type="number" class="form-control" id="txtName"
-                                    placeholder="Enter ">
+                                <input name="txtBirth" type="date" class="form-control" placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Join Date</label>
-                                <input name="txtJoindate" type="date" class="form-control" id="txtName"
-                                    placeholder="Enter ">
+                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter ">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Username</label>
+                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter ">
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -243,29 +214,133 @@
         </div>
     </div>
 </div>
-
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    function openModalEmployee(e) {
-        $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['
-        Page ']?>';
+    $(document).ready(function () {
+        employeetable = $('#employeetable').DataTable({
+            dom: 'Bfrtip',
+            "ajax": "http://localhost/Bookstore/employee/getall",
+            "columns": [{
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "phone"
+                },
+                {
+                    "data": "email"
+                },
+                {
+                    "data": "address"
+                },
+                {
+                    "data": "birth"
+                },
+                {
+                    "data": "joindate"
+                },
+                {
+                    "data": "username"
+                },
+                {
+                    "data": "id",
+                    "render": function (data, type, row, meta) {
 
-        //update model
+                        return (
+                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
+                            "</button>"
+                        );
+
+                    }
+                }
+            ],
+
+        });
+
+        $("#formAdd").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    employeetable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formUpdate").submit(function (e) {
+
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    employeetable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formDelete").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Delete");
+                    employeetable.ajax.reload();
+
+                }
+            });
+
+        })
+    });
+    function openModal(e){
+        $getCurrentUrl = '<?php echo constant('URL') ?>Employee';
+        id=$(e).attr('data_id');
         const x = document.forms["formUpdate"];
-        x.elements[0].value = e.name;
-        x.elements[1].value = e.phone;
-        x.elements[2].value = e.address;
-        x.elements[3].value = e.email;
-        x.elements[4].value = e.birth;
-        x.elements[5].value = e.auth;
-        x.elements[6].value = e.joindate;
+        var name,detail;
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>employee/getbyid/'+id,
+            dataType: 'json',
+            success: function(data){
+                console.log(data['data'][0].id);
+                x.elements[0].value = data['data'][0].name;
+                x.elements[1].value = data['data'][0].phone;
+                x.elements[2].value = data['data'][0].email;
+                x.elements[3].value = data['data'][0].address;
+                x.elements[4].value = data['data'][0].birth;
+                x.elements[5].value = data['data'][0].joindate;
+                x.elements[6].value = data['data'][0].username;
 
-        //action
+               
+            }
+        });
         $formUpdate = document.querySelector("#formUpdate");
         $formDelete = document.querySelector("#formDelete");
         $formAdd = document.querySelector("#formAdd");
-        $formAdd.action = $getCurrentUrl + "/add";
-        $formUpdate.action = $getCurrentUrl + "/update/" + e.id;
-        $formDelete.action = $getCurrentUrl + "/delete/" + e.id;
-
+        $formAdd.action =  $getCurrentUrl+"/add";
+        $formUpdate.action = $getCurrentUrl+"/update/"+id;
+        $formDelete.action = $getCurrentUrl+"/delete/"+id;
     }
 </script>

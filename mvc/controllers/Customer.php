@@ -8,14 +8,16 @@ class Customer extends Controller{
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "customer",
-            "Customer" => $this->customer->getAll()            
+			"Page" => "customer"  
 		));        
     }
-    function ajax(){
-        $this->view("admin/pages/customer/customerAjax",array(
-            "Customer" => $this->customer->getAll()
-        ));
+    function getAll(){
+        $list = $this->customer->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->customer->getID($id);
+        echo $list;
     }
     function add(){
         //if(isset($_POST['submit'])){
@@ -23,11 +25,18 @@ class Customer extends Controller{
 
             $name = $_POST['txtName'];
             $phone= $_POST['txtPhone'];
-            $address= $_POST['txtAddress'];
             $email= $_POST['txtEmail'];
+            $address= $_POST['txtAddress'];
             $birth= $_POST['txtBirth'];
-
-            $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
+            //neu co username add them usernam
+            if(empty($_POST['txtUsername'])){
+                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
+                
+            }
+            else{
+                $username = $_POST['txtUsername'] ;
+                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth, 'username'=>$username);
+            }
             if($this->customer->add($array)==1){
                 echo 1;
                 return;
@@ -46,7 +55,14 @@ class Customer extends Controller{
             $email= $_POST['txtEmail'];
             $birth= $_POST['txtBirth'];
           
-            $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
+            if(empty($_POST['txtUsername'])){
+                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
+                
+            }
+            else{
+                $username = $_POST['txtUsername'] ;
+                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth, 'username'=>$username);
+            }
             
             if($this->customer->updateByID($array,$id)==1){
                 echo 1;

@@ -1,4 +1,3 @@
-
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -11,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Thể loại</li>
+                        <li class="breadcrumb-item active">Tác giả</li>
                     </ol>
                 </div>
             </div>
@@ -27,22 +26,20 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Category table</h3>
+                            <h3 class="card-title">Author table</h3>
 
                             <button type="button" onclick="openModal('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                                 data-target="#AddModal">Add</button>
-                           
+
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1"
                                 role="button" data-toggle="modal" data-target="#">Import</button>
                         </div>
-                        <div class="alert alert-success" id="success-alert">
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                        <strong>Success! </strong> Product have added to your wishlist.
-                        </div>
+
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="authortable" class="table table-striped table-bordered dt-responsive nowrap display">
+                            <table id="authortable"
+                                class="table table-striped table-bordered dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -51,7 +48,7 @@
                                         <th>#</th>
                                     </tr>
                                 </thead>
-                                <tbody >
+                                <tbody>
 
                                 </tbody>
                                 <tfoot>
@@ -74,8 +71,8 @@
     </section>
     <!-- /.content -->
 
-    <div class="modal" id="AddModal">
-        <div class="modal-dialog">
+    <div class="modal"  id="AddModal">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -88,12 +85,12 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category Name</label>
+                                <label for="exampleInputEmail1">Author Name</label>
                                 <input name="txtName" type="text" class="form-control formUpdateInput"
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category Detail</label>
+                                <label for="exampleInputEmail1">Author Detail</label>
                                 <input name='txtDetail' type="text" class="form-control formUpdateInput"
                                     placeholder="Enter ">
                             </div>
@@ -137,7 +134,7 @@
         </div>
     </div>
     <div class="modal" id="UpdateModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -150,12 +147,12 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category Name</label>
+                                <label for="exampleInputEmail1">Author Name</label>
                                 <input name="txtName" type="text" class="form-control" id="CategoryName"
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category Detail</label>
+                                <label for="exampleInputEmail1">Author Detail</label>
                                 <input name='txtDetail' type="text" class="form-control" id="CategoryDetail"
                                     placeholder="Enter ">
                             </div>
@@ -172,9 +169,113 @@
     </div>
 </div>
 <!-- jQuery -->
-<script src="http://localhost/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    $(document).ready(function () { 
-        alert("Hello")
+    
+    $(document).ready(function () {
+        authortable = $('#authortable').DataTable({
+            dom: 'Bfrtip',
+            "ajax": "http://localhost/Bookstore/author/getall",
+            "columns": [{
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "detail"
+                },
+                {
+                    "data": "id",
+                    //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                    "render": function (data, type, row, meta) {
+
+                        return (
+                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
+                            "</button>"
+                        );
+
+                    }
+                }
+            ],
+
+        });
+
+        $("#formAdd").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    authortable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formUpdate").submit(function (e) {
+
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    authortable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formDelete").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Delete");
+                    authortable.ajax.reload();
+
+                }
+            });
+
+        })
     });
+    function openModal(e){
+        $getCurrentUrl = '<?php echo constant('URL') ?>Author';
+        id=$(e).attr('data_id');
+        const x = document.forms["formUpdate"];
+        var name,detail;
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>Author/getByID/'+id,
+            dataType: 'json',
+            success: function(data){
+                console.log(data['data'][0].id);
+                x.elements[0].value = data['data'][0].name;
+                x.elements[1].value = data['data'][0].detail;
+            }
+        });
+        $formUpdate = document.querySelector("#formUpdate");
+        $formDelete = document.querySelector("#formDelete");
+        $formAdd = document.querySelector("#formAdd");
+        $formAdd.action =  $getCurrentUrl+"/add";
+        $formUpdate.action = $getCurrentUrl+"/update/"+id;
+        $formDelete.action = $getCurrentUrl+"/delete/"+id;
+    }
 </script>

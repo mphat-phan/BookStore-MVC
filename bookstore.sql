@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Nov 01, 2021 at 08:21 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Host: 127.0.0.1:3307
+-- Generation Time: Nov 02, 2021 at 01:52 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `testbookstore`
+-- Database: `bookstore`
 --
 
 -- --------------------------------------------------------
@@ -32,6 +32,9 @@ CREATE TABLE `author` (
   `name` varchar(50) NOT NULL,
   `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `author`
 
 -- --------------------------------------------------------
 
@@ -67,11 +70,15 @@ CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `birth` date NOT NULL,
-  `username` varchar(50) NOT NULL
+  `email` varchar(50) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `birth` date DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `customer`
+--
 -- --------------------------------------------------------
 
 --
@@ -82,12 +89,16 @@ CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `birth` date NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `birth` date DEFAULT NULL,
   `joindate` date NOT NULL,
-  `username` varchar(50) NOT NULL
+  `username` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `employee`
+--
 -- --------------------------------------------------------
 
 --
@@ -98,7 +109,7 @@ CREATE TABLE `import` (
   `id` int(11) NOT NULL,
   `date` date NOT NULL,
   `total` int(11) NOT NULL,
-  `employeeID` int(11) NOT NULL
+  `employee_username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -167,7 +178,7 @@ CREATE TABLE `product` (
   `pagenumber` int(11) DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
   `authorID` int(11) DEFAULT NULL,
-  `publisherID` int(11) NOT NULL
+  `publisherID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -181,17 +192,6 @@ CREATE TABLE `publisher` (
   `name` varchar(50) NOT NULL,
   `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `publisher`
---
-
-INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
-(1, 'Little, Brown and Company', ''),
-(2, 'Vintage Books', ''),
-(3, 'Shogakukan', ''),
-(4, 'NXB Giáo dục Việt Nam', ''),
-(5, 'Oxford University Press', '');
 
 -- --------------------------------------------------------
 
@@ -212,8 +212,16 @@ CREATE TABLE `role` (
 
 CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`username`, `password`, `date`) VALUES
+('minhphat', '123', '2021-11-16');
 
 -- --------------------------------------------------------
 
@@ -278,7 +286,8 @@ ALTER TABLE `employee`
 -- Indexes for table `import`
 --
 ALTER TABLE `import`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_username` (`employee_username`);
 
 --
 -- Indexes for table `importdetail`
@@ -299,8 +308,8 @@ ALTER TABLE `orderdetail`
 --
 ALTER TABLE `ordertb`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `employee_userID` (`employee_username`),
-  ADD KEY `customer_userID` (`customer_username`);
+  ADD KEY `employee_username` (`employee_username`),
+  ADD KEY `customer_username` (`customer_username`);
 
 --
 -- Indexes for table `permission`
@@ -356,7 +365,7 @@ ALTER TABLE `user_permission`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -368,18 +377,24 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `permission`
+--
+ALTER TABLE `permission`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -410,6 +425,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `import`
+--
+ALTER TABLE `import`
+  ADD CONSTRAINT `import_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `importdetail`

@@ -1,4 +1,3 @@
-
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -10,8 +9,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Quản lý User</li>
-                        <li class="breadcrumb-item active">Role</li>
+                        <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                        <li class="breadcrumb-item active">Nhà xuất bản</li>
                     </ol>
                 </div>
             </div>
@@ -29,47 +28,35 @@
                         <div class="card-header">
                             <h3 class="card-title">Role table</h3>
 
-                            <button type="button" onclick="openModalRole('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
-                                data-toggle="modal" data-target="#AddModal">Add</button>
+                            <button type="button" onclick="openModal('')" href="#"
+                                class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
+                                data-target="#AddModal">Add</button>
 
-                            <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
-                                data-toggle="modal" data-target="#">Import</button>
+                            <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1"
+                                role="button" data-toggle="modal" data-target="#">Import</button>
                         </div>
 
                         <!-- /.card-header -->
-                        <div  class="card-body">
-                            <table id="roletable" class="table table-bordered table-striped">
+                        <div class="card-body">
+                            <table id="roletable"
+                                class="table table-striped table-bordered dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
                                         <th>Detail</th>
                                         <th>#</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    //print_r($data['Author']);
-                                    foreach($data['Role'] as $row){
-        
-                                    ?>
-                                    <tr>
-                                        <td><?=$row['id']?></td>
-                                        <td><?=$row['name']?></td>
-                                        <td><?=$row['detail']?></td>
-                                        <td><a onclick='openModalRole(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
-                                                data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick='openModalRole(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
-                                                data-toggle="modal" data-target="#DeleteModal">Delete</a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
+
                                 </tbody>
-                                
+                                <tfoot>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Detail</th>
+                                    <th>#</th>
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -83,100 +70,212 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-<div class="modal" id="AddModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form id="formAdd" action="" method="post">
-                    
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Role Name</label>
-                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Enter ">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Role Detail</label>
-                            <input name='txtDetail' type="text" class="form-control" id="txtDetail" placeholder="Enter ">
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
-                        </div>
+    <div class="modal"  id="AddModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add</h3>
                     </div>
-                </form>
-            </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formAdd" action="" method="post">
 
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Role Name</label>
+                                <input name="txtName" type="text" class="form-control "
+                                    placeholder="Enter ">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Role Detail</label>
+                                <input name='txtDetail' type="text" class="form-control "
+                                    placeholder="Enter ">
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="DeleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Delete</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formDelete" action="" method="POST">
+
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="UpdateModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formUpdate" action="" method="POST">
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Role Name</label>
+                                <input name="txtName" type="text" class="form-control" id=""
+                                    placeholder="Enter ">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Role Detail</label>
+                                <input name='txtDetail' type="text" class="form-control" id=""
+                                    placeholder="Enter ">
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
-<div class="modal" id="DeleteModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<!-- jQuery -->
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
+<script>
+    
+    $(document).ready(function () {
+        roletable = $('#roletable').DataTable({
+            dom: 'Bfrtip',
+            "ajax": "http://localhost/Bookstore/role/getall",
+            "columns": [{
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "detail"
+                },
+                {
+                    "data": "id",
+                    //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                    "render": function (data, type, row, meta) {
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Delete</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form id="formDelete" action="" method="POST">
-                    
-                    <div class="card-body">
-                        <div class="form-check">
-                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                        return (
+                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
+                            "</button>"
+                        );
 
-        </div>
-    </div>
-</div>
-<div class="modal" id="UpdateModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                    }
+                }
+            ],
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Update</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form id="formUpdate" action="" method="POST">
-                    
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Role Name</label>
-                            <input name="txtName" value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Role Detail</label>
-                            <input name='txtDetail' value="" type="text" class="form-control formUpdateInput" placeholder="Enter ">
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+        });
 
-        </div>
-    </div>
-</div>
-</div>
+        $("#formAdd").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    roletable.ajax.reload();
+                }
+            });
 
+        })
+        $("#formUpdate").submit(function (e) {
 
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    roletable.ajax.reload();
+                }
+            });
 
+        })
+        $("#formDelete").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
 
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Delete");
+                    roletable.ajax.reload();
+
+                }
+            });
+
+        })
+    });
+    function openModal(e){
+        $getCurrentUrl = '<?php echo constant('URL') ?>role';
+        id=$(e).attr('data_id');
+        const x = document.forms["formUpdate"];
+        var name,detail;
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>role/getByID/'+id,
+            dataType: 'json',
+            success: function(data){
+                console.log(data['data'][0].id);
+                x.elements[0].value = data['data'][0].name;
+                x.elements[1].value = data['data'][0].detail;
+            }
+        });
+        $formUpdate = document.querySelector("#formUpdate");
+        $formDelete = document.querySelector("#formDelete");
+        $formAdd = document.querySelector("#formAdd");
+        $formAdd.action =  $getCurrentUrl+"/add";
+        $formUpdate.action = $getCurrentUrl+"/update/"+id;
+        $formDelete.action = $getCurrentUrl+"/delete/"+id;
+    }
+</script>
