@@ -38,8 +38,7 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="roletable"
-                                class="table table-striped table-bordered dt-responsive nowrap display">
+                            <table id="roletable" class="table table-striped table-bordered dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>

@@ -170,55 +170,71 @@
 <script src="http://localhost:84/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function () { 
-       alert("Hello")
-       // category ------------------------------------------------------------------------
-    //an thong bao 
-    $("#success-alert").hide();
-    //$('#authortable').destroy();
-    $.fn.dataTable.ext.errMode = 'throw';
-    //var editor;
-    categorytable = $('#categorytable').DataTable( {
-        dom: 'Bfrtip',
-        "ajax": "http://localhost:84/Bookstore/category/getall",
-        "columns": [
-            { "data": "id" },
-            { "data": "name" },
-            { "data": "detail" },
-            {   
-                "data": "id",
-                //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
-                "render": function ( data, type, row, meta ) {
-                   
+        categorytable = $('#categorytable').DataTable({
+            dom: 'Bfrtip',
+            "ajax": "http://localhost:84/Bookstore/category/getall",
+            "columns": [{
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "detail"
+                },
+                {
+                    "data": "id",
+                    //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                    "render": function (data, type, row, meta) {
+
                         return (
-                          "<button onclick='openModalCategory(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='"+data+"'>" +
-                            "Update"+
-                          "</button>"+
-                          "<button onclick='openModalCategory(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='"+data+"'>" +
-                          "Delete"+
+                            "<button onclick='openModalCategory(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModalCategory(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
                             "</button>"
                         );
-              
+
+                    }
                 }
-            }            
-        ],
-           
-    });
+            ],
+
+        });
+    
+    $("#formUpdate").submit(function (e) {
+
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                sweetAlertCRUD(data, "Update");
+                roletable.ajax.reload();
+            }
+        });
+
+    })
     });
 
     function openModalCategory(e){
-        $getCurrentUrl = 'http://localhost:84/Bookstore/Category';
+        $getCurrentUrl = '<?php echo constant('URL') ?>category';
         id=$(e).attr('data_id');
         const x = document.forms["formUpdate"];
         var name,detail;
         $.ajax({
             type: "POST",
-            url: 'http://localhost:84/Bookstore/Category/getByID/'+id,
+            url: '<?php echo constant('URL') ?>category/getByID/'+id,
             dataType: 'json',
             success: function(data){
                 console.log(data['data'][0].id);
                 x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].detail;
-                x.elements[2].value = data['data'][0].prarentID;
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
@@ -227,5 +243,5 @@
         $formAdd.action =  $getCurrentUrl+"/add";
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
-    } 
+    }     
 </script>
