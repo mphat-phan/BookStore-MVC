@@ -1,5 +1,6 @@
 
-$(document).ready(function () {    
+$(document).ready(function () { 
+    //author ------------------------------------------------------------------------   
     //an thong bao 
     $("#success-alert").hide();
     //$('#authortable').destroy();
@@ -7,7 +8,7 @@ $(document).ready(function () {
     //var editor;
     authortable = $('#authortable').DataTable( {
         dom: 'Bfrtip',
-        "ajax": "http://localhost/Bookstore/author/getall",
+        "ajax": "http://localhost:84/Bookstore/author/getall",
         "columns": [
             { "data": "id" },
             { "data": "name" },
@@ -31,8 +32,8 @@ $(document).ready(function () {
         ],
            
     });
-
     
+
     $("#formAdd").submit(function(e) {
         e.preventDefault();
         var form = $(this);
@@ -108,7 +109,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         $.ajax({
-            url: "http://localhost/Bookstore/User/ajax",
+            url: "http://localhost:84/Bookstore/User/ajax",
             success: function(data)
             {
                 $("#content").html(data);
@@ -302,13 +303,13 @@ $(document).ready(function () {
 });
 
 function openModal(e){
-    $getCurrentUrl = 'http://localhost/Bookstore/Author';
+    $getCurrentUrl = 'http://localhost:84/Bookstore/Author';
     id=$(e).attr('data_id');
     const x = document.forms["formUpdate"];
     var name,detail;
     $.ajax({
         type: "POST",
-        url: 'http://localhost/Bookstore/Author/getByID/'+id,
+        url: 'http://localhost:84/Bookstore/Author/getByID/'+id,
         dataType: 'json',
         success: function(data){
             console.log(data['data'][0].id);
@@ -323,3 +324,4 @@ function openModal(e){
     $formUpdate.action = $getCurrentUrl+"/update/"+id;
     $formDelete.action = $getCurrentUrl+"/delete/"+id;
 }
+ 

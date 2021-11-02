@@ -172,7 +172,7 @@
     </div>
 </div>
 <!-- jQuery -->
-<script src="http://localhost/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
+<script src="http://localhost:84/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function () { 
         alert("Hello")

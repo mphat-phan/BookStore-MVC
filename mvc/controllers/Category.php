@@ -7,7 +7,7 @@ class Category extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "category",
             "Category" => $this->category->getAll()            
 		));        
@@ -16,6 +16,14 @@ class Category extends Controller{
         $this->view("admin/pages/category/categoryAjax",array(
             "Category" => $this->category->getAll()
         ));
+    }
+    function getAll(){
+        $list = $this->category->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->category->getID($id);
+        echo $list;
     }
     function add(){
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
