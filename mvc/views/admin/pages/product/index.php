@@ -39,7 +39,7 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="producttable" class="table table-bordered table-striped">
+                            <table id="producttable" class="table table-bordered table-striped dt-responsive nowrap">
                                 <thead>
                                     <tr>
                                         <th>id</th>

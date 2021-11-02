@@ -38,14 +38,13 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="authortable" class="table table-bordered table-striped dt-responsive">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
                                         <th>Detail</th>
                                         <th>#</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,8 +58,8 @@
                                         <td><?=$row['name']?></td>
                                         <td><?=$row['detail']?></td>
                                         <td><a onclick='openModalCategory(<?php echo json_encode($row)?>)' href="#"
-                                                class="btn btn-warning btn-sm" role="button" data-toggle="modal"
-                                                data-target="#UpdateModalCategory">Update</a>
+                                                class="btn btn-warning btn-sm" role='button' data-toggle='modal'
+                                                data-target='#UpdateModalCategory'>Update</a>
                                             <a onclick='openModalCategory(<?php echo json_encode($row)?>)' href="#"
                                                 class="btn btn-danger btn-sm" role="button" data-toggle="modal"
                                                 data-target="#DeleteModal">Delete</a>

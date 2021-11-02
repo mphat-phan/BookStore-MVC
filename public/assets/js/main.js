@@ -1,5 +1,37 @@
 
-$(document).ready(function () {
+$(document).ready(function () {    
+    //an thong bao 
+    $("#success-alert").hide();
+    //$('#authortable').destroy();
+    $.fn.dataTable.ext.errMode = 'throw';
+    //var editor;
+    authortable = $('#authortable').DataTable( {
+        dom: 'Bfrtip',
+        "ajax": "http://localhost/Bookstore/author/getall",
+        "columns": [
+            { "data": "id" },
+            { "data": "name" },
+            { "data": "detail" },
+            {   
+                "data": "id",
+                //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                "render": function ( data, type, row, meta ) {
+                   
+                        return (
+                          "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='"+data+"'>" +
+                            "Update"+
+                          "</button>"+
+                          "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='"+data+"'>" +
+                          "Delete"+
+                            "</button>"
+                        );
+              
+                }
+            }            
+        ],
+           
+    });
+
     
     $("#formAdd").submit(function(e) {
         e.preventDefault();
@@ -11,7 +43,7 @@ $(document).ready(function () {
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $("#content").html(data);
+                authortable.ajax.reload();
             }
         });
        
@@ -26,8 +58,8 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
-            {
-                $("#content").html(data);
+            {   
+                authortable.ajax.reload();
             }
         });
        
@@ -43,7 +75,7 @@ $(document).ready(function () {
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $("#content").html(data);
+                authortable.ajax.reload();
             }
         });
        
@@ -59,7 +91,12 @@ $(document).ready(function () {
             data: form.serialize(), // serializes the form's elements.
             success: function(data)
             {
-                $("#content").html(data);
+                if(data==1){
+                    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+                        $("#success-alert").slideUp(500);
+                    });
+                }
+                authortable.ajax.reload();
             }
         });
        
@@ -264,5 +301,25 @@ $(document).ready(function () {
 
 });
 
-
-
+function openModal(e){
+    $getCurrentUrl = 'http://localhost/Bookstore/Author';
+    id=$(e).attr('data_id');
+    const x = document.forms["formUpdate"];
+    var name,detail;
+    $.ajax({
+        type: "POST",
+        url: 'http://localhost/Bookstore/Author/getByID/'+id,
+        dataType: 'json',
+        success: function(data){
+            console.log(data['data'][0].id);
+            x.elements[0].value = data['data'][0].name;
+            x.elements[1].value = data['data'][0].detail;
+        }
+    });
+    $formUpdate = document.querySelector("#formUpdate");
+    $formDelete = document.querySelector("#formDelete");
+    $formAdd = document.querySelector("#formAdd");
+    $formAdd.action =  $getCurrentUrl+"/add";
+    $formUpdate.action = $getCurrentUrl+"/update/"+id;
+    $formDelete.action = $getCurrentUrl+"/delete/"+id;
+}

@@ -1,8 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost:84/Bookstore/');
-  echo dirname(__FILE__);
+  define ('URL', 'http://localhost/Bookstore/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +57,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div id="maincontent">
     
-    <?php require dirname(__FILE__) .'\admin\pages\\'.$data['Page'].'\\index.php'?>
+    <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'\\index.php'?>
     </div>
     
 
@@ -114,7 +113,7 @@
   <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
   <!-- Select2 -->
 <script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
-  
+  <!-- test -->  
   <script>
     $(function () {
       //hoa don
@@ -165,8 +164,8 @@
       //author
       $("#authortable").DataTable({
         "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
+        "lengthChange": true,
+        "autoWidth": true,
         "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
       }).buttons().container().appendTo('#authortable_wrapper .col-md-6:eq(0)');
       //nhanvien

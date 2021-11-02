@@ -1,3 +1,4 @@
+
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -28,37 +29,37 @@
                         <div class="card-header">
                             <h3 class="card-title">Category table</h3>
 
-                            <button type="button" onclick="openModalCategory('')" href="#"
+                            <button type="button" onclick="openModal('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
                                 data-target="#AddModal">Add</button>
-
+                           
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1"
                                 role="button" data-toggle="modal" data-target="#">Import</button>
                         </div>
-
+                        <div class="alert alert-success" id="success-alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <strong>Success! </strong> Product have added to your wishlist.
+                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="authortable" class="table table-bordered table-striped">
+                            <table id="authortable" class="table table-striped table-bordered dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
                                         <th>Detail</th>
                                         <th>#</th>
-
                                     </tr>
                                 </thead>
-                                <tbody>
-                                
-                                    <tr>
-                                    <th>id</th>
-                                        <th>Name</th>
-                                        <th>Detail</th>
-                                        <th>#</th>
-                                    </tr>
-                                    
-                                </tbody>
+                                <tbody >
 
+                                </tbody>
+                                <tfoot>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Detail</th>
+                                    <th>#</th>
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -170,3 +171,10 @@
         </div>
     </div>
 </div>
+<!-- jQuery -->
+<script src="http://localhost/Bookstore/public/assets/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function () { 
+        alert("Hello")
+    });
+</script>

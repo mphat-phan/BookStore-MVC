@@ -121,7 +121,7 @@ class DB_driver
         mysqli_free_result($result);
  
         if ($arr){
-            return json_encode($arr);
+            return json_encode(['data' => $arr]);
         }
  
         return false;

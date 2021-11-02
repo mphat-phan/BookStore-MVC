@@ -7,7 +7,7 @@ class Author extends Controller{
     }
 
     function index(){
-        $this->view("layout",array(
+        $this->view("admin/layout",array(
 			"Page" => "author",
             "Author" => $this->author->getAll()            
 		));        
@@ -19,9 +19,11 @@ class Author extends Controller{
     }
     function getAll(){
         $list = $this->author->getAll();
-        $output = json_encode(['data' => $list]);
-        print_r($output);
- 
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->author->getID($id);
+        echo $list;
     }
     function add(){
         

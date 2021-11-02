@@ -1,20 +1,4 @@
-function openModalAuthor(e){
-    $getCurrentUrl = 'http://localhost:84/Bookstore/Author';
-    
-    //update model
-    const x = document.forms["formUpdate"];
-    x.elements[0].value= e.name;
-    x.elements[1].value= e.detail;
-    
-    //action
-    $formUpdate = document.querySelector("#formUpdate");
-    $formDelete = document.querySelector("#formDelete");
-    $formAdd = document.querySelector("#formAdd");
-    $formAdd.action =  $getCurrentUrl+"/add";
-    $formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-    $formDelete.action = $getCurrentUrl+"/delete/"+e.id;
-    
-} 
+
 function openModalCategory(e){
     $getCurrentUrl = 'http://localhost:84/Bookstore/Category';
     
