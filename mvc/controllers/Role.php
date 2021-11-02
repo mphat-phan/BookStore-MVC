@@ -8,8 +8,16 @@ class Role extends Controller{
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "role"          
+			"Page" => "role"              
 		));        
+    }
+    function getAll(){
+        $list = $this->role->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->role->getID($id);
+        echo $list;
     }
     function add(){
         //if(isset($_POST['submit'])){
