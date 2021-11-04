@@ -34,6 +34,9 @@ class DB_business extends DB_driver
     function update_by_id($data, $id){
         return $this->update($this->_table_name, $data, $this->_key."=".(int)$id);
     }
+    function update_by_stringID($data, $id){
+        return $this->update($this->_table_name, $data, $this->_key.'='."'".$id."'");
+    }
  
     // hàm select theo id
     function select_by_id($select, $id){
@@ -43,6 +46,9 @@ class DB_business extends DB_driver
     function select_by_id2($select, $id){
         $sql = "select $select from ".$this->_table_name." where ".$this->_key." = ".(int)$id;
         return $this->get_row2($sql);
+    function select_by_stringID($select, $id){
+        $sql = "select $select from ".$this->_table_name." where ".$this->_key.'='."'".$id."'";
+        return $this->get_row($sql);
     }
     function selectAll($select){
         $sql = "select $select from ".$this->_table_name;

@@ -166,10 +166,10 @@
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () { 
         categorytable = $('#categorytable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost/Bookstore/category/getall",
+            "ajax": "http://localhost:84/Bookstore/category/getall",
             "columns": [{
                     "data": "id"
                 },
