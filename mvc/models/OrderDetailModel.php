@@ -15,6 +15,10 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
+            }
+            public function getID($id)
+            {   
+                  return $this->select_by_id('*',$id);
             }	
             public function getOrderDetailByOrderID($id){
                   return $this->select_by_id('*', $id);

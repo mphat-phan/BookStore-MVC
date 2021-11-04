@@ -173,6 +173,7 @@
     $(document).ready(function () {
         roletable = $('#roletable').DataTable({
             dom: 'Bfrtip',
+            responsive : true,
             "ajax": "<?php echo constant('URL') ?>role/getall",
             "columns": [
                 {

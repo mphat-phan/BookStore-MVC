@@ -219,7 +219,7 @@
     $(document).ready(function () {
         employeetable = $('#employeetable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost/Bookstore/employee/getall",
+            "ajax": "<?php echo constant('URL') ?>employee/getall",
             "columns": [{
                     "data": "id"
                 },

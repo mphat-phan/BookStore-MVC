@@ -175,7 +175,7 @@
     $(document).ready(function () {
         authortable = $('#authortable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost/Bookstore/author/getall",
+            "ajax": "<?php echo constant('URL') ?>author/getall",
             "columns": [{
                     "data": "id"
                 },
