@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 02, 2021 at 01:52 PM
+-- Generation Time: Nov 06, 2021 at 03:55 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -35,6 +35,13 @@ CREATE TABLE `author` (
 
 --
 -- Dumping data for table `author`
+--
+
+INSERT INTO `author` (`id`, `name`, `detail`) VALUES
+(3, 'Phan Minh Phát', 'Chi tiết lịch sử'),
+(4, 'Phan Minh Phát 2', '123123123'),
+(5, 'alex', 'alex'),
+(6, 'Phan Minh Phát', 'Chi tiết lịch sử');
 
 -- --------------------------------------------------------
 
@@ -48,6 +55,14 @@ CREATE TABLE `category` (
   `detail` text DEFAULT NULL,
   `parentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `detail`, `parentID`) VALUES
+(1, 'Lịch sử', 'Chi tiết lịch sử34', 0),
+(2, 'Lịch sử', 'Chi tiết lịch sử', 0);
 
 -- --------------------------------------------------------
 
@@ -79,6 +94,11 @@ CREATE TABLE `customer` (
 --
 -- Dumping data for table `customer`
 --
+
+INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `address`, `birth`, `username`) VALUES
+(12, 'Phan Minh Phát', '0973458954', 'myphan2710@gmail.com', '11/41 Tân Thới Nhất 12', '2021-11-04', 'minhphat'),
+(13, 'Đoàn Chí Quang', '0707061515', 'phan@gmail.com', '34sfsef', NULL, 'minhphat123');
+
 -- --------------------------------------------------------
 
 --
@@ -99,6 +119,10 @@ CREATE TABLE `employee` (
 --
 -- Dumping data for table `employee`
 --
+
+INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
+(4, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', '3424234', '2001-09-14', '2021-10-26', 'minhphat');
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +135,21 @@ CREATE TABLE `import` (
   `total` int(11) NOT NULL,
   `employee_username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `import`
+--
+
+INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
+(1, '2021-11-05', 100000, 'minhphat'),
+(2, '2021-08-13', 200, 'minhphat'),
+(3, '2021-08-13', 200, 'minhphat'),
+(4, '2021-08-13', 200, 'minhphat'),
+(5, '2021-11-06', 1000000, 'minhphat'),
+(6, '2021-11-06', 1000000, 'minhphat'),
+(7, '2021-11-06', 500000, 'minhphat'),
+(8, '2021-11-06', 5700000, 'minhphat'),
+(9, '2021-11-06', 500000, 'minhphat');
 
 -- --------------------------------------------------------
 
@@ -125,6 +164,17 @@ CREATE TABLE `importdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `importdetail`
+--
+
+INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
+(1, 6, 50, 242424),
+(7, 3, 10, 50000),
+(8, 3, 10, 50000),
+(8, 5, 104, 50000),
+(9, 3, 10, 50000);
+
 -- --------------------------------------------------------
 
 --
@@ -138,6 +188,15 @@ CREATE TABLE `orderdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `orderdetail`
+--
+
+INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`) VALUES
+(2, 6, 50, 50000),
+(2, 7, 50, 50000),
+(4, 3, 2, 50000);
+
 -- --------------------------------------------------------
 
 --
@@ -149,8 +208,18 @@ CREATE TABLE `ordertb` (
   `date` date NOT NULL,
   `total` double NOT NULL,
   `employee_username` varchar(50) DEFAULT NULL,
-  `customer_username` varchar(50) DEFAULT NULL
+  `customer_username` varchar(50) DEFAULT NULL,
+  `customerID` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ordertb`
+--
+
+INSERT INTO `ordertb` (`id`, `date`, `total`, `employee_username`, `customer_username`, `customerID`, `status`) VALUES
+(2, '2021-10-26', 100000, 'minhphat', 'minhphat123', NULL, -1),
+(4, '2021-11-06', 100000, 'minhphat', NULL, 13, 3);
 
 -- --------------------------------------------------------
 
@@ -181,6 +250,19 @@ CREATE TABLE `product` (
   `publisherID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `image`, `authorID`, `publisherID`) VALUES
+(3, '10 vạn câu hỏi vì sao 2', '10 vạn câu hỏi vì sao....', 55, 50000, 344, '', 4, 14),
+(4, 'Lịch sử', '.............', 22, 5000450, 233, '', 3, 14),
+(5, 'Lịch sử', '10 vạn câu hỏi vì sao....', 0, 50000, 2344, '', 3, 14),
+(6, '10 vạn câu hỏi vì sao', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled__4_-removebg-preview.png', 3, 14),
+(7, 'Phan Minh Phát', '123', 0, 50000, 200, 'SlickGantt.png', 3, 14),
+(8, '333333333', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled (7).png', 5, 14),
+(9, 'Lịch sử', '123', 0, 50000, 200, 'n.png', 3, 14);
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +274,15 @@ CREATE TABLE `publisher` (
   `name` varchar(50) NOT NULL,
   `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `publisher`
+--
+
+INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
+(14, 'Lịch sử', '214234'),
+(15, 'Phan Minh Phát', 'Chi tiết lịch sử'),
+(16, 'Phan Minh Phát', 'Chi tiết lịch sử');
 
 -- --------------------------------------------------------
 
@@ -221,7 +312,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `date`) VALUES
-('minhphat', '123', '2021-11-16');
+('minhphat', '123', '2021-11-16'),
+('minhphat123', '123', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -309,7 +401,8 @@ ALTER TABLE `orderdetail`
 ALTER TABLE `ordertb`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_username` (`employee_username`),
-  ADD KEY `customer_username` (`customer_username`);
+  ADD KEY `customer_username` (`customer_username`),
+  ADD KEY `customerID` (`customerID`);
 
 --
 -- Indexes for table `permission`
@@ -365,31 +458,37 @@ ALTER TABLE `user_permission`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `ordertb`
+--
+ALTER TABLE `ordertb`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -401,7 +500,13 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `publisher`
+--
+ALTER TABLE `publisher`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
@@ -430,7 +535,7 @@ ALTER TABLE `employee`
 -- Constraints for table `import`
 --
 ALTER TABLE `import`
-  ADD CONSTRAINT `import_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `import_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `employee` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `importdetail`
@@ -443,22 +548,23 @@ ALTER TABLE `importdetail`
 -- Constraints for table `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  ADD CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `ordertb` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orderdetail_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `ordertb` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ordertb`
 --
 ALTER TABLE `ordertb`
   ADD CONSTRAINT `ordertb_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ordertb_ibfk_2` FOREIGN KEY (`customer_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ordertb_ibfk_2` FOREIGN KEY (`customer_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ordertb_ibfk_3` FOREIGN KEY (`customerID`) REFERENCES `customer` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`authorID`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `userrole`
