@@ -19,6 +19,10 @@ class Employee extends Controller{
         $list = $this->employee->getID($id);
         echo $list;
     }
+    function getByUsername($name){
+        $list = $this->employee->getUsername($name);
+        echo $list;
+    }
     function add(){
         //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && $_POST['txtPhone'] && $_POST['txtAddress'] && $_POST['txtEmail'] && $_POST['txtBirth'] && $_POST['txtJoindate']){

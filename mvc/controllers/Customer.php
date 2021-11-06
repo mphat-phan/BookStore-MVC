@@ -19,6 +19,10 @@ class Customer extends Controller{
         $list = $this->customer->getID($id);
         echo $list;
     }
+    function getByUsername($name){
+        $list = $this->customer->getUsername($name);
+        echo $list;
+    }
     function add(){
         //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && $_POST['txtPhone'] && $_POST['txtAddress'] && $_POST['txtEmail'] && $_POST['txtBirth']){

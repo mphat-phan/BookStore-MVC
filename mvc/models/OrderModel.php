@@ -30,6 +30,14 @@
                   return $this->delete_by_id($id);
 
             }
+            public function selectLast(){
+                  $sql = "SELECT Max(id) as id FROM ordertb";
+                  $list = $this->selectQuery($sql);
+                  foreach($list as $row){
+                        return $row['id'];
+                  }
+
+            }
 
 
 	}

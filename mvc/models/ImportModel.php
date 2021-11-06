@@ -15,6 +15,10 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
+            }
+            public function getID($id)
+            {   
+                  return $this->select_by_id('*',$id);
             }	
             public function add($data){
                   return $this->add_new($data);
@@ -26,6 +30,15 @@
                   return $this->delete_by_id($id);
 
             }
+            public function selectLast(){
+                  $sql = "SELECT Max(id) as id FROM import";
+                  $list = $this->selectQuery($sql);
+                  foreach($list as $row){
+                        return $row['id'];
+                  }
+
+            }
+            
 
 
 	}

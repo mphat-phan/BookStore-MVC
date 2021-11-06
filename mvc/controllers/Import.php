@@ -2,46 +2,54 @@
 class Import extends Controller{
     
     function __construct(){
-        //$this->goodsreceived = $this->model("GoodsReceivedModel");
-        //$this->detailgoodsreceived = $this->model("DetailGoodsReceivedModel");
-        $this->product = $this->model("ProductModel");
-        // $this->goodsreceived = $this->model("GoodsReceivedModel");
-        // $this->detailgoodsreceived = $this->model("DetailGoodsReceivedModel");
+        $this->import = $this->model("ImportModel");
+        $this->importdetail = $this->model("ImportDetailModel");
     }
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "goodsreceived",
-            "Product"=> $this->product->getAll()
-            //"Goodsreceived" => $this->goodsreceived->getAll()            
+			"Page" => "import"    
 		));        
+    }
+    function getAll(){
+        $list = $this->import->getAll();
+        echo $list;
+    }
+    function getByID($id){
+        $list = $this->import->getID($id);
+        echo $list;
+    }
+    function getLastID(){
+        $list = $this->import->selectLast();
+        echo $list;
     }
     function add(){
         
-        if(isset($_POST['txttotal']) && $_POST['txtdate'] && $_POST['txtuser'] && $_POST['obj'] ){
+        if(isset($_POST['importdetail'])){
+            $date = $_POST['txtDate'];
+            $total= $_POST['txtTotal'];
+            $user= $_POST['txtUser'];
+            $obj = json_decode($_POST['importdetail']);
             
-            $date = $_POST['txtdate'];
-            $total= $_POST['txttotal'];
-            $user= $_POST['txtuser'];
-            $detail = json_decode($_POST['obj']);
+            if($total==0){
+                echo 0; 
+                return;
+            }
 
-            $array = array('date' => $date, "total" => $total , "user" => $user);
-            if($this->goodsreceived->add($array)==1){
-                for($i = 0 ; $i < count($detail) ; $i++){
-                    $bookID = $detail[$i]->id;
-                    $quantity = $detail[$i]->quantity;
-                    $price = $detail[$i]->price;
-                    $total = $detail[$i]->total;
-                    $array = array('bookID' => $bookID, "quantity" => $quantity , "price" => $price , "total"=> $total);
-                    if($this->detailgoodsreceived->add($array)==1){
-                        echo 1;
-                    }
+            if($this->import->add(array('date' => $date, "total" => $total , "employee_username" => $user))==1){
+                $importID = $this->import->selectLast();
+                for($i = 0 ; $i < count($obj) ; $i++){
+                    
+                    $array = array('importID' => $importID ,'productID' => $obj[$i]->productID, "quantity" => $obj[$i]->quantity , "price" => $obj[$i]->price);
+                    
+                    $this->importdetail->add($array);
                 }
                 echo 1;
                 return;
             }
         }
         echo 0;
+        
     }
     function update(){
 

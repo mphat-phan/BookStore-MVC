@@ -130,6 +130,7 @@
   <script src="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
   <!-- Toastr -->
   <script src="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.js"></script>
+  <script src="<?php echo constant('URL') ?>public/assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 </body>
 
 </html>
