@@ -8,7 +8,7 @@
     <div class="card-body login-card-body">      
     <div id="loginmessage">
     </div>
-      <form action="checklogin" method="post" id="formLogin">
+      <form action="" method="post" id="formLogin">
         <div class="input-group mb-3">
           <input type="" class="form-control" name="txtUsername" placeholder="Username & Email" required>
           <div class="input-group-append">
@@ -66,7 +66,7 @@
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
 $('#formLogin').submit(function(e){
-  //e.preventDefault();
+  e.preventDefault();
   var form = $(this);
   var url = "<?php echo constant('URL') ?>Home/checkLogin";
   $.ajax({
