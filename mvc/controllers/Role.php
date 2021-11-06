@@ -51,13 +51,11 @@ class Role extends Controller{
     function delete($name){
         
         if(isset($_POST['checkDelete'])){
-            /*
+            
             if($this->role->delete($name)==1){
                 echo 1;
                 return;
             }
-            */
-
         }
         echo 0;
     }

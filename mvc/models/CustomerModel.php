@@ -7,7 +7,7 @@
                   $this->_table_name = 'customer';
                   
                   // Khai báo tên field id
-                  $this->_key = 'id';
+                  $this->_key = 'username';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();

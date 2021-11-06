@@ -20,6 +20,10 @@
             {   
                   return $this->select_by_id('*',$id);
             }
+            public function getID2($id)
+            {   
+                  return $this->select_by_id2('*',$id);
+            }
             public function add($data){
                   return $this->add_new($data);
             }

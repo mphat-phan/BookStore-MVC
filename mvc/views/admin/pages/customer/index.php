@@ -209,7 +209,7 @@
     $(document).ready(function () {
         customertable = $('#customertable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost/Bookstore/customer/getall",
+            "ajax": "<?php echo constant('URL') ?>customer/getall",
             "columns": [{
                     "data": "id"
                 },
