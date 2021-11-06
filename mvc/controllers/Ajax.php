@@ -2,8 +2,7 @@
 class Ajax{
     
     public function AddAuthor(){
-        $this->author = $this->model("AuthorModel");
-        
+        $this->author = $this->model("AuthorModel");    
     }
 }
 ?>
