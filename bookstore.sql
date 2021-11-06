@@ -1,5 +1,5 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
@@ -303,8 +303,10 @@ CREATE TABLE `role` (
 
 CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `password` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `status` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -434,7 +436,8 @@ ALTER TABLE `role`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `userrole`
