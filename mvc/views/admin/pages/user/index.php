@@ -27,10 +27,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">User table</h3>
-
-                            <button type="button" onclick="openModalUser('')" href="#" class="btn btn-primary btn-sm float-right" role="button"
-                                data-toggle="modal" data-target="#AddModal">Add</button>
+                            <h3 class="card-title">User table</h3>                            
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
                                 data-toggle="modal" data-target="#">Import</button>
@@ -38,48 +35,25 @@
 
                         <!-- /.card-header -->
                         <div  class="card-body">
-                            <table id="usertable" class="table table-bordered table-striped">
+                            <table id="usertable" class="table table-bordered table-striped dt-responsive nowrap display">
                                 <thead>
-                                    <tr>
-                                        
+                                    <tr>                                        
                                         <th>Username</th>
                                         <th>Password</th>
-                                        <th>#</th>
-
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>#</th>                                        
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    //print_r($data['Author']);
-                                    $UserRole='';
-                                    foreach($data['User'] as $row){
-
-                                    ?>
-                                    <tr>
-                                        
-                                        <td><?=$row['username']?></td>
-                                        <td>***</td>
-                                        <td><a onclick='openModalUser(<?php echo json_encode($row)?>)' href="#" class="btn btn-warning btn-sm" role="button"
-                                                data-toggle="modal" data-target="#UpdateModal">Update</a>
-                                            <a onclick='openModalUser(<?php echo json_encode($row)?>)' href="#" class="btn btn-danger btn-sm" role="button"
-                                                data-toggle="modal" data-target="#DeleteModal">Delete</a>
-                                            <?php
-                                            foreach($data['UserHasRole'] as $UserHasRole){
-                                                if($UserHasRole['username']==$row['username']){
-                                                    $UserRole = $UserHasRole;
-                                                }
-                                            }
-                                            ?>
-                                            <a onclick='openRoleModal(<?php echo json_encode($UserRole)?>)' href="#" class="btn btn-primary btn-sm" role="button"
-                                                data-toggle="modal" data-target="#UpdateRoleModal">Role</a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                <tbody>                                    
                                 </tbody>
-                                
+                                <tfoot>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Date</th>
+                                    <th>Status</th>                                    
+                                    <th>#</th>                                    
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -100,7 +74,7 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Add</h3>
+                    <h3 class="card-title">Add Role</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -108,17 +82,69 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">User Name</label>
-                            <input name="txtUserName" type="text" class="form-control" id="txtName" placeholder="Enter ">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">User Password</label>
-                            <input name='txtUserPassword' type="password" class="form-control" id="txtDetail" >
-                        </div>
-                        
+                            <label for="exampleInputEmail1">Role</label>
+                            <select class="form-control select2" name="selectRole[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectRole" style="width: 100%;">                                                              
+                            </select>                         
+                        </div>                                               
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="LockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Lock</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formLock" action="" method="POST">
+                    
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input name="checkLock" id="checkLock" type="checkbox" class="form-check-input" required>
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="UnlockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Unlock</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formUnlock" action="" method="POST">
+                    
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input name="checkUnlock" id="checkLock" type="checkbox" class="form-check-input" required>
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -141,7 +167,7 @@
                     
                     <div class="card-body">
                         <div class="form-check">
-                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
+                            <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input" required>
                             <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div>
                         <!-- /.card-body -->
@@ -170,7 +196,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">User Password</label>
-                            <input name='txtUserPassword' value="" type="password" class="form-control formUpdateInput" placeholder="Enter ">
+                            <input name='txtUserPassword' value="" type="password" class="form-control formUpdateInput" placeholder="Enter " required>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -221,6 +247,204 @@
     </div>
 </div>
 </div>
+
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
+<script>
+    
+    $(document).ready(function () {        
+        usertable = $('#usertable').DataTable({            
+            dom: 'Bfrtip',
+            "ajax": "<?php echo constant('URL') ?>user/getall",
+            "columns": [{
+                    "data": "username"
+                },
+                {
+                    "data": "password"
+                },
+                {
+                    "data": "date"
+                },
+                {
+                    "data": null,
+                    "render": function (data, type, full) {                        
+                        var username = full.username;
+                        var status = full.status;
+                        if(status==1)
+                        {
+                            return (                                
+                                "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#LockModal' data_id='"+ username +"'>Lock</button>"
+                            );
+                        }
+                        else if (status==0)
+                        {
+                            return (
+                                "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#UnlockModal' data_id='"+ username +"'>Unlock</button>"
+                            );
+                        }                        
+                    }
+                },                
+                {                    
+                    "data": "username",                    
+                    //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
+                    "render": function (data, type, row, meta) {
+
+                        return (                            
+                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            data + "'>" +
+                            "Update" +
+                            "</button>" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm mr-1' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            data + "'>" +
+                            "Delete" +
+                            "</button>" +                            
+                            "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm' role='button'data-toggle='modal' data-target='#AddModal' data_id='" + data + "'>Role</button>"
+                            
+                        );
+                    }
+                }                
+            ],
+
+        });
+                
+
+        $("#formAdd").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            console.log(form.serialize());
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    usertable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formUpdate").submit(function (e) {
+
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    usertable.ajax.reload();
+                }
+            });
+
+        })
+        $("#formDelete").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Delete");
+                    usertable.ajax.reload();
+
+                }
+            });
+
+        })
+
+        $("#formLock").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    usertable.ajax.reload();
+
+                }
+            });
+
+        })
+
+        $("#formUnlock").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    usertable.ajax.reload();
+
+                }
+            });
+
+        })            
+       
+    });          
+    function openModal(e){
+        $getCurrentUrl = '<?php echo constant('URL') ?>user';
+        id=$(e).attr('data_id');
+        const x = document.forms["formUpdate"];
+        var username,password;
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>user/getByID/'+id,
+            dataType: 'json',
+            success: function(data){
+                console.log(data['data'][0].id);
+                x.elements[0].value = data['data'][0].username;
+                x.elements[1].value = data['data'][0].password;
+            }
+        });
+        $formUpdate = document.querySelector("#formUpdate");
+        $formDelete = document.querySelector("#formDelete");
+        $formAdd = document.querySelector("#formAdd");
+        $formLock = document.querySelector("#formLock");
+        $formUnlock = document.querySelector("#formUnlock");
+
+        $formAdd.action =  $getCurrentUrl+"/add/"+id;
+        $formUpdate.action = $getCurrentUrl+"/update/"+id;
+        $formDelete.action = $getCurrentUrl+"/delete/"+id;
+        $formLock.action = $getCurrentUrl+"/updateStatus/"+id;
+        $formUnlock.action = $getCurrentUrl+"/updateStatus/"+id;
+
+        var selectRole = document.getElementById('selectRole');                         
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>Role/getAll/',
+                dataType: 'json',
+                success: function(data){
+                    var role = data['data'];
+                    Object.keys(role).forEach(key => {                                                                                            
+                        selectRole.options[key] = new Option(role[key].name, role[key].name,);
+                        $.ajax({
+                            type: "POST",
+                            url: '<?php echo constant('URL') ?>User/getUserRoleByID/'+id,
+                            dataType: 'json',
+                            success: function(data){
+                                var userrole = data['data'];
+                                Object.keys(userrole).forEach(key => {                                            
+                                    selectRole.options[key] = new Option(userrole[key].rolename, userrole[key].rolename,false,true);
+                                });
+                            }                                                    
+                        });
+                    });
+                }                                                                    
+            });                        
+    }
+        
+</script>
 
 
 

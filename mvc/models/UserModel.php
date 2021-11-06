@@ -26,7 +26,9 @@
                   return $this->delete_by_id2($id);
 
             }
-
+            public function getToCheckLogin($sql){
+                  return $this->selectQuery($sql);
+            }
 
 	}
 ?> 
