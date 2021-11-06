@@ -206,7 +206,7 @@
     var selectProduct = document.getElementById('selectProduct');
     var productNumberRealtime;
     var customerID;
-    var user = '<?php echo $_COOKIE['username'] ?>'
+    var user = "<?php echo $_COOKIE['username'] ?>";
     function fetchProduct(){
         $.ajax({
             url: '<?php echo constant('URL') ?>product/getByID/'+selectProduct.value,
