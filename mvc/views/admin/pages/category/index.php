@@ -169,7 +169,7 @@
     $(document).ready(function () { 
         categorytable = $('#categorytable').DataTable({
             dom: 'Bfrtip',
-            "ajax": "http://localhost:84/Bookstore/category/getall",
+            "ajax": "<?php echo constant('URL') ?>category/getall",
             "columns": [{
                     "data": "id"
                 },

@@ -2,38 +2,30 @@
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
   define ('URL', 'http://localhost:84/Bookstore/');
+  if( isset($_COOKIE["username"]))
+  {
+      echo "Welcome " . $_COOKIE["username"];
+  }
+  else
+  {
+      echo "Không có tên";
+  }  
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin</title>
+  <title>AdminLTE 3 | Log in</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  
-  <!-- DataTables -->
-  <link rel="stylesheet"
-    href="<?php echo constant('URL') ?>public/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet"
-    href="<?php echo constant('URL') ?>public/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet"
-    href="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <!-- Theme style -->
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
-  
-    <style>
-      
-    </style>
 </head>
 <!--
 `body` tag options:
@@ -44,76 +36,20 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <?php require dirname(__FILE__) .'\header.php'?>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <?php require dirname(__FILE__) .'\menu.php'?>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div id="maincontent">
+<body class="hold-transition login-page">
+<?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'.php'?>
     
-    <?php require dirname(__FILE__) .$data['Page']?>
-    </div>
-    
-
-    
-
-
-
-
-
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <?php require dirname(__FILE__) .'\footer.php'?>
-  </div>
-  <!-- ./wrapper -->
-
-  <!-- REQUIRED SCRIPTS -->
-
-  <!-- jQuery -->
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE -->
-  <script src="<?php echo constant('URL') ?>public/assets/dist/js/adminlte.js"></script>
-
-  <!-- OPTIONAL SCRIPTS -->
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/chart.js/Chart.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="<?php echo constant('URL') ?>public/assets/dist/js/demo.js"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="<?php echo constant('URL') ?>public/assets/dist/js/pages/dashboard3.js"></script>
-
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js">
-  </script>
-  <script
-    src="<?php echo constant('URL') ?>public/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js">
-  </script>
-  <script
-    src="<?php echo constant('URL') ?>public/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js">
-  </script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js">
-  </script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js">
-  </script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/jszip/jszip.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/pdfmake/pdfmake.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/pdfmake/vfs_fonts.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
-  <!-- Select2 -->
-  <script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
+<!-- /.login-box -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo constant('URL') ?>public/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo constant('URL') ?>public/assets/dist/js/adminlte.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
 
 </body>
-
 </html>

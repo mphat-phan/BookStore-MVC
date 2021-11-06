@@ -173,7 +173,7 @@
 <script>
     
     $(document).ready(function () {
-        authortable = $('#authortable').DataTable({
+        authortable = $('#authortable').DataTable({            
             dom: 'Bfrtip',
             
             "ajax": "<?php echo constant('URL') ?>author/getall",

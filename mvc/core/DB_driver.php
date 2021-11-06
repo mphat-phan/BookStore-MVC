@@ -100,6 +100,7 @@ class DB_driver
     // Hàm lấy 1 record dùng trong trường hợp lấy chi tiết tin
     function get_row($sql)
     {
+        //echo $sql;
         // Kết nối
         $this->connect();
         

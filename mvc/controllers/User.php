@@ -2,42 +2,51 @@
 class User extends Controller{
     
     function __construct(){
-        $this->User = $this->model("UserModel");
-        $this->UserRole = $this->model("UserRoleModel");
-        $this->Role = $this->model("RoleModel");
+        $this->User = $this->model("UserModel");                
+        $this->UserRole = $this->model("UserRoleModel");  
     }
 
     function index(){
         $this->view("admin/layout",array(
-			"Page" => "user",
-            "User" => $this->User->getAll(),
-            "UserRole" => $this->UserRole->getAll(),     
-            "Role" => $this->Role->getAll()  
+			"Page" => "user",            
 		));        
     }
-    function ajax(){
-        $this->view("admin/pages/user/userAjax",array(
-            "User" => $this->User->getAll(),
-            "UserHasRole" => $this->UserHasRole->getAll(),
-            "Role" => $this->Role->getAll()  
-        ));
+    function getAll(){
+        $list = $this->User->getAll();        
+        echo $list;
     }
-    function add(){
-        //if(isset($_POST['submit'])){
-        if(isset($_POST['txtUserName']) && $_POST['txtUserPassword']){
-
-            $username = $_POST['txtUserName'];
-            $password= $_POST['txtUserPassword'];
-            $role = 2;
-            $arrayUser = array('username' => $username, "password" => $password);
-            $arrayRole = array('username' => $username, "roleID" => $role);
-            if($this->User->add($arrayUser)==1 && $this->UserRole->add($arrayRole)==1){
-                echo 1;
-                return;
-            }
+    function getUserRoleByID($username){
+        $list = $this->UserRole->getID($username);        
+        echo $list;
+    }    
+    function getByID($id){
+        $list = $this->User->getID($id);
+        echo $list;
+    }
+    function add($username){         
+        $name = $_POST['selectRole'];
+        $fag = 0;                  
+        if(isset($_POST['selectRole']) && !empty($_POST['selectRole']))
+        {            
+            foreach($name as $value)
+            {                
+                $array = array('username' => $username, "rolename" => $value);
+                if($this->UserRole->add($array)==1)
+                {
+                    $fag = 1;
+                }
+                else
+                {
+                    $fag = 0;
+                }                    
+            }                        
+        }
+        if($fag == 1)
+        {
+            echo 1;        
+            return;
         }
         echo 0;
-
     }
 
     function update($username){
@@ -53,7 +62,27 @@ class User extends Controller{
         }
         echo 0;
     }
-
+    function updateStatus($username){                
+        if(isset($_POST['checkLock']))
+        {            
+            $array = array("status" => '0');    
+            if($this->User->update_by_stringID($array,$username)==1){
+                echo 1;
+                return;
+            }
+            echo 0;
+        }
+        else if(isset($_POST['checkUnlock']))
+        {
+            $array = array("status" => '1');    
+            if($this->User->update_by_stringID($array,$username)==1){
+                echo 1;
+                return;
+            }
+            echo 0;
+        }
+        
+    }
     function updateRole($username){
         
         if(isset($_POST['roleSelect'])){
@@ -78,7 +107,7 @@ class User extends Controller{
             }
         }
         echo 0;
-    }
+    }    
     function pages() {
         $this->view("pages/404");
     }
