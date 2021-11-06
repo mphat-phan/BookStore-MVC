@@ -206,6 +206,7 @@
     var selectProduct = document.getElementById('selectProduct');
     var productNumberRealtime;
     var customerID;
+    var user = '<?php echo $_COOKIE['username'] ?>'
     function fetchProduct(){
         $.ajax({
             url: '<?php echo constant('URL') ?>product/getByID/'+selectProduct.value,
@@ -515,7 +516,7 @@
         const x = document.forms["formAdd"];
         x.elements[0].value = getDate();
         x.elements[1].value = sumOrder();
-        x.elements[2].value =  "minhphat";
+        x.elements[2].value =  user;
         
     } 
     

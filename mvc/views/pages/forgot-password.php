@@ -42,6 +42,7 @@ $('#formRequest').submit(function(e){
   var form = $(this);
   var url = "<?php echo constant('URL') ?>Home/checkEmail";
   $.ajax({
+    
     type: "POST",
     url: url,
     data: form.serialize(),

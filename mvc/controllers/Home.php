@@ -33,9 +33,11 @@ class Home extends Controller{
     function UpdatePassword() {
         if(isset($_POST['password']) && isset($_POST['retypepassword']))
         {            
-            $username = $_SESSION['username'];
-            $password = $_POST['password'];                
+            $username = $_SESSION['username'];        
+            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);     
+            
             $array = array('password' => $password);        
+            
             if($this->Home->update_by_stringID($array,$username)==1)
             {
                 echo 1;                
@@ -79,7 +81,7 @@ class Home extends Controller{
                 $_SESSION['username'] =  $txtusername;
                 if(isset($_POST['checkremember']))
                 {
-                    setcookie("username", $txtusername, time() + 600, "/");                                                            
+                    setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
                 }                
                 $result = mysqli_fetch_array($this->Home->getToCheckLogin($sql));                
                 if(password_verify($txtpassword, $result['password']))
