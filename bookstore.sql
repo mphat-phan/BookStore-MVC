@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Nov 02, 2021 at 01:52 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: localhost:3307
+-- Generation Time: Nov 06, 2021 at 04:09 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,9 +32,6 @@ CREATE TABLE `author` (
   `name` varchar(50) NOT NULL,
   `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `author`
 
 -- --------------------------------------------------------
 
@@ -76,9 +73,6 @@ CREATE TABLE `customer` (
   `username` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `customer`
---
 -- --------------------------------------------------------
 
 --
@@ -96,9 +90,6 @@ CREATE TABLE `employee` (
   `username` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `employee`
---
 -- --------------------------------------------------------
 
 --
@@ -212,16 +203,18 @@ CREATE TABLE `role` (
 
 CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `password` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `status` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `date`) VALUES
-('minhphat', '123', '2021-11-16');
+INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`) VALUES
+('minhphat', '123', 'phanminhphat2001@gmail.com', '2021-11-16', 1);
 
 -- --------------------------------------------------------
 
@@ -341,7 +334,8 @@ ALTER TABLE `role`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `userrole`
