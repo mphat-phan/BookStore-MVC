@@ -28,12 +28,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Order table</h3>
 
-                            <button type="button" onclick="openModal('')" href="#"
-                                class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
-                                data-target="#AddModal">Add</button>
 
-                            <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1"
-                                role="button" data-toggle="modal" data-target="#">Import</button>
                         </div>
 
                         <!-- /.card-header -->
@@ -46,6 +41,7 @@
                                         <th>Total</th>
                                         <th>Employee Username</th>
                                         <th>Customer Username</th>
+                                        <th>CustomerID</th>
                                         <th>#</th>
                                         <th>Status</th>
 
@@ -62,6 +58,7 @@
                                         <th>Total</th>
                                         <th>Employee Username</th>
                                         <th>Customer Username</th>
+                                        <th>CustomerID</th>
                                         <th>#</th>
                                         <th>Status</th>
                                     </tr>
@@ -75,6 +72,48 @@
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
+                <div class="col-12">
+                    <!-- /.card -->
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order Detail table</h3>
+
+                        </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="orderdetailtable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>OrderID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                      
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>OrderID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                       
+                                    </tr>
+
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
             <!-- /.row -->
         </div>
@@ -124,7 +163,7 @@
 
                         <div class="card-body">
                             <div class="form-check">
-                                <input name="checkDelete" id="checkDelete" type="checkbox" class="form-check-input">
+                                <input name="checkStatus" id="checkDelete" type="checkbox" class="form-check-input">
                                 <label class="form-check-label" for="exampleCheck1">Xác nhận đơn hàng</label>
                             </div>
                             <!-- /.card-body -->
@@ -148,38 +187,34 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="formUpdate" action="" method="POST">
-
+                    <form id="formInfo" action="" method="POST">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">ID</label>
                                 <input name="txtName" type="text" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product Name</label>
+                                <label for="exampleInputEmail1">Name</label>
                                 <input name="txtName" type="text" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product Name</label>
+                                <label for="exampleInputEmail1">Phone</label>
                                 <input name="txtName" type="text" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product Name</label>
+                                <label for="exampleInputEmail1">Email</label>
                                 <input name="txtName" type="text" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product Name</label>
+                                <label for="exampleInputEmail1">Address</label>
                                 <input name="txtName" type="text" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " disabled>
                             </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -194,6 +229,8 @@
 $(document).ready(function () {
         ordertable = $('#ordertable').DataTable({
             dom: 'Bfrtip',
+            "scrollY":        "500px",
+            "scrollCollapse": true,
             "ajax": "<?php echo constant('URL') ?>order/getall",
             "columns": [{
                     "data": "id"
@@ -208,7 +245,7 @@ $(document).ready(function () {
                     "data": "employee_username",
                     "render": function (data, type, row, meta) {
                         return(
-                            "<a class='nav-link' data-toggle='modal' data-target='#Info' onclick='openModal(this)' data_id='"+data+"'>"+data+"</a>"
+                            "<a class='nav-link' data='employee' data-toggle='modal' data-target='#Info' onclick='openModal(this)' data_id='"+data+"'>"+data+"</a>"
                         )
 
                     }
@@ -217,22 +254,35 @@ $(document).ready(function () {
                     "data": "customer_username",
                     "render": function (data, type, row, meta) {
                         return(
-                            "<a class='nav-link' data-toggle='modal' data-target='#Info' onclick='openModal(this)' data_id='"+data+"'>"+data+"</a>"
+                            "<a class='nav-link' data='customer' data-toggle='modal' data-target='#Info' onclick='openModal(this)' data_id='"+data+"'>"+data+"</a>"
                         )
                         
                     }
                 },
                 {
-                    "data": "id",
-                    "render": function (data, type, row, meta) {
-
-                        return (
+                    "data": "customerID"
+                },
+                {
+                    
+                    "data" : null,
+                    "render": function (data, type, full) {
+                        var id = full.id;
+                        var status = full.status;
+                        if(status>=0 && status<=2){
+                            return (
                             "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
-                            data + "'>" +
+                            id + "'>" +
+                            "Hủy đơn hàng" +
+                            "</button>"
+                            );
+                        }
+                        return (
+                            "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                            id + "'>" +
                             "Hủy đơn hàng" +
                             "</button>"
                         );
-
+                            
                     }
                 },
                 {
@@ -255,7 +305,30 @@ $(document).ready(function () {
                                 "</button>"
                             );
                         }
-                        
+                        else if(status==-1){
+                            return (
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Đã hủy" +
+                                "</button>"
+                            );
+                        }
+                        else if(status==2){
+                            return (
+                                "<button onclick='' class='btn btn-info btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Đang giao" +
+                                "</button>"
+                            );
+                        }
+                        else if(status==3){
+                            return (
+                                "<button onclick='' class='btn btn-success btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Đã giao" +
+                                "</button>"
+                            );
+                        }
 
                     }
                 }
@@ -263,21 +336,48 @@ $(document).ready(function () {
 
         });
 
-        $("#formAdd").submit(function (e) {
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
-                success: function (data) {
-                    sweetAlertCRUD(data, "Add");
-                    employeetable.ajax.reload();
-                }
-            });
+        $('#ordertable').click(function(){
+            var table = document.getElementById("ordertable");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 0; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function (row) {
+                    return function () {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var id = cell.innerHTML;
 
+                            orderdetailtable = $('#orderdetailtable').DataTable({
+                            dom: 'Bfrtip',
+                            "ajax": "<?php echo constant('URL') ?>orderdetail/getbyid/"+id,
+                            "columns": [{
+                                    "data": "orderID"
+                                },
+                                {
+                                    "data": "productID",
+                                    "render": function (data, type, row, meta) {
+                                        return(
+                                            data.name
+                                        );
+                                    }
+                                },
+                                {
+                                    "data": "quantity"
+                                },
+                                {
+                                    "data": "price"
+                                }
+                            
+                            ],
+
+                            });
+                        };
+                        };
+                    currentRow.onclick = createClickHandler(currentRow);
+                    }
         })
+
+     
+        
         $("#formUpdate").submit(function (e) {
 
             e.preventDefault();
@@ -289,11 +389,12 @@ $(document).ready(function () {
                 data: form.serialize(), // serializes the form's elements.
                 success: function (data) {
                     sweetAlertCRUD(data, "Update");
-                    employeetable.ajax.reload();
+                    ordertable.ajax.reload();
                 }
             });
 
         })
+        
         $("#formDelete").submit(function (e) {
             e.preventDefault();
             var form = $(this);
@@ -305,25 +406,44 @@ $(document).ready(function () {
                 data: form.serialize(), // serializes the form's elements.
                 success: function (data) {
                     sweetAlertCRUD(data, "Delete");
-                    employeetable.ajax.reload();
+                    ordertable.ajax.reload();
 
                 }
             });
 
         })
     });
+
     function openModal(e){
+        
         $getCurrentUrl = '<?php echo constant('URL') ?>order';
         id=$(e).attr('data_id');
-        
+
         $formDelete = document.querySelector("#formDelete");
         $formUpdate = document.querySelector("#formUpdate");
+        $formInfo = document.querySelector("#formInfo");
+        const x = document.forms["formInfo"];
+       
+    
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>'+$(e).attr('data')+'/getByUsername/'+id,
+            dataType: 'json',
+            success: function(data){
+                x.elements[0].value = data['data'][0].id;
+                x.elements[1].value = data['data'][0].name;
+                x.elements[2].value = data['data'][0].phone;
+                x.elements[3].value = data['data'][0].email;
+                x.elements[4].value = data['data'][0].address;
+               
 
-
-
+               
+            }
+        });
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
     }
+    
 </script>
 
 <!--
