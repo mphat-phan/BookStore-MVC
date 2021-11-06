@@ -247,7 +247,6 @@
     </div>
 </div>
 </div>
-
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     
