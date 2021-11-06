@@ -17,14 +17,6 @@ class Product extends Controller{
     function getAll(){
         $product = json_decode($this->product->getAll());
         
-        //$product->data[3]->authorID= array("name" => "Hello");
-        //print_r($product->data[1]->authorID) ;
-        // $authorobj = json_decode($this->author->getID(3));
-        // $publisherobj = json_decode($this->publisher->getID(14));
-        // echo $authorobj->data[0]->name;
-        // echo $publisherobj->data[0]->name;
-      
-        
         for($i=0 ; $i< count($product->data) ; $i++ ){
             $author = $product->data[$i]->authorID; // id author
             $publisher = $product->data[$i]->publisherID; // id publisher
@@ -41,11 +33,14 @@ class Product extends Controller{
         
 
     }
+
     function getByID($id){
         $list = $this->product->getID($id);
         echo $list;
     }
     
+     
+
     function add(){
        
         if(isset($_POST['txtName']) && $_POST['txtPrice']){

@@ -321,19 +321,14 @@
         var name,detail;
         $.ajax({
             type: "POST",
-            url: '<?php echo constant('URL') ?>employee/getbyid/'+id,
+            url: '<?php echo constant('URL') ?>employee/getByUsername/'+id,
             dataType: 'json',
             success: function(data){
-                console.log(data['data'][0].id);
-                x.elements[0].value = data['data'][0].name;
+                x.elements[0].value = data['data'][0].id;
                 x.elements[1].value = data['data'][0].phone;
                 x.elements[2].value = data['data'][0].email;
                 x.elements[3].value = data['data'][0].address;
                 x.elements[4].value = data['data'][0].birth;
-                x.elements[5].value = data['data'][0].joindate;
-                x.elements[6].value = data['data'][0].username;
-
-               
             }
         });
         $formUpdate = document.querySelector("#formUpdate");

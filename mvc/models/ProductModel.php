@@ -26,10 +26,12 @@
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
             }
+            
             public function delete($id){
                   return $this->delete_by_id($id);
 
             }
+            
 
 
 	}

@@ -20,6 +20,11 @@
             {   
                   return $this->select_by_id('*',$id);
             }	
+            public function getUsername($id)
+            {   
+                  $this->_key = 'username';
+                  return $this->select_by_stringID('*',$id);
+            }
             public function add($data){
                   return $this->add_new($data);
             }

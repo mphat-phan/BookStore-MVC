@@ -7,7 +7,7 @@
                   $this->_table_name = 'customer';
                   
                   // Khai báo tên field id
-                  $this->_key = 'username';
+                  $this->_key = 'id';
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
@@ -19,6 +19,11 @@
             public function getID($id)
             {   
                   return $this->select_by_id('*',$id);
+            }
+            public function getUsername($id)
+            {   
+                  $this->_key = 'username';
+                  return $this->select_by_stringID('*',$id);
             }
             public function add($data){
                   return $this->add_new($data);
