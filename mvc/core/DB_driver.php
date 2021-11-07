@@ -47,7 +47,7 @@ class DB_driver
  
         // Vì sau vòng lặp các biến $field_list và $value_list sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
         $sql = 'INSERT INTO '.$table. '('.trim($field_list, ',').') VALUES ('.trim($value_list, ',').')';
-     
+       
         return mysqli_query($this->__conn, $sql);
     }
  

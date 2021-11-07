@@ -23,12 +23,13 @@ class Order extends Controller{
         echo $list;
     }
     function add(){
-
+        $arr;
         if(isset($_POST['orderdetail'])){
             $date = $_POST['txtDate'];
             $total= $_POST['txtTotal'];
+            $MoneyInput = $_POST['txtMoneyInput'];
+            $MoneyOutput = $_POST['txtMoneyOutput'];
             $EmployeeUser= $_POST['txtEmployeeUser'];
-            $CustomerID = $_POST['txtCustomerID'];
             //$sale= $_POST['txtSale'];
             $obj = json_decode($_POST['orderdetail']);
             
@@ -36,15 +37,23 @@ class Order extends Controller{
                 echo 0; 
                 return;
             }
+            
+            if(!empty( $_POST['txtCustomerID'])){
+                $CustomerID = $_POST['txtCustomerID'];
+                $arr = array('date' => $date, "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID, "status" => "3" , "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+            }
+            else{
+                $arr = array('date' => $date, "total" => $total , "employee_username" => $EmployeeUser,"status" => "3", "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+            }
 
-            if($this->order->add(array('date' => $date, "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID,"status" => "3"))==1){
+            if($this->order->add($arr)==1){
                 $orderID = $this->order->selectLast();
                 for($i = 0 ; $i < count($obj) ; $i++){
                     
                     $array = array('orderID' => $orderID ,'productID' => $obj[$i]->productID, "quantity" => $obj[$i]->quantity , "price" => $obj[$i]->price);
                     $this->orderdetail->add($array);
                 }
-                echo 1;
+                echo $orderID;
                 return;
             }
             
