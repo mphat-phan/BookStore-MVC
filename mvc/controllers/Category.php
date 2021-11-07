@@ -3,7 +3,6 @@ class Category extends Controller{
     
     function __construct(){
         $this->category = $this->model("CategoryModel");
-        
     }
 
     function index(){
@@ -12,6 +11,7 @@ class Category extends Controller{
 		));        
     }
     function getAll(){
+
         $list = $this->category->getAll();
         echo $list;
     }
@@ -20,6 +20,7 @@ class Category extends Controller{
         echo $list;
     }
     function add(){
+        
         if(isset($_POST['txtName']) && $_POST['txtDetail']){
 
             $name = $_POST['txtName'];

@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input value = 0 min=0 name="" type="number" class="form-control" id="txtQuantity"
+                                        <input value = 1 min=0 name="" type="number" class="form-control" id="txtQuantity"
                                             placeholder=" " >
                                     </div>
                                     <div class="form-group">
@@ -97,7 +97,7 @@
 
 </div>
 <div class="modal" id="saveModel">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
 
             <div class="card card-primary">
@@ -200,13 +200,42 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-success">
+        <div class="modal-dialog">
+          <div class="modal-content bg-success">
+            <div class="modal-header">
+              <h4 class="modal-title">Success</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Thanh toán thành công&hellip;</p>
+                <form action="" method="post" id="printbill">
+                    <div class="card-body">
+                        <div class="modal-footer justify-content-between">
+                            <button name="submit" type="submit" rel="noopener" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
+                            <button id="reload" type="button" class="btn btn-outline-light">Trở về</button>
+                        </div>
+                    </div>
+                </form>
+              
+              
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     var orderdetail = []   ;
     var selectProduct = document.getElementById('selectProduct');
     var productNumberRealtime;
-    var customerID;
-    var user = "<?php echo $_COOKIE['username'] ?>";
+    var customerID="";
+    var orderID; //id hóa đơn
+    var user = '<?php echo $_COOKIE['username'] ?>'
     function fetchProduct(){
         $.ajax({
             url: '<?php echo constant('URL') ?>product/getByID/'+selectProduct.value,
@@ -338,7 +367,7 @@
             } );
             ordertable.destroy();
         });
-        
+
         $("#formAdd").submit(function (e) {
             e.preventDefault();
             if(document.getElementById('txtTotal').value==0){
@@ -362,10 +391,22 @@
                     "txtEmployeeUser" : $("#txtEmployeeUser").val(),
                     "txtCustomerID" : customerID,
                     "txtSale" : $("#txtSale").val(),
-                    "orderdetail" : JSON.stringify(orderdetail)
+                    "orderdetail" : JSON.stringify(orderdetail),
+                    "txtMoneyInput" : $("#txtMoneyInput").val(),
+                    "txtMoneyOutput" :$("#txtMoneyOutput").val()
                 }, // serializes the form's elements.
                 success: function (data) {
-                    sweetAlertCRUD(data, "Add");
+                    if(data>0){
+                        orderID = data;
+                       sweetAlertCRUD(1, "Add"); 
+                       $("#saveModel").removeClass("modal show");
+                       $("#modal-success").modal('show');
+                       $("#printbill").attr('action',"<?php echo constant('URL') ?>sell/printInvoice/"+parseInt(orderID));
+                    }
+                    else{
+                        sweetAlertCRUD(0, "Add"); 
+                    }
+                    
                     console.log(data);
                 }
             });
@@ -393,6 +434,7 @@
         });
       
     });
+    
     function removeRow(e){
         id=$(e).attr('data_id');
         if(removeArr(id)==1){

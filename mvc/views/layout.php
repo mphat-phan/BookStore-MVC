@@ -1,15 +1,8 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost:84/Bookstore/');
-  if( isset($_COOKIE["username"]))
-  {
-      echo "Welcome " . $_COOKIE["username"];
-  }
-  else
-  {
-      echo "Không có tên";
-  }  
+  define ('URL', 'http://localhost/Bookstore/');
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
