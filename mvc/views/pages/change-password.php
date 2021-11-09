@@ -1,39 +1,31 @@
-<div class="login-box">
-  <div class="login-logo">
-    <p><strong>Book</strong>store</p>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">    
-    <div class="card-body login-card-body">
-    <p class="login-box-msg">Create your new password here.</p>      
-    <div id="loginmessage">
-    </div>
-    <div id="countdown">
-    </div>
-    <form id="formRequest" method="post" action="">
-      <div class="card-body">
-        <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+<div class="logincss">
+  <div class="login-wrap">
+    <div class="login-html">
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">CHANGE PASSWORD</label>      
+      <div class="login-form">        
+        <div id="loginmessage">
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Retype Password</label>
-            <input type="password" name="retypepassword" class="form-control" id="exampleInputPassword2" placeholder="Password">
-        </div>        
-      </div>
-      <!-- /.card-body -->
-      <div class="card-footer">
-      <input type="submit" value="Change" class="btn btn-primary btn-block">
-      </div>
-    </form>      
-      <p class="mb-1 ml-3">
-        <a href="<?php echo constant('URL') ?>Home/Login">Login</a>
-      </p>
-      <p class="mb-0 ml-3">
-        <a href="<?php echo constant('URL') ?>Register" class="text-center">Register a new membership</a>
-      </p>
+        <div id="countdown">
+        </div>
+          <form action="" method="post" id="formRequest">                        
+          <div class="group form-group">
+              <label for="pass" class="label">Password</label>
+              <input id="exampleInputPassword1" type="password" name="password" class="input" data-type="password">            
+            </div>
+            <div class="group form-group">
+              <label for="pass" class="label">Repeat Password</label>
+              <input id="exampleInputPassword2" type="password" name="retypepassword" class="input" data-type="password">            
+            </div>
+            <div class="group">              
+              <input type="submit" value="Change" class="button">
+            </div>
+            <div class="hr"></div>
+            <div class="foot-lnk">
+              <a href="<?php echo constant('URL') ?>Home/login">Back to login</a>
+            </div>
+          </div>
+        </form>              
     </div>
-    <!-- /.login-card-body -->
   </div>
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>

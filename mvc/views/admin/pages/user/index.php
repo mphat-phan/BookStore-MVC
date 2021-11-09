@@ -27,8 +27,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">User table</h3>                            
-
+                            <h3 class="card-title">User table</h3>                                                                                    
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1" role="button"
                                 data-toggle="modal" data-target="#">Import</button>
                         </div>
@@ -68,6 +67,34 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+<div class="modal" id="AddUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add User Account</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAddUser" action="" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="">Employee</label>
+                            <select class="form-control" name="employee" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectEmployee">                                
+                            </select>                         
+                        </div>                                               
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>             
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="modal" id="AddModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -250,7 +277,8 @@
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     
-    $(document).ready(function () {        
+    $(document).ready(function () { 
+               
         usertable = $('#usertable').DataTable({            
             dom: 'Bfrtip',
             "ajax": "<?php echo constant('URL') ?>user/getall",
@@ -258,7 +286,12 @@
                     "data": "username"
                 },
                 {
-                    "data": "password"
+                    "data": "password",
+                    "render": function (data, type, row, meta) {                        
+                        return (                                                        
+                            "**************"
+                        );
+                    }
                 },
                 {
                     "data": "date"
@@ -285,12 +318,11 @@
                 {                    
                     "data": "username",                    
                     //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
-                    "render": function (data, type, row, meta) {
-
+                    "render": function (data, type, row, meta) {                        
                         return (                            
-                            "<button onclick='openModal(this)' class='btn btn-warning btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                            "<button onclick='openModal(this)' class='btn btn-info btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
                             data + "'>" +
-                            "Update" +
+                            "Reset Password" +
                             "</button>" +
                             "<button onclick='openModal(this)' class='btn btn-danger btn-sm mr-1' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
                             data + "'>" +
@@ -389,7 +421,22 @@
             });
 
         })            
-       
+        $("#formAddUser").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "add");
+                    usertable.ajax.reload();
+
+                }
+            });
+
+        })
     });          
     function openModal(e){
         $getCurrentUrl = '<?php echo constant('URL') ?>user';
@@ -411,12 +458,14 @@
         $formAdd = document.querySelector("#formAdd");
         $formLock = document.querySelector("#formLock");
         $formUnlock = document.querySelector("#formUnlock");
+        $formAddUser = document.querySelector("#formAddUser");
 
         $formAdd.action =  $getCurrentUrl+"/add/"+id;
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
         $formLock.action = $getCurrentUrl+"/updateStatus/"+id;
         $formUnlock.action = $getCurrentUrl+"/updateStatus/"+id;
+        $formAddUser.action = $getCurrentUrl+"/updateUsername/"+id ;
 
         var selectRole = document.getElementById('selectRole');                         
             $.ajax({
@@ -438,6 +487,19 @@
                                 });
                             }                                                    
                         });
+                    });
+                }                                                                    
+            });
+
+        var selectemployee = document.getElementById('selectEmployee');                         
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>employee/getUserhasNull',
+                dataType: 'json',
+                success: function(data){                    
+                    var employee = data['data'];                      
+                    Object.keys(employee).forEach(key => {                                                                                                                                        
+                        selectemployee.options[key] = new Option("ID: " + employee[key].id + " - " + employee[key].name,employee[key].name);                                                
                     });
                 }                                                                    
             });                        

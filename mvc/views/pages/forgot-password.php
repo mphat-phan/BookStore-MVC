@@ -1,59 +1,53 @@
-<div class="login-box">
-  <div class="login-logo">
-    <p><strong>Book</strong>store</p>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div id="content"></div>
-    <div class="card-body login-card-body">
-    <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>      
-    <div id="loginmessage">
-    </div>
-      <form action="" method="post" id="formRequest">
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" name="txtEmail" placeholder="Email" required>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
+<div class="logincss">
+  <div class="login-wrap">
+    <div class="login-html">  
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">GIVE ME YOUR EMAIL</label>      
+      <div class="login-form">
+        <div class="loading" id="loading">          
+          <div class="spinner-border" role="status" style="margin-left: 22.5px; margin-top:18.5px">
+            <span class="sr-only">Loading...</span>
           </div>
         </div>        
-        <div class="row">          
-          <div class="col-12">
-            <input type="submit" value="Request new password" class="btn btn-primary btn-block">
-          </div>          
-        </div>
-      </form>
-      
-      <p class="mb-1">
-        <a href="<?php echo constant('URL') ?>Home/Login">Login</a>
-      </p>
-      <p class="mb-0">
-        <a href="<?php echo constant('URL') ?>Home/Register" class="text-center">Register a new membership</a>
-      </p>
+        <div id="loginmessage">
+        </div>                      
+          <form action="" method="post" id="formRequest">                        
+            <div class="group">
+              <label for="email" class="label">Email</label>              
+              <input type="email" class="input" name="txtEmail" required>          
+            </div>
+            <div class="group">              
+              <input type="submit" value="Request password" class="button">
+            </div>
+            <div class="hr"></div>
+            <div class="foot-lnk">
+              <a href="<?php echo constant('URL') ?>Home/login">Back to login</a>
+            </div>
+          </div>
+        </form>              
     </div>
-    <!-- /.login-card-body -->
   </div>
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-$('#formRequest').submit(function(e){
-  e.preventDefault();
+$('#formRequest').submit(function(e){  
+  e.preventDefault();  
   var form = $(this);
   var url = "<?php echo constant('URL') ?>Home/checkEmail";
-  $.ajax({
-    
+  document.getElementById("loading").style.display="block";
+  $.ajax({    
     type: "POST",
     url: url,
     data: form.serialize(),
     success: function(data)
     {
       if(data==0)
-      {
+      {                
+        document.getElementById("loading").style.display="none";
         $('#loginmessage').html('<p class="alert alert-danger"><strong>Fail!</strong> Invalid email</p>');
       }
       else if(data==1)
-      {        
+      {              
+        document.getElementById("loading").style.display="none";
         window.location = "<?php echo constant('URL') ?>Home/VerifyEmail";
       }
     }

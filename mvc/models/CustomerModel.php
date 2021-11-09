@@ -34,8 +34,6 @@
             public function delete($id){
                   return $this->delete_by_id($id);
 
-            }
-
-
+            }            
 	}
 ?> 

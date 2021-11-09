@@ -35,7 +35,10 @@
                   return $this->delete_by_id($id);
 
             }
-
+            public function getUserQuery($sql)
+            {   
+                  return $this->selectQuery($sql);
+            }
 
 	}
 ?> 

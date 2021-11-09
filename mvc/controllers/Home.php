@@ -3,6 +3,7 @@ class Home extends Controller{
     
     function __construct(){
         $this->Home = $this->model("UserModel");        
+        $this->Employee = $this->model("EmployeeModel"); 
     }
 
     function Login(){        
@@ -117,14 +118,17 @@ class Home extends Controller{
         echo 1;
     }
     function addRegister() {        
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])){
+        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
             $username = $_POST['username'];
-            $email = $_POST['email'];            
+            $email = $_POST['email']; 
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
             $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
             $date = date("Y-m-d");            
 
-            $array = array('username' => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
-            if($this->Home->add($array)==1){
+            $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
+            $arrayemployee = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);
+            if($this->Home->add($arrayuser)==1 && $this->Employee->add($arrayemployee)==1){
                 echo 1;
                 return;
             }

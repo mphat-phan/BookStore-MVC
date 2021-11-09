@@ -7,7 +7,19 @@ function ValidateEmail() {
         lblError.innerHTML = "Invalid email address.";
     }
 }
-
+function ValidateFullname() {
+    var name = document.getElementById("fname").value;       
+    lblError.innerHTML = "";
+    var expr1 = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/g;
+    var expr2 = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]{4,}(?: [a-zA-Z]+){0,2}$/;
+    if (!expr2.test(name) ) {        
+        return 0;
+    }    
+    else
+    {
+        return 1;
+    }
+}
 function ValidatePhoneNumber() {
     var email = document.getElementById("txtPhone").value;
     var lblError = document.getElementById("lblError");

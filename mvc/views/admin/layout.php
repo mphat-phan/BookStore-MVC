@@ -1,7 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost/Bookstore/');  
+  define ('URL', 'http://localhost:84/Bookstore/');  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,8 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/login.css">
     <style>
       
     </style>

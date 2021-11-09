@@ -1,8 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost/Bookstore/');
-  
+  define ('URL', 'http://localhost:84/Bookstore/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +18,7 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/login.css">
 </head>
 <!--
 `body` tag options:
@@ -29,7 +29,8 @@
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition login-page">
+<body style="background:#c8c8c8">
+<!-- class="hold-transition login-page" -->
 <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'.php'?>
     
 <!-- /.login-box -->
@@ -43,6 +44,6 @@
 <!-- AdminLTE App -->
 <script src="<?php echo constant('URL') ?>public/assets/dist/js/adminlte.min.js"></script>
 <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
-
+<script src="<?php echo constant('URL') ?>public/assets/js/build-in.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
-            }	
+            }            	
             public function add($data){
                   return $this->add_new($data);
             }
@@ -28,7 +28,6 @@
             }
             public function getToCheckLogin($sql){
                   return $this->selectQuery($sql);
-            }
-
+            }            
 	}
 ?> 
