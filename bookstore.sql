@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Nov 09, 2021 at 03:57 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: localhost:3307
+-- Generation Time: Nov 09, 2021 at 04:15 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -296,6 +296,17 @@ INSERT INTO `role` (`name`, `detail`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `role_permission`
+--
+
+CREATE TABLE `role_permission` (
+  `rolename` varchar(50) NOT NULL,
+  `permissionID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sale`
 --
 
@@ -374,17 +385,6 @@ CREATE TABLE `userrole` (
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
 ('minhphat', 'admin'),
 ('minhphat', 'customer');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_permission`
---
-
-CREATE TABLE `user_permission` (
-  `username` varchar(50) NOT NULL,
-  `permissionID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -481,6 +481,13 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`name`);
 
 --
+-- Indexes for table `role_permission`
+--
+ALTER TABLE `role_permission`
+  ADD PRIMARY KEY (`rolename`,`permissionID`),
+  ADD KEY `permissionID` (`permissionID`);
+
+--
 -- Indexes for table `sale`
 --
 ALTER TABLE `sale`
@@ -499,13 +506,6 @@ ALTER TABLE `user`
 ALTER TABLE `userrole`
   ADD PRIMARY KEY (`username`,`rolename`),
   ADD KEY `rolename` (`rolename`);
-
---
--- Indexes for table `user_permission`
---
-ALTER TABLE `user_permission`
-  ADD PRIMARY KEY (`username`,`permissionID`),
-  ADD KEY `permissionID` (`permissionID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -631,18 +631,18 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
+-- Constraints for table `role_permission`
+--
+ALTER TABLE `role_permission`
+  ADD CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`rolename`) REFERENCES `role` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permissionID`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `userrole`
 --
 ALTER TABLE `userrole`
   ADD CONSTRAINT `userrole_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `userrole_ibfk_2` FOREIGN KEY (`rolename`) REFERENCES `role` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `user_permission`
---
-ALTER TABLE `user_permission`
-  ADD CONSTRAINT `user_permission_ibfk_1` FOREIGN KEY (`permissionID`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_permission_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
