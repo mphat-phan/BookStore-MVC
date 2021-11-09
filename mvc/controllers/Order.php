@@ -24,12 +24,17 @@ class Order extends Controller{
     }
     function add(){
         $arr;
-        if(isset($_POST['orderdetail'])){
+        if(isset($_POST['orderdetail'])){ 
             $date = $_POST['txtDate'];
+            $saleID =  $_POST['txtSale'];
+            $subtotal= $_POST['txtSubTotal'];
+            $shippingfee= 0;
+            $discount = $_POST['txtDiscount'];
             $total= $_POST['txtTotal'];
             $MoneyInput = $_POST['txtMoneyInput'];
             $MoneyOutput = $_POST['txtMoneyOutput'];
             $EmployeeUser= $_POST['txtEmployeeUser'];
+            
             //$sale= $_POST['txtSale'];
             $obj = json_decode($_POST['orderdetail']);
             
@@ -40,10 +45,10 @@ class Order extends Controller{
             
             if(!empty( $_POST['txtCustomerID'])){
                 $CustomerID = $_POST['txtCustomerID'];
-                $arr = array('date' => $date, "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID, "status" => "3" , "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+                $arr = array('date' => $date, "saleID" => $saleID , "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID, "status" => "4" , "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
             }
             else{
-                $arr = array('date' => $date, "total" => $total , "employee_username" => $EmployeeUser,"status" => "3", "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+                $arr = array('date' => $date, "saleID" => $saleID , "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser,"status" => "4", "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
             }
 
             if($this->order->add($arr)==1){
@@ -81,6 +86,11 @@ class Order extends Controller{
             }
         }
         echo 0;
+    }
+    function printInvoice($id){
+        $this->view("admin/layout2",array(
+			"Page" => "printInvoice"
+		));  
     }
     function pages() {
         $this->view("pages/404");

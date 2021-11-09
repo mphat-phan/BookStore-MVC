@@ -118,6 +118,20 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
+                                    <label for="exampleInputEmail1">Sub Total</label>
+                                    <input name='txtSubtotal' type="number" class="form-control" id="txtSubTotal"
+                                        disabled>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Sale</label>
+                                    <input value=0 name='txtDiscount' type="number" class="form-control" id="txtDiscount"
+                                        disabled>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
                                     <label for="exampleInputEmail1">Total</label>
                                     <input name='txtTotal' type="number" class="form-control" id="txtTotal"
                                         disabled>
@@ -137,8 +151,8 @@
                                     <div class="form-group">
                                         <label>Mã giảm giá(nếu có)</label>
                                         <input name="txtSale" type="text" class="form-control" id="txtSale"
-                                            placeholder=" ">
-                                        <span id="" style="color: red">Không tìm thấy</span>
+                                            placeholder="">
+                                        <span id="saleError" style="color: red">Không tìm thấy</span>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -231,11 +245,17 @@
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     var orderdetail = []   ;
-    var selectProduct = document.getElementById('selectProduct');
-    var productNumberRealtime;
-    var customerID="";
-    var orderID; //id hóa đơn
-    var user = '<?php echo $_COOKIE['username'] ?>'
+    var selectProduct = document.getElementById('selectProduct'); // selectProduct 
+    var productNumberRealtime; //biến lưu số lượng sản phẩm realtime sau 2s
+    
+    var customerID=""; //biến lưu customer khi có số điện thoại
+    var orderID; //biến lưu id hóa đơn dùng cho in hóa đơn
+    var user = '<?php echo $_COOKIE['username'] ?>' // biến lưu username khi login 
+    
+    var minorder; //biến lưu minorder sale
+    var maxsale; //biến lưu maxorder sale
+    var salediscount=0; //biến lưu discount sale
+
     function fetchProduct(){
         $.ajax({
             url: '<?php echo constant('URL') ?>product/getByID/'+selectProduct.value,
@@ -253,12 +273,12 @@
 
     $(document).ready(function() {
  
-        setInterval(fetchProduct,2000); //set số lượng retime
+        setInterval(fetchProduct,2000); //set số lượng realtime trong 2s
 
         var txtQuantity = document.getElementById('txtQuantity');
         var txtPrice = document.getElementById('txtPrice');
         var product_quantity = document.getElementById('product_quantity');
-        
+        // select product
         $.ajax({
                 type: "POST",
                 url: '<?php echo constant('URL') ?>product/getall',
@@ -274,14 +294,20 @@
                 }
 
         });
+        //inbill
+        $("#printbill").submit(function (e) {
+        
+        })
+        // select on change
         $('#selectProduct').on('change', function() {
             fetchProduct();
         });
-
+        // event on change calculate sum 
         $('#txtMoneyInput').on('keyup', function() {
             $('#txtMoneyOutput').val($('#txtMoneyInput').val() - $('#txtTotal').val() );
         });
 
+        // kiểm tra khi thêm sản phẩm
         $("#addOrder").click(function(){
             //kiem tra so luong san pham
             if(productNumberRealtime<=0){
@@ -303,7 +329,6 @@
             quantity = $("#txtQuantity").val();
             price = $("#txtPrice").val();   
             total = quantity*price;
-            console.log(productID);
             if(checkDuplicate(productID)==1){
                 sweetAlertCRUD(0, "Bị trùng mã sản phẩm : ");
                 return;
@@ -367,7 +392,7 @@
             } );
             ordertable.destroy();
         });
-
+        // thanh toán
         $("#formAdd").submit(function (e) {
             e.preventDefault();
             if(document.getElementById('txtTotal').value==0){
@@ -379,6 +404,7 @@
                 sweetAlertCRUD(0, "Vui lòng nhập đủ tiền hóa đơn :");
                 return;
             }
+           
 
             var form = $(this);
             var url = form.attr('action');
@@ -388,6 +414,8 @@
                 data: {
                     "txtDate" : $("#txtDate").val(),
                     "txtTotal" : $("#txtTotal").val(),
+                    "txtSubTotal" : $("#txtSubTotal").val(),
+                    "txtDiscount" : $("#txtDiscount").val(),
                     "txtEmployeeUser" : $("#txtEmployeeUser").val(),
                     "txtCustomerID" : customerID,
                     "txtSale" : $("#txtSale").val(),
@@ -399,15 +427,15 @@
                     if(data>0){
                         orderID = data;
                        sweetAlertCRUD(1, "Add"); 
-                       $("#saveModel").removeClass("modal show");
+                       $("#saveModel").modal('hide');
                        $("#modal-success").modal('show');
-                       $("#printbill").attr('action',"<?php echo constant('URL') ?>sell/printInvoice/"+parseInt(orderID));
+                       $("#printbill").attr('action',"<?php echo constant('URL') ?>order/printInvoice/"+parseInt(orderID));
+                       
                     }
                     else{
                         sweetAlertCRUD(0, "Add"); 
                     }
-                    
-                    console.log(data);
+                 
                 }
             });
 
@@ -423,6 +451,7 @@
                     for(let i=0;i<customer.length;i++){
                         if(customer[i].phone==$('#txtPhone').val()){
                             customerID = customer[i].id;
+
                             $('#lblError').html("");
                             return;
                         }
@@ -432,9 +461,51 @@
                 }
             })
         });
+        //kiểm tra tồn tại mã sale
+        $('#txtSale').on('keyup', function() {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>sale/getall',
+                dataType: 'json',
+                success: function(data){
+                    var sale = data['data'];
+                    for(let i=0;i<sale.length;i++){
+                        if(sale[i].id==$('#txtSale').val()){
+                            minorder = sale[i].minorder;
+                            maxsale = sale[i].maxsale;
+                            discount = sale[i].discount;
+                            ///hàm tính tính tiền sell
+                            if(minorder>$("#txtSubTotal").val())
+                            {
+                                $('#saleError').html("Đơn tối thiểu để áp dụng mã là "+minorder+"<br>"+"Giảm tối đa "+maxsale);
+                                return;
+                            }
+                            else{
+                                $('#saleError').html("Giảm tối đa "+maxsale+"<br>"+"Mã giảm "+discount+"%");
+                                // tính giá giảm theo hóa đơn
+                                salediscount = $('#txtSubTotal').val()*discount/100; 
+                                //nếu giá giảm lớn hơn giá tối đa thì gán giá giảm là giá tối đa
+                                if(salediscount>maxsale){
+                                    salediscount = maxsale; 
+                                }
+                                //gán giá giảm vào input discount
+                                $('#txtDiscount').val(salediscount);
+                                //tính tổng tiền hóa đơn
+                                $('#txtTotal').val( $('#txtSubTotal').val()-$('#txtDiscount').val() );
+                                return;
+                            }
+                            $('#saleError').html("");
+                            return;
+                        }
+                        
+                    }
+                    $('#saleError').html("Không tìm thấy");
+                }
+            })
+        });
       
     });
-    
+    //remove row
     function removeRow(e){
         id=$(e).attr('data_id');
         if(removeArr(id)==1){
@@ -499,6 +570,7 @@
         
         
     }
+    //kiêm tra trùng mã sản phẩm
     function checkDuplicate(id){
         for(let i=0;i<orderdetail.length;i++){
             if(orderdetail[i].productID==id){
@@ -507,6 +579,7 @@
         }
         return 0;
     }
+    //remove arr product
     function removeArr(id){
 
         for(let i=0;i<orderdetail.length;i++){
@@ -517,6 +590,7 @@
         }
         return 0;
     }
+    //tính tổng = số lượng * giá
     function keyupCalculate(element){
     
         
@@ -537,6 +611,7 @@
 
         
     }
+    //tỉnh tổng hóa đơn
     function sumOrder(){
         var sum = 0
         for(let i=0;i<orderdetail.length;i++){
@@ -544,12 +619,14 @@
         }
         return sum;
     }
+    //get today
     function getDate(){
         var today = new Date();
         return today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
 
 
     }
+    //modal
     function openModal(){
             //action
         $getCurrentUrl = '<?php echo constant('URL') ?>order';
@@ -558,7 +635,10 @@
         const x = document.forms["formAdd"];
         x.elements[0].value = getDate();
         x.elements[1].value = sumOrder();
-        x.elements[2].value =  user;
+        x.elements[2].value = salediscount;
+        x.elements[3].value = sumOrder()-salediscount;
+        x.elements[4].value = user;
+
         
     } 
     

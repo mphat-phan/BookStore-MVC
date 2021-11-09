@@ -33,19 +33,21 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="ordertable" class="table table-bordered table-striped">
+                            <table id="ordertable" class="table table-bordered table-striped dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Date</th>
+                                        <th>SaleID</th>
+                                        <th>SubTotal</th>
+                                        <th>Shipping fee</th>
+                                        <th>Discount</th>
                                         <th>Total</th>
                                         <th>Employee Username</th>
                                         <th>Customer Username</th>
                                         <th>CustomerID</th>
                                         <th>#</th>
                                         <th>Status</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,6 +57,10 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Date</th>
+                                        <th>SaleID</th>
+                                        <th>SubTotal</th>
+                                        <th>Shipping fee</th>
+                                        <th>Discount</th>
                                         <th>Total</th>
                                         <th>Employee Username</th>
                                         <th>Customer Username</th>
@@ -226,6 +232,7 @@
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
+
 $(document).ready(function () {
         ordertable = $('#ordertable').DataTable({
             dom: 'Bfrtip',
@@ -237,6 +244,18 @@ $(document).ready(function () {
                 },
                 {
                     "data": "date"
+                },
+                {
+                    "data": "saleID"
+                },
+                {
+                    "data": "subtotal"
+                },
+                {
+                    "data": "shippingfee"
+                },
+                {
+                    "data": "discount"
                 },
                 {
                     "data": "total"
@@ -317,11 +336,19 @@ $(document).ready(function () {
                             return (
                                 "<button onclick='' class='btn btn-info btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
                                 id + "'>" +
-                                "Đang giao" +
+                                "Đã thanh toán" +
                                 "</button>"
                             );
                         }
                         else if(status==3){
+                            return (
+                                "<button onclick='' class='btn btn-success btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Đang giao" +
+                                "</button>"
+                            );
+                        }
+                        else if(status==4){
                             return (
                                 "<button onclick='' class='btn btn-success btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
                                 id + "'>" +
