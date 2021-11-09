@@ -11,9 +11,6 @@ class Sell extends Controller{
 			"Page" => "sell"    
 		));        
     }
-    function printInvoice($id){
-        echo $id;
-    }
     function pages() {
         $this->view("pages/404");
     }
