@@ -4,8 +4,11 @@ class Order extends Controller{
     function __construct(){
         $this->order = $this->model("OrderModel");
         $this->orderdetail = $this->model("OrderDetailModel");
+        $this->saleorder = $this->model("SaleOrderModel");
+        
     }
     function index(){
+      
         $this->view("admin/layout",array(
 			"Page" => "order"
 		));        
@@ -23,44 +26,55 @@ class Order extends Controller{
         echo $list;
     }
     function add(){
+       
         $arr;
         if(isset($_POST['orderdetail'])){ 
             $date = $_POST['txtDate'];
-            $saleID =  $_POST['txtSale'];
+           
             $subtotal= $_POST['txtSubTotal'];
-            $shippingfee= 0;
+            $shippingfee= $_POST['txtShippingfee'];
             $discount = $_POST['txtDiscount'];
             $total= $_POST['txtTotal'];
             $MoneyInput = $_POST['txtMoneyInput'];
             $MoneyOutput = $_POST['txtMoneyOutput'];
             $EmployeeUser= $_POST['txtEmployeeUser'];
             
-            //$sale= $_POST['txtSale'];
             $obj = json_decode($_POST['orderdetail']);
+            $saleList = json_decode($_POST['saleList']);
             
             if($total==0){
                 echo 0; 
                 return;
             }
             
-            if(!empty( $_POST['txtCustomerID'])){
+            if(!empty($_POST['txtCustomerID'])){
                 $CustomerID = $_POST['txtCustomerID'];
-                $arr = array('date' => $date, "saleID" => $saleID , "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID, "status" => "4" , "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+                $arr = array('date' => $date , "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser, "customerID" => $CustomerID, "status" => "4" , "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
             }
             else{
-                $arr = array('date' => $date, "saleID" => $saleID , "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser,"status" => "4", "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
+                $arr = array('date' => $date, "subtotal" => $subtotal , "shippingfee" => $shippingfee , "discount" => $discount , "total" => $total , "employee_username" => $EmployeeUser,"status" => "4", "moneyinput" => $MoneyInput, "moneyoutput" => $MoneyOutput);
             }
 
             if($this->order->add($arr)==1){
                 $orderID = $this->order->selectLast();
                 for($i = 0 ; $i < count($obj) ; $i++){
                     
-                    $array = array('orderID' => $orderID ,'productID' => $obj[$i]->productID, "quantity" => $obj[$i]->quantity , "price" => $obj[$i]->price);
+                    $array = array('orderID' => $orderID ,'productID' => $obj[$i]->productID, "quantity" => $obj[$i]->quantity , "price" => $obj[$i]->price , "subtotal" => $obj[$i]->subtotal , "discount" => $obj[$i]->discount);
                     $this->orderdetail->add($array);
+                }
+                //nếu tồn tại mã sale thì add vào bảng sale order
+                if(!empty($saleList)){
+
+                    for($i = 0 ; $i < count($saleList) ; $i++){
+                    
+                        $array = array('orderID' => $orderID ,'saleID' => $saleList[$i]->saleID);
+                        $this->saleorder->add($array);
+                    }
                 }
                 echo $orderID;
                 return;
             }
+
             
         }
         echo 0;

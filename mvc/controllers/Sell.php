@@ -7,7 +7,7 @@ class Sell extends Controller{
     }
 
     function index(){
-        $this->view("admin/layout",array(
+        $this->view("admin/layout2",array(
 			"Page" => "sell"    
 		));        
     }

@@ -25,14 +25,8 @@
       </address>
     </div>
     <!-- /.col -->
-    <div class="col-sm-4 invoice-col">
-      To
-      <address>
-        Customer name:<strong id="txtCustomerName"></strong><br>
-        Address:<b id="txtAddress"></b><br>
-        Phone:<b id="txtPhone"></b><br>
-        Email<b id="txtEmail"></b><br>
-      </address>
+    <div id="customer" class="col-sm-4 invoice-col">
+    
     </div>
     <!-- /.col -->
     <div class="col-sm-4 invoice-col">
@@ -54,6 +48,8 @@
             <th>Qty</th>
             <th>Price</th>
             <th>Sub Total</th>
+            <th>Discount</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +60,8 @@
             <th>Qty</th>
             <th>Price</th>
             <th>Sub Total</th>
+            <th>Discount</th>
+            <th>Total</th>
           </tr>
         </tfoot>
       </table>
@@ -77,31 +75,24 @@
     
     <!-- /.col -->
     <div class="col-6">
-      <p class="lead">Amount Due 2/22/2014</p>
-
       <div class="table-responsive">
         <table class="table">
           <tr>
             <th style="width:50%">Subtotal</th>
-            <td id="">$</td>
-          </tr>
-          <tr>
-            <th>Tax (9.3%)</th>
-            <td>$</td>
+            <td id="txtSubtotal"></td>
           </tr>
           <tr>
             <th>Shipping:</th>
-            <td>$</td>
+            <td id="txtShipping"></td>
           </tr>
           <tr>
             <th>Sale:</th>
-            <td>$</td>
+            <td id="txtDiscount"></td>
           </tr>
           <tr>
             <th>Total:</th>
             <td id="txtTotal"></td>
           </tr>
-
           <tr>
             <th>Tiền khách đưa:</th>
             <td id="txtMoneyInput"></td>
@@ -151,12 +142,18 @@
           "data": "price"
         },
         {
+          "data": "subtotal"
+        },
+        {
+          "data": "discount"
+        },
+        {
           "data": null,
           "render": function (data, type, full) {
-            var total = full.quantity*full.price;
+            var subtotal = full.quantity*full.price;
+            var total = subtotal - subtotal*full.discount/100;
             return (
-              total
-
+                total
             );
           }
         }
@@ -178,29 +175,44 @@
                     $("#txtMoneyInput").html(order[0].moneyinput+" VND")
                     $("#txtMoneyOutput").html(order[0].moneyoutput+" VND")
                     $("#txtEmployee").html(order[0].employee_username)
+                    $("#txtShipping").html(order[0].shippingfee+" VND")
+                    $("#txtDiscount").html(order[0].discount+" VND")
+                    $("#txtSubtotal").html(order[0].subtotal+" VND")
+                    customer(order[0].customerID)
                     //txtPhonetxtEmailtxtOrderIDtxtOrderDate 
                     //txtTotaltxtMoneyInputtxtMoneyOutput
                 }
 
     });
-    $.ajax({
-      type: "POST",
-      url: '<?php echo constant('URL')?>customer/getbyid/14',
-      dataType: 'json',
-      success: function(data){
-        var customer = data['data'];
-        console.log(customer);
-        $("#txtCustomerName").html(customer[0].name);
-        $("#txtPhone").html(customer[0].phone);
-        $("#txtEmail").html(customer[0].email);
-
-      }
-    });
+    
     setTimeout(function(){ 
       window.addEventListener("load", window.print());
     }, 3000);
 
     
   });
+  function customer($id){
+    $.ajax({
+      type: "POST",
+      url: '<?php echo constant('URL')?>customer/getbyid/'+$id,
+      dataType: 'json',
+      success: function(data){
+        var customer = data['data'];
+        $("#customer").html(      
+          'To'+
+          '<address>'+
+          'Customer name:<strong id="txtCustomerName"></strong><br>'+
+          'Address:<b id="txtAddress"></b><br>'+
+          'Phone:<b id="txtPhone"></b><br>'+
+          'Email<b id="txtEmail"></b><br>'+
+          '</address>'
+        )
+        $("#txtCustomerName").html(customer[0].name);
+        $("#txtPhone").html(customer[0].phone);
+        $("#txtEmail").html(customer[0].email);
+
+      }
+    });
+  }
   
 </script>

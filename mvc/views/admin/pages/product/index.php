@@ -39,7 +39,7 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="producttable" class="table table-bordered table-striped dt-responsive nowrap">
+                            <table id="producttable" class="table table-bordered table-striped dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -51,6 +51,7 @@
                                         <th>Image</th>
                                         <th>Author</th>
                                         <th>Publisher</th>
+                                        <th>SaleID</th>
                                         <th>#</th>
 
                                     </tr>
@@ -69,6 +70,7 @@
                                         <th>Image</th>
                                         <th>Author</th>
                                         <th>Publisher</th>
+                                        <th>SaleID</th>
                                         <th>#</th>
                                     </tr>
                                     
@@ -88,7 +90,7 @@
     </section>
     <!-- /.content -->
     <div class="modal"  id="AddModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -113,7 +115,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Quantity</label>
                                 <input name="txtQuantity" type="number" class="form-control "
-                                    value="0" disabled required>
+                                    value="0" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Price</label>
@@ -123,12 +125,12 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Page Number</label>
                                 <input name="txtPagenumber" type="number" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Image</label>
                                 <input name="txtImage" id="txtImage" type="file" accept="image/*" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Author</label>
@@ -138,6 +140,11 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Publisher</label>
                                 <select name="selectPublisher" class="form-control select2" id="selectPublisher" style="width: 100%;">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">SaleID</label>
+                                <select name="selectSale" class="form-control select2" id="selectSale" style="width: 100%;">
                                 </select>
                             </div>
                             <!-- /.card-body -->
@@ -180,7 +187,7 @@
         </div>
     </div>
     <div class="modal" id="UpdateModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -215,13 +222,15 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Page Number</label>
                                 <input name="txtPagenumber" type="number" class="form-control "
-                                    placeholder="Enter " required>
+                                    placeholder="Enter " >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Image</label>
-                                <input name="txtImage" type="file" accept="image/*" class="form-control "
-                                    placeholder="Enter " required>
+                                <input id="txtImage" name="txtImage" type="file" accept="image/*" class="form-control "
+                                    placeholder="Enter " >
+                                <img id="imageProduct" class="img-fluid" src="" alt="">
                             </div>
+                             
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Author</label>
                                 <select name="selectAuthor" class="form-control select2" id="selectAuthorUpdate" style="width: 100%;">
@@ -230,6 +239,11 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Publisher</label>
                                 <select name="selectPublisher" class="form-control select2" id="selectPublisherUpdate" style="width: 100%;">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">SaleID</label>
+                                <select name="selectSale" class="form-control select2" id="selectSaleUpdate" style="width: 100%;">
                                 </select>
                             </div>
                             <!-- /.card-body -->
@@ -247,16 +261,38 @@
 <!-- jQuery -->
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    
+    $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox({
+            alwaysShowClose: true
+        });
+    });
+    })
     $(document).ready(function () {
+    
+      
+            $('input[type="file"]').change(function(e) {
+                
+                $("#imageProduct").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
+            
+            });
+   
+
+
     //select author
     var selectAuthor = document.getElementById('selectAuthor'); 
     //select publisher
     var selectPublisher = document.getElementById('selectPublisher'); 
+    //select sale
+    var selectSale = document.getElementById('selectSale'); 
+
     //select author update
     var selectAuthorUpdate = document.getElementById('selectAuthorUpdate'); 
     //select publisher update
     var selectPublisherUpdate = document.getElementById('selectPublisherUpdate'); 
+    //select sale update
+    var selectSaleUpdate = document.getElementById('selectSaleUpdate'); 
     
     var option = document.createElement("option");
         //select author
@@ -290,11 +326,28 @@
                 });
             }
         });
+        //select sale
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>sale/getall',
+            dataType: 'json',
+            success: function(data){
+                var sale = data['data'];
+                Object.keys(sale).forEach(key => {
+                    selectSale.options[key] = new Option(sale[key].id+"-"+sale[key].name, sale[key].id);
+                });
+                Object.keys(sale).forEach(key => {
+                    selectSaleUpdate.options[key] = new Option(sale[key].id+"-"+sale[key].name, sale[key].id);
+                });
+            }
+        });
         //
 
         //datatable
         producttable = $('#producttable').DataTable({
             dom: 'Bfrtip',
+            "scrollY":"500px",
+           
             "ajax": "<?php echo constant('URL') ?>Product/getall",
             "columns": [{
                     "data": "id"
@@ -317,16 +370,25 @@
                 {
                     "data": "image",
                     "render": function (data, type, row, meta) {
-                        return(
-                            "<img src='<?php echo constant('URL') ?>/public/assets/images/"+data+"' class='img-thumbnail'>"
-
-                        );
+                        if(data){
+                            return(
+                            "<a href='<?php echo constant('URL') ?>/public/assets/images/"+data+"' data-toggle='lightbox' data-title='Image'>"+
+                                "<img class='img-fluid' src='<?php echo constant('URL') ?>/public/assets/images/"+data+"' class='img-fluid mb-2' alt='white sample'/>"+
+                            "</a>"
+                            );
+                        }
+                        else{
+                            return(
+                                "Blank"
+                            )
+                        }
+                        
                     }
                 },
                 {
                     "data": "authorID",
                     "render": function (data, type, row, meta) {
-                        return(
+                        return( 
                             data.name
                         );
                     }
@@ -336,6 +398,14 @@
                     "render": function (data, type, row, meta) {
                         return(
                             data.name
+                        );
+                    }
+                },
+                {
+                    "data": "saleID",
+                    "render": function (data, type, row, meta) {
+                        return(
+                            data.id
                         );
                     }
                 },
@@ -432,13 +502,18 @@
                 x.elements[2].value = data['data'][0].quantity;
                 x.elements[3].value = data['data'][0].price;
                 x.elements[4].value = data['data'][0].pagenumber;
+                $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
+                $('#txtImage').val(data['data'][0].image);
                 //x.elements[5].value = data['data'][0].image;
                 //$('#selectAuthor').val(data['data'][0].authorID); 
                 $('[name=selectAuthorUpdate]').val(data['data'][0].authorID);
                 $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID);
 
                 $('[name=selectPublishUpdate]').val(data['data'][0].publisherID);
-                $("#selectPublishUpdate").select2().select2("val", data['data'][0].authorID);
+                $("#selectPublishUpdate").select2().select2("val", data['data'][0].publisherID);
+
+                $('[name=selectSaleUpdate]').val(data['data'][0].saleID);
+                $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID);
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
@@ -448,4 +523,7 @@
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
     }
+    
 </script>
+
+

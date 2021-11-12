@@ -1,6 +1,5 @@
 
-<div id="content" class="content-wrapper">
-    <!-- Content Header (Page header) -->
+
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -69,9 +68,6 @@
                                     <button type="button" onclick='' href="#" id = "addOrder"
                                         class="btn btn-primary btn-sm float-left mr-1">Add</button>
                                         
-                                    <button type="button" onclick="" href="#"
-                                        class="btn btn-success btn-sm float-right mr-1" role="button"
-                                        data-toggle="modal" data-target="#">Import</button>
                                 </div>
                             </div>
 
@@ -95,7 +91,7 @@
     </section>
     <!-- /.content -->
 
-</div>
+
 <div class="modal" id="saveModel">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -153,6 +149,7 @@
                                         <input name="txtSale" type="text" class="form-control" id="txtSale"
                                             placeholder="">
                                         <span id="saleError" style="color: red">Không tìm thấy</span>
+                                        <div id="acceptSale"></div>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -215,6 +212,7 @@
     </div>
 </div>
 <div class="modal fade" id="modal-success">
+
         <div class="modal-dialog">
           <div class="modal-content bg-success">
             <div class="modal-header">
@@ -225,7 +223,7 @@
             </div>
             <div class="modal-body">
                 <p>Thanh toán thành công&hellip;</p>
-                <form action="" method="post" id="printbill">
+                <form action="" method="post" id="printbill" target="_blank">
                     <div class="card-body">
                         <div class="modal-footer justify-content-between">
                             <button name="submit" type="submit" rel="noopener" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
@@ -242,6 +240,7 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+</div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     var orderdetail = []   ;
@@ -252,28 +251,34 @@
     var orderID; //biến lưu id hóa đơn dùng cho in hóa đơn
     var user = '<?php echo $_COOKIE['username'] ?>' // biến lưu username khi login 
     
+    var saleList = [];
+
     var minorder; //biến lưu minorder sale
     var maxsale; //biến lưu maxorder sale
+    var discount;
     var salediscount=0; //biến lưu discount sale
-
-    function fetchProduct(){
+    var sum=0;
+    var discount;
+    function fetchProduct(id){
         $.ajax({
-            url: '<?php echo constant('URL') ?>product/getByID/'+selectProduct.value,
+            url: '<?php echo constant('URL') ?>product/getByID/'+id,
             type: 'post',
             dataType: 'json',
             success: function(data){
                 var product = data['data'];
+                
+                discount = product[0].saleID.discount;
                 //console.log(product[0].quantity);
-                $('#product_quantity').text("Sô lượng sản phẩm : "+product[0].quantity);
+                $('#product_quantity').text("Số lượng sản phẩm : "+product[0].quantity);
                 productNumberRealtime = product[0].quantity;
                 $('#txtPrice').val(product[0].price);
             }
         });
     }
-
+  
     $(document).ready(function() {
- 
-        setInterval(fetchProduct,2000); //set số lượng realtime trong 2s
+        
+        setInterval(fetchProduct(selectProduct.value),2000); //set số lượng realtime trong 2s
 
         var txtQuantity = document.getElementById('txtQuantity');
         var txtPrice = document.getElementById('txtPrice');
@@ -284,23 +289,37 @@
                 url: '<?php echo constant('URL') ?>product/getall',
                 dataType: 'json',
                 success: function(data){
+                   
                     var product = data['data'];
+                    
                     Object.keys(product).forEach(key => {
                         selectProduct.options[key] = new Option("ID:"+product[key].id+" - "+product[key].name, product[key].id);
                     });
                     txtPrice.value=product[0].price;
                     $('#product_quantity').text("Sô lượng sản phẩm : "+product[0].quantity);
+                    fetchProduct(selectProduct.value);
 
                 }
-
         });
         //inbill
-        $("#printbill").submit(function (e) {
-        
+        $("#modal-success").submit(function (e) {
+            e.preventDefault();
+            
+            var form = $(this);
+            var url = form.attr('action');
+            var win = window.open('<?php echo constant('URL') ?>order/printInvoice/'+parseInt(orderID), '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
+            location.reload();
         })
         // select on change
         $('#selectProduct').on('change', function() {
-            fetchProduct();
+            fetchProduct(selectProduct.value);
         });
         // event on change calculate sum 
         $('#txtMoneyInput').on('keyup', function() {
@@ -319,7 +338,7 @@
                 sweetAlertCRUD(0, "Nhập số lượng sản phẩm : ");
                 return
             }
-            fetchProduct();
+            fetchProduct(selectProduct.value);
             if(productNumberRealtime<parseInt($("#txtQuantity").val())){
                 sweetAlertCRUD(0, "Số lượng nhập không quá số lượng hiện tại : ");
                 return
@@ -328,14 +347,17 @@
             productID = $("#selectProduct").val();
             quantity = $("#txtQuantity").val();
             price = $("#txtPrice").val();   
-            total = quantity*price;
+            subtotal = quantity*price;
+            total = subtotal-subtotal*discount/100;
+            console.log(total)
             if(checkDuplicate(productID)==1){
                 sweetAlertCRUD(0, "Bị trùng mã sản phẩm : ");
                 return;
             }
             sweetAlertCRUD(1, "Add");
-            orderdetail.push({productID,quantity,price,total});
-     
+            
+            orderdetail.push({productID,quantity,price,subtotal,discount,total});
+            
             let ordertable=$('#ordertable').DataTable( {
             "data": orderdetail,
             //define the columns and set the data property for each column
@@ -356,19 +378,37 @@
                     "title": "Price", "data": "price",
                     "render": function (data, type, row, meta) {
                         return(
-                            "<input onkeyup='keyupCalculate(this)' name='txtPriceDetail' type='number' class='form-control' value='"+data+"'>"
+                            "<input onkeyup='keyupCalculate(this)' name='txtPriceDetail' type='number' class='form-control' value='"+data+"' disabled>"
                         )
                     }
                 
                 },
                 { 
-                    "title": "Total", "data": null,
+                    "title": "SubTotal", "data": "subtotal",
                     "render": function (data, type, full) {
-                        var quantity = full.quantity;
-                        var price = full.price;
-                        var total = quantity*price;
+                        
                         return(
-                            "<input name='txtTotal' type='number' class='form-control' value='"+total+"' disabled >"
+                            "<input name='txtTotal' type='number' class='form-control' value='"+data+"' disabled >"
+                        )
+
+                    }
+                
+                },
+                { 
+                    "title": "Discount %", "data": "discount" ,
+                    "render": function (data, type, row, meta) {
+                        return(
+                            "<input onkeyup='' name='txtDiscountProduct' type='number' class='form-control' value='"+data+"' disabled>"
+                        )
+                    }
+                
+                },
+                { 
+                    "title": "Total", "data": "total",
+                    "render": function (data, type, full) {
+                        
+                        return(
+                            "<input name='txtTotal' type='number' class='form-control' value='"+data+"' disabled >"
                         )
 
                     }
@@ -392,6 +432,40 @@
             } );
             ordertable.destroy();
         });
+        //thêm mã sale id vào mảng
+        $("#acceptSale").click(function(){
+            if(checkDuplicateSale($("#txtSale").val())){
+                sweetAlertCRUD(0, "Bị trùng mã sale : ");
+                return;
+            }
+            var saleID = $("#txtSale").val();
+            discountByID = parseInt(discount);
+            saleList.push({saleID,discountByID,maxsale,minorder});
+            sum=0;  
+            for(let i=0;i<saleList.length;i++){
+                salediscount = parseInt($('#txtSubTotal').val()*saleList[i]['discountByID']/100) ;
+
+                if(salediscount>saleList[i]['maxsale']){
+                    salediscount = parseInt(saleList[i]['maxsale']); 
+                }
+                
+                sum+=salediscount;
+
+                salediscount=0;
+            }
+
+            $('#txtDiscount').val(sum);
+
+            //gán giá giảm vào input discount
+            
+            //tính tổng tiền hóa đơn
+            $('#txtTotal').val( $('#txtSubTotal').val()-$('#txtDiscount').val() );
+
+            $("#txtSale").val('');
+            $('#acceptSale').html("");
+            $('#saleError').html("Không tìm thấy");
+
+        });
         // thanh toán
         $("#formAdd").submit(function (e) {
             e.preventDefault();
@@ -400,7 +474,7 @@
                 return;
             }
 
-            if(document.getElementById('txtMoneyInput').value<document.getElementById('txtTotal').value){
+            if(parseInt($("#txtMoneyInput").val())<parseInt($("#txtTotal").val())){
                 sweetAlertCRUD(0, "Vui lòng nhập đủ tiền hóa đơn :");
                 return;
             }
@@ -418,7 +492,8 @@
                     "txtDiscount" : $("#txtDiscount").val(),
                     "txtEmployeeUser" : $("#txtEmployeeUser").val(),
                     "txtCustomerID" : customerID,
-                    "txtSale" : $("#txtSale").val(),
+                    "txtShippingfee" : 0,
+                    "saleList" : JSON.stringify(saleList),
                     "orderdetail" : JSON.stringify(orderdetail),
                     "txtMoneyInput" : $("#txtMoneyInput").val(),
                     "txtMoneyOutput" :$("#txtMoneyOutput").val()
@@ -474,32 +549,39 @@
                             minorder = sale[i].minorder;
                             maxsale = sale[i].maxsale;
                             discount = sale[i].discount;
+
+                            startdate = sale[i].startdate;
+                            enddate = sale[i].enddate;
+                            today = getDate();
+                            
+                            var from = new Date(startdate.replace(/-/g,'/'));  
+                            var to = new Date(enddate.replace(/-/g,'/'));  
+                            var check = new Date(today.replace(/-/g,'/'));
+
                             ///hàm tính tính tiền sell
-                            if(minorder>$("#txtSubTotal").val())
+                            if(parseInt(minorder)>parseInt($("#txtSubTotal").val()))
                             {
-                                $('#saleError').html("Đơn tối thiểu để áp dụng mã là "+minorder+"<br>"+"Giảm tối đa "+maxsale);
+                                $('#saleError').html("Đơn tối thiểu để áp dụng mã là "+minorder+" | "+"Giảm tối đa "+maxsale);
+                               
+                                return;
+                            }
+                            else if(check < from || check > to){
+                                $('#saleError').html("Mã đã hết hạn");
                                 return;
                             }
                             else{
-                                $('#saleError').html("Giảm tối đa "+maxsale+"<br>"+"Mã giảm "+discount+"%");
-                                // tính giá giảm theo hóa đơn
-                                salediscount = $('#txtSubTotal').val()*discount/100; 
-                                //nếu giá giảm lớn hơn giá tối đa thì gán giá giảm là giá tối đa
-                                if(salediscount>maxsale){
-                                    salediscount = maxsale; 
-                                }
-                                //gán giá giảm vào input discount
-                                $('#txtDiscount').val(salediscount);
-                                //tính tổng tiền hóa đơn
-                                $('#txtTotal').val( $('#txtSubTotal').val()-$('#txtDiscount').val() );
+                                $('#saleError').html("Giảm tối đa "+maxsale+" | "+"Mã giảm "+discount+"%");
+                                $('#acceptSale').html("<div id='confirmSale' type='button' class='btn btn-outline-primary'>Áp dụng mã</div>");
                                 return;
                             }
                             $('#saleError').html("");
+                            
                             return;
                         }
                         
                     }
                     $('#saleError').html("Không tìm thấy");
+                    $('#acceptSale').html("");
                 }
             })
         });
@@ -521,7 +603,7 @@
                     "title": "Quantity", "data": "quantity",
                     "render": function (data, type, row, meta) {
                         return(
-                            "<input name='txtQuantityDetail' type='number' class='form-control' value='"+data+"'>"
+                            "<input onkeyup='keyupCalculate(this)' name='txtQuantityDetail' type='number' class='form-control' value='"+data+"'>"
                         )
                     }
                 
@@ -530,19 +612,37 @@
                     "title": "Price", "data": "price",
                     "render": function (data, type, row, meta) {
                         return(
-                            "<input name='txtPriceDetail' type='number' class='form-control' value='"+data+"'>"
+                            "<input onkeyup='keyupCalculate(this)' name='txtPriceDetail' type='number' class='form-control' value='"+data+"' disabled>"
                         )
                     }
                 
                 },
                 { 
-                    "title": "Total", "data": null,
+                    "title": "SubTotal", "data": "subtotal",
                     "render": function (data, type, full) {
-                        var quantity = full.quantity;
-                        var price = full.price;
-                        var total = quantity*price;
+                        
                         return(
-                            total
+                            "<input name='txtTotal' type='number' class='form-control' value='"+data+"' disabled >"
+                        )
+
+                    }
+                
+                },
+                { 
+                    "title": "Discount %", "data": "discount" ,
+                    "render": function (data, type, row, meta) {
+                        return(
+                            "<input onkeyup='' name='txtDiscountProduct' type='number' class='form-control' value='"+data+"' disabled>"
+                        )
+                    }
+                
+                },
+                { 
+                    "title": "Total", "data": "total",
+                    "render": function (data, type, full) {
+                        
+                        return(
+                            "<input name='txtTotal' type='number' class='form-control' value='"+data+"' disabled >"
                         )
 
                     }
@@ -579,6 +679,15 @@
         }
         return 0;
     }
+
+    function checkDuplicateSale(id){
+        for(let i=0;i<saleList.length;i++){
+            if(saleList[i].saleID==id){
+                return 1;
+            }
+        }
+        return 0;
+    }
     //remove arr product
     function removeArr(id){
 
@@ -592,22 +701,53 @@
     }
     //tính tổng = số lượng * giá
     function keyupCalculate(element){
-    
-        
-        var row = element.parentNode.parentNode.rowIndex; // trả về hàng của table
        
 
+        var row = element.parentNode.parentNode.rowIndex; // trả về hàng của table
+       
+        var c0 = document.getElementById("ordertable").rows[row].cells.item(0);
+        id = c0.innerHTML;
+        
         var c1 = document.getElementById("ordertable").rows[row].cells.item(1);
         var quantity = c1.childNodes[0].value;
-        orderdetail[row-1].quantity = quantity;
+
+        $.ajax({
+            url: '<?php echo constant('URL') ?>product/getByID/'+id,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){
+                var product = data['data'];
+                if(parseInt(product[0].quantity)<parseInt(quantity)){
+                    sweetAlertCRUD(0,"Nhập quá số lượng hiện có");
+                    c1.childNodes[0].value=product[0].quantity;
+                }
+                else{
+                    orderdetail[row-1].quantity = quantity;
+                }
+            
+                
+            }
+        });
+
         
         var c2 = document.getElementById("ordertable").rows[row].cells.item(2);
         var price = c2.childNodes[0].value;
         orderdetail[row-1].price = price;
-        
+
         var c3 =document.getElementById("ordertable").rows[row].cells.item(3);
-        c3.childNodes[0].value=quantity*price;
-        orderdetail[row-1].total = quantity*price;
+        total = quantity*price;
+        c3.childNodes[0].value=total;
+        orderdetail[row-1].subtotal = total;
+
+        
+        var c4 = document.getElementById("ordertable").rows[row].cells.item(4);
+        var discount = c4.childNodes[0].value;
+        orderdetail[row-1].discount = discount;
+        
+        var c5 =document.getElementById("ordertable").rows[row].cells.item(5);
+        total = quantity*price;
+        c5.childNodes[0].value=total - total*discount/100;
+        orderdetail[row-1].total = total - total*discount/100;
 
         
     }
@@ -635,8 +775,8 @@
         const x = document.forms["formAdd"];
         x.elements[0].value = getDate();
         x.elements[1].value = sumOrder();
-        x.elements[2].value = salediscount;
-        x.elements[3].value = sumOrder()-salediscount;
+        x.elements[2].value = sum;
+        x.elements[3].value = sumOrder()-sum;
         x.elements[4].value = user;
 
         

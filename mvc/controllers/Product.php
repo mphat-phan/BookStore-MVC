@@ -6,6 +6,7 @@ class Product extends Controller{
         $this->product = $this->model("ProductModel");
         $this->author = $this->model("AuthorModel");
         $this->publisher = $this->model("PublisherModel");
+        $this->sale = $this->model("SaleModel");
     }
 
     function index(){
@@ -18,15 +19,27 @@ class Product extends Controller{
         $product = json_decode($this->product->getAll());
         
         for($i=0 ; $i< count($product->data) ; $i++ ){
+
             $author = $product->data[$i]->authorID; // id author
             $publisher = $product->data[$i]->publisherID; // id publisher
+            $sale = $product->data[$i]->saleID;
+
             
-            $authorobj = json_decode($this->author->getID($author));
-            $publisherobj = json_decode($this->publisher->getID($publisher));
-            
-            $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
-            $product->data[$i]->publisherID = array("name" => $publisherobj->data[0]->name);
-       
+            if(isset($author)){
+                $authorobj = json_decode($this->author->getID($author));
+                $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
+            }
+            if(isset($publisher)){
+                $publisherobj = json_decode($this->publisher->getID($publisher));
+                $product->data[$i]->publisherID = array("name" => $publisherobj->data[0]->name);
+            }
+            if(isset($sale)){
+                $saleobj = json_decode($this->sale->getID($sale));
+                $product->data[$i]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount);
+            }
+            else{
+                $product->data[$i]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
+            }
         }
         
         echo json_encode(["data" => $product->data],JSON_PRETTY_PRINT);
@@ -35,12 +48,21 @@ class Product extends Controller{
     }
 
     function getByID($id){
-        $list = $this->product->getID($id);
-        echo $list;
+        //$list = $this->product->getID($id);
+
+        $product = json_decode($this->product->getID($id));
+        $sale = $product->data[0]->saleID;
+        if(isset($sale)){
+            $saleobj = json_decode($this->sale->getID($sale));
+            $product->data[0]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount);
+        }
+        else{
+            $product->data[0]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
+        }
+        
+        echo json_encode(["data" => $product->data],JSON_PRETTY_PRINT);
     }
     
-     
-
     function add(){
        
         if(isset($_POST['txtName']) && $_POST['txtPrice']){
@@ -53,8 +75,9 @@ class Product extends Controller{
             $image= basename($_FILES["txtImage"]["name"]);
             $publisherID= $_POST['selectPublisher'];
             $authorID= $_POST['selectAuthor'];
+            $saleID= $_POST['selectSale'];
             
-            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID );
+            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
             if($this->product->add($array)==1){
                 $target_dir = "./public/assets/images/";
                 $target_file = $target_dir.basename($_FILES["txtImage"]["name"]);
@@ -74,11 +97,18 @@ class Product extends Controller{
             $price= $_POST['txtPrice'];
             $pagenumber= $_POST['txtPagenumber'];
             
+            
             $image= basename($_FILES["txtImage"]["name"]);
             $publisherID= $_POST['selectPublisher'];
             $authorID= $_POST['selectAuthor'];
+            $saleID= $_POST['selectSale'];
+            if(empty($image)){
+                $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
+            }
+            else{
+                $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
+            }
             
-            $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID );
             if($this->product->updateByID($array,$id)==1){
                 $target_dir = "./public/assets/images/";
                 $target_file = $target_dir.basename($_FILES["txtImage"]["name"]);

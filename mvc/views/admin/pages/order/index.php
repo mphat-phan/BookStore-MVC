@@ -38,7 +38,7 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Date</th>
-                                        <th>SaleID</th>
+                                       
                                         <th>SubTotal</th>
                                         <th>Shipping fee</th>
                                         <th>Discount</th>
@@ -48,6 +48,7 @@
                                         <th>CustomerID</th>
                                         <th>#</th>
                                         <th>Status</th>
+                                        <th>Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,7 +58,7 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Date</th>
-                                        <th>SaleID</th>
+                                   
                                         <th>SubTotal</th>
                                         <th>Shipping fee</th>
                                         <th>Discount</th>
@@ -67,6 +68,7 @@
                                         <th>CustomerID</th>
                                         <th>#</th>
                                         <th>Status</th>
+                                        <th>Detail</th>
                                     </tr>
 
                                 </tfoot>
@@ -81,43 +83,6 @@
                 <div class="col-12">
                     <!-- /.card -->
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Order Detail table</h3>
-
-                        </div>
-
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="orderdetailtable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>OrderID</th>
-                                        <th>ProductID</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                      
-                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>OrderID</th>
-                                        <th>ProductID</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                       
-                                    </tr>
-
-                                </tfoot>
-
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
                     <!-- /.card -->
                 </div>
             </div>
@@ -228,6 +193,61 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="InfoOrder">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Info</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order Detail table</h3>
+
+                        </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="orderdetailtable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>OrderID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Subtotal</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>OrderID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Subtotal</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
@@ -244,9 +264,6 @@ $(document).ready(function () {
                 },
                 {
                     "data": "date"
-                },
-                {
-                    "data": "saleID"
                 },
                 {
                     "data": "subtotal"
@@ -358,53 +375,25 @@ $(document).ready(function () {
                         }
 
                     }
+                },
+                {
+                    
+                    "data" : null,
+                    "render": function (data, type, full) {
+                        var id = full.id;
+                        
+                        return (
+                            "<button onclick='openDetail(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#InfoOrder' data_id='" +
+                            id + "'>" +
+                            "Show Detail Order" +
+                            "</button>"
+                        );
+                            
+                    }
                 }
             ],
 
-        });
-
-        $('#ordertable').click(function(){
-            var table = document.getElementById("ordertable");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function (row) {
-                    return function () {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var id = cell.innerHTML;
-
-                            orderdetailtable = $('#orderdetailtable').DataTable({
-                            dom: 'Bfrtip',
-                            "ajax": "<?php echo constant('URL') ?>orderdetail/getbyid/"+id,
-                            "columns": [{
-                                    "data": "orderID"
-                                },
-                                {
-                                    "data": "productID",
-                                    "render": function (data, type, row, meta) {
-                                        return(
-                                            data.name
-                                        );
-                                    }
-                                },
-                                {
-                                    "data": "quantity"
-                                },
-                                {
-                                    "data": "price"
-                                }
-                            
-                            ],
-
-                            });
-                        };
-                        };
-                    currentRow.onclick = createClickHandler(currentRow);
-                    }
-        })
-
-     
-        
+        });     
         $("#formUpdate").submit(function (e) {
 
             e.preventDefault();
@@ -440,7 +429,52 @@ $(document).ready(function () {
 
         })
     });
+    function openDetail(e){
+        
+        id=$(e).attr('data_id');
+        orderdetailtable = $('#orderdetailtable').DataTable({
+        dom: 'Bfrtip',
+        "ajax": "<?php echo constant('URL') ?>orderdetail/getbyid/"+id,
+        "columns": [{
+            "data": "orderID"
+            },
+            {
+            "data": "productID",
+                "render": function (data, type, row, meta) {
+                    return(
+                        data.name
+                    );
+                }
+            },
+            {
+                "data": "quantity"
+            },
+            {
+                "data": "price"
+            },
+            {
+                "data": "subtotal"
+            },
+            {
+                "data": "discount"
+            },
+            {
+                "data": null,
+                "render": function (data, type, full) {
+                    var subtotal = full.quantity*full.price;
+                    var total = subtotal - subtotal*full.discount/100;
+                    return(
+                        total
+                    );
+                }
+            }
+                            
+            ],
 
+              });
+          orderdetailtable.destroy();
+                  
+    }
     function openModal(e){
         
         $getCurrentUrl = '<?php echo constant('URL') ?>order';
@@ -472,73 +506,3 @@ $(document).ready(function () {
     }
     
 </script>
-
-<!--
-<script>
-    $getCurrentUrl = 'http://localhost/Bookstore/<?=$data['Page']?>';
-
-    function openModalOrder(e) {
-        //update model
-        /*
-        const x = document.forms["formUpdate"];
-        x.elements[0].value= e.customerID;
-        x.elements[1].value= e.employeeID;
-        x.elements[2].value= e.date;
-        x.elements[3].value= e.total;
-        x.elements[4].value= e.status;
-        */
-
-        //action
-        //$formUpdate = document.querySelector("#formUpdate");
-        $formDelete = document.querySelector("#formDelete");
-        //$formAdd = document.querySelector("#formAdd");
-        //$formAdd.action =  $getCurrentUrl+"/add";
-        //$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-        $formDelete.action = $getCurrentUrl + "/deleteOrder/" + e.id;
-
-    }
-
-    function openModalOrderDetail(e) {
-
-        //update model
-        /*
-        const x = document.forms["formUpdate"];
-        x.elements[0].value= e.orderID;
-        x.elements[0].value= e.bookID;
-        x.elements[0].value= e.quantity;
-        x.elements[0].value= e.price;
-        */
-
-        //action
-        //$formUpdate = document.querySelector("#formUpdate");
-        $formDelete = document.querySelector("#formDelete");
-        //$formAdd = document.querySelector("#formAdd");
-        //$formAdd.action =  $getCurrentUrl+"/add";
-        //$formUpdate.action = $getCurrentUrl+"/update/"+e.id;
-        $formDelete.action = $getCurrentUrl + "/deleteOrderDetail/" + e.orderID;
-
-    }
-
-    function addRowHandlers() {
-        var table = document.getElementById("ordertable");
-        var rows = table.getElementsByTagName("tr");
-        for (i = 0; i < rows.length; i++) {
-            var currentRow = table.rows[i];
-            var createClickHandler = function (row) {
-                return function () {
-                    var cell = row.getElementsByTagName("td")[0];
-                    var id = cell.innerHTML;
-                    $.ajax({
-                        type: "POST",
-                        url: $getCurrentUrl + "/chitiethoadon/" + id,
-                        success: function (data) {
-                            $("#orderdetailtable").html(data);
-                        }
-                    });
-                };
-            };
-            currentRow.onclick = createClickHandler(currentRow);
-        }
-    }
-</script>
--->

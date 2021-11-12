@@ -84,7 +84,7 @@
     </section>
     <!-- /.content -->
 
-    <div class="modal"  id="AddModal">
+    <div class="modal" id="AddModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -98,6 +98,11 @@
 
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Sale ID</label>
+                                <input name="txtSaleID" type="text" class="form-control formUpdateInput"
+                                    placeholder="Enter " required>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Sale Name</label>
                                 <input name="txtName" type="text" class="form-control formUpdateInput"
                                     placeholder="Enter " required>
@@ -105,7 +110,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sale Quantity</label>
                                 <input name='txtQuantity' type="number" class="form-control formUpdateInput"
-                                    placeholder="Enter "required>
+                                    placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sale Discount</label>
@@ -125,12 +130,12 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sale Min Order</label>
                                 <input name='txtMinOrder' type="number" class="form-control formUpdateInput"
-                                    placeholder="Enter " required>
+                                    placeholder="Enter ">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Sale Max Sale</label>
                                 <input name='txtMaxSale' type="number" class="form-control formUpdateInput"
-                                    placeholder="Enter " required>
+                                    placeholder="Enter ">
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">

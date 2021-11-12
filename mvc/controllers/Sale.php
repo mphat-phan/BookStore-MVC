@@ -18,23 +18,11 @@ class Sale extends Controller{
     function getByID($id){
         $list = $this->sale->getID($id);
         echo $list;
-    }
-    static function reverse($number)  
-    {  
-    /* writes number into string. */  
-        $num = (string) $number;  
-        /* Reverse the string. */  
-        $revstr = strrev($num);  
-        /* writes string into int. */  
-        $reverse = (int) $revstr;   
-        return $reverse;  
-    }  
+    } 
     function add(){
         
-        if(isset($_POST['txtName']) && $_POST['txtQuantity'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate'] && $_POST['txtMinOrder'] && $_POST['txtMaxSale']){
-            $id= sale::reverse((int)time());
-            
-
+        if(isset($_POST['txtName']) && $_POST['txtSaleID'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate']){
+            $id = $_POST['txtSaleID'];
             $name = $_POST['txtName'];
             $quantity= $_POST['txtQuantity'];
             $discount = $_POST['txtDiscount'];
@@ -55,7 +43,7 @@ class Sale extends Controller{
     }
 
     function update($id){
-        if(isset($_POST['txtName']) && $_POST['txtQuantity'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate'] && $_POST['txtMinOrder'] && $_POST['txtMaxSale']){
+        if(isset($_POST['txtName']) && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate']){
             
             $name = $_POST['txtName'];
             $quantity= $_POST['txtQuantity'];
