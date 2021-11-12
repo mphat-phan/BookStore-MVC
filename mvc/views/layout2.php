@@ -34,7 +34,6 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/main.css">
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/login.css">
     <style>
       

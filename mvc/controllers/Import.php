@@ -3,7 +3,13 @@ class Import extends Controller{
     
     function __construct(){
         $this->import = $this->model("ImportModel");
-        $this->importdetail = $this->model("ImportDetailModel");
+        $this->importdetail = $this->model("ImportDetailModel");        
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.import")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
 
     function index(){
@@ -24,7 +30,11 @@ class Import extends Controller{
         echo $list;
     }
     function add(){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.import","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['importdetail'])){
             $date = $_POST['txtDate'];
             $total= $_POST['txtTotal'];
@@ -52,13 +62,26 @@ class Import extends Controller{
         
     }
     function update(){
-
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.import","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
     }
     function delete(){
-
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.import","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

@@ -7,6 +7,12 @@ class Product extends Controller{
         $this->author = $this->model("AuthorModel");
         $this->publisher = $this->model("PublisherModel");
         $this->sale = $this->model("SaleModel");
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.product")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
 
     function index(){
@@ -64,7 +70,11 @@ class Product extends Controller{
     }
     
     function add(){
-       
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtPrice']){
             $name = $_POST['txtName'];
             $description= $_POST['txtDescription'];
@@ -91,6 +101,11 @@ class Product extends Controller{
         
     }
     function update($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtPrice']){
             $name = $_POST['txtName'];
             $description= $_POST['txtDescription'];
@@ -120,6 +135,11 @@ class Product extends Controller{
         echo 0;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->product->delete($id)==1){
@@ -132,6 +152,10 @@ class Product extends Controller{
     function pages() {
         $this->view("pages/404");
     }
-    
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
+    }
 }
 ?>

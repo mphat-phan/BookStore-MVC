@@ -3,7 +3,12 @@ class Publisher extends Controller{
     
     function __construct(){
         $this->publisher = $this->model("PublisherModel");
-        
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.product")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
 
     function index(){
@@ -20,7 +25,11 @@ class Publisher extends Controller{
         echo $list;
     }
     function add(){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(!empty($_POST['txtName']) && isset($_POST['txtName'])){
 
             $name = $_POST['txtName'];
@@ -37,7 +46,11 @@ class Publisher extends Controller{
     }
 
     function update($id){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(!empty($_POST['txtName']) && isset($_POST['txtName'])){
             
             $name = $_POST['txtName'];
@@ -53,6 +66,11 @@ class Publisher extends Controller{
         echo 0;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->publisher->delete($id)==1){
@@ -64,6 +82,11 @@ class Publisher extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

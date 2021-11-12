@@ -49,6 +49,7 @@
                                         <th>Price</th>
                                         <th>PageNumber</th>
                                         <th>Image</th>
+                                        <th>Category</th>
                                         <th>Author</th>
                                         <th>Publisher</th>
                                         <th>SaleID</th>
@@ -68,6 +69,7 @@
                                         <th>Price</th>
                                         <th>PageNumber</th>
                                         <th>Image</th>
+                                        <th>Category</th>
                                         <th>Author</th>
                                         <th>Publisher</th>
                                         <th>SaleID</th>
@@ -186,6 +188,32 @@
             </div>
         </div>
     </div>
+<div class="modal" id="AddCategoryModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add Category</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAdd" action="" method="post">
+                    
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Category</label>
+                            <select class="form-control select2" name="selectCategory[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectCategory" style="width: 100%;">                                                              
+                            </select>                         
+                        </div>                                               
+                        <!-- /.card-body -->                        
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
     <div class="modal" id="UpdateModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -386,6 +414,18 @@
                     }
                 },
                 {
+                    "data": "id",
+                    "render": function (data, type, row, meta) {
+                        return(
+                            "<button onclick='openModal(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#AddCategoryModal' data_id='" +
+                            data + "'>" +
+                            "Category" +
+                            "</button>"
+
+                        );
+                    }
+                },
+                {
                     "data": "authorID",
                     "render": function (data, type, row, meta) {
                         return( 
@@ -522,6 +562,58 @@
         $formAdd.action =  $getCurrentUrl+"/add";
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
+
+        var selectCategory = document.getElementById('selectCategory');
+        var category;                         
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>category/getall',
+                dataType: 'json',
+                success: function(data){                                        
+                    category = data['data'];                    
+                    Object.keys(category).forEach(key => {                                                                    
+                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name + " - " + category[key].detail, category[key].id)
+                    });                            
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo constant('URL') ?>category/getCategoryProduct/'+id,
+                        dataType: 'json',
+                        success: function(data){                                    
+                            var categoryproduct = data['data'];                            
+                            if(categoryproduct !== undefined)
+                            {
+                                Object.keys(category).forEach(key1 => {                                
+                                    Object.keys(categoryproduct).forEach(key2 => {                                    
+                                        if(category[key1].id == categoryproduct[key2].categoryID)
+                                        {                                        
+                                            category[key1]['selected'] = 'selected';
+                                        }                                    
+                                    })
+                                    category['product'] = id;
+                                });                                                                                        
+                                Object.keys(category).forEach(key => {                                
+                                    if(category[key]['selected'] == 'selected' && category['product'] == id)
+                                    {
+                                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name + " - " + category[key].detail, category[key].id,false,true);
+                                    }                                    
+                                });                                                                                                
+                            }                                                        
+                        }                                                    
+                    });                    
+                }                
+            });                                      
+        $('#selectCategory').change(function(e) {            
+            var selected = $(e.target).val();            
+            console.log(selected);
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>category/addCategoryProduct/'+id,
+                data: {selected:selected}, // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");                    
+                }
+            });
+        });
     }
     
 </script>

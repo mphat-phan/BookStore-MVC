@@ -176,11 +176,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Name</label>
-                                <input name="txtName" type="text" class="form-control" placeholder="Enter ">
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter " required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Phone</label>
-                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter ">
+                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter " required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Email</label>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Address</label>
-                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter ">
+                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter " required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Birth</label>
@@ -196,11 +196,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Join Date</label>
-                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter ">
+                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter " required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Username</label>
-                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter ">
+                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter " required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -321,14 +321,17 @@
         var name,detail;
         $.ajax({
             type: "POST",
-            url: '<?php echo constant('URL') ?>employee/getByUsername/'+id,
+            url: '<?php echo constant('URL') ?>employee/getByID/'+id,
             dataType: 'json',
             success: function(data){
-                x.elements[0].value = data['data'][0].id;
+                console.log(data);                
+                x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].phone;
                 x.elements[2].value = data['data'][0].email;
                 x.elements[3].value = data['data'][0].address;
                 x.elements[4].value = data['data'][0].birth;
+                x.elements[5].value = data['data'][0].joindate;
+                x.elements[6].value = data['data'][0].username;
             }
         });
         $formUpdate = document.querySelector("#formUpdate");

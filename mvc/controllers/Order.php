@@ -6,6 +6,12 @@ class Order extends Controller{
         $this->orderdetail = $this->model("OrderDetailModel");
         $this->saleorder = $this->model("SaleOrderModel");
         
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.sell")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
     function index(){
       
@@ -26,7 +32,11 @@ class Order extends Controller{
         echo $list;
     }
     function add(){
-       
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         $arr;
         if(isset($_POST['orderdetail'])){ 
             $date = $_POST['txtDate'];
@@ -80,6 +90,11 @@ class Order extends Controller{
         echo 0;
     }
     function update($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkStatus'])){
             $status = 1;
             $array = array('status' => $status);
@@ -91,6 +106,11 @@ class Order extends Controller{
         echo 0;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             $status = -1;
             $array = array('status' => $status);
@@ -108,6 +128,11 @@ class Order extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
     
 }

@@ -3,7 +3,12 @@ class Sale extends Controller{
     
     function __construct(){
         $this->sale = $this->model("SaleModel");
-        
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.author")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        } 
     }
 
     function index(){
@@ -21,6 +26,11 @@ class Sale extends Controller{
     } 
     function add(){
         
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtSaleID'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate']){
             $id = $_POST['txtSaleID'];
             $name = $_POST['txtName'];
@@ -43,6 +53,12 @@ class Sale extends Controller{
     }
 
     function update($id){
+ 
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate']){
             
             $name = $_POST['txtName'];
@@ -63,6 +79,11 @@ class Sale extends Controller{
         
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->sale->delete($id)==1){
@@ -74,6 +95,11 @@ class Sale extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>
