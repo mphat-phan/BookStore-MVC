@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Nov 09, 2021 at 04:15 PM
+-- Generation Time: Nov 12, 2021 at 04:46 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -38,10 +38,8 @@ CREATE TABLE `author` (
 --
 
 INSERT INTO `author` (`id`, `name`, `detail`) VALUES
-(3, 'Phan Minh Phát', 'Chi tiết lịch sử'),
-(4, 'Phan Minh Phát 2', '123123123'),
-(5, 'alex', 'alex'),
-(6, 'Phan Minh Phát', 'Chi tiết lịch sử');
+(4, 'Phan Minh Phát 2', 'Phan Minh Phát Phan Minh Phá'),
+(5, 'Bộ giáo dục', 'Bộ giáo dục và đào tạo');
 
 -- --------------------------------------------------------
 
@@ -61,8 +59,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `detail`, `parentID`) VALUES
-(1, 'Lịch sử', 'Chi tiết lịch sử34', 0),
-(2, 'Lịch sử', 'Chi tiết lịch sử', 0);
+(1, 'Lịch sử', 'Lịch sử Việt Nam', 0),
+(2, 'Lịch sử', 'Lịch sử Thế giới', 0),
+(4, 'Tiểu thuyết', 'Tiểu thuyết', 0);
 
 -- --------------------------------------------------------
 
@@ -74,6 +73,13 @@ CREATE TABLE `category_product` (
   `categoryID` int(11) NOT NULL,
   `productID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category_product`
+--
+
+INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
+(4, 8);
 
 -- --------------------------------------------------------
 
@@ -120,7 +126,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
-(7, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'sdfsdf', '2021-11-06', '2021-11-06', 'minhphat');
+(7, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'Hồ Chí Minh', '2021-11-06', '2021-11-06', 'minhphat'),
+(8, 'Đoàn Chí Quang', '0384327229', 'chiquang127@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2021-11-09', 'chiquang');
 
 -- --------------------------------------------------------
 
@@ -155,13 +162,6 @@ CREATE TABLE `importdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `importdetail`
---
-
-INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
-(21, 3, 10, 50000);
-
 -- --------------------------------------------------------
 
 --
@@ -174,13 +174,6 @@ CREATE TABLE `orderdetail` (
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `orderdetail`
---
-
-INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`) VALUES
-(47, 3, 1, 50000);
 
 -- --------------------------------------------------------
 
@@ -222,6 +215,15 @@ CREATE TABLE `permission` (
   `permission` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `permission`
+--
+
+INSERT INTO `permission` (`id`, `permission`) VALUES
+(1, 'add'),
+(2, 'update'),
+(3, 'delete');
+
 -- --------------------------------------------------------
 
 --
@@ -245,13 +247,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `image`, `authorID`, `publisherID`) VALUES
-(3, '10 vạn câu hỏi vì sao 2', '10 vạn câu hỏi vì sao....', 55, 50000, 344, '', 4, 14),
-(4, 'Lịch sử', '.............', 22, 5000450, 233, '', 3, 14),
-(5, 'Lịch sử', '10 vạn câu hỏi vì sao....', 0, 50000, 2344, '', 3, 14),
-(6, '10 vạn câu hỏi vì sao', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled__4_-removebg-preview.png', 3, 14),
-(7, 'Phan Minh Phát', '123', 0, 50000, 200, 'SlickGantt.png', 3, 14),
-(8, '333333333', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled (7).png', 5, 14),
-(9, 'Lịch sử', '123', 0, 50000, 200, 'n.png', 3, 14);
+(8, 'Văn học', 'Sách ngữ văn lớp 9', 0, 50000, 1000, 'Untitled (7).png', 5, 14);
 
 -- --------------------------------------------------------
 
@@ -270,7 +266,7 @@ CREATE TABLE `publisher` (
 --
 
 INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
-(14, 'Lịch sử', '214234'),
+(14, 'NXB HN', 'Thủ đô Hà Nội'),
 (15, 'Phan Minh Phát', 'Chi tiết lịch sử'),
 (16, 'Phan Minh Phát', 'Chi tiết lịch sử');
 
@@ -282,7 +278,7 @@ INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
 
 CREATE TABLE `role` (
   `name` varchar(50) NOT NULL,
-  `detail` varchar(50) DEFAULT NULL
+  `detail` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -290,8 +286,9 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`name`, `detail`) VALUES
-('admin', 'admin'),
-('customer', 'customer');
+('admin', 'Quản lý'),
+('customer', 'Khách hàng'),
+('staff.product', 'Nhân viên bên khu quản lý thông tin sản phẩm (bao gồm quản lý tác giả, danh mục, nhà cung cấp)\r\n');
 
 -- --------------------------------------------------------
 
@@ -303,6 +300,15 @@ CREATE TABLE `role_permission` (
   `rolename` varchar(50) NOT NULL,
   `permissionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `role_permission`
+--
+
+INSERT INTO `role_permission` (`rolename`, `permissionID`) VALUES
+('staff.product', 1),
+('staff.product', 2),
+('staff.product', 3);
 
 -- --------------------------------------------------------
 
@@ -365,6 +371,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`) VALUES
+('chiquang', '$2y$10$qK.83bSn0kOJi5oiSld5S.3uLJeyHx1katJqzvlW1AeFBJtyQ4B2K', 'chiquang127@gmail.com', '2021-11-09', 1),
 ('minhphat', '$2y$10$lUt3jDUtcW6UZkIMBPM3POoO4CIT.pOAyuoDTu1O7JsPes5wamGbK', 'phanminhphat2001@gmail.com', '2021-11-06', 1);
 
 -- --------------------------------------------------------
@@ -383,8 +390,10 @@ CREATE TABLE `userrole` (
 --
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
+('chiquang', 'customer'),
+('chiquang', 'staff.product'),
 ('minhphat', 'admin'),
-('minhphat', 'customer');
+('minhphat', 'staff.product');
 
 --
 -- Indexes for dumped tables
@@ -515,13 +524,13 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -533,7 +542,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `import`
@@ -551,7 +560,7 @@ ALTER TABLE `ordertb`
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product`
