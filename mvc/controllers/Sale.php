@@ -3,7 +3,12 @@ class Sale extends Controller{
     
     function __construct(){
         $this->sale = $this->model("SaleModel");
-        
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.author")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        } 
     }
 
     function index(){
@@ -30,7 +35,11 @@ class Sale extends Controller{
         return $reverse;  
     }  
     function add(){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtQuantity'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate'] && $_POST['txtMinOrder'] && $_POST['txtMaxSale']){
             $id= sale::reverse((int)time());
             
@@ -55,6 +64,11 @@ class Sale extends Controller{
     }
 
     function update($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtQuantity'] && $_POST['txtDiscount'] && $_POST['txtStartDate'] && $_POST['txtEndDate'] && $_POST['txtMinOrder'] && $_POST['txtMaxSale']){
             
             $name = $_POST['txtName'];
@@ -75,6 +89,11 @@ class Sale extends Controller{
         
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.author","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->sale->delete($id)==1){
@@ -86,6 +105,11 @@ class Sale extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

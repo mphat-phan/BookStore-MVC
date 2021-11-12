@@ -7,28 +7,28 @@ class Home extends Controller{
     }
 
     function Login(){        
-        $this->view("layout",array(
-            "Page" => "login"
+        $this->view("admin/layout2",array(
+            "Page" => "login/login"
         ));
     }
-    function register(){
-        $this->view("layout",array(
-            "Page" => "register"
-        ));
-    }
+    // function register(){
+    //     $this->view("layout",array(
+    //         "Page" => "register"
+    //     ));
+    // }
     function ForgotPassword(){
-        $this->view("layout",array(
-            "Page" => "forgot-password"
+        $this->view("admin/layout2",array(
+            "Page" => "login/forgot-password"
         ));
     }
     function VerifyEmail(){
-        $this->view("layout",array(
-            "Page" => "verifyEmail"
+        $this->view("admin/layout2",array(
+            "Page" => "login/verifyEmail"
         ));
     }
     function ChangePassword(){
-        $this->view("layout",array(
-            "Page" => "change-password"
+        $this->view("admin/layout2",array(
+            "Page" => "login/change-password"
         ));
     }
     function UpdatePassword() {
@@ -117,24 +117,24 @@ class Home extends Controller{
         }
         echo 1;
     }
-    function addRegister() {        
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
-            $username = $_POST['username'];
-            $email = $_POST['email']; 
-            $name = $_POST['name'];
-            $phone = $_POST['phone'];
-            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            $date = date("Y-m-d");            
+    // function addRegister() {        
+    //     if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
+    //         $username = $_POST['username'];
+    //         $email = $_POST['email']; 
+    //         $name = $_POST['name'];
+    //         $phone = $_POST['phone'];
+    //         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    //         $date = date("Y-m-d");            
 
-            $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
-            $arrayemployee = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);
-            if($this->Home->add($arrayuser)==1 && $this->Employee->add($arrayemployee)==1){
-                echo 1;
-                return;
-            }
-        }
-        echo 0;        
-    }        
+    //         $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
+    //         $arrayemployee = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);
+    //         if($this->Home->add($arrayuser)==1 && $this->Employee->add($arrayemployee)==1){
+    //             echo 1;
+    //             return;
+    //         }
+    //     }
+    //     echo 0;        
+    // }        
     function pages() {
         $this->view("pages/404");
     }

@@ -3,7 +3,12 @@ class Customer extends Controller{
     
     function __construct(){
         $this->customer = $this->model("CustomerModel");
-        
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.user")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
 
     function index(){
@@ -24,6 +29,11 @@ class Customer extends Controller{
         echo $list;
     }
     function add(){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && $_POST['txtPhone'] && $_POST['txtAddress'] && $_POST['txtEmail'] && $_POST['txtBirth']){
 
@@ -51,7 +61,11 @@ class Customer extends Controller{
     }
 
     function update($id){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtPhone'] && $_POST['txtAddress'] && $_POST['txtEmail'] && $_POST['txtBirth']){
             $name = $_POST['txtName'];
             $phone= $_POST['txtPhone'];
@@ -76,6 +90,11 @@ class Customer extends Controller{
         echo 0;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->customer->delete($id)==1){
@@ -87,6 +106,11 @@ class Customer extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

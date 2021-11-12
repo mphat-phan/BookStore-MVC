@@ -217,6 +217,7 @@
                 url: url,
                 data: form.serialize(), // serializes the form's elements.
                 success: function (data) {
+                    console.log(data);
                     sweetAlertCRUD(data, "Add");
                     authortable.ajax.reload();
                 }

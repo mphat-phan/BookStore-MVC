@@ -15,6 +15,10 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
+            }
+            public function getProductID($sql)
+            {   
+                  return $this->selectQueryJson($sql);
             }	
             public function add($data){
                   return $this->add_new($data);
@@ -26,7 +30,9 @@
                   return $this->delete_by_id($id);
 
             }
-
+            public function deleteProductID($sql){
+                  return $this->selectQuery($sql);
+            }
 
 	}
 ?> 

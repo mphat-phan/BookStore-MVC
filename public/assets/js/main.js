@@ -15,6 +15,11 @@ function sweetAlertCRUD(data, name) {
             icon: 'error',
             title: name + ' Failed'
         })
+    } else if (data == 2) {
+        Toast.fire({
+            icon: 'warning',
+            title: 'You do not have permission!'
+        })
     }
 }
 

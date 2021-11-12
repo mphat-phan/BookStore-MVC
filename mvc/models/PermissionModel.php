@@ -15,6 +15,10 @@
             public function getAll()
             {   
                   return $this->selectAll('*');
+            }
+            public function getID($id)
+            {   
+                  return $this->select_by_id('*',$id);
             }	
             public function add($data){
                   return $this->add_new($data);

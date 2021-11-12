@@ -5,6 +5,12 @@ class OrderDetail extends Controller{
         $this->orderdetail = $this->model("OrderDetailModel");
         $this->order = $this->model("OrderModel");
         $this->product = $this->model("ProductModel");
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.sell")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }
     }
     function getAll(){
         $list = $this->orderdetail->getAll();
@@ -25,6 +31,11 @@ class OrderDetail extends Controller{
         //echo $list;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDeleteOrderDetail'])){
             if($this->orderdetail->delete($id)==1){
                 echo 1;

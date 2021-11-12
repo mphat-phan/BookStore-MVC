@@ -18,13 +18,13 @@
             }	
             public function getID($id)
             {   
-                  return $this->select_by_id('*',$id);
+                  return $this->select_by_stringID('*',$id);
             }
             public function add($data){
                   return $this->add_new($data);
             }
             public function updateByID($data,$id){
-                  return $this->update_by_id($data, $id);
+                  return $this->update_by_stringID($data, $id);
             }
             public function delete($id){
                   return $this->delete_by_id2($id);

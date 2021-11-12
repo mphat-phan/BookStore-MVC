@@ -3,7 +3,12 @@ class User extends Controller{
     
     function __construct(){
         $this->User = $this->model("UserModel");                
-        $this->UserRole = $this->model("UserRoleModel");  
+        $this->UserRole = $this->model("UserRoleModel"); 
+        if($this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        } 
     }
 
     function index(){
@@ -23,11 +28,17 @@ class User extends Controller{
         $list = $this->User->getID($id);
         echo $list;
     }
-    function add($username){         
-        $name = $_POST['selectRole'];
+    function add($username){
+        if($this->UserRole->checkRole("admin")!=1)        
+        {
+            echo 2;
+            return;
+        }         
+        $name = $_POST['selected'];
         $fag = 0;                  
-        if(isset($_POST['selectRole']) && !empty($_POST['selectRole']))
-        {            
+        if(isset($_POST['selected']) && !empty($_POST['selected']))
+        {         
+            $this->UserRole->delete($username);   
             foreach($name as $value)
             {                
                 $array = array('username' => $username, "rolename" => $value);
@@ -41,6 +52,11 @@ class User extends Controller{
                 }                    
             }                        
         }
+        else
+        {
+            $this->UserRole->delete($username);
+            $fag = 1;
+        }
         if($fag == 1)
         {
             echo 1;        
@@ -50,7 +66,11 @@ class User extends Controller{
     }
 
     function update($username){
-        
+        if($this->UserRole->checkRole("admin")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtUserPassword'])){
             $password= $_POST['txtUserPassword'];
             $arrayUser = array("password" => $password);
@@ -62,7 +82,12 @@ class User extends Controller{
         }
         echo 0;
     }
-    function updateStatus($username){                
+    function updateStatus($username){
+        if($this->UserRole->checkRole("admin")!=1)        
+        {
+            echo 2;
+            return;
+        }                
         if(isset($_POST['checkLock']))
         {            
             $array = array("status" => '0');    
@@ -84,7 +109,11 @@ class User extends Controller{
         
     }
     function updateRole($username){
-        
+        if($this->UserRole->checkRole("admin")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['roleSelect'])){
             $roleID= $_POST['roleSelect'];
             $array = array("roleID" => $roleID);
@@ -98,7 +127,11 @@ class User extends Controller{
     }
 
     function delete($username){
-    
+        if($this->UserRole->checkRole("admin")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->UserRole->delete($username)==1 && $this->User->delete($username)==1){
@@ -107,9 +140,14 @@ class User extends Controller{
             }
         }
         echo 0;
-    }    
+    }        
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

@@ -1,4 +1,3 @@
-
 <div id="content" class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -113,10 +112,7 @@
                             <select class="form-control select2" name="selectRole[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectRole" style="width: 100%;">                                                              
                             </select>                         
                         </div>                                               
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
-                        </div>
+                        <!-- /.card-body -->                        
                     </div>
                 </form>
             </div>
@@ -236,43 +232,7 @@
         </div>
     </div>
 </div>
-<div class="modal" id="UpdateRoleModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Update Role</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form id="formRoleUpdate" action="" method="POST">
-                    
-                    <div class="card-body">
-                    <div class="form-group">
-                            <label for="sel2">User Role</label>
-                            <select class="form-control" name="roleSelect" id="roleSelect">
-                                <?php
-                                    foreach($data['Role'] as $row){
-        
-                                    ?>
-                                    <option value="<?=$row['id']?>"><?=$row['name']?></option>
-                                <?php
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
@@ -436,7 +396,7 @@
                 }
             });
 
-        })
+        })        
     });          
     function openModal(e){
         $getCurrentUrl = '<?php echo constant('URL') ?>user';
@@ -465,44 +425,64 @@
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
         $formLock.action = $getCurrentUrl+"/updateStatus/"+id;
         $formUnlock.action = $getCurrentUrl+"/updateStatus/"+id;
-        $formAddUser.action = $getCurrentUrl+"/updateUsername/"+id ;
+        $formAddUser.action = $getCurrentUrl+"/updateUsername/"+id;
 
-        var selectRole = document.getElementById('selectRole');                         
+        var selectRole = document.getElementById('selectRole');
+        var role;                         
             $.ajax({
                 type: "POST",
                 url: '<?php echo constant('URL') ?>Role/getAll/',
                 dataType: 'json',
-                success: function(data){
-                    var role = data['data'];
-                    Object.keys(role).forEach(key => {                                                                                            
-                        selectRole.options[key] = new Option(role[key].name, role[key].name,);
-                        $.ajax({
-                            type: "POST",
-                            url: '<?php echo constant('URL') ?>User/getUserRoleByID/'+id,
-                            dataType: 'json',
-                            success: function(data){
-                                var userrole = data['data'];
-                                Object.keys(userrole).forEach(key => {                                            
-                                    selectRole.options[key] = new Option(userrole[key].rolename, userrole[key].rolename,false,true);
-                                });
-                            }                                                    
-                        });
-                    });
-                }                                                                    
-            });
-
-        var selectemployee = document.getElementById('selectEmployee');                         
+                success: function(data){                                        
+                    role = data['data'];                    
+                    Object.keys(role).forEach(key => {                                                                    
+                        selectRole.options[key] = new Option(role[key].name, role[key].name)
+                    });                            
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo constant('URL') ?>User/getUserRoleByID/'+id,
+                        dataType: 'json',
+                        success: function(data){                                    
+                            var userrole = data['data'];                            
+                            if(userrole !== undefined)
+                            {
+                                Object.keys(role).forEach(key1 => {                                
+                                    Object.keys(userrole).forEach(key2 => {                                    
+                                        if(role[key1].name == userrole[key2].rolename)
+                                        {                                        
+                                            role[key1]['selected'] = 'selected';
+                                        }                                    
+                                    })
+                                    role['username'] = id;
+                                });                                                                                        
+                                Object.keys(role).forEach(key => {                                
+                                    if(role[key]['selected'] == 'selected' && role['username'] == id)
+                                    {
+                                        selectRole.options[key] = new Option(role[key].name, role[key].name,false,true);
+                                    }
+                                    else if(role['username'] == id)
+                                    {
+                                        selectRole.options[key] = new Option(role[key].name, role[key].name,false,false);
+                                    }
+                                });                                                                                                
+                            }                                                        
+                        }                                                    
+                    });                    
+                }                
+            });                                      
+        $('#selectRole').change(function(e) {            
+            var selected = $(e.target).val();            
+            console.log(selected);
             $.ajax({
                 type: "POST",
-                url: '<?php echo constant('URL') ?>employee/getUserhasNull',
-                dataType: 'json',
-                success: function(data){                    
-                    var employee = data['data'];                      
-                    Object.keys(employee).forEach(key => {                                                                                                                                        
-                        selectemployee.options[key] = new Option("ID: " + employee[key].id + " - " + employee[key].name,employee[key].name);                                                
-                    });
-                }                                                                    
-            });                        
+                url: '<?php echo constant('URL') ?>user/add/'+id,
+                data: {selected:selected}, // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    roletable.ajax.reload();
+                }
+            });
+        });       
     }
         
 </script>

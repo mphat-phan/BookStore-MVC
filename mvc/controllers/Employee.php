@@ -3,7 +3,13 @@ class Employee extends Controller{
     
     function __construct(){
         $this->employee = $this->model("EmployeeModel");
-        $this->user = $this->model("UserModel");        
+        $this->user = $this->model("UserModel");
+        $this->UserRole = $this->model("UserRoleModel");                        
+        if($this->UserRole->checkRole("staff.user")!=1 && $this->UserRole->checkRole("admin")!=1)
+        {
+            $this->page500();
+            exit();
+        }        
     }
 
     function index(){
@@ -29,6 +35,11 @@ class Employee extends Controller{
         echo $list;
     }
     function add(){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","add")!=1)        
+        {
+            echo 2;
+            return;
+        }
         //if(isset($_POST['submit'])){
         if(isset($_POST['txtName']) && isset($_POST['txtPhone']) && isset($_POST['txtAddress']) && isset($_POST['txtEmail']) && isset($_POST['txtBirth']) && isset($_POST['txtJoindate']) && isset($_POST['txtUsername'])){
             $name = $_POST['txtName'];
@@ -57,7 +68,11 @@ class Employee extends Controller{
     }
 
     function update($id){
-        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","update")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['txtName']) && $_POST['txtPhone'] && $_POST['txtAddress'] && $_POST['txtEmail'] && $_POST['txtBirth']){
             $name = $_POST['txtName'];
             $phone= $_POST['txtPhone'];
@@ -82,6 +97,11 @@ class Employee extends Controller{
         echo 0;
     }
     function delete($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.user","delete")!=1)        
+        {
+            echo 2;
+            return;
+        }
         if(isset($_POST['checkDelete'])){
             
             if($this->employee->delete($id)==1){
@@ -93,6 +113,11 @@ class Employee extends Controller{
     }
     function pages() {
         $this->view("pages/404");
+    }
+    function page500() {
+        $this->view("layout2",array(
+            "Page" => "500"
+        ));
     }
 }
 ?>

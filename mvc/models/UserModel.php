@@ -28,6 +28,6 @@
             }
             public function getToCheckLogin($sql){
                   return $this->selectQuery($sql);
-            }            
+            }                              
 	}
 ?> 
