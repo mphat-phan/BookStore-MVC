@@ -65,17 +65,14 @@ class User extends Controller{
         echo 0;
     }
 
-    function update($username){
-        if($this->UserRole->checkRole("admin")!=1)        
-        {
-            echo 2;
-            return;
-        }
-        if(isset($_POST['txtUserPassword'])){
-            $password= $_POST['txtUserPassword'];
-            $arrayUser = array("password" => $password);
-            
-            if($this->User->updateByID($arrayUser,$username)==1){
+    function updateImage($username){
+        
+        if(isset($_FILES["txtImage"]["name"])){
+
+            $image= basename($_FILES["txtImage"]["name"]);
+            $array = array('image' => $image);
+
+            if($this->User->update_by_stringID($array,$username)==1){
                 echo 1;
                 return;
             }

@@ -35,9 +35,13 @@ class Author extends Controller{
 
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
+            $image= basename($_FILES["txtImage"]["name"]);
 
-            $array = array('name' => $name, "detail" => $detail);
+            $array = array('name' => $name, "detail" => $detail , "image" => $image);
             if($this->author->add($array)==1){
+                $target_dir = "./public/assets/images/";
+                $target_file = $target_dir.basename($_FILES["txtImage"]["name"]);
+                move_uploaded_file($_FILES["txtImage"]["tmp_name"], $target_file);
                 echo 1;
                 return;
             }
@@ -55,10 +59,17 @@ class Author extends Controller{
             
             $name = $_POST['txtName'];
             $detail= $_POST['txtDetail'];
+            $image= basename($_FILES["txtImage"]["name"]);
 
             $array = array('name' => $name, "detail" => $detail);
-            
+            if(isset($image)){
+                
+                $array += array('image' => $image);
+            }
             if($this->author->updateByID($array,$id)==1){
+                $target_dir = "./public/assets/images/";
+                $target_file = $target_dir.basename($_FILES["txtImage"]["name"]);
+                move_uploaded_file($_FILES["txtImage"]["tmp_name"], $target_file);
                 echo 1;
                 return;
             }            

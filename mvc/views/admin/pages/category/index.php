@@ -45,6 +45,7 @@
                                         <th>id</th>
                                         <th>Name</th>
                                         <th>Detail</th>
+                                        <th>Image</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
@@ -52,10 +53,14 @@
 
                                 </tbody>
                                 <tfoot>
-                                    <th>id</th>
-                                    <th>Name</th>
-                                    <th>Detail</th>
-                                    <th>#</th>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Name</th>
+                                        <th>Detail</th>
+                                        <th>Image</th>
+                                        <th>#</th>
+                                    </tr>
+                                    
                                 </tfoot>
                             </table>
                         </div>
@@ -72,7 +77,7 @@
     <!-- /.content -->
 
     <div class="modal" id="AddModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -81,17 +86,25 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="formAdd" action="" method="post">
+                    <form id="formAdd" action="" method="post" enctype="multipart/form-data">
 
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Name</label>
                                 <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Category Detail</label>
-                                <input name='txtDetail' type="text" class="form-control" placeholder="Enter ">
+                            <div class="form-group w-25">
+                                <label for="exampleInputEmail1">Category Image</label>
+                                <input name="txtImage" id="txtImage" type="file" accept="image/*" class="form-control "
+                                    placeholder="Enter ">
+                                <img id="imageCategoryAdd" class="img-fluid " src="" alt="">
                             </div>
+                            <label for="exampleInputEmail1">Category Description</label>
+                                <div class="card-body">
+                                    <textarea name="txtDetail" id="summernote" id="">
+                                       
+                                    </textarea>
+                                </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -132,7 +145,7 @@
         </div>
     </div>
     <div class="modal" id="UpdateModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="card card-primary">
@@ -141,17 +154,25 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="formUpdate" action="" method="POST">
+                    <form id="formUpdate" action="" method="POST" enctype="multipart/form-data">
 
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Category Name</label>
                                 <input name="txtName" type="text" class="form-control" placeholder="Enter ">
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Category Detail</label>
-                                <input name='txtDetail' type="text" class="form-control" placeholder="Enter ">
+                            <div class="form-group w-25">
+                                <label for="exampleInputEmail1">Category Image</label>
+                                <input name="txtImage" id="txtImageUpdate" type="file" accept="image/*" class="form-control "
+                                    placeholder="Enter ">
+                                <img id="imageCategory" class="img-fluid " src="" alt="">
                             </div>
+                            <label for="exampleInputEmail1">Category Description</label>
+                                <div class="card-body">
+                                    <textarea name="txtDetail" id="summernote2" id="">
+                                       
+                                    </textarea>
+                                </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -166,9 +187,37 @@
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
+    $(function () {
+    // Summernote
+        $('#summernote').summernote()
+        $('#summernote2').summernote()
+    })
+    $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox({
+            alwaysShowClose: true
+        });
+    });
+    })
     $(document).ready(function () { 
+
+
+        $('#UpdateModal input[type="file"]').change(function(e) {
+                
+                $("#imageCategory").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
+                    
+            });
+        
+            $('#AddModal input[type="file"]').change(function(e) {
+                        
+                $("#imageCategoryAdd").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
+                    
+            });
+
         categorytable = $('#categorytable').DataTable({
             dom: 'Bfrtip',
+            "scrollY":true,
             "ajax": "<?php echo constant('URL') ?>category/getall",
             "columns": [{
                     "data": "id"
@@ -177,7 +226,28 @@
                     "data": "name"
                 },
                 {
-                    "data": "detail"
+                    "data": null,
+                    "render": function (data, type, full) {
+                        return("...see more in update")
+                    }
+                },
+                {
+                    "data": "image",
+                    "render": function (data, type, row, meta) {
+                        if(data){
+                            return(
+                            "<a href='<?php echo constant('URL') ?>/public/assets/images/"+data+"' data-toggle='lightbox' data-title='Image'>"+
+                                "<img class='img-fluid' src='<?php echo constant('URL') ?>/public/assets/images/"+data+"' class='img-fluid mb-2' alt='white sample'/>"+
+                            "</a>"
+                            );
+                        }
+                        else{
+                            return(
+                                "Blank"
+                            )
+                        }
+                        
+                    }
                 },
                 {
                     "data": "id",
@@ -208,7 +278,10 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: form.serialize(), // serializes the form's elements.
+                data:  new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function (data) {
                     sweetAlertCRUD(data, "Add");
                     categorytable.ajax.reload();
@@ -224,7 +297,10 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: form.serialize(), // serializes the form's elements.
+                data:  new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function (data) {
                     sweetAlertCRUD(data, "Update");
                     categorytable.ajax.reload();
@@ -260,9 +336,11 @@
             url: '<?php echo constant('URL') ?>category/getByID/'+id,
             dataType: 'json',
             success: function(data){
-                console.log(data['data'][0].id);
+              
                 x.elements[0].value = data['data'][0].name;
-                x.elements[1].value = data['data'][0].detail;
+                $("#summernote2").summernote("code",data['data'][0].detail);
+                $('#txtImageUpdate').val('');
+                $("#imageCategory").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
             }
         });
         $formUpdate = document.querySelector("#formUpdate");

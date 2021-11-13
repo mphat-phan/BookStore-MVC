@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Nov 12, 2021 at 04:46 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Host: 127.0.0.1:3307
+-- Generation Time: Nov 13, 2021 at 05:55 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,16 +30,52 @@ SET time_zone = "+00:00";
 CREATE TABLE `author` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `detail` text DEFAULT NULL
+  `detail` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `author`
 --
 
-INSERT INTO `author` (`id`, `name`, `detail`) VALUES
-(4, 'Phan Minh Phát 2', 'Phan Minh Phát Phan Minh Phá'),
-(5, 'Bộ giáo dục', 'Bộ giáo dục và đào tạo');
+INSERT INTO `author` (`id`, `name`, `detail`, `image`) VALUES
+(3, 'Haha', 'Chi tiết lịch sử', 'artworks-9GYMM38Wzt4D0ygP-PEX5LQ-t500x500.jpg'),
+(4, 'Phan Minh Phát 2', '123123123', NULL),
+(5, 'alex', 'alex', NULL),
+(6, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
+(9, 'Lịch sử', 'Chi tiết lịch sử', '2447228.jpg'),
+(10, '', '<b>étfsfsfsrfsf</b>', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `username`) VALUES
+(1, 'minhphat'),
+(4, 'minhphat123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cartdetail`
+--
+
+CREATE TABLE `cartdetail` (
+  `cartID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -51,17 +87,9 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `detail` text DEFAULT NULL,
-  `parentID` int(11) NOT NULL
+  `parentID` int(11) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id`, `name`, `detail`, `parentID`) VALUES
-(1, 'Lịch sử', 'Lịch sử Việt Nam', 0),
-(2, 'Lịch sử', 'Lịch sử Thế giới', 0),
-(4, 'Tiểu thuyết', 'Tiểu thuyết', 0);
 
 -- --------------------------------------------------------
 
@@ -73,13 +101,6 @@ CREATE TABLE `category_product` (
   `categoryID` int(11) NOT NULL,
   `productID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `category_product`
---
-
-INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
-(4, 8);
 
 -- --------------------------------------------------------
 
@@ -126,8 +147,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
-(7, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'Hồ Chí Minh', '2021-11-06', '2021-11-06', 'minhphat'),
-(8, 'Đoàn Chí Quang', '0384327229', 'chiquang127@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2021-11-09', 'chiquang');
+(7, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'sdfsdf', '2021-11-06', '2021-11-06', 'minhphat');
 
 -- --------------------------------------------------------
 
@@ -147,7 +167,8 @@ CREATE TABLE `import` (
 --
 
 INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
-(21, '2021-11-06', 500000, 'minhphat');
+(21, '2021-11-06', 500000, 'minhphat'),
+(22, '2021-11-13', 2000000, 'minhphat');
 
 -- --------------------------------------------------------
 
@@ -162,6 +183,17 @@ CREATE TABLE `importdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `importdetail`
+--
+
+INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
+(21, 3, 10, 50000),
+(22, 3, 10, 50000),
+(22, 4, 10, 50000),
+(22, 5, 10, 50000),
+(22, 6, 10, 50000);
+
 -- --------------------------------------------------------
 
 --
@@ -172,8 +204,44 @@ CREATE TABLE `orderdetail` (
   `orderID` int(11) NOT NULL,
   `productID` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` double NOT NULL
+  `price` double NOT NULL,
+  `subtotal` double NOT NULL,
+  `discount` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orderdetail`
+--
+
+INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtotal`, `discount`) VALUES
+(48, 3, 11, 50000, 0, NULL),
+(49, 3, 11, 50000, 0, NULL),
+(50, 3, 11, 50000, 0, NULL),
+(51, 3, 1, 50000, 0, NULL),
+(52, 3, 1, 50000, 0, NULL),
+(53, 3, 1, 50000, 0, NULL),
+(54, 3, 1, 50000, 0, NULL),
+(55, 3, 1, 50000, 0, NULL),
+(56, 3, 1, 50000, 0, NULL),
+(57, 3, 1, 50000, 0, NULL),
+(58, 3, 1, 50000, 0, NULL),
+(59, 3, 1, 50000, 0, NULL),
+(60, 3, 1, 50000, 0, NULL),
+(61, 3, 1, 50000, 0, NULL),
+(62, 3, 1, 50000, 0, NULL),
+(63, 3, 1, 50000, 0, NULL),
+(64, 3, 1, 50000, 0, NULL),
+(65, 3, 1, 50000, 0, NULL),
+(66, 3, 1, 50000, 0, NULL),
+(67, 3, 1, 50000, 0, NULL),
+(68, 3, 1, 50000, 0, NULL),
+(69, 3, 1, 50000, 0, NULL),
+(70, 3, 1, 50000, 50000, 20),
+(70, 4, 1, 5000450, 5000450, 50),
+(71, 3, 1, 50000, 50000, 20),
+(71, 5, 1, 50000, 50000, 0),
+(72, 3, 50, 50000, 2500000, 20),
+(72, 4, 1, 5000450, 5000450, 50);
 
 -- --------------------------------------------------------
 
@@ -184,7 +252,6 @@ CREATE TABLE `orderdetail` (
 CREATE TABLE `ordertb` (
   `id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `saleID` bigint(20) DEFAULT NULL,
   `subtotal` double NOT NULL,
   `shippingfee` double NOT NULL,
   `discount` double NOT NULL,
@@ -201,8 +268,32 @@ CREATE TABLE `ordertb` (
 -- Dumping data for table `ordertb`
 --
 
-INSERT INTO `ordertb` (`id`, `date`, `saleID`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
-(47, '2021-11-09', 290836361, 50000, 0, 16000, 34000, 'minhphat', NULL, 14, 4, 34000, 0);
+INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
+(48, '2021-11-10', 550000, 0, 150000, 400000, 'minhphat', NULL, NULL, 4, 400000, 0),
+(49, '2021-11-11', 550000, 0, 50000, 500000, 'minhphat', NULL, 14, 4, 500000, 0),
+(50, '2021-11-11', 550000, 0, 0, 550000, 'minhphat', NULL, 14, 4, 555555, 5555),
+(51, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, 14, 4, 50000, 0),
+(52, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(53, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(54, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(55, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(56, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(57, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(58, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(59, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(60, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(61, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(62, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(63, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(64, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(65, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(66, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(67, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(68, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
+(69, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, 14, 4, 50000, 0),
+(70, '2021-11-12', 2540225, 0, 200000, 2340225, 'minhphat', NULL, 14, 4, 2340225, 0),
+(71, '2021-11-12', 90000, 0, 0, 90000, 'minhphat', NULL, NULL, 4, 100000, 10000),
+(72, '2021-11-12', 4500225, 0, 200000, 4300225, 'minhphat', NULL, 14, 4, 7000000, 2699775);
 
 -- --------------------------------------------------------
 
@@ -220,9 +311,9 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`id`, `permission`) VALUES
-(1, 'add'),
-(2, 'update'),
-(3, 'delete');
+(2, 'add'),
+(3, 'update'),
+(4, 'delete');
 
 -- --------------------------------------------------------
 
@@ -239,15 +330,23 @@ CREATE TABLE `product` (
   `pagenumber` int(11) DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
   `authorID` int(11) DEFAULT NULL,
-  `publisherID` int(11) DEFAULT NULL
+  `publisherID` int(11) DEFAULT NULL,
+  `saleID` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `image`, `authorID`, `publisherID`) VALUES
-(8, 'Văn học', 'Sách ngữ văn lớp 9', 0, 50000, 1000, 'Untitled (7).png', 5, 14);
+INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `image`, `authorID`, `publisherID`, `saleID`) VALUES
+(3, '10 vạn câu hỏi vì sao 2', '10 vạn câu hỏi vì sao....', 50, 50000, 344, 'landmark81.jpg', 3, 14, 'discount50'),
+(4, 'Lịch sử', '.............', 22, 5000450, 233, '1620484.jpg', 5, 15, 'discount20'),
+(5, 'Lịch sử', '10 vạn câu hỏi vì sao....', 10, 50000, 2344, '', 3, 15, 'discount50'),
+(6, '10 vạn câu hỏi vì sao', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled__4_-removebg-preview.png', 3, 14, NULL),
+(7, 'Phan Minh Phát', '123', 0, 50000, 200, 'SlickGantt.png', 3, 14, NULL),
+(8, '333333333', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled (7).png', 5, 14, NULL),
+(9, 'Lịch sử', '123', 0, 50000, 200, 'n.png', 3, 14, NULL),
+(11, 'Lịch sử', '10 vạn câu hỏi vì sao....', 0, 50000, 200, 'wallpaperflare.com_wallpaper (1).jpg', 3, 14, 'discount20');
 
 -- --------------------------------------------------------
 
@@ -258,17 +357,18 @@ INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenu
 CREATE TABLE `publisher` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `detail` text DEFAULT NULL
+  `detail` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `publisher`
 --
 
-INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
-(14, 'NXB HN', 'Thủ đô Hà Nội'),
-(15, 'Phan Minh Phát', 'Chi tiết lịch sử'),
-(16, 'Phan Minh Phát', 'Chi tiết lịch sử');
+INSERT INTO `publisher` (`id`, `name`, `detail`, `image`) VALUES
+(14, 'Lịch sử', '214234', NULL),
+(15, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
+(16, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL);
 
 -- --------------------------------------------------------
 
@@ -278,7 +378,7 @@ INSERT INTO `publisher` (`id`, `name`, `detail`) VALUES
 
 CREATE TABLE `role` (
   `name` varchar(50) NOT NULL,
-  `detail` text DEFAULT NULL
+  `detail` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -286,9 +386,10 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`name`, `detail`) VALUES
-('admin', 'Quản lý'),
-('customer', 'Khách hàng'),
-('staff.product', 'Nhân viên bên khu quản lý thông tin sản phẩm (bao gồm quản lý tác giả, danh mục, nhà cung cấp)\r\n');
+('admin', 'admin'),
+('customer', 'customer'),
+('staff.product', '...'),
+('staff.user', 'Chi tiết lịch sử');
 
 -- --------------------------------------------------------
 
@@ -306,7 +407,7 @@ CREATE TABLE `role_permission` (
 --
 
 INSERT INTO `role_permission` (`rolename`, `permissionID`) VALUES
-('staff.product', 1),
+('customer', 2),
 ('staff.product', 2),
 ('staff.product', 3);
 
@@ -317,40 +418,55 @@ INSERT INTO `role_permission` (`rolename`, `permissionID`) VALUES
 --
 
 CREATE TABLE `sale` (
-  `id` bigint(20) NOT NULL,
+  `id` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `discount` float NOT NULL,
   `startdate` date DEFAULT NULL,
   `enddate` date DEFAULT NULL,
   `minorder` double NOT NULL,
-  `maxsale` double NOT NULL
+  `maxsale` double NOT NULL,
+  `type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sale`
 --
 
-INSERT INTO `sale` (`id`, `name`, `quantity`, `discount`, `startdate`, `enddate`, `minorder`, `maxsale`) VALUES
-(290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 200000, 50000),
-(880836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(1080836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(2147483647, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(2290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(2680836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(2880836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(2970836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(3290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(4580836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(5290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(5380836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(5680836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(6001836361, 'Phan Minh Phát', 23, 23, '2021-11-02', '2021-11-24', 0, 0),
-(6290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(6680836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(7290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(7680836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0),
-(8290836361, 'Phan Minh Phát', 10, 32, '2021-11-02', '2021-11-24', 0, 0);
+INSERT INTO `sale` (`id`, `name`, `quantity`, `discount`, `startdate`, `enddate`, `minorder`, `maxsale`, `type`) VALUES
+('discount20', 'giảm 20%', 0, 20, '2021-11-01', '2021-12-04', 0, 0, NULL),
+('discount50', 'Giam gia 50%', 0, 50, '2021-11-10', '2021-12-03', 0, 0, NULL),
+('SN2021', 'Sinh nhật 2021', 100, 50, '2021-10-05', '2021-11-30', 1000000, 200000, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_order`
+--
+
+CREATE TABLE `sale_order` (
+  `orderID` int(11) NOT NULL,
+  `saleID` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sale_order`
+--
+
+INSERT INTO `sale_order` (`orderID`, `saleID`) VALUES
+(70, 'SN2021'),
+(72, 'SN2021');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_user`
+--
+
+CREATE TABLE `sale_user` (
+  `username` varchar(50) NOT NULL,
+  `saleID` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -363,16 +479,17 @@ CREATE TABLE `user` (
   `password` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
-  `status` tinyint(4) NOT NULL
+  `status` tinyint(4) NOT NULL,
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`) VALUES
-('chiquang', '$2y$10$qK.83bSn0kOJi5oiSld5S.3uLJeyHx1katJqzvlW1AeFBJtyQ4B2K', 'chiquang127@gmail.com', '2021-11-09', 1),
-('minhphat', '$2y$10$lUt3jDUtcW6UZkIMBPM3POoO4CIT.pOAyuoDTu1O7JsPes5wamGbK', 'phanminhphat2001@gmail.com', '2021-11-06', 1);
+INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
+('minhphat', '$2y$10$lUt3jDUtcW6UZkIMBPM3POoO4CIT.pOAyuoDTu1O7JsPes5wamGbK', 'phanminhphat2001@gmail.com', '2021-11-06', 1, NULL),
+('minhphat123', '123', '324123', '2021-11-13', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -390,9 +507,8 @@ CREATE TABLE `userrole` (
 --
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
-('chiquang', 'customer'),
-('chiquang', 'staff.product'),
 ('minhphat', 'admin'),
+('minhphat', 'customer'),
 ('minhphat', 'staff.product');
 
 --
@@ -406,10 +522,25 @@ ALTER TABLE `author`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `cartdetail`
+--
+ALTER TABLE `cartdetail`
+  ADD PRIMARY KEY (`cartID`,`productID`),
+  ADD KEY `productID` (`productID`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parentID` (`parentID`);
 
 --
 -- Indexes for table `category_product`
@@ -460,8 +591,7 @@ ALTER TABLE `ordertb`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_username` (`employee_username`),
   ADD KEY `customer_username` (`customer_username`),
-  ADD KEY `customerID` (`customerID`),
-  ADD KEY `saleID` (`saleID`);
+  ADD KEY `customerID` (`customerID`);
 
 --
 -- Indexes for table `permission`
@@ -475,7 +605,8 @@ ALTER TABLE `permission`
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `authorID` (`authorID`),
-  ADD KEY `publisherID` (`publisherID`);
+  ADD KEY `publisherID` (`publisherID`),
+  ADD KEY `saleID` (`saleID`);
 
 --
 -- Indexes for table `publisher`
@@ -503,6 +634,20 @@ ALTER TABLE `sale`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sale_order`
+--
+ALTER TABLE `sale_order`
+  ADD PRIMARY KEY (`orderID`,`saleID`),
+  ADD KEY `saleID` (`saleID`);
+
+--
+-- Indexes for table `sale_user`
+--
+ALTER TABLE `sale_user`
+  ADD PRIMARY KEY (`username`,`saleID`),
+  ADD KEY `saleID` (`saleID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -524,13 +669,19 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -542,31 +693,31 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `publisher`
@@ -575,14 +726,27 @@ ALTER TABLE `publisher`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `sale`
---
-ALTER TABLE `sale`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8290836362;
-
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cartdetail`
+--
+ALTER TABLE `cartdetail`
+  ADD CONSTRAINT `cartdetail_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cartdetail_ibfk_3` FOREIGN KEY (`cartID`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parentID`) REFERENCES `category` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `category_product`
@@ -629,15 +793,15 @@ ALTER TABLE `orderdetail`
 ALTER TABLE `ordertb`
   ADD CONSTRAINT `ordertb_ibfk_1` FOREIGN KEY (`employee_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ordertb_ibfk_2` FOREIGN KEY (`customer_username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ordertb_ibfk_3` FOREIGN KEY (`customerID`) REFERENCES `customer` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `ordertb_ibfk_4` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `ordertb_ibfk_3` FOREIGN KEY (`customerID`) REFERENCES `customer` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`authorID`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `role_permission`
@@ -645,6 +809,20 @@ ALTER TABLE `product`
 ALTER TABLE `role_permission`
   ADD CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`rolename`) REFERENCES `role` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permissionID`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sale_order`
+--
+ALTER TABLE `sale_order`
+  ADD CONSTRAINT `sale_order_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `ordertb` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sale_order_ibfk_3` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sale_user`
+--
+ALTER TABLE `sale_user`
+  ADD CONSTRAINT `sale_user_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sale_user_ibfk_2` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `userrole`

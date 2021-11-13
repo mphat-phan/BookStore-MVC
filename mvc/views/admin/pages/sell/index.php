@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label>Quantity</label>
                                         <input value = 1 min=0 name="" type="number" class="form-control" id="txtQuantity"
-                                            placeholder=" " >
+                                            placeholder="" >
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>

@@ -1,5 +1,5 @@
 
-<div id="content" class="content-wrapper">
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -54,23 +54,40 @@
 
                             </div>
                             <div class="row">
-
-
                                 <div class="col-12">
                                     <button type="button" onclick='openModal()' href="#"
                                         class="btn btn-primary btn-sm float-right "
                                         role="button" data-toggle="modal" data-target="#saveModel">Save</button>
                                     <button type="button" onclick='' href="#" id = "addImport"
                                         class="btn btn-primary btn-sm float-left mr-1">Add</button>
-                                        
+                                    
                                     <button type="button" onclick="" href="#"
                                         class="btn btn-success btn-sm float-right mr-1" role="button"
                                         data-toggle="modal" data-target="#">Import</button>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" value="">Auto Update Price Over
+                                        </label>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input min=0 max=100 name="" type="number" class="form-control" id="txtPricePercent"
+                                            disabled>
+                                        <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                   
 
-
+                                </div>
+                            
+                            
+                            </div>
                         </div>
+                        
 
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -89,7 +106,7 @@
     </section>
     <!-- /.content -->
 
-</div>
+
 <div class="modal" id="saveModel">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -132,9 +149,19 @@
 <script>
     var importdetail = []   ;
     var user = '<?php echo $_COOKIE['username'] ?>';
-
+    var autoPrice = 0;
     $(document).ready(function() {
- 
+        
+        
+        $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true){
+                $('#txtPricePercent').prop("disabled", false);
+            }
+            else if($(this).prop("checked") == false){
+                $('#txtPricePercent').prop("disabled", true);
+            }
+        });
+
         var selectProduct = document.getElementById('selectProduct');
         $.ajax({
                 type: "POST",
@@ -241,6 +268,9 @@
                 success: function (data) {
                     sweetAlertCRUD(data, "Add");
                     console.log(data);
+                    if(data==1){
+                        location.reload();
+                    }
                 }
             });
 

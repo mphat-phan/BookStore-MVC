@@ -31,13 +31,14 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="importtable" class="table table-bordered table-striped">
+                            <table id="importtable" class="table table-bordered table-striped dt-responsive nowrap display">
                                 <thead>
                                     <tr>
                                         <th>id</th>
                                         <th>Date</th>
                                         <th>Total</th>
                                         <th>Employee Username</th>
+                                        <th>#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,6 +50,7 @@
                                         <th>Date</th>
                                         <th>Total</th>
                                         <th>Employee Username</th>
+                                        <th>#</th>
                                     </tr>
 
                                 </tfoot>
@@ -63,40 +65,6 @@
                 <div class="col-12">
                     <!-- /.card -->
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Import Detail table</h3>
-
-                        </div>
-
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="importdetailtable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ImportID</th>
-                                        <th>ProductID</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>ImportID</th>
-                                        <th>ProductID</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-
-                                </tfoot>
-
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
                     <!-- /.card -->
                 </div>
             </div>
@@ -150,6 +118,55 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="InfoImport">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Info</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Import Detail table</h3>
+
+                        </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="importdetailtable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ImportID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>ImportID</th>
+                                        <th>ProductID</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
@@ -176,50 +193,25 @@ $(document).ready(function () {
                         )
 
                     }
+                },
+                {
+                    
+                    "data" : null,
+                    "render": function (data, type, full) {
+                        var id = full.id;
+                        
+                        return (
+                            "<button onclick='openDetail(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#InfoImport' data_id='" +
+                            id + "'>" +
+                            "Show Detail Import" +
+                            "</button>"
+                        );
+                            
+                    }
                 }
             ],
 
         });
-        $('#importtable').click(function(){
-            var table = document.getElementById("importtable");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 0; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function (row) {
-                    return function () {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var id = cell.innerHTML;
-
-                            importdetailtable = $('#importdetailtable').DataTable({
-                            dom: 'Bfrtip',
-                            "ajax": "<?php echo constant('URL') ?>importdetail/getbyid/"+id,
-                            "columns": [{
-                                    "data": "importID"
-                                },
-                                {
-                                    "data": "productID"
-                                    // "render": function (data, type, row, meta) {
-                                    //     return(
-                                    //         data.name
-                                    //     );
-                                    // }
-                                },
-                                {
-                                    "data": "quantity"
-                                },
-                                {
-                                    "data": "price"
-                                }
-                            
-                            ],
-
-                            });
-                            importdetailtable.destroy();
-                        };
-                        };
-                    currentRow.onclick = createClickHandler(currentRow);
-                    }
-        })
 });
 
     function openModal(e){
@@ -246,6 +238,32 @@ $(document).ready(function () {
                
             }
         });
+    }
+    function openDetail(e){
+
+        id=$(e).attr('data_id');
+        importdetailtable = $('#importdetailtable').DataTable({
+        dom: 'Bfrtip',
+        "ajax": "<?php echo constant('URL') ?>importdetail/getbyid/"+id,
+        "columns": [{
+                    "data": "importID"
+                    },
+                    {
+                    "data": "productID"
+                                    
+                    },
+                    {
+                    "data": "quantity"
+                    },
+                    {
+                    "data": "price"
+                    }
+                            
+                    ],
+
+        });
+        importdetailtable.destroy();
+                  
     }
     
 </script>

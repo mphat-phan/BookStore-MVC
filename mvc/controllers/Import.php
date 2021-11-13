@@ -13,8 +13,8 @@ class Import extends Controller{
     }
 
     function index(){
-        $this->view("admin/layout",array(
-			"Page" => "import"    
+        $this->view("admin/layout2",array(
+			"Page" => "import\index"    
 		));        
     }
     function getAll(){

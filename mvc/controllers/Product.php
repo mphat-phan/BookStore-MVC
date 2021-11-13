@@ -20,8 +20,8 @@ class Product extends Controller{
 			"Page" => "product"
 		));        
     }
-
-    function getAll(){
+    
+    function getAll($number=null){
         $product = json_decode($this->product->getAll());
         
         for($i=0 ; $i< count($product->data) ; $i++ ){
@@ -41,7 +41,7 @@ class Product extends Controller{
             }
             if(isset($sale)){
                 $saleobj = json_decode($this->sale->getID($sale));
-                $product->data[$i]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount);
+                $product->data[$i]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount , "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
             }
             else{
                 $product->data[$i]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
@@ -60,7 +60,7 @@ class Product extends Controller{
         $sale = $product->data[0]->saleID;
         if(isset($sale)){
             $saleobj = json_decode($this->sale->getID($sale));
-            $product->data[0]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount);
+            $product->data[0]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount, "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
         }
         else{
             $product->data[0]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
@@ -117,11 +117,9 @@ class Product extends Controller{
             $publisherID= $_POST['selectPublisher'];
             $authorID= $_POST['selectAuthor'];
             $saleID= $_POST['selectSale'];
-            if(empty($image)){
-                $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
-            }
-            else{
-                $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
+            $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'authorID' => $authorID , 'publisherID' => $publisherID , 'saleID' => $saleID);
+            if(isset($image)){
+                $array += array('image' => $image);
             }
             
             if($this->product->updateByID($array,$id)==1){

@@ -4,7 +4,7 @@ class Sale extends Controller{
     function __construct(){
         $this->sale = $this->model("SaleModel");
         $this->UserRole = $this->model("UserRoleModel");                        
-        if($this->UserRole->checkRole("staff.author")!=1 && $this->UserRole->checkRole("admin")!=1)
+        if($this->UserRole->checkRole("staff.product")!=1 && $this->UserRole->checkRole("admin")!=1)
         {
             $this->page500();
             exit();

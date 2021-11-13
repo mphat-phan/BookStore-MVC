@@ -14,7 +14,7 @@
                     class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Đoàn Chí Quang</a>
+                <a href="#" class="d-block"><?php echo $_COOKIE['username'] ?></a>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a id="dashboard" href="<?php echo constant('URL') ?>Dashboard" class="nav-link active">
+                    <a id="" href="<?php echo constant('URL') ?>Dashboard" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -53,33 +53,34 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a id="product" href="<?php echo constant('URL') ?>Product" class="nav-link">
+                            <a id="" href="<?php echo constant('URL') ?>Product" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sản phẩm</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="category" href="<?php echo constant('URL') ?>Category" class="nav-link">
+                            <a id="" href="<?php echo constant('URL') ?>Category" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Thể loại</p>
                             </a>
                         </li>
+                       
                         <li class="nav-item">
-                            <a id="producttype" href="<?php echo constant('URL') ?>ProductType" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Loại sản phẩm</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="author" href="<?php echo constant('URL') ?>Author" class="nav-link">
+                            <a id="" href="<?php echo constant('URL') ?>Author" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tác giả</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="company" href="<?php echo constant('URL') ?>Company" class="nav-link">
+                            <a id="" href="<?php echo constant('URL') ?>publisher" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nhà xuất bản</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="" href="<?php echo constant('URL') ?>sale" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sale</p>
                             </a>
                         </li>
                     </ul>
@@ -105,10 +106,26 @@
                                 <p>Role</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a id="employee" href="<?php echo constant('URL') ?>Employee" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Quản lý nhân viên
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="customer" href="<?php echo constant('URL') ?>Customer" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Quản lý khách hàng
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a id="quanlynhaphang" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
+                    <a id="" href="<?php echo constant('URL') ?>import" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Quản lý nhập hàng
@@ -116,7 +133,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="order" href="<?php echo constant('URL') ?>Order" class="nav-link">
+                    <a id="" href="<?php echo constant('URL') ?>Order" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Quản lý hóa đơn
@@ -124,43 +141,20 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="employee" href="<?php echo constant('URL') ?>Employee" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Quản lý nhân viên
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a id="customer" href="<?php echo constant('URL') ?>Customer" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Quản lý khách hàng
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a id="goodsreceived" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
+                    <a id="" href="<?php echo constant('URL') ?>importmanagement" class="nav-link">
                         <i class="nav-icon fas fa-truck-loading"></i>
-                        <p>
-                            Quản lý nhập hàng
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a id="sell" href="<?php echo constant('URL') ?>Sell" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-basket"></i>
-                        <p>Sell</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a id="nhaphang" href="<?php echo constant('URL') ?>GoodsReceived" class="nav-link">
-                        <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Nhập hàng
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="" href="<?php echo constant('URL') ?>sell" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-basket"></i>
+                        <p>Sell</p>
+                    </a>
+                </li>
+             
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
