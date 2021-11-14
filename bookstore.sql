@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 13, 2021 at 05:55 PM
+-- Generation Time: Nov 14, 2021 at 03:33 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -39,7 +39,7 @@ CREATE TABLE `author` (
 --
 
 INSERT INTO `author` (`id`, `name`, `detail`, `image`) VALUES
-(3, 'Haha', 'Chi tiết lịch sử', 'artworks-9GYMM38Wzt4D0ygP-PEX5LQ-t500x500.jpg'),
+(3, 'Haha', 'Chi tiết lịch sử', 'landmark81.jpg'),
 (4, 'Phan Minh Phát 2', '123123123', NULL),
 (5, 'alex', 'alex', NULL),
 (6, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
@@ -91,6 +91,13 @@ CREATE TABLE `category` (
   `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `detail`, `parentID`, `image`) VALUES
+(4, 'Phan Minh Phát', '                                       \r\n                                    ', NULL, '');
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +108,13 @@ CREATE TABLE `category_product` (
   `categoryID` int(11) NOT NULL,
   `productID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category_product`
+--
+
+INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
+(4, 17);
 
 -- --------------------------------------------------------
 
@@ -152,6 +166,30 @@ INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `esrb`
+--
+
+CREATE TABLE `esrb` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `detail` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `esrb`
+--
+
+INSERT INTO `esrb` (`id`, `name`, `detail`, `image`) VALUES
+(1, 'Everyone', 'Content is generally suitable for all ages. May contain minimal cartoon, fantasy or mild violence and/or infrequent use of mild language.', 'E.svg'),
+(2, 'Everyone 10+', 'Content is generally suitable for ages 10 and up. May contain more cartoon, fantasy or mild violence, mild language and/or minimal suggestive themes.', 'E10plus.svg'),
+(3, 'Teen', 'Content is generally suitable for ages 13 and up. May contain violence, suggestive themes, crude humor, minimal blood, simulated gambling and/or infrequent use of strong language.', 'T.svg'),
+(4, 'Mature 17+', 'Content is generally suitable for ages 17 and up. May contain intense violence, blood and gore, sexual content and/or strong language.', 'M.svg'),
+(5, 'Adults Only 18+', 'Content suitable only for adults ages 18 and up. May include prolonged scenes of intense violence, graphic sexual content and/or gambling with real currency.', 'AO.svg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `import`
 --
 
@@ -183,17 +221,6 @@ CREATE TABLE `importdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `importdetail`
---
-
-INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
-(21, 3, 10, 50000),
-(22, 3, 10, 50000),
-(22, 4, 10, 50000),
-(22, 5, 10, 50000),
-(22, 6, 10, 50000);
-
 -- --------------------------------------------------------
 
 --
@@ -208,40 +235,6 @@ CREATE TABLE `orderdetail` (
   `subtotal` double NOT NULL,
   `discount` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `orderdetail`
---
-
-INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtotal`, `discount`) VALUES
-(48, 3, 11, 50000, 0, NULL),
-(49, 3, 11, 50000, 0, NULL),
-(50, 3, 11, 50000, 0, NULL),
-(51, 3, 1, 50000, 0, NULL),
-(52, 3, 1, 50000, 0, NULL),
-(53, 3, 1, 50000, 0, NULL),
-(54, 3, 1, 50000, 0, NULL),
-(55, 3, 1, 50000, 0, NULL),
-(56, 3, 1, 50000, 0, NULL),
-(57, 3, 1, 50000, 0, NULL),
-(58, 3, 1, 50000, 0, NULL),
-(59, 3, 1, 50000, 0, NULL),
-(60, 3, 1, 50000, 0, NULL),
-(61, 3, 1, 50000, 0, NULL),
-(62, 3, 1, 50000, 0, NULL),
-(63, 3, 1, 50000, 0, NULL),
-(64, 3, 1, 50000, 0, NULL),
-(65, 3, 1, 50000, 0, NULL),
-(66, 3, 1, 50000, 0, NULL),
-(67, 3, 1, 50000, 0, NULL),
-(68, 3, 1, 50000, 0, NULL),
-(69, 3, 1, 50000, 0, NULL),
-(70, 3, 1, 50000, 50000, 20),
-(70, 4, 1, 5000450, 5000450, 50),
-(71, 3, 1, 50000, 50000, 20),
-(71, 5, 1, 50000, 50000, 0),
-(72, 3, 50, 50000, 2500000, 20),
-(72, 4, 1, 5000450, 5000450, 50);
 
 -- --------------------------------------------------------
 
@@ -328,25 +321,23 @@ CREATE TABLE `product` (
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL,
   `pagenumber` int(11) DEFAULT NULL,
+  `publishdate` date NOT NULL,
+  `language` varchar(50) DEFAULT NULL,
+  `esrbID` int(11) DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
   `authorID` int(11) DEFAULT NULL,
   `publisherID` int(11) DEFAULT NULL,
-  `saleID` varchar(100) DEFAULT NULL
+  `saleID` varchar(100) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `image`, `authorID`, `publisherID`, `saleID`) VALUES
-(3, '10 vạn câu hỏi vì sao 2', '10 vạn câu hỏi vì sao....', 50, 50000, 344, 'landmark81.jpg', 3, 14, 'discount50'),
-(4, 'Lịch sử', '.............', 22, 5000450, 233, '1620484.jpg', 5, 15, 'discount20'),
-(5, 'Lịch sử', '10 vạn câu hỏi vì sao....', 10, 50000, 2344, '', 3, 15, 'discount50'),
-(6, '10 vạn câu hỏi vì sao', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled__4_-removebg-preview.png', 3, 14, NULL),
-(7, 'Phan Minh Phát', '123', 0, 50000, 200, 'SlickGantt.png', 3, 14, NULL),
-(8, '333333333', '10 vạn câu hỏi vì sao....', 0, 50000, 2000, 'Untitled (7).png', 5, 14, NULL),
-(9, 'Lịch sử', '123', 0, 50000, 200, 'n.png', 3, 14, NULL),
-(11, 'Lịch sử', '10 vạn câu hỏi vì sao....', 0, 50000, 200, 'wallpaperflare.com_wallpaper (1).jpg', 3, 14, 'discount20');
+INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
+(17, '10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '', 5, 14, 'discount50', 1),
+(18, '10 vạn câu hỏi vì sao 2', 'sdafsdfsf', 0, 500000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 0);
 
 -- --------------------------------------------------------
 
@@ -369,6 +360,20 @@ INSERT INTO `publisher` (`id`, `name`, `detail`, `image`) VALUES
 (14, 'Lịch sử', '214234', NULL),
 (15, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
 (16, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rating`
+--
+
+CREATE TABLE `rating` (
+  `productID` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `rating` tinyint(4) NOT NULL,
+  `comment` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -564,6 +569,12 @@ ALTER TABLE `employee`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `esrb`
+--
+ALTER TABLE `esrb`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `import`
 --
 ALTER TABLE `import`
@@ -606,13 +617,21 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `authorID` (`authorID`),
   ADD KEY `publisherID` (`publisherID`),
-  ADD KEY `saleID` (`saleID`);
+  ADD KEY `saleID` (`saleID`),
+  ADD KEY `esrbID` (`esrbID`);
 
 --
 -- Indexes for table `publisher`
 --
 ALTER TABLE `publisher`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rating`
+--
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`productID`,`username`),
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `role`
@@ -681,7 +700,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -694,6 +713,12 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `esrb`
+--
+ALTER TABLE `esrb`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `import`
@@ -717,7 +742,7 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `publisher`
@@ -801,7 +826,15 @@ ALTER TABLE `ordertb`
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`authorID`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`publisherID`) REFERENCES `publisher` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `product_ibfk_3` FOREIGN KEY (`saleID`) REFERENCES `sale` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `product_ibfk_4` FOREIGN KEY (`esrbID`) REFERENCES `esrb` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Constraints for table `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `role_permission`
