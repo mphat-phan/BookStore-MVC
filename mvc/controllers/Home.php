@@ -5,7 +5,11 @@ class Home extends Controller{
         $this->Home = $this->model("UserModel");        
         $this->Employee = $this->model("EmployeeModel"); 
     }
-
+    function index(){
+        $this->view("layout",array(
+            "Page" => "home"
+        ));
+    }
     function Login(){        
         $this->view("admin/layout2",array(
             "Page" => "login/login"

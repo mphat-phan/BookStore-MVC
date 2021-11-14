@@ -83,6 +83,12 @@
                                 <p>Sale</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a id="" href="<?php echo constant('URL') ?>esrb" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Esrb</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

@@ -14,6 +14,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/login.css">
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/main.css">
 </head>
 <!--
 `body` tag options:
@@ -39,6 +40,7 @@
 <!-- AdminLTE App -->
 <script src="<?php echo constant('URL') ?>public/assets/dist/js/adminlte.min.js"></script>
 <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/js/index.js"></script>
 <script src="<?php echo constant('URL') ?>public/assets/js/build-in.js"></script>
 </body>
 </html>

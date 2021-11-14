@@ -80,8 +80,6 @@
                                         <span class="input-group-text">%</span>
                                         </div>
                                     </div>
-                                   
-
                                 </div>
                             
                             

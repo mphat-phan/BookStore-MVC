@@ -48,6 +48,10 @@
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>PageNumber</th>
+                                        <th>Publish Date</th>
+                                        <th>Status</th>
+                                        <th>Language</th>
+                                        <th>Esrb</th>
                                         <th>Image</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -68,6 +72,10 @@
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>PageNumber</th>
+                                        <th>Publish Date</th>
+                                        <th>Status</th>
+                                        <th>Language</th>
+                                        <th>Esrb</th>
                                         <th>Image</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -136,12 +144,35 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">SaleID</label>
+                                        <label for="exampleInputEmail1">Sale</label>
                                         <select name="selectSale" class="form-control select2" id="selectSale" style="width: 100%;">
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Rated Age</label>
+                                        <select name="selectRated" class="form-control select2" id="selectRated" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
                                 
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Publish Date</label>
+                                    <input name="txtPublishdate" type="date" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Language</label>
+                                    <input name="txtLanguage" type="text" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
                                 
                             </div>
                             <div class="form-group w-25">
@@ -263,16 +294,39 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                    <label for="exampleInputEmail1">Publisher</label>
-                                    <select name="selectPublisher" class="form-control select2" id="selectPublisherUpdate" style="width: 100%;">
-                                    </select>
+                                        <label for="exampleInputEmail1">Product Publisher</label>
+                                        <select name="selectPublisher" class="form-control select2" id="selectPublisherUpdate" style="width: 100%;">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">SaleID</label>
+                                        <label for="exampleInputEmail1">Product Sale</label>
                                         <select name="selectSale" class="form-control select2" id="selectSaleUpdate" style="width: 100%;">
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Product Rated Age</label>
+                                        <select name="selectRated" class="form-control select2" id="selectRatedUpdate" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Publish Date</label>
+                                    <input name="txtPublishdate" type="date" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Language</label>
+                                    <input name="txtLanguage" type="text" class="form-control "
+                                        placeholder="Enter " required>
                                     </div>
                                 </div>
                                 
@@ -321,7 +375,31 @@
         });
     });
     })
+    $(document).on('click', 'input[type="checkbox"]', function(event){
+            id=$(this).attr('data_id');
+            if($(this).prop("checked") == true){
+                
+                $(this).val(1)
+            }
+            else if($(this).prop("checked") == false){
+                
+                $(this).val(0)    
+            }
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>product/updateStatus/'+id,
+                data :{
+                    'txtStatus' : $(this).val()
+                },
+                success: function(data){
+                    sweetAlertCRUD(data, "Update status");
+                }
+            });
+       
+    });
     $(document).ready(function () {
+
+
     //dislay picture 
     $('#UpdateModal input[type="file"]').change(function(e) {
                 
@@ -336,13 +414,14 @@
     });
    
 
-
     //select author
     var selectAuthor = document.getElementById('selectAuthor'); 
     //select publisher
     var selectPublisher = document.getElementById('selectPublisher'); 
     //select sale
     var selectSale = document.getElementById('selectSale'); 
+    //select rated
+    var selectRated = document.getElementById('selectRated'); 
 
     //select author update
     var selectAuthorUpdate = document.getElementById('selectAuthorUpdate'); 
@@ -350,6 +429,8 @@
     var selectPublisherUpdate = document.getElementById('selectPublisherUpdate'); 
     //select sale update
     var selectSaleUpdate = document.getElementById('selectSaleUpdate'); 
+    //select rated update
+    var selectRatedUpdate = document.getElementById('selectRatedUpdate'); 
     
     var option = document.createElement("option");
         //select author
@@ -398,7 +479,23 @@
                 });
             }
         });
-      
+
+        //select rated
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>esrb/getall',
+            dataType: 'json',
+            success: function(data){
+                var esrb = data['data'];
+                Object.keys(esrb).forEach(key => {
+                    selectRated.options[key] = new Option(esrb[key].name, esrb[key].id);
+                });
+                Object.keys(esrb).forEach(key => {
+                    selectRatedUpdate.options[key] = new Option(esrb[key].name, esrb[key].id);
+                });
+            }
+        });
+
         //datatable
         producttable = $('#producttable').DataTable({
             dom: 'Bfrtip',
@@ -429,12 +526,45 @@
                     "data": "pagenumber"
                 },
                 {
+                    "data": "publishdate"
+                },
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        var status = full.status;
+                        var id = full.id;
+                        if(status==1){
+                            return( 
+                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' data_id='"+id+"' value="+status+" checked></label></div></div>"
+                            );
+                        }
+                        else{
+                            return( 
+                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' value="+status+" ></label></div></div>"
+                            );
+                        }
+                        
+                    }
+                },
+                {
+                    "data": "language"
+                },
+                {
+                    "data": "esrbID",
+                    "render": function (data, type, row, meta) {
+                        return( 
+                            data.name
+                        );
+                    }
+                },
+                
+                {
                     "data": "image",
                     "render": function (data, type, row, meta) {
                         if(data){
                             return(
                             "<a href='<?php echo constant('URL') ?>/public/assets/images/"+data+"' data-toggle='lightbox' data-title='Image'>"+
-                                "<img class='img-fluid' src='<?php echo constant('URL') ?>/public/assets/images/"+data+"' class='img-fluid mb-2' alt='white sample'/>"+
+                                data+
                             "</a>"
                             );
                         }
@@ -573,17 +703,22 @@
                 x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].price;
                 x.elements[2].value = data['data'][0].pagenumber;
-               
+                x.elements[7].value = data['data'][0].publishdate;
+                x.elements[8].value = data['data'][0].language;
+                
                 $("#summernote2").summernote("code", data['data'][0].description);
                 
                 $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
                 $('#txtImageUpdate').val('');
-                $("#selectPublishUpdate").select2().select2("val", data['data'][0].publisherID);
+              
+                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].publisherID);
                 
                 $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID);
                 
-                
                 $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID.id);
+             
+
+                $("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID);
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
