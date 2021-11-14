@@ -48,6 +48,10 @@
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>PageNumber</th>
+                                        <th>Publish Date</th>
+                                        <th>Status</th>
+                                        <th>Language</th>
+                                        <th>Esrb</th>
                                         <th>Image</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -68,6 +72,10 @@
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>PageNumber</th>
+                                        <th>Publish Date</th>
+                                        <th>Status</th>
+                                        <th>Language</th>
+                                        <th>Esrb</th>
                                         <th>Image</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -110,16 +118,6 @@
                                     placeholder="Enter " required>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Product Description</label>
-                                <input name="txtDescription" type="text" class="form-control "
-                                    placeholder="Enter " required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Quantity</label>
-                                <input name="txtQuantity" type="number" class="form-control "
-                                    value="0" disabled>
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleInputEmail1">Product Price</label>
                                 <input name="txtPrice" type="number" class="form-control "
                                     placeholder="Enter " required>
@@ -129,26 +127,70 @@
                                 <input name="txtPagenumber" type="number" class="form-control "
                                     placeholder="Enter ">
                             </div>
-                            <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Author</label>
+                                    <select name="selectAuthor" class="form-control select2" id="selectAuthor" style="width: 100%;">
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Publisher</label>
+                                    <select name="selectPublisher" class="form-control select2" id="selectPublisher" style="width: 100%;">
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Sale</label>
+                                        <select name="selectSale" class="form-control select2" id="selectSale" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Rated Age</label>
+                                        <select name="selectRated" class="form-control select2" id="selectRated" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Publish Date</label>
+                                    <input name="txtPublishdate" type="date" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Language</label>
+                                    <input name="txtLanguage" type="text" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group w-25">
                                 <label for="exampleInputEmail1">Product Image</label>
                                 <input name="txtImage" id="txtImage" type="file" accept="image/*" class="form-control "
                                     placeholder="Enter ">
+                                <img id="imageProductAdd" class="img-fluid " src="" alt="">
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Author</label>
-                                <select name="selectAuthor" class="form-control select2" id="selectAuthor" style="width: 100%;">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher</label>
-                                <select name="selectPublisher" class="form-control select2" id="selectPublisher" style="width: 100%;">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">SaleID</label>
-                                <select name="selectSale" class="form-control select2" id="selectSale" style="width: 100%;">
-                                </select>
-                            </div>
+                                <!--Editor Description-->
+                                <label for="exampleInputEmail1">Product Description</label>
+                                <div class="card-body">
+                                    <textarea name="txtDescription" id="summernote">
+                                       
+                                    </textarea>
+                                </div>
+                            
+                            
+                            
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
@@ -188,32 +230,32 @@
             </div>
         </div>
     </div>
-<div class="modal" id="AddCategoryModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal" id="AddCategoryModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add Category</h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form id="formAdd" action="" method="post">
-                    
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Category</label>
-                            <select class="form-control select2" name="selectCategory[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectCategory" style="width: 100%;">                                                              
-                            </select>                         
-                        </div>                                               
-                        <!-- /.card-body -->                        
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Category</h3>
                     </div>
-                </form>
-            </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formAdd" action="" method="post">
+                        
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Category</label>
+                                <select class="form-control select2" name="selectCategory[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectCategory" style="width: 100%;">                                                              
+                                </select>                         
+                            </div>                                               
+                            <!-- /.card-body -->                        
+                        </div>
+                    </form>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
     <div class="modal" id="UpdateModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -226,21 +268,11 @@
                     <!-- form start -->
                     <form id="formUpdate" action="" method="POST" enctype="multipart/form-data">
 
-                        <div class="card-body">
+                    <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Name</label>
                                 <input name="txtName" type="text" class="form-control "
                                     placeholder="Enter " required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Description</label>
-                                <input name="txtDescription" type="text" class="form-control "
-                                    placeholder="Enter " required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Quantity</label>
-                                <input name="txtQuantity" type="number" class="form-control "
-                                    placeholder="Enter " disabled>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Price</label>
@@ -250,33 +282,74 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Product Page Number</label>
                                 <input name="txtPagenumber" type="number" class="form-control "
-                                    placeholder="Enter " >
+                                    placeholder="Enter ">
                             </div>
-                            <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Author</label>
+                                    <select name="selectAuthor" class="form-control select2" id="selectAuthorUpdate" style="width: 100%;">
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Product Publisher</label>
+                                        <select name="selectPublisher" class="form-control select2" id="selectPublisherUpdate" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Product Sale</label>
+                                        <select name="selectSale" class="form-control select2" id="selectSaleUpdate" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Product Rated Age</label>
+                                        <select name="selectRated" class="form-control select2" id="selectRatedUpdate" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Publish Date</label>
+                                    <input name="txtPublishdate" type="date" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Language</label>
+                                    <input name="txtLanguage" type="text" class="form-control "
+                                        placeholder="Enter " required>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group w-25">
                                 <label for="exampleInputEmail1">Product Image</label>
-                                <input id="txtImage" name="txtImage" type="file" accept="image/*" class="form-control "
-                                    placeholder="Enter " >
-                                <img id="imageProduct" class="img-fluid" src="" alt="">
+                                <input name="txtImage" id="txtImageUpdate" type="file" accept="image/*" class="form-control "
+                                    placeholder="Enter ">
+                                <img id="imageProduct" class="img-fluid " src="" alt="">
                             </div>
-                             
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Author</label>
-                                <select name="selectAuthor" class="form-control select2" id="selectAuthorUpdate" style="width: 100%;">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher</label>
-                                <select name="selectPublisher" class="form-control select2" id="selectPublisherUpdate" style="width: 100%;">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">SaleID</label>
-                                <select name="selectSale" class="form-control select2" id="selectSaleUpdate" style="width: 100%;">
-                                </select>
-                            </div>
+                                <!--Editor Description-->
+                                <label for="exampleInputEmail1">Product Description</label>
+                                <div class="card-body">
+                                    <textarea name="txtDescription" id="summernote2">
+                                       
+                                    </textarea>
+                                </div>
+                            
+                            
+                            
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -290,6 +363,11 @@
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(function () {
+    // Summernote
+        $('#summernote').summernote()
+        $('#summernote2').summernote()
+    })
+    $(function () {
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
         event.preventDefault();
         $(this).ekkoLightbox({
@@ -297,16 +375,44 @@
         });
     });
     })
-    $(document).ready(function () {
-    
-      
-            $('input[type="file"]').change(function(e) {
+    $(document).on('click', 'input[type="checkbox"]', function(event){
+            id=$(this).attr('data_id');
+            if($(this).prop("checked") == true){
                 
-                $("#imageProduct").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
-            
+                $(this).val(1)
+            }
+            else if($(this).prop("checked") == false){
+                
+                $(this).val(0)    
+            }
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>product/updateStatus/'+id,
+                data :{
+                    'txtStatus' : $(this).val()
+                },
+                success: function(data){
+                    sweetAlertCRUD(data, "Update status");
+                }
             });
-   
+       
+    });
+    $(document).ready(function () {
 
+
+    //dislay picture 
+    $('#UpdateModal input[type="file"]').change(function(e) {
+                
+        $("#imageProduct").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
+            
+    });
+
+    $('#AddModal input[type="file"]').change(function(e) {
+                
+        $("#imageProductAdd").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
+            
+    });
+   
 
     //select author
     var selectAuthor = document.getElementById('selectAuthor'); 
@@ -314,6 +420,8 @@
     var selectPublisher = document.getElementById('selectPublisher'); 
     //select sale
     var selectSale = document.getElementById('selectSale'); 
+    //select rated
+    var selectRated = document.getElementById('selectRated'); 
 
     //select author update
     var selectAuthorUpdate = document.getElementById('selectAuthorUpdate'); 
@@ -321,6 +429,8 @@
     var selectPublisherUpdate = document.getElementById('selectPublisherUpdate'); 
     //select sale update
     var selectSaleUpdate = document.getElementById('selectSaleUpdate'); 
+    //select rated update
+    var selectRatedUpdate = document.getElementById('selectRatedUpdate'); 
     
     var option = document.createElement("option");
         //select author
@@ -369,7 +479,22 @@
                 });
             }
         });
-        //
+
+        //select rated
+        $.ajax({
+            type: "POST",
+            url: '<?php echo constant('URL') ?>esrb/getall',
+            dataType: 'json',
+            success: function(data){
+                var esrb = data['data'];
+                Object.keys(esrb).forEach(key => {
+                    selectRated.options[key] = new Option(esrb[key].name, esrb[key].id);
+                });
+                Object.keys(esrb).forEach(key => {
+                    selectRatedUpdate.options[key] = new Option(esrb[key].name, esrb[key].id);
+                });
+            }
+        });
 
         //datatable
         producttable = $('#producttable').DataTable({
@@ -384,7 +509,12 @@
                     "data": "name"
                 },
                 {
-                    "data": "description"
+                    "data": null,
+                    "render": function (data, type, full) {
+                        return(
+                            "...see more in update"
+                        )
+                    }
                 },
                 {
                     "data": "quantity"
@@ -396,12 +526,45 @@
                     "data": "pagenumber"
                 },
                 {
+                    "data": "publishdate"
+                },
+                {
+                    "data": "status",
+                    "render": function (data, type, full) {
+                        var status = full.status;
+                        var id = full.id;
+                        if(status==1){
+                            return( 
+                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' data_id='"+id+"' value="+status+" checked></label></div></div>"
+                            );
+                        }
+                        else{
+                            return( 
+                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' value="+status+" ></label></div></div>"
+                            );
+                        }
+                        
+                    }
+                },
+                {
+                    "data": "language"
+                },
+                {
+                    "data": "esrbID",
+                    "render": function (data, type, row, meta) {
+                        return( 
+                            data.name
+                        );
+                    }
+                },
+                
+                {
                     "data": "image",
                     "render": function (data, type, row, meta) {
                         if(data){
                             return(
                             "<a href='<?php echo constant('URL') ?>/public/assets/images/"+data+"' data-toggle='lightbox' data-title='Image'>"+
-                                "<img class='img-fluid' src='<?php echo constant('URL') ?>/public/assets/images/"+data+"' class='img-fluid mb-2' alt='white sample'/>"+
+                                data+
                             "</a>"
                             );
                         }
@@ -538,21 +701,24 @@
             dataType: 'json',
             success: function(data){
                 x.elements[0].value = data['data'][0].name;
-                x.elements[1].value = data['data'][0].description;
-                x.elements[2].value = data['data'][0].quantity;
-                x.elements[3].value = data['data'][0].price;
-                x.elements[4].value = data['data'][0].pagenumber;
-                $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)                
-                //x.elements[5].value = data['data'][0].image;
-                //$('#selectAuthor').val(data['data'][0].authorID); 
-                $('[name=selectAuthorUpdate]').val(data['data'][0].authorID);
+                x.elements[1].value = data['data'][0].price;
+                x.elements[2].value = data['data'][0].pagenumber;
+                x.elements[7].value = data['data'][0].publishdate;
+                x.elements[8].value = data['data'][0].language;
+                
+                $("#summernote2").summernote("code", data['data'][0].description);
+                
+                $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
+                $('#txtImageUpdate').val('');
+              
+                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].publisherID);
+                
                 $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID);
+                
+                $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID.id);
+             
 
-                $('[name=selectPublishUpdate]').val(data['data'][0].publisherID);
-                $("#selectPublishUpdate").select2().select2("val", data['data'][0].publisherID);
-
-                $('[name=selectSaleUpdate]').val(data['data'][0].saleID);
-                $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID);
+                $("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID);
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
@@ -571,7 +737,7 @@
                 success: function(data){                                        
                     category = data['data'];                    
                     Object.keys(category).forEach(key => {                                                                    
-                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name + " - " + category[key].detail, category[key].id)
+                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name, category[key].id)
                     });                            
                     $.ajax({
                         type: "POST",
@@ -593,7 +759,7 @@
                                 Object.keys(category).forEach(key => {                                
                                     if(category[key]['selected'] == 'selected' && category['product'] == id)
                                     {
-                                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name + " - " + category[key].detail, category[key].id,false,true);
+                                        selectCategory.options[key] = new Option("ID : " + category[key].id + " - " + category[key].name, category[key].id,false,true);
                                     }                                    
                                 });                                                                                                
                             }                                                        

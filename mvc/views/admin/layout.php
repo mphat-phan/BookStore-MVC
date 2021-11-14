@@ -1,8 +1,3 @@
-<?php
-  // khác port => http://localhost/Bookstore/
-  // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost:84/Bookstore/');  
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,8 +31,13 @@
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/ekko-lightbox/ekko-lightbox.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/summernote/summernote-bs4.min.css">
+  <!-- SimpleMDE -->
+  <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/simplemde/simplemde.min.css">
 
   <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/css/login.css">
+
 
     <style>
       
@@ -130,6 +130,8 @@
   <script src="<?php echo constant('URL') ?>public/assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
   <!-- Ekko Lightbox -->
   <script src="<?php echo constant('URL') ?>public/assets/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+  <!-- Summernote -->
+  <script src="<?php echo constant('URL') ?>public/assets/plugins/summernote/summernote-bs4.min.js"></script>
   
 </body>
 

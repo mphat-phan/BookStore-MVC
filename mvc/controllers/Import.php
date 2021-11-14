@@ -5,7 +5,7 @@ class Import extends Controller{
         $this->import = $this->model("ImportModel");
         $this->importdetail = $this->model("ImportDetailModel");        
         $this->UserRole = $this->model("UserRoleModel");                                
-    }
+    }    
 
     function index(){
         if($this->UserRole->checkRole("staff.import")!=1 && $this->UserRole->checkRole("admin")!=1)
@@ -13,8 +13,8 @@ class Import extends Controller{
             $this->page500();
             exit();
         }
-        $this->view("admin/layout",array(
-			"Page" => "import"    
+        $this->view("admin/layout2",array(
+			"Page" => "import\index"    
 		));        
     }
     function getAll(){

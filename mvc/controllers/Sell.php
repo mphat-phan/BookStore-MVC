@@ -14,7 +14,7 @@ class Sell extends Controller{
             exit();
         }
         $this->view("admin/layout2",array(
-			"Page" => "sell"    
+			"Page" => "sell\index"    
 		));        
     }
     function pages() {
