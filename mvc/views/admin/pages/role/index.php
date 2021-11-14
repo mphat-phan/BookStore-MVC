@@ -616,8 +616,7 @@
                 url: '<?php echo constant('URL') ?>permission/addRolePermission/'+name,
                 data: {selected:selected}, // serializes the form's elements.
                 success: function (data) {
-                    sweetAlertCRUD(data, "Update");
-                    roletable.ajax.reload();
+                    sweetAlertCRUD(data, "Update");                    
                 }
             });
         });

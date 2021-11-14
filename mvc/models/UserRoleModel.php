@@ -29,14 +29,22 @@
             public function delete($id){
                   return $this->delete_by_id2($id);
 
-            }  
+            }            
             public function checkRole($role){
                   if(!isset($_SESSION['username']))
                   {
-                        return 0;
+                        header("Location: Home/Login");
+                  }
+                  else
+                  {
+                        $sql = "SELECT * FROM `user` WHERE `user`.`username` = 'chiquang' AND `user`.`status` = 1";
+                        if(mysqli_num_rows($this->selectQuery($sql))==0)
+                        {
+                              header("Location: ./Home/Login");
+                        }
                   }
                   $username = $_SESSION['username'];
-                  $sql ="SELECT * FROM `userrole` WHERE `userrole`.`username` = '$username' and `userrole`.`rolename` = '$role'";                                  
+                  $sql ="SELECT * FROM `userrole` WHERE `userrole`.`username` = '$username' AND `userrole`.`rolename` LIKE '$role%'";                                  
                   if(mysqli_num_rows($this->selectQuery($sql))==1)
                   {
                         return 1;

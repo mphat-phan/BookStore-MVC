@@ -4,15 +4,15 @@ class Author extends Controller{
     function __construct(){
         $this->author = $this->model("AuthorModel");
         $this->UserRole = $this->model("UserRoleModel");
-        $this->RolePermission = $this->model("RolePermissionModel");                        
+        $this->RolePermission = $this->model("RolePermissionModel");                                                                
+    }
+
+    function index(){
         if($this->UserRole->checkRole("staff.product")!=1 && $this->UserRole->checkRole("admin")!=1)
         {
             $this->page500();
             exit();
-        }                                   
-    }
-
-    function index(){        
+        }               
         $this->view("admin/layout",array(
 			"Page" => "author"       
 		));        
@@ -26,7 +26,7 @@ class Author extends Controller{
         echo $list;
     }
     function add(){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
         {
             echo 2;
             return;
@@ -46,7 +46,7 @@ class Author extends Controller{
     }
 
     function update($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)
         {
             echo 2;
             return;
@@ -66,7 +66,7 @@ class Author extends Controller{
         echo 0;
     }
     function delete($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","delete")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.delete","delete")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","delete")!=1)        
         {
             echo 2;
             return;

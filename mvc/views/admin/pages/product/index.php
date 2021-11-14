@@ -542,8 +542,7 @@
                 x.elements[2].value = data['data'][0].quantity;
                 x.elements[3].value = data['data'][0].price;
                 x.elements[4].value = data['data'][0].pagenumber;
-                $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
-                $('#txtImage').val(data['data'][0].image);
+                $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)                
                 //x.elements[5].value = data['data'][0].image;
                 //$('#selectAuthor').val(data['data'][0].authorID); 
                 $('[name=selectAuthorUpdate]').val(data['data'][0].authorID);

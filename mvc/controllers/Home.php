@@ -10,6 +10,10 @@ class Home extends Controller{
         $this->view("admin/layout2",array(
             "Page" => "login/login"
         ));
+    }    
+    function Logout(){                        
+        session_destroy();
+        header("Location: Login");
     }
     // function register(){
     //     $this->view("layout",array(
@@ -76,7 +80,7 @@ class Home extends Controller{
         {
             $txtusername = $_POST['txtUsername'];
             $txtpassword = $_POST['txtPassword'];            
-            $sql = "SELECT * FROM `user` WHERE `username` = '$txtusername' or `email` = '$txtusername' LIMIT 1";            
+            $sql = "SELECT * FROM `user` WHERE (`username` = '$txtusername' OR `email` = '$txtusername') AND `status`=1 LIMIT 1";            
             if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
             {
                 $_SESSION['username'] =  $txtusername;

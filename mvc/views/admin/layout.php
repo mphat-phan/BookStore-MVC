@@ -1,7 +1,7 @@
 <?php
   // khác port => http://localhost/Bookstore/
   // có port => http://localhost:(PORT)/Bookstore/
-  define ('URL', 'http://localhost/Bookstore/');  
+  define ('URL', 'http://localhost:84/Bookstore/');  
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -6,15 +6,14 @@ class Order extends Controller{
         $this->orderdetail = $this->model("OrderDetailModel");
         $this->saleorder = $this->model("SaleOrderModel");
         
-        $this->UserRole = $this->model("UserRoleModel");                        
+        $this->UserRole = $this->model("UserRoleModel");                                
+    }
+    function index(){
         if($this->UserRole->checkRole("staff.sell")!=1 && $this->UserRole->checkRole("admin")!=1)
         {
             $this->page500();
             exit();
         }
-    }
-    function index(){
-      
         $this->view("admin/layout",array(
 			"Page" => "order"
 		));        
@@ -32,7 +31,7 @@ class Order extends Controller{
         echo $list;
     }
     function add(){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
         {
             echo 2;
             return;
@@ -90,7 +89,7 @@ class Order extends Controller{
         echo 0;
     }
     function update($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","update")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","update")!=1)
         {
             echo 2;
             return;
@@ -106,7 +105,7 @@ class Order extends Controller{
         echo 0;
     }
     function delete($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","delete")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.delete","delete")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","delete")!=1)        
         {
             echo 2;
             return;

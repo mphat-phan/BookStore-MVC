@@ -176,35 +176,35 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Name</label>
-                                <input name="txtName" type="text" class="form-control" placeholder="Enter " required>
+                                <input name="txtName" type="text" class="form-control" placeholder="Enter" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Phone</label>
-                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter " required>
+                                <input name="txtPhone" type="text" class="form-control" placeholder="Enter" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Email</label>
-                                <input name="txtEmail" type="text" class="form-control" placeholder="Enter ">
+                                <input name="txtEmail" type="text" class="form-control" placeholder="Enter">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Address</label>
-                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter " required>
+                                <input name="txtAddress" type="text" class="form-control" placeholder="Enter" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Birth</label>
-                                <input name="txtBirth" type="date" class="form-control" placeholder="Enter ">
+                                <input name="txtBirth" type="date" class="form-control" placeholder="Enter">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Employee Join Date</label>
-                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter " required>
+                                <input name="txtJoindate" type="date" class="form-control" placeholder="Enter" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Username</label>
-                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter " required>
+                                <input name="txtUsername" type="text" class="form-control" placeholder="Enter" required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                <input name="submit" type="submit" class="btn btn-primary" value="Submit">                                
                             </div>
                         </div>
                     </form>
@@ -261,7 +261,7 @@
 
                     }
                 }
-            ],
+            ]
 
         });
 
