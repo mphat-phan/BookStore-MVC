@@ -11,7 +11,7 @@
         <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
         <meta property="og:site_name" content="" /> <!-- website name -->
         <meta property="og:site" content="" /> <!-- website link -->
-        <meta property="og:title" content=""/> <!-- title shown in the actual shared post -->
+        <meta property="og:title" content=""/> <!   -- title shown in the actual shared post -->
         <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
         <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
         <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
@@ -27,6 +27,7 @@
         <link href="<?php echo constant('URL') ?>public/assets2/css/swiper.css" rel="stylesheet">
         <link href="<?php echo constant('URL') ?>public/assets2/css/styles.css" rel="stylesheet">
         <!--Owl-->
+        <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.carousel.css">
         <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.theme.default.min.css">
     
@@ -105,18 +106,72 @@
         </header> <!-- end of header -->
 
         <div class="owl-carousel owl-theme">
-            <div class="item"><h4>1</h4></div>
-            <div class="item"><h4>2</h4></div>
-            <div class="item"><h4>3</h4></div>
-            <div class="item"><h4>4</h4></div>
-            <div class="item"><h4>5</h4></div>
-            <div class="item"><h4>6</h4></div>
-            <div class="item"><h4>7</h4></div>
-            <div class="item"><h4>8</h4></div>
-            <div class="item"><h4>9</h4></div>
-            <div class="item"><h4>10</h4></div>
-            <div class="item"><h4>11</h4></div>
-            <div class="item"><h4>12</h4></div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
+            <div class="item">
+                <h4>1</h4>
+                <div class="card" style="width:400px">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">John Doe</h4>
+                    <p class="card-text">Some example text.</p>
+                    <a href="#" class="btn btn-primary">See Profile</a>
+                </div>
+                </div>
+            </div>
         </div>
         
         <!-- Footer -->
