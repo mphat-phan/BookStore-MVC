@@ -37,7 +37,8 @@
                   }
                   else
                   {
-                        $sql = "SELECT * FROM `user` WHERE `user`.`username` = 'chiquang' AND `user`.`status` = 1";
+                        $user = $_SESSION['username'];
+                        $sql = "SELECT * FROM `user` WHERE `user`.`username` = '$user' AND `user`.`status` = 1";
                         if(mysqli_num_rows($this->selectQuery($sql))==0)
                         {
                               header("Location: ./Home/Login");
