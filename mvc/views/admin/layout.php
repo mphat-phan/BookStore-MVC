@@ -69,13 +69,6 @@
     <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'\\index.php'?>
     </div>
     
-
-    
-
-
-
-
-
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->

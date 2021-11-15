@@ -7,7 +7,7 @@ class Home extends Controller{
     }
     function index(){
         $this->view("layoutHome",array(
-            "Page" => "index"
+            "Page" => "home"
         ));
     }
     function Login(){        
