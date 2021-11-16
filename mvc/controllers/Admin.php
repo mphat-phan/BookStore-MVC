@@ -1,23 +1,18 @@
 <?php
-class Home extends Controller{
+class Admin extends Controller{
     
     function __construct(){
-        $this->Home = $this->model("UserModel");        
-        $this->Customer = $this->model("CustomerModel"); 
+        $this->Admin = $this->model("UserModel");        
+        $this->Employee = $this->model("EmployeeModel"); 
     }
     function index(){
         $this->view("layoutHome",array(
-            "Page" => "home"
+            "Page" => "index"
         ));
     }
     function Login(){        
-        $this->view("layoutHome",array(
-            "Page" => "login"
-        ));
-    }
-    function Register(){        
-        $this->view("layoutHome",array(
-            "Page" => "signup"
+        $this->view("admin/layout2",array(
+            "Page" => "login/login"
         ));
     }    
     function Logout(){                        
@@ -52,7 +47,7 @@ class Home extends Controller{
             
             $array = array('password' => $password);        
             
-            if($this->Home->update_by_stringID($array,$username)==1)
+            if($this->Admin->update_by_stringID($array,$username)==1)
             {
                 echo 1;                
                 return;
@@ -65,11 +60,11 @@ class Home extends Controller{
         {
             $txtusername = $_POST['txtEmail'];            
             $sql = "SELECT * FROM `user` WHERE `email` = '$txtusername' LIMIT 1";            
-            if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
+            if(mysqli_num_rows($this->Admin->getToCheckLogin($sql))==1)
             {  
                 $code = rand (1000 , 9999);
                 setcookie("verifycode", $code, time() + 60, "/");                
-                $result = mysqli_fetch_array($this->Home->getToCheckLogin($sql));
+                $result = mysqli_fetch_array($this->Admin->getToCheckLogin($sql));
                 $_SESSION['username'] = $result['username'];
                 $to = $_POST['txtEmail'];
                 $subject = "Confirm Verifition Code";
@@ -90,14 +85,14 @@ class Home extends Controller{
             $txtusername = $_POST['txtUsername'];
             $txtpassword = $_POST['txtPassword'];            
             $sql = "SELECT * FROM `user` WHERE (`username` = '$txtusername' OR `email` = '$txtusername') AND `status`=1 LIMIT 1";            
-            if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
+            if(mysqli_num_rows($this->Admin->getToCheckLogin($sql))==1)
             {
                 $_SESSION['username'] =  $txtusername;
                 if(isset($_POST['checkremember']))
                 {
                     setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
                 }                
-                $result = mysqli_fetch_array($this->Home->getToCheckLogin($sql));                
+                $result = mysqli_fetch_array($this->Admin->getToCheckLogin($sql));                
                 if(password_verify($txtpassword, $result['password']))
                 {
                     echo 1;
@@ -112,7 +107,7 @@ class Home extends Controller{
         {
             $txtusername = $_POST['username'];
             $sql = "SELECT * FROM `user` WHERE `username` = '$txtusername' LIMIT 1";
-            if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
+            if(mysqli_num_rows($this->Admin->getToCheckLogin($sql))==1)
             {                
                 echo 0;
                 return;
@@ -122,7 +117,7 @@ class Home extends Controller{
         {
             $txtemail = $_POST['email'];
             $sql = "SELECT * FROM `user` WHERE `email` = '$txtemail' LIMIT 1";
-            if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
+            if(mysqli_num_rows($this->Admin->getToCheckLogin($sql))==1)
             {                
                 echo 0;
                 return;
@@ -130,24 +125,24 @@ class Home extends Controller{
         }
         echo 1;
     }
-    function addRegister() {        
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
-            $username = $_POST['username'];
-            $email = $_POST['email']; 
-            $name = $_POST['name'];
-            $phone = $_POST['phone'];
-            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            $date = date("Y-m-d");            
+    // function addRegister() {        
+    //     if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
+    //         $username = $_POST['username'];
+    //         $email = $_POST['email']; 
+    //         $name = $_POST['name'];
+    //         $phone = $_POST['phone'];
+    //         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    //         $date = date("Y-m-d");            
 
-            $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
-            $arraycustomer = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);
-            if($this->Home->add($arrayuser)==1 && $this->Customer->add($arraycustomer)==1){
-                echo 1;
-                return;
-            }
-        }
-        echo 0;        
-    }        
+    //         $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
+    //         $arrayemployee = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);
+    //         if($this->Admin->add($arrayuser)==1 && $this->Employee->add($arrayemployee)==1){
+    //             echo 1;
+    //             return;
+    //         }
+    //     }
+    //     echo 0;        
+    // }        
     function pages() {
         $this->view("pages/404");
     }

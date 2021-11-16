@@ -33,7 +33,7 @@
             public function checkRole($role){
                   if(!isset($_SESSION['username']))
                   {
-                        header("Location: Home/Login");
+                        header("Location: Admin/Login");
                   }
                   else
                   {
@@ -41,7 +41,7 @@
                         $sql = "SELECT * FROM `user` WHERE `user`.`username` = '$user' AND `user`.`status` = 1";
                         if(mysqli_num_rows($this->selectQuery($sql))==0)
                         {
-                              header("Location: ./Home/Login");
+                              header("Location: ./Admin/Login");
                         }
                   }
                   $username = $_SESSION['username'];

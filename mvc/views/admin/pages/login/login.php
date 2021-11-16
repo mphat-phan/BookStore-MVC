@@ -25,7 +25,7 @@
               </div>
               <div class="hr"></div>
               <div class="foot-lnk">
-                <a href="<?php echo constant('URL') ?>Home/forgotpassword">Forgot Password?</a>
+                <a href="<?php echo constant('URL') ?>admin/forgotpassword">Forgot Password?</a>
               </div>
             </form>
         <!-- </div>         -->
@@ -83,7 +83,7 @@ $("#username").keyup(function (){
   if(txtusername != '')
   {
     $.ajax({
-        url:"<?php echo constant('URL') ?>Home/checkRegister",
+        url:"<?php echo constant('URL') ?>admin/checkRegister",
         method:"post",
         data:{username:txtusername},
         dataType:"text",
@@ -110,7 +110,7 @@ $("#email").keyup(function (){
   if(txtemail != '')
   {
     $.ajax({
-        url:"<?php echo constant('URL') ?>Home/checkRegister",
+        url:"<?php echo constant('URL') ?>admin/checkRegister",
         method:"post",
         data:{email:txtemail},
         dataType:"text",
@@ -144,7 +144,7 @@ $(function () {
       if(password == retypepassword)
       {
         $.ajax({
-          url:"<?php echo constant('URL') ?>Home/addRegister",
+          url:"<?php echo constant('URL') ?>admin/addRegister",
           method:"post",
           data:{username:txtusername,email:txtemail,name:txtfname,phone:txtphone,password:password,retypepassword:retypepassword},
           dataType:"text",
@@ -157,7 +157,7 @@ $(function () {
               var downloadTimer = setInterval(function(){
                 if(timeleft <= 0){
                   clearInterval(downloadTimer);
-                  window.location = "<?php echo constant('URL') ?>Home/Login";
+                  window.location = "<?php echo constant('URL') ?>admin/Login";
                 } 
                 else 
                 {
@@ -228,7 +228,7 @@ $(function () {
 $('#formLogin').submit(function(e){
   e.preventDefault();
   var form = $(this);
-  var url = "<?php echo constant('URL') ?>Home/checkLogin";
+  var url = "<?php echo constant('URL') ?>admin/checkLogin";
   $.ajax({
     type: "POST",
     url: url,

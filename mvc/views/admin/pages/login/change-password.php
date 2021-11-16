@@ -10,18 +10,18 @@
           <form action="" method="post" id="formRequest">                        
           <div class="group form-group">
               <label for="pass" class="label">Password</label>
-              <input id="exampleInputPassword1" type="password" name="password" class="input" data-type="password">            
+              <input id="exampleInputPassword1" type="password" name="password" class="input" data-type="password" required>            
             </div>
             <div class="group form-group">
               <label for="pass" class="label">Repeat Password</label>
-              <input id="exampleInputPassword2" type="password" name="retypepassword" class="input" data-type="password">            
+              <input id="exampleInputPassword2" type="password" name="retypepassword" class="input" data-type="password" required>            
             </div>
             <div class="group">              
               <input type="submit" value="Change" class="button">
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
-              <a href="<?php echo constant('URL') ?>Home/login">Back to login</a>
+              <a href="<?php echo constant('URL') ?>admin/login">Back to login</a>
             </div>
           </div>
         </form>              
@@ -33,20 +33,19 @@
 $(function () {
   if(sessionStorage.getItem("rolechange") != "1")
   {
-    window.location = "<?php echo constant('URL') ?>Home/Login";
+    window.location = "<?php echo constant('URL') ?>admin/Login";
   }
   else
-  {
+  {    
     sessionStorage.setItem("rolechange", "0");
   }
 
-  $.validator.setDefaults({
-    submitHandler: function () {
-      //alert( "Form successful submitted!" );
-      var password = $("input[name='password']").val();
-      var retypepassword = $("input[name='retypepassword']").val();      
+  $("#formRequest").submit(function (e) {
+  e.preventDefault();
+  var password = $("input[name='password']").val();
+  var retypepassword = $("input[name='retypepassword']").val();      
       if(password == retypepassword){        
-        var url = "<?php echo constant('URL') ?>Home/updatePassword";
+        var url = "<?php echo constant('URL') ?>admin/updatePassword";
         $.ajax({
             type: "POST",
             url: url,
@@ -54,13 +53,13 @@ $(function () {
             success: function(data)
             {
               if(data==1)
-              {
+              {                
                 $('#loginmessage').html('<p class="alert alert-success"><strong>Your password has been changed</strong></p>');                  
                 var timeleft = 5;
                 var downloadTimer = setInterval(function(){
                   if(timeleft <= 0){
                     clearInterval(downloadTimer);
-                    window.location = "<?php echo constant('URL') ?>Home/Login";
+                    window.location = "<?php echo constant('URL') ?>admin/Login";
                   } 
                   else 
                   {
@@ -76,8 +75,46 @@ $(function () {
       {
         $('#loginmessage').html('<p class="alert alert-warning"><strong>Your password do not match</strong></p>');
       }
-    }
   });
+  // $.validator.setDefaults({
+  //   submitHandler: function () {
+  //     //alert( "Form successful submitted!" );
+  //     var password = $("input[name='password']").val();
+  //     var retypepassword = $("input[name='retypepassword']").val();      
+  //     if(password == retypepassword){        
+  //       var url = "<?php //echo constant('URL') ?>admin/updatePassword";
+  //       $.ajax({
+  //           type: "POST",
+  //           url: url,
+  //           data: {password:password,retypepassword:retypepassword},
+  //           success: function(data)
+  //           {
+  //             if(data==1)
+  //             {
+  //               alert("oke");
+  //               // $('#loginmessage').html('<p class="alert alert-success"><strong>Your password has been changed</strong></p>');                  
+  //               // var timeleft = 5;
+  //               // var downloadTimer = setInterval(function(){
+  //               //   if(timeleft <= 0){
+  //               //     clearInterval(downloadTimer);
+  //               //     window.location = "<?php //echo constant('URL') ?>admin/Login";
+  //               //   } 
+  //               //   else 
+  //               //   {
+  //               //     document.getElementById("countdown").innerHTML = "You will be redirected to login page in "+ timeleft +" sec.";
+  //               //   }
+  //               //   timeleft -= 1;
+  //               // }, 1000);
+  //             }              
+  //           }
+  //       });      
+  //     }
+  //     else
+  //     {
+  //       $('#loginmessage').html('<p class="alert alert-warning"><strong>Your password do not match</strong></p>');
+  //     }
+  //   }
+  // });
   $('#formRequest').validate({
     rules: {
       email: {

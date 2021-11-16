@@ -20,7 +20,7 @@
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
-              <a href="<?php echo constant('URL') ?>Home/login">Back to login</a>
+              <a href="<?php echo constant('URL') ?>admin/login">Back to login</a>
             </div>
           </div>
         </form>              
@@ -32,7 +32,7 @@
 $('#formRequest').submit(function(e){  
   e.preventDefault();  
   var form = $(this);
-  var url = "<?php echo constant('URL') ?>Home/checkEmail";
+  var url = "<?php echo constant('URL') ?>admin/checkEmail";
   document.getElementById("loading").style.display="block";
   $.ajax({    
     type: "POST",
@@ -48,7 +48,7 @@ $('#formRequest').submit(function(e){
       else if(data==1)
       {              
         document.getElementById("loading").style.display="none";
-        window.location = "<?php echo constant('URL') ?>Home/VerifyEmail";
+        window.location = "<?php echo constant('URL') ?>admin/VerifyEmail";
       }
     }
   });

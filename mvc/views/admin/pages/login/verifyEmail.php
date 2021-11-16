@@ -1,7 +1,7 @@
 <?php
   if(!isset($_COOKIE["verifycode"]))
   { 
-    header("Location:".constant('URL')."Home/forgotpassword");
+    header("Location:".constant('URL')."admin/forgotpassword");
   }
   else
   {    
@@ -14,10 +14,12 @@
     <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">GIVE ME YOUR CODE</label>      
       <div class="login-form">        
         <div id="loginmessage">
-        </div>
-          <form action="" method="post" id="formRequest">                        
+        </div>        
+          <form action="" method="post" id="formRequest">                                    
             <div class="group">
-              <label for="" class="label">Verifition code</label>                            
+              <label for="" class="label">Verifition code</label>                
+              <div id="countdown">
+            </div>            
               <input type="text" name="txtCode" class="input" required>          
             </div>
             <div class="group">              
@@ -25,7 +27,7 @@
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
-              <a href="<?php echo constant('URL') ?>Home/login">Back to login</a>
+              <a href="<?php echo constant('URL') ?>admin/login">Back to login</a>
             </div>
           </div>
         </form>              
@@ -58,7 +60,7 @@ $(document).ready(function (){
       if(verifycode == txtcode)
       {
         sessionStorage.setItem("rolechange", "1");
-        window.location = "<?php echo constant('URL') ?>Home/changepassword";
+        window.location = "<?php echo constant('URL') ?>admin/changepassword";
       }
       else
       {
