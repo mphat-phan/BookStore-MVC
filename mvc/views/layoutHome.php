@@ -19,7 +19,7 @@
     <meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
 
     <!-- Webpage Title -->
-    <title>Ioniq Webpage Title</title>
+    <title>DzeamTechie</title>
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap"
@@ -32,16 +32,21 @@
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.carousel.css">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets3/dist/assets/owl.theme.default.min.css">
-
+    
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assetsshop/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assetsshop/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assetsshop/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assetsshop/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assetsshop/css/style.css" type="text/css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets//plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets//dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
 
 
     <!-- Favicon  -->
-    <link rel="icon" href="<?php echo constant('URL') ?>public/assets2/images/favicon.png">
+    <link rel="icon" href="<?php echo constant('URL') ?>public/assets/images/icon.png">
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbarExample">
@@ -50,6 +55,7 @@
     <!-- Header -->
     <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'.php'?>
     <?php require dirname(__FILE__) .'\footer.php'?>
+    
     <!-- Scripts -->
     <script src="<?php echo constant('URL') ?>public/assets2/js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
     <script src="<?php echo constant('URL') ?>public/assets2/js/swiper.min.js"></script>
@@ -73,7 +79,14 @@
     <script src="<?php echo constant('URL') ?>public/assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
     <!-- Bootstrap slider -->
     <script src="<?php echo constant('URL') ?>public/assets/plugins/bootstrap-slider/bootstrap-slider.min.js"></script>
-
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/jquery.nice-select.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/jquery.nicescroll.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/jquery.magnific-popup.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/jquery.countdown.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/jquery.slicknav.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/mixitup.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/owl.carousel.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assetsshop/js/main.js"></script>
 </body>
 
 </html>
