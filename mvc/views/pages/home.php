@@ -76,8 +76,8 @@
     aria-hidden="true">
 
     <div class="modal-dialog modal-lg" role="document">
-        <div class="ribbon-wrapper ribbon-xl">
-            <div class="ribbon bg-danger text-xl">
+        <div class="ribbon-wrapper ribbon">
+            <div class="ribbon bg-danger text">
                 Sale
             </div>
         </div>
@@ -190,7 +190,6 @@
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';
             return `
-        
                     <div class="item moviewrap">
                         <div class="ribbon-wrapper ribbon-xl">
                             <div class="ribbon bg-danger text-xl">

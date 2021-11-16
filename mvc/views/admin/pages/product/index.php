@@ -367,13 +367,14 @@
         $('#summernote').summernote()
         $('#summernote2').summernote()
     })
+    
     $(function () {
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
         event.preventDefault();
-        $(this).ekkoLightbox({
-            alwaysShowClose: true
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
         });
-    });
     })
     $(document).on('click', 'input[type="checkbox"]', function(event){
             id=$(this).attr('data_id');
