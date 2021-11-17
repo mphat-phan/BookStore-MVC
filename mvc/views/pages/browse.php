@@ -95,6 +95,51 @@
                 <div class="row cardproduct">                                                                     
                 </div>
                 
+                <div class="row">                    
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                            <div class="ribbon-wrapper ribbon">
+                            <div class="ribbon bg-danger text">
+                                Sale
+                            </div>
+                        </div>
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
+
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
+
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
+
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
+                </div>
+
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__pagination">
@@ -110,6 +155,7 @@
         </div>
     </div>
 </section>
+
 <script>
     const cardproduct = document.querySelector('.cardproduct');    
     const spinner = document.querySelector('.spinner');    
