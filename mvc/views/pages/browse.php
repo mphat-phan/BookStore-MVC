@@ -85,43 +85,50 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item sale">
-                            <div class="product__item__pic set-bg"
-                                data-setbg="<?php echo constant('URL') ?>public/assetsshop/img/product/product-3.jpg">
-                                <div class="ribbon-wrapper ribbon">
-                                    <div class="ribbon bg-danger text">
-                                        Sale
-                                    </div>
-                                </div>
-                                <ul class="product__hover">
-
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Add to cart</a>
-                                    </li>
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Detail</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6>Multi-pocket Chest Bag</h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <span style="font-size:30px">300.000đ</span><span
-                                    style="text-decoration: line-through; vertical-align: top; color:gray;">250.000đ</span>
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                            <div class="ribbon-wrapper ribbon">
+                            <div class="ribbon bg-danger text">
+                                Sale
                             </div>
                         </div>
-                    </div>
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
 
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
 
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
+                    <figure class="snip1396">
+                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
+                            alt="pr-sample13" />
+                        <figcaption>
+                            <h7>10 vạn câu hỏi vì sao 2 </h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>$24.00</s>$19.00
+                        </div><a href="#" class="add-to-cart">
+
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure>
                 </div>
+
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__pagination">

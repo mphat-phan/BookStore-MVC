@@ -20,10 +20,10 @@
                         <a class="nav-link active" aria-current="page" href="#header">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
+                        <a class="nav-link" href="#features">Browse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#details">Details</a>
+                        <a class="nav-link" href="#details">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#pricing">Pricing</a>

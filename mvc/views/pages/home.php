@@ -19,10 +19,11 @@
     </div> <!-- end of container -->
 </header> <!-- end of header -->
 
+<!--Spinner-->
 <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
     <circle class="circle" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
 </svg>
-
+<!--Best Seller-->
 <div class="moviewpb-section">
     <div class="container-fluid">
         <h1>Best Seller</h1>
@@ -70,8 +71,8 @@
     <div class="owl-carousel owl-theme cardauthor" id="">
     </div>
 </div>
-<!-- Modal -->
 
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
 
@@ -145,6 +146,7 @@
     </div>
 
 </div>
+
 <script>
     const cardbestseller = document.querySelector('.cardbestseller');
     const cardnewrelease = document.querySelector('.cardnewrelease');
@@ -343,6 +345,7 @@
 
     }
 
+    
     async function fetchProduct(urlEndpoint) {
         let data;
         try {
@@ -361,11 +364,12 @@
         const categorys = await fetchProduct(URL_API_CATEGORY);
         const authors = await fetchProduct(URL_API_AUTHOR);
 
-        spinner.setAttribute("hidden", "");
+        
         cardBestSeller(products);
         cardNewRelease(products);
         cardCategory(categorys);
         cardAuthor(authors);
         slider();
+        spinner.setAttribute("hidden", "");
     })();
 </script>
