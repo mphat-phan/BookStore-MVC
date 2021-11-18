@@ -712,14 +712,14 @@
                 $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
                 $('#txtImageUpdate').val('');
               
-                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].publisherID);
+                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].publisherID.id);
                 
-                $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID);
+                $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID.id);
                 
                 $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID.id);
              
 
-                $("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID);
+                $("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID.id);
             }
         });
         $formUpdate = document.querySelector("#formUpdate");
