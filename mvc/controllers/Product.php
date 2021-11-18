@@ -8,7 +8,8 @@ class Product extends Controller{
         $this->publisher = $this->model("PublisherModel");
         $this->sale = $this->model("SaleModel");
         $this->UserRole = $this->model("UserRoleModel");
-        $this->esrb = $this->model("EsrbModel");                                
+        $this->esrb = $this->model("EsrbModel");
+        $this->category = $this->model("CategoryProductModel");                                 
     }
 
     function index(){
@@ -85,7 +86,11 @@ class Product extends Controller{
         else if(isset($product->data[0]->id)){
             $product->data[0]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
         }
-        
+        json_decode($this->author->getID($author));
+        $arrCategory = array();
+        array_push($arrCategory,"orange");
+        array_push($arrCategory,"banana");
+        $product->data[0]->category = $arrCategory;
         echo json_encode(["data" => $product->data],JSON_PRETTY_PRINT);
     }
     
@@ -205,6 +210,7 @@ class Product extends Controller{
         }
         echo 0;
     }
+    
     function pages() {
         $this->view("pages/404");
     }

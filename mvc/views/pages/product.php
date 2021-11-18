@@ -40,8 +40,32 @@
 
     function display(arr) {
         var products = arr.data;
+        var htmlsale;
+        var currentdate = new Date();
+        Number.prototype.format = function(n, x) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+            return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
+        };   
         const html = products.map(product => {
-
+            var enddate = new Date(product.saleID.enddate);
+            var startdate = new Date(product.saleID.startdate);
+            var salePrice = parseInt(product.price) - parseInt(product.price*product.saleID.discount/100);
+            if(product.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){     
+                htmlsale = `
+                    <div>
+                        <span style="font-size:50px">${parseInt(salePrice).format()}đ</span>
+                        <span style="text-decoration: line-through; vertical-align: top; color:gray;">${parseInt(product.price).format()}đ</span>
+                        <span class="badge badge-danger">${'Sale '+product.saleID.discount+'%'}</span>
+                    </div>
+                `
+            }
+            else{
+                htmlsale = `
+                    <div>
+                        <span style="font-size:50px">${parseInt(product.price).format()}đ</span>  
+                    </div>
+                `
+            }
             return `
             <div class="container header">
                 <div class="row">
@@ -55,9 +79,7 @@
                         </div>
                         <div class="row">
                             <div>
-                                <span style="font-size:50px">${product.price}</span>
-                                <span style="text-decoration: line-through; vertical-align: top; color:gray;">${product.price}</span>
-                                <span class="badge badge-danger">${'Sale '+product.saleID.discount+'%'}</span>
+                                `+htmlsale+`
                             </div>
                         </div>
                         <div class="row w-50">
@@ -167,7 +189,7 @@
                                 <div class="side">
                                     <div>1 star</div>
                                 </div>
-                                <div class="middle">
+                                <div class="middle  ">
                                     <div class="bar-container">
                                         <div class="bar-1"></div>
                                     </div>
@@ -176,9 +198,7 @@
                                     <div>20</div>
                                 </div>
                             </div>
-                        </div>
-                  
-                    
+                </div>
                 <div class="row">
                     <div>
                         <h1>Review</h1>
