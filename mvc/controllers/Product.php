@@ -60,9 +60,24 @@ class Product extends Controller{
 
     function getByID($id){
         //$list = $this->product->getID($id);
-
+        
         $product = json_decode($this->product->getID($id));
         $sale = $product->data[0]->saleID;
+        $author = $product->data[0]->authorID; // id author
+        $publisher = $product->data[0]->publisherID; // id publisher
+        $esrb = $product->data[0]->esrbID;
+        if(isset($author)){
+            $authorobj = json_decode($this->author->getID($author));
+            $product->data[0]->authorID = array("id" => $authorobj->data[0]->id,"name" => $authorobj->data[0]->name);
+        }
+        if(isset($publisher)){
+            $publisherobj = json_decode($this->publisher->getID($publisher));
+            $product->data[0]->publisherID = array("id" => $publisherobj->data[0]->id,"name" => $publisherobj->data[0]->name);
+        }
+        if(isset($esrb)){
+            $esrbobj = json_decode($this->esrb->getID($esrb));
+            $product->data[0]->esrbID = array("id" => $esrbobj->data[0]->id ,"name" => $esrbobj->data[0]->name);
+        }
         if(isset($sale)){
             $saleobj = json_decode($this->sale->getID($sale));
             $product->data[0]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount, "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
