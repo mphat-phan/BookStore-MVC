@@ -41,9 +41,9 @@
                             <!--Price-->                            
                             <div class="card">
                                 <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseThree">Price</h4>
+                                    <h4 data-toggle="collapse" data-target="#collapseTwo">Price</h4>
                                 </div>
-                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
                                     <div class="pricebody">
                                         <div class="middle">
                                             <div class="amount">
@@ -65,7 +65,63 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <!--Languages-->
+                            <div class="card">
+                                <div class="card-heading">
+                                    <h4 data-toggle="collapse" data-target="#collapseThree">Languages</h4>
+                                </div>
+                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                    <div class="selectbody">
+                                        <select class="form-control" id="" name="">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!--esrb-->
+                            <div class="card">
+                                <div class="card-heading">
+                                    <h4 data-toggle="collapse" data-target="#collapseFour">ESRB</h4>
+                                </div>
+                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                    <form>
+                                        <input type="checkbox" id="" name="" value="10" checked>
+                                        <label>under 10</label>
+                                        <input type="checkbox" id="" name="" value="18">
+                                        <label>18+</label>                                                                                
+                                    </form>
+                                </div>
+                            </div>
+                            <!--publisher-->
+                            <div class="card">
+                                <div class="card-heading">
+                                    <h4 data-toggle="collapse" data-target="#collapseFive">Publisher</h4>
+                                </div>
+                                <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                    <form>
+                                        <input type="checkbox" id="" name="" value="10" checked>
+                                        <label>under 10</label>
+                                        <input type="checkbox" id="" name="" value="18">
+                                        <label>18+</label>                                                                                
+                                    </form>
+                                </div>
+                            </div>
+                            <!--sale-->
+                            <div class="card">
+                                <div class="card-heading">
+                                    <h4 data-toggle="collapse" data-target="#collapseSix">Sale</h4>
+                                </div>
+                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                    <form>
+                                        <input type="checkbox" id="" name="" value="10" checked>
+                                        <label>under 10</label>
+                                        <input type="checkbox" id="" name="" value="18">
+                                        <label>18+</label>                                                                                
+                                    </form>
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>
@@ -93,51 +149,7 @@
                     </div>
                 </div>
                 <div class="row cardproduct">                                                                     
-                </div>
-                
-                <div class="row">                    
-                    <figure class="snip1396">
-                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
-                            alt="pr-sample13" />
-                            <div class="ribbon-wrapper ribbon">
-                            <div class="ribbon bg-danger text">
-                                Sale
-                            </div>
-                        </div>
-                        <figcaption>
-                            <h7>10 vạn câu hỏi vì sao 2 </h7>
-                        </figcaption>
-                        <div class="price">
-                            <s>$24.00</s>$19.00
-                        </div><a href="#" class="add-to-cart">
-
-                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
-                    </figure>
-                    <figure class="snip1396">
-                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
-                            alt="pr-sample13" />
-                        <figcaption>
-                            <h7>10 vạn câu hỏi vì sao 2 </h7>
-                        </figcaption>
-                        <div class="price">
-                            <s>$24.00</s>$19.00
-                        </div><a href="#" class="add-to-cart">
-
-                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
-                    </figure>
-                    <figure class="snip1396">
-                        <img src="http://localhost/Bookstore/public/assets/images/1952560.jpg"
-                            alt="pr-sample13" />
-                        <figcaption>
-                            <h7>10 vạn câu hỏi vì sao 2 </h7>
-                        </figcaption>
-                        <div class="price">
-                            <s>$24.00</s>$19.00
-                        </div><a href="#" class="add-to-cart">
-
-                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
-                    </figure>
-                </div>
+                </div>                                
 
 
                 <div class="row">
@@ -166,85 +178,63 @@
         var products = arr.data;
         const html = products.map(product => {
             //let title = movie.title || movie.name;
-            //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';
+            //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';                                    
             var saleDate = product.saleID.enddate;            
             var endDateSale = new Date(saleDate);
             var currentDate = new Date();
-            if(endDateSale.getTime() !== currentDate.getTime())
+            // console.log(endDateSale.getTime());
+            // console.log(currentDate.getTime());
+            Number.prototype.format = function(n, x) {
+                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+                return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
+            };            
+            if(endDateSale.getTime() < currentDate.getTime())
             {
+                var price = parseInt(product.price).format();
                 return `
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item sale">
-                            <div class="product__item__pic set-bg" data-setbg="<?php echo constant('URL')?>public/assets/images/${product.image}">                                
-                                <ul class="product__hover">
+                    <figure class="snip1396">
+                        <img src="<?php echo constant('URL')?>/public/assets/images/${product.image}"
+                            alt="pr-sample13" />
+                            <div class="ribbon-wrapper ribbon">                            
+                        </div>
+                        <figcaption>
+                            <h7>${product.name}</h7>
+                        </figcaption>
+                        <div class="price">
+                            ${price}đ
+                        </div><a href="#" class="add-to-cart">
 
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Add to cart</a>
-                                    </li>
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Detail</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6>${product.name}</h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <span style="font-size:30px">${product.price}đ</span><span
-                                    style="text-decoration: line-through; vertical-align: top; color:gray;">250.000đ</span>
-                            </div>
-                        </div>                        
-                    </div> 
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure> 
                 `;
             }
             else
             {
-                return `1
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item sale">
-                            <div class="product__item__pic set-bg" data-setbg="<?php echo constant('URL')?>public/assets/images/${product.image}">
-                                <div class="ribbon-wrapper ribbon">                            
-                                    <div class="ribbon bg-danger text">
-                                        Sale
-                                    </div>
-                                </div>
-                                <ul class="product__hover">
+                var priceSale = parseInt(product.price-(product.price*(product.saleID.discount/100))).format();
+                var price = parseInt(product.price).format();
+                return `
+                    <figure class="snip1396">
+                        <img src="<?php echo constant('URL')?>/public/assets/images/${product.image}"
+                            alt="pr-sample13" />
+                            <div class="ribbon-wrapper ribbon">
+                            <div class="ribbon bg-danger text">
+                                Sale ${product.saleID.discount}%
+                            </div>
+                        </div>
+                        <figcaption>
+                            <h7>${product.name}</h7>
+                        </figcaption>
+                        <div class="price">
+                            <s>${price}đ</s>${priceSale}đ
+                        </div><a href="#" class="add-to-cart">
 
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Add to cart</a>
-                                    </li>
-                                    <li>
-                                        <a class="btn-solid-sm" href="sign-up.html">Detail</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6>${product.name}</h6>
-                                <a href="#" class="add-cart">+ Add To Cart</a>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <span style="font-size:30px">${product.price}đ</span><span
-                                    style="text-decoration: line-through; vertical-align: top; color:gray;">250.000đ</span>
-                            </div>
-                        </div>                        
-                    </div> 
+                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
+                    </figure> 
                 `;
             }            
             
         }).join('');
-        cardproduct.innerHTML += html;
-
+        cardproduct.innerHTML += html;        
     }
     async function fetchProduct(urlEndpoint) {
         let data;
