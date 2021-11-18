@@ -139,10 +139,12 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__right">
-                                <p>Sort by Price:</p>
-                                <select>
-                                    <option value="">Low To High</option>
-                                    <option value="">High To Low</option>                                    
+                                <p>Sort:</p>
+                                <select id="selectSort">
+                                    <option value="name.ASC">Low To High By Name</option>
+                                    <option value="name.DESC">High To Low By Name</option>
+                                    <option value="price.ASC">Low To High By Price</option>
+                                    <option value="price.DESC">High To Low By Price</option>                                    
                                 </select>
                             </div>
                         </div>
@@ -167,15 +169,15 @@
         </div>
     </div>
 </section>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const cardproduct = document.querySelector('.cardproduct');    
     const spinner = document.querySelector('.spinner');    
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getall';    
 
-    function cardProduct(arr) {
-        var products = arr.data;
+    function cardProduct(arr) {                 
+        var products = arr.data;                
         const html = products.map(product => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';                                    
@@ -251,10 +253,32 @@
 
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT); 
-    
+        
         cardProduct(products);                 
         spinner.setAttribute("hidden", "");  
     })();
+
+    $(function(){
+        $(document).on('change', '#selectSort', function(e){
+            //spinner.setAttribute("hidden", false);
+            var selected = $(e.target).val();            
+            var array = selected.split(".");
+            console.log(array['0']); 
+            var by =  array['0'];
+            var way =  array['1'];                      
+            var url = '<?php echo constant('URL') ?>product/sort/'+by+"/"+way;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {selected:selected}, // serializes the form's elements.
+                success: function (data) { 
+                    //console.log(data);
+                    cardProduct(data);                 
+                    //spinner.setAttribute("hidden", "");
+                }
+            });
+        });
+    });    
 </script>
 <script>
     var inputLeft = document.getElementById("input-left");
@@ -330,4 +354,6 @@
     inputRight.oninput = function (){
         inputmax.value = this.value+"$";
     }    
+
+               
 </script>
