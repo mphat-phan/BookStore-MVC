@@ -134,7 +134,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__left">
-                                <p>Showing 1–12 of 126 results</p>
+                                <p id="amountproducts">Showing 1–12 of 126 results</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -176,66 +176,59 @@
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getall';    
 
-    function cardProduct(arr) {             
-        var products = arr.data;   
-        console.log(products)
+    var arrayproducts;
+    function cardProduct(arr) {        
+        arrayproducts = arr;                 
+        var products = arr.data;        
         const html = products.map(product => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';                                    
-            var saleDate = product.saleID.enddate;            
-            var endDateSale = new Date(saleDate);
+            var saleStartDate = product.saleID.startdate;            
+            var saleEndDate = product.saleID.enddate;
+            var startDateSale = new Date(saleStartDate);
+            var endDateSale = new Date(saleEndDate);
             var currentDate = new Date();
             // console.log(endDateSale.getTime());
             // console.log(currentDate.getTime());
             Number.prototype.format = function(n, x) {
                 var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
                 return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
-            };            
-            if(endDateSale.getTime() < currentDate.getTime())
-            {
-                var price = parseInt(product.price).format();
-                return `
-                    <figure class="snip1396">
-                        <img src="<?php echo constant('URL')?>/public/assets/images/${product.image}"
-                            alt="pr-sample13" />
-                            <div class="ribbon-wrapper ribbon">                            
-                        </div>
-                        <figcaption>
-                            <h7>${product.name}</h7>
-                        </figcaption>
-                        <div class="price">
-                            ${price}đ
-                        </div><a href="#" class="add-to-cart">
-
-                            Add to Cart<i class="ion-android-checkbox-outline"></i></a>
-                    </figure> 
-                `;
-            }
-            else
+            };
+            var salehtml, pricehtml;            
+            if(currentDate.getTime()>=startDateSale.getTime() && currentDate.getTime()<=endDateSale.getTime())
             {
                 var priceSale = parseInt(product.price-(product.price*(product.saleID.discount/100))).format();
                 var price = parseInt(product.price).format();
-                return `
+                salehtml = `<div class="ribbon-wrapper ribbon">
+                                <div class="ribbon bg-danger text">
+                                    Sale ${product.saleID.discount}%
+                                </div>
+                            </div>`;
+                pricehtml = `<div class="price">
+                                <s>${price}đ</s>${priceSale}đ
+                            </div>`;                                
+            }
+            else
+            {
+                var price = parseInt(product.price).format();
+                salehtml = ``;
+                pricehtml = `<div class="price">
+                                ${price}đ
+                            </div>`;                
+            }            
+            return `
                     <figure class="snip1396">
                         <img src="<?php echo constant('URL')?>/public/assets/images/${product.image}"
-                            alt="pr-sample13" />
-                            <div class="ribbon-wrapper ribbon">
-                            <div class="ribbon bg-danger text">
-                                Sale ${product.saleID.discount}%
-                            </div>
-                        </div>
-                        <figcaption>
+                            alt="pr-sample13" />`
+                        + salehtml +
+                        `<figcaption>
                             <h7>${product.name}</h7>
-                        </figcaption>
-                        <div class="price">
-                            <s>${price}đ</s>${priceSale}đ
-                        </div><a href="#" class="add-to-cart">
-
+                        </figcaption>`
+                        + pricehtml +                        
+                        `<a href="#" class="add-to-cart">
                             Add to Cart<i class="ion-android-checkbox-outline"></i></a>
                     </figure> 
                 `;
-            }            
-            
         }).join('');
         cardproduct.innerHTML += html;        
     }
@@ -257,28 +250,41 @@
         
         cardProduct(products);                 
         spinner.setAttribute("hidden", "");  
-    })();
-
+    })();    
     $(function(){
         $(document).on('change', '#selectSort', function(e){
-            //spinner.setAttribute("hidden", false);
-            var selected = $(e.target).val();            
-            var array = selected.split(".");
-            console.log(array['0']); 
-            var by =  array['0'];
-            var way =  array['1'];                      
-            var url = '<?php echo constant('URL') ?>product/sort/'+by+"/"+way;
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {selected:selected}, // serializes the form's elements.
-                dataType: 'json',
-                success: function (data) { 
-                    console.log(data);
-                    cardProduct(data);                 
-                    //spinner.setAttribute("hidden", "");
-                }
-            });
+            spinner.removeAttribute("hidden");            
+            var selected = $(e.target).val();
+            var products = arrayproducts.data;
+            if(selected === "name.ASC")
+            {   
+                products.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });                
+                
+            }
+            else if (selected === "name.DESC")
+            {
+                products.reverse(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+            }
+            else if (selected === "price.ASC")
+            {
+                products.sort(function (a, b) {
+                    return ((a.price*a.saleID.discount)/100) - ((b.price*b.saleID.discount)/100);
+                });
+            }
+            else
+            {
+                products.sort(function (a, b) {
+                    return ((b.price*b.saleID.discount)/100) - ((a.price*a.saleID.discount)/100);
+                });
+            }
+            arrayproducts.data = products;
+            cardproduct.innerHTML = '';
+            cardProduct(arrayproducts);                 
+            spinner.setAttribute("hidden", "");                        
         });
     });    
 </script>
