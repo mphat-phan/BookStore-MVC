@@ -204,13 +204,7 @@ class Product extends Controller{
             }
         }
         echo 0;
-    }
-    function sort($by,$way)
-    {
-        $sql = "SELECT * FROM `product` ORDER BY `product`.`$by` $way";
-        $list = $this->product->selectQuery($sql);
-        echo $list;
-    }
+    }    
     function pages() {
         $this->view("pages/404");
     }
