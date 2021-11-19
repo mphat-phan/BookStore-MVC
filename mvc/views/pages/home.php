@@ -358,7 +358,7 @@
         // return data.data;
         return data.items || data.results;
     }
-
+    
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
         const categorys = await fetchProduct(URL_API_CATEGORY);
@@ -370,6 +370,8 @@
         cardCategory(categorys);
         cardAuthor(authors);
         slider();
-        spinner.setAttribute("hidden", "");
+        spinner.setAttribute("hidden","");
+        spinner.removeAttribute("hidden");;
     })();
+    
 </script>
