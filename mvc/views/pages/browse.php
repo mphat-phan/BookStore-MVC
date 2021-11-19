@@ -176,8 +176,9 @@
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getall';    
 
-    function cardProduct(arr) {                 
-        var products = arr.data;                
+    function cardProduct(arr) {             
+        var products = arr.data;   
+        console.log(products)
         const html = products.map(product => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';                                    
@@ -271,8 +272,9 @@
                 type: "POST",
                 url: url,
                 data: {selected:selected}, // serializes the form's elements.
+                dataType: 'json',
                 success: function (data) { 
-                    //console.log(data);
+                    console.log(data);
                     cardProduct(data);                 
                     //spinner.setAttribute("hidden", "");
                 }

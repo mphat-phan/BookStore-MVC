@@ -371,7 +371,7 @@
         cardAuthor(authors);
         slider();
         spinner.setAttribute("hidden","");
-        spinner.removeAttribute("hidden");;
+        
     })();
     
 </script>
