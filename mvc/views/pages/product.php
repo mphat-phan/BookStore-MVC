@@ -84,9 +84,9 @@
                         </div>
                         <div class="row w-50">
                             <div class="input-group">
-                                <input type="number" min=1 value="1" class="form-control w-25">
+                                <input id="quantity" type="number" min=1 value="1" class="form-control w-25">
                                 <div class="input-group-append">
-                                    <a class="btn-solid-sm" href="sign-up.html">Add to cart</a>
+                                    <a id="addtocart" class="btn-solid-sm" data_id="${product.id}">Add to cart</a>
                                 </div>
                             </div>
                         </div>
@@ -291,6 +291,7 @@
     })();
 </script>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
 <script>
     $(function () {
         $(document).on('click', '.btn-plus, .btn-minus', function (e) {
@@ -299,6 +300,25 @@
             if (input.is('input')) {
                 input[0][isNegative ? 'stepDown' : 'stepUp']()
             }
+        })
+    })
+
+    $(function () {
+        $(document).on('click', '#addtocart', function (e) {
+            id=$(e.target).attr('data_id');
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>cartdetail/add',
+                data:{
+                    "cartID" : "2",
+                    "productID" : id,
+                    "quantity" : $("#quantity").val()
+                },
+                success: function(data){
+                    console.log(data);
+                    sweetAlertCRUD(data, "Add");
+                }
+            });
         })
     })
 </script>
