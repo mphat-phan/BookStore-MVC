@@ -29,7 +29,10 @@
             public function delete($id){
                   return $this->delete_by_id2($id);
 
-            }            
+            }
+            public function selectQuery($sql) {
+                  return $this->selectQuery($sql);
+            }                        
             public function checkRole($role){
                   if(!isset($_SESSION['username']))
                   {
