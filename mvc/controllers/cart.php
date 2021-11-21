@@ -3,7 +3,7 @@ error_reporting(0);
 class cart extends Controller{
 
     function __construct(){
-                    
+        $this->cart = $this->model("CartModel");
     }
     function index(){
         $this->view("layoutHome",array(
@@ -23,9 +23,21 @@ class cart extends Controller{
     function pages() {
         $this->view("pages/404");
     }
+
     function page500() {
         $this->view("layout2",array(
             "Page" => "500"
         ));
-    }    
+    }  
+    function add(){
+        if(isset($_POST['username'])){
+            $username = $_POST['username'];
+            $array = array('username' => $username);
+            if($this->author->add($array)==1){
+                return 1;
+            }
+        }
+        return 0;
+    }  
+  
 }

@@ -42,6 +42,12 @@
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/dist/css/adminlte.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.css">
+    <!-- Ekko Lightbox -->
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/ekko-lightbox/ekko-lightbox.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
 
     <!-- Favicon  -->
@@ -86,6 +92,12 @@
     <script src="<?php echo constant('URL') ?>public/assetsshop/js/mixitup.min.js"></script>
     <script src="<?php echo constant('URL') ?>public/assetsshop/js/owl.carousel.min.js"></script>
     <script src="<?php echo constant('URL') ?>public/assetsshop/js/main.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="<?php echo constant('URL') ?>public/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- Toastr -->
+    <script src="<?php echo constant('URL') ?>public/assets/plugins/toastr/toastr.min.js"></script>
+    <script src="<?php echo constant('URL') ?>public/assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 </body>
 
 </html>
