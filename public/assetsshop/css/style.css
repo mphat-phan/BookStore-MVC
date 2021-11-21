@@ -4041,3 +4041,20 @@ input[type=range]::-webkit-slider-thumb {
 	margin-left: 5%;
 }
 
+
+
+.whatever{
+    display: block;
+    color: black;
+}
+
+#checkboxes input[type=checkbox]{
+    display: none;
+}
+label:not(.form-check-label):not(.custom-file-label){
+	font-weight: lighter!important;
+}
+
+#checkboxes input[type=checkbox]:checked + .whatever{
+    font-weight: bold!important;
+}

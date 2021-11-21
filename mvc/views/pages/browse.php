@@ -13,6 +13,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="shop__sidebar__accordion">
                         <div class="accordion" id="accordionExample">
                             <!--Category-->
@@ -20,19 +21,19 @@
                                 <div class="card-heading">
                                     <h4 data-toggle="collapse" data-target="#collapseOne">Categories</h4>
                                 </div>
+                            
                                 <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
-                                            <ul class="nice-scroll">
-                                                <li><a href="#">Men (20)</a></li>
-                                                <li><a href="#">Women (20)</a></li>
-                                                <li><a href="#">Bags (20)</a></li>
-                                                <li><a href="#">Clothing (20)</a></li>
-                                                <li><a href="#">Shoes (20)</a></li>
-                                                <li><a href="#">Accessories (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
-                                                <li><a href="#">Kids (20)</a></li>
+                                            <ul class="nice-scroll" id="checkboxes">
+                                                <li><input type="checkbox" name="rGroup" value="1" id="r1" checked="checked" /><label class="whatever" for="r1">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="2" id="r2" /><label class="whatever" for="r2">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r3" /><label class="whatever" for="r3">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r4" /><label class="whatever" for="r4">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r5" /><label class="whatever" for="r5">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r6" /><label class="whatever" for="r6">fsedfsdf</label></li>
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r7" /><label class="whatever" for="r7">fsedfsdf</label></li>
+                                                
                                             </ul>
                                         </div>
                                     </div>
