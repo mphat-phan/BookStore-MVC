@@ -5,11 +5,11 @@ class Esrb extends Controller{
         $this->esrb = $this->model("EsrbModel");
         $this->UserRole = $this->model("UserRoleModel");
         $this->RolePermission = $this->model("RolePermissionModel");                        
-        if($this->UserRole->checkRole("admin")!=1)
-        {
-            $this->page500();
-            exit();
-        }                                   
+        // if($this->UserRole->checkRole("admin")!=1)
+        // {
+        //     $this->page500();
+        //     exit();
+        // }                                   
     }
 
     function index(){        
