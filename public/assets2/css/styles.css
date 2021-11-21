@@ -1658,7 +1658,7 @@ a:hover {
 	-webkit-animation: rotation 1.35s linear infinite;
 	animation: rotation 1.35s linear infinite;
 	stroke: #272556;
-	position: absolute;
+	position: fixed;
 	left: 50%;
 	top: 50%;
 }
