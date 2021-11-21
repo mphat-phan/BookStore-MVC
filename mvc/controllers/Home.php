@@ -92,6 +92,12 @@ class Home extends Controller{
             $sql = "SELECT * FROM `user` WHERE (`username` = '$txtusername' OR `email` = '$txtusername') AND `status`=1 LIMIT 1";            
             if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
             {
+                $sqlcart = "SELECT * FROM `cart`,`user` WHERE `cart`.`username` = `user`.`username` AND `user`.`username` = '$txtusername'";
+                $cart = mysqli_fetch_array($this->Home->selectQuery($sqlcart));                
+                if(isset($cart["id"]))
+                {                    
+                    $_SESSION['cart'] =  $cart["id"];                    
+                }
                 $_SESSION['username'] =  $txtusername;
                 if(isset($_POST['checkremember']))
                 {

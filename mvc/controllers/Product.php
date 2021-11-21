@@ -39,11 +39,11 @@ class Product extends Controller{
             }
             if(isset($publisher)){
                 $publisherobj = json_decode($this->publisher->getID($publisher));
-                $product->data[$i]->publisherID = array("name" => $publisherobj->data[0]->name);
+                $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
             }
             if(isset($esrb)){
                 $esrbobj = json_decode($this->esrb->getID($esrb));
-                $product->data[$i]->esrbID = array("name" => $esrbobj->data[0]->name);
+                $product->data[$i]->esrbID = array("id" => $esrbobj->data[0]->id,"name" => $esrbobj->data[0]->name);
             }
             if(isset($sale)){
                 $saleobj = json_decode($this->sale->getID($sale));

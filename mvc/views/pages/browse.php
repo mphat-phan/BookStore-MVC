@@ -1,3 +1,6 @@
+<?php
+    $cart = $_SESSION['cart'];
+?>
 <section class="shop spad">
     <div class="container">
         <div class="row">
@@ -5,7 +8,7 @@
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search this blog">
+                            <input type="text" class="form-control" value="<?php echo $cart ?>" placeholder="Search this blog">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fa fa-search"></i>
@@ -86,10 +89,10 @@
                                     <h4 data-toggle="collapse" data-target="#collapseFour">ESRB</h4>
                                 </div>
                                 <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                    <form>
-                                        <input type="checkbox" id="" name="" value="10" checked>
+                                    <form class="formchange" data-name="esrb">
+                                        <input type="checkbox" name="esrb" value="5">
                                         <label>under 10</label>
-                                        <input type="checkbox" id="" name="" value="18">
+                                        <input type="checkbox" name="esrb" value="1">
                                         <label>18+</label>                                                                                
                                     </form>
                                 </div>
@@ -100,11 +103,11 @@
                                     <h4 data-toggle="collapse" data-target="#collapseFive">Publisher</h4>
                                 </div>
                                 <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                    <form>
-                                        <input type="checkbox" id="" name="" value="10" checked>
-                                        <label>under 10</label>
-                                        <input type="checkbox" id="" name="" value="18">
-                                        <label>18+</label>                                                                                
+                                    <form class="formchange" data-name="publisher">
+                                        <input type="checkbox" name="publisher" value="14" >
+                                        <label>Quang</label>
+                                        <input type="checkbox" name="publisher" value="22" >
+                                        <label>Quắng</label>                                                                                
                                     </form>
                                 </div>
                             </div>
@@ -114,11 +117,11 @@
                                     <h4 data-toggle="collapse" data-target="#collapseSix">Sale</h4>
                                 </div>
                                 <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                    <form>
-                                        <input type="checkbox" id="" name="" value="10" checked>
-                                        <label>under 10</label>
-                                        <input type="checkbox" id="" name="" value="18">
-                                        <label>18+</label>                                                                                
+                                    <form class="formchange" data-name="sale">
+                                        <input type="checkbox" name="sale" value="discount20">
+                                        <label>Sale 20%</label>
+                                        <input type="checkbox" name="sale" value="discount50">
+                                        <label>Sale 50%</label>                                                                                
                                     </form>
                                 </div>
                             </div>                            
@@ -182,9 +185,9 @@
     //     console.log(p);
     // }
     var searchURL = paramsString.search;
-
+    
     var arrayproducts;
-    var filterarr = {};
+    var filterarr = {};    
     function cardProduct(arr) {                                 
         var products = arr.data;        
         const html = products.map(product => {
@@ -244,7 +247,7 @@
     }
     function showresults() {
         var results = document.getElementById("amountproducts");
-        results.innerHTML = 'Showing 1–3 of ' + Object.keys(arrayproducts.data).length + ' results';
+        //results.innerHTML = 'Showing 1–3 of ' + Object.keys(arrayproducts.data).length + ' results';
     }  
     function changeURL() {            
         //var sort = '', category = '', price = '', language = '', esrb = '', publisher = '', sale = '';
@@ -253,6 +256,11 @@
             var sort = '&sort=' + searchParams.get('sort');
         }
         else {var sort = ''}
+        if(searchParams.has('category'))
+        {
+            var category = '&category=' + searchParams.get('category');
+        }
+        else {var category = ''}
         if(searchParams.has('price'))
         {
             var price = '&price=' + searchParams.get('price');
@@ -262,35 +270,73 @@
         {
             var language = '&language=' + searchParams.get('language');
         }
-        else {var language = ''}                                      
-        searchURL = sort + price + language;
+        else {var language = ''}
+        if(searchParams.has('esrb'))
+        {
+            var esrb = '&esrb=' + searchParams.get('esrb');
+        }
+        else {var esrb = ''}
+        if(searchParams.has('publisher'))
+        {
+            var publisher = '&publisher=' + searchParams.get('publisher');
+        }
+        else {var publisher = ''}
+        if(searchParams.has('sale'))
+        {
+            var sale = '&sale=' + searchParams.get('sale');
+        }
+        else {var sale = ''}                                      
+        searchURL = sort + category + price + language + esrb + publisher + sale;
         //console.log(searchURL);            
         history.replaceState(paramsString.href, '', paramsString.origin+paramsString.pathname + '?' + searchURL);
         filter();            
     }
-
     function filter() {
+        spinner.removeAttribute("hidden");
+        arrayfilter = arrayproducts;                  
         if(searchURL !== '')
         {
             if(searchParams.has('sort'))
             { 
                 //console.log(searchParams.get('sort'));                        
-                sortarr(searchParams.get('sort'));
+                arrayfilter = sortarr(searchParams.get('sort'),arrayfilter);
+            }
+            if(searchParams.has('category'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = languagefilter(searchParams.get('category'),arrayfilter);
             }
             if(searchParams.has('price')) 
             {
                 //console.log(searchParams.get('sort'));                        
-                pricefilter(searchParams.get('price'));
+                arrayfilter = pricefilter(searchParams.get('price'),arrayfilter);
             }           
             if(searchParams.has('language'))
             {
                 //console.log(searchParams.get('language'));
-                languagefilter(searchParams.get('language'));
+                arrayfilter = languagefilter(searchParams.get('language'),arrayfilter);
             }
+            if(searchParams.has('esrb'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = esrbfilter(searchParams.get('esrb'),arrayfilter);
+            }
+            if(searchParams.has('publisher'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = publisherfilter(searchParams.get('publisher'),arrayfilter);
+            }
+            if(searchParams.has('sale'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = salefilter(searchParams.get('sale'),arrayfilter);
+            }            
+            cardproduct.innerHTML = '';
+            cardProduct(arrayfilter);            
         }
+        spinner.setAttribute("hidden", "");
     }
-    function sortarr(by){
-        spinner.removeAttribute("hidden");            
+    function sortarr(by,arrayproducts){                    
         var selected = by;
         var products = arrayproducts.data;        
         if(selected === "nameASC")
@@ -318,27 +364,16 @@
                 return (b.price-((b.price*b.saleID.discount)/100)) - (a.price-((a.price*a.saleID.discount)/100));
             });
         }        
-        filterarr.data = products;
-        cardproduct.innerHTML = '';
-        cardProduct(filterarr);                 
-        spinner.setAttribute("hidden", "");                                
+        filterarr.data = products;        
+        return filterarr;
     }
-    function pricefilter(value){
-        spinner.removeAttribute("hidden");
-        var arrprice = value.split('-');        
+    function pricefilter(value, arrayproducts){       
+        var arrprice = value.split(',');        
         let min = arrprice[0].replace(/[^0-9]/g, '');
         let max = arrprice[1].replace(/[^0-9]/g, '');                                                                                    
         var array = [];    
-        var i=0;
-        if(!searchParams.has('category'))
-        {            
-            var products = arrayproducts;
-        }
-        else
-        {
-            var products = filterarr;
-        }        
-        products.data.forEach(element => {        
+        var i=0;                
+        arrayproducts.data.forEach(element => {        
             var saleStartDate = element.saleID.startdate;            
             var saleEndDate = element.saleID.enddate;
             var startDateSale = new Date(saleStartDate);
@@ -357,35 +392,69 @@
             {                
                 array[i++] = element;
             }            
-        })                
-        filterarr.data = array;
-        //console.log(filterarr);        
-        cardproduct.innerHTML = '';
-        cardProduct(filterarr);                 
-        //spinner.setAttribute("hidden", "");
+        })
+        filterarr.data = array;                
+        return filterarr;        
     }
-    function languagefilter(selected) {
-        spinner.removeAttribute("hidden");                                    
+    function languagefilter(selected,arrayproducts) {        
         var array = [];    
-        var i=0;           
-        if(!searchParams.has('price') && !searchParams.has('category'))
-        {            
-            var products = arrayproducts;
-        }
-        else
-        {
-            var products = filterarr;
-        }
-        products.data.forEach(element => {
+        var i=0;                   
+        arrayproducts.data.forEach(element => {
             if(element.language === selected)
             {
                 array[i++] = element;
             }            
         })                               
-        filterarr.data = array;        
-        cardproduct.innerHTML = '';
-        cardProduct(filterarr);                 
-        spinner.setAttribute("hidden", "");
+        filterarr.data = array;                
+        return filterarr;                
+    }
+    function esrbfilter(selected,arrayproducts) {        
+        var arr = selected.split('_');
+        var array = [];    
+        var i=0;                   
+        arrayproducts.data.forEach(element => {
+            arr.forEach(key => {
+                if(element.esrbID.id === key)
+                {                    
+                    array[i++] = element;
+                }
+            });                        
+        }) 
+        //console.log(array);                              
+        filterarr.data = array;                
+        return filterarr;                   
+    }
+    function publisherfilter(selected,arrayproducts) {
+        var arr = selected.split('_');
+        var array = [];    
+        var i=0;                   
+        arrayproducts.data.forEach(element => {
+            arr.forEach(key => {
+                if(element.publisherID.id === key)
+                {                    
+                    array[i++] = element;
+                }
+            });                        
+        }) 
+        //console.log(array);                              
+        filterarr.data = array;                
+        return filterarr;
+    }
+    function salefilter(selected,arrayproducts) {
+        var arr = selected.split('_');
+        var array = [];    
+        var i=0;                   
+        arrayproducts.data.forEach(element => {
+            arr.forEach(key => {
+                if(element.saleID.id === key)
+                {                    
+                    array[i++] = element;
+                }
+            });                        
+        }) 
+        //console.log(array);                              
+        filterarr.data = array;                
+        return filterarr;
     }            
     async function fetchProduct(urlEndpoint) {
         let data;
@@ -427,16 +496,35 @@
             }            
         });
         $(document).on('mouseup', '.rangechange', function(){                        
-            var inputmin = document.getElementById("minprice").value;
-            var inputmax = document.getElementById("maxprice").value;            
+            var inputmin = document.getElementById("input-left").value;
+            var inputmax = document.getElementById("input-right").value;            
             if(searchParams.has('price') || !searchParams.has('price'))
             {                
-                searchParams.set('price', inputmin+'-'+inputmax);
+                searchParams.set('price', inputmin+','+inputmax);
                 changeURL();
             }            
-        });
-                                     
-        
+        });                
+        $(document).on('change', '.formchange', function(e){                                                            
+            var arr = $(this).serializeArray();                        
+            var value;
+            var name = $(this).attr("data-name");                        
+            if(arr != '')
+            {
+                arr.forEach(element => {
+                    value += '_' + element.value;
+                });                
+                if(searchParams.has(name) || !searchParams.has(name))
+                {                
+                    searchParams.set(name, value.replace('undefined_', ''));
+                    changeURL();
+                }
+            }
+            else 
+            {
+                searchParams.delete(name);
+                changeURL();
+            }                        
+        });                                                           
     });        
 </script>
 <script>
