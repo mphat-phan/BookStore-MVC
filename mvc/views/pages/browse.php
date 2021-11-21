@@ -35,8 +35,7 @@
                                                 <li><input type="checkbox" name="rGroup" value="3" id="r4" /><label class="whatever" for="r4">fsedfsdf</label></li>
                                                 <li><input type="checkbox" name="rGroup" value="3" id="r5" /><label class="whatever" for="r5">fsedfsdf</label></li>
                                                 <li><input type="checkbox" name="rGroup" value="3" id="r6" /><label class="whatever" for="r6">fsedfsdf</label></li>
-                                                <li><input type="checkbox" name="rGroup" value="3" id="r7" /><label class="whatever" for="r7">fsedfsdf</label></li>
-                                                
+                                                <li><input type="checkbox" name="rGroup" value="3" id="r7" /><label class="whatever" for="r7">fsedfsdf</label></li>                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -90,12 +89,20 @@
                                     <h4 data-toggle="collapse" data-target="#collapseFour">ESRB</h4>
                                 </div>
                                 <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                    <form class="formchange" data-name="esrb">
+                                    <!-- <form class="formchange" data-name="esrb">
                                         <input type="checkbox" name="esrb" value="5">
                                         <label>under 10</label>
                                         <input type="checkbox" name="esrb" value="1">
                                         <label>18+</label>                                                                                
-                                    </form>
+                                    </form> -->
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <form class="formchange" data-name="esrb">
+                                                <ul class="nice-scroll cardesrb" id="checkboxes">                                                    
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--publisher-->
@@ -104,12 +111,20 @@
                                     <h4 data-toggle="collapse" data-target="#collapseFive">Publisher</h4>
                                 </div>
                                 <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                    <form class="formchange" data-name="publisher">
+                                    <!-- <form class="formchange" data-name="publisher">
                                         <input type="checkbox" name="publisher" value="14" >
                                         <label>Quang</label>
                                         <input type="checkbox" name="publisher" value="22" >
                                         <label>Quắng</label>                                                                                
-                                    </form>
+                                    </form> -->
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <form class="formchange" data-name="publisher">
+                                                <ul class="nice-scroll cardpublisher" id="checkboxes">                                                    
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--sale-->
@@ -118,12 +133,20 @@
                                     <h4 data-toggle="collapse" data-target="#collapseSix">Sale</h4>
                                 </div>
                                 <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                    <form class="formchange" data-name="sale">
+                                    <!-- <form class="formchange" data-name="sale">
                                         <input type="checkbox" name="sale" value="discount20">
                                         <label>Sale 20%</label>
                                         <input type="checkbox" name="sale" value="discount50">
                                         <label>Sale 50%</label>                                                                                
-                                    </form>
+                                    </form> -->
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <form class="formchange" data-name="sale">
+                                                <ul class="nice-scroll cardsale" id="checkboxes">                                                    
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>                            
                         </div>
@@ -176,10 +199,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const cardproduct = document.querySelector('.cardproduct');    
+    const cardesrb = document.querySelector('.cardesrb');
+    const cardpublisher = document.querySelector('.cardpublisher');
+    const cardsale = document.querySelector('.cardsale');
     const spinner = document.querySelector('.spinner');    
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getall';    
-
+    let URL_API_ESRB = '<?php echo constant('URL')?>esrb/getall';
+    let URL_API_PUBLISHER = '<?php echo constant('URL')?>publisher/getall';
+    let URL_API_SALE = '<?php echo constant('URL')?>sale/getall';
     const paramsString = window.location;        
     let searchParams = new URLSearchParams(paramsString.search);
     // for (let p of searchParams) {
@@ -189,7 +217,7 @@
     
     var arrayproducts;    
     var filterarr = {};
-    var pagenum = 3;
+    var pagenum = 12;
     function loadpage(arr,pagenum) {        
         var arrayload = {};
         var i=0;
@@ -203,6 +231,33 @@
         arrayload.data = arraypage;
         cardproduct.innerHTML = '';        
         cardProduct(arrayload);    
+    }
+    function cardEsrb(arr) {                                 
+        var esrbs = arr.data;        
+        const html = esrbs.map(esrb => {                        
+                return ` 
+                        <li><input type="checkbox" name="esrb" value="${esrb.id}" id="esrb_${esrb.id}" /><label class="whatever" for="esrb_${esrb.id}">${esrb.name}</label></li>                                                    
+                        `;              
+        }).join('');
+        cardesrb.innerHTML += html;        
+    }
+    function cardPublisher(arr) {                                 
+        var publishers = arr.data;        
+        const html = publishers.map(publisher => {                        
+                return ` 
+                        <li><input type="checkbox" name="publisher" value="${publisher.id}" id="publisher_${publisher.id}" /><label class="whatever" for="publisher_${publisher.id}">${publisher.name}</label></li>                                                    
+                        `;              
+        }).join('');
+        cardpublisher.innerHTML += html;        
+    }
+    function cardSale(arr) {                                 
+        var sales = arr.data;        
+        const html = sales.map(sale => {                        
+                return ` 
+                        <li><input type="checkbox" name="sale" value="${sale.id}" id="sale_${sale.id}" /><label class="whatever" for="sale_${sale.id}">${sale.name}</label></li>                                                    
+                        `;              
+        }).join('');
+        cardsale.innerHTML += html;        
     }    
     function cardProduct(arr) {                                 
         var products = arr.data;        
@@ -318,38 +373,39 @@
                 //console.log(searchParams.get('sort'));                        
                 arrayfilter = await sortarr(searchParams.get('sort'),arrayfilter);
             }
-            // if(searchParams.has('category'))
-            // {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = languagefilter(searchParams.get('category'),arrayfilter);
-            // }
-            // if(searchParams.has('price')) 
-            // {
-            //     //console.log(searchParams.get('sort'));                        
-            //     arrayfilter = pricefilter(searchParams.get('price'),arrayfilter);
-            // }           
-            // if(searchParams.has('language'))
-            // {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = languagefilter(searchParams.get('language'),arrayfilter);
-            // }
-            // if(searchParams.has('esrb'))
-            // {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = esrbfilter(searchParams.get('esrb'),arrayfilter);
-            // }
-            // if(searchParams.has('publisher'))
-            // {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = publisherfilter(searchParams.get('publisher'),arrayfilter);
-            // }
-            // if(searchParams.has('sale'))
-            // {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = salefilter(searchParams.get('sale'),arrayfilter);
-            // }            
-            cardproduct.innerHTML = '';
-            cardProduct(arrayfilter);            
+            if(searchParams.has('category'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = languagefilter(searchParams.get('category'),arrayfilter);
+            }
+            if(searchParams.has('price')) 
+            {
+                //console.log(searchParams.get('sort'));                        
+                arrayfilter = pricefilter(searchParams.get('price'),arrayfilter);
+            }           
+            if(searchParams.has('language'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = languagefilter(searchParams.get('language'),arrayfilter);
+            }
+            if(searchParams.has('esrb'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = esrbfilter(searchParams.get('esrb'),arrayfilter);
+            }
+            if(searchParams.has('publisher'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = publisherfilter(searchParams.get('publisher'),arrayfilter);
+            }
+            if(searchParams.has('sale'))
+            {
+                //console.log(searchParams.get('language'));
+                arrayfilter = salefilter(searchParams.get('sale'),arrayfilter);
+            }
+            loadpage(arrayfilter,pagenum);            
+            // cardproduct.innerHTML = '';
+            // cardProduct(arrayfilter);            
         }
         spinner.setAttribute("hidden", "");
     }
@@ -494,8 +550,14 @@
     }
 
     (async () => {
-        const products = await fetchProduct(URL_API_PRODUCT);                 
+        const products = await fetchProduct(URL_API_PRODUCT);
+        const esrb = await fetchProduct(URL_API_ESRB);
+        const publisher = await fetchProduct(URL_API_PUBLISHER);
+        const sale = await fetchProduct(URL_API_SALE);
         arrayproducts = products;
+        cardEsrb(esrb);
+        cardPublisher(publisher);
+        cardSale(sale);
         loadpage(products,pagenum);
         showresults();        
         filter();                
@@ -551,8 +613,10 @@
         
         $(window).scroll(function() {                        
             if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                alert("hello")
                 pagenum += 3;
                 loadpage(arrayproducts,pagenum);
+                filter();
             }
         });                                                           
     });        
