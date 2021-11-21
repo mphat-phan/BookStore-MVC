@@ -186,8 +186,23 @@
     // }
     var searchURL = paramsString.search;
     
-    var arrayproducts;
-    var filterarr = {};    
+    var arrayproducts;    
+    var filterarr = {};
+    var pagenum = 3;
+    function loadpage(arr,pagenum) {        
+        var arrayload = {};
+        var i=0;
+        var arraypage = [];
+        arr.data.forEach(element => {
+            if(i<pagenum)
+            {                
+                arraypage[i++] = element;                 
+            }            
+        });        
+        arrayload.data = arraypage;
+        cardproduct.innerHTML = '';        
+        cardProduct(arrayload);    
+    }    
     function cardProduct(arr) {                                 
         var products = arr.data;        
         const html = products.map(product => {
@@ -472,7 +487,7 @@
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);                 
         arrayproducts = products;
-        cardProduct(products);
+        loadpage(products,pagenum);
         showresults();        
         filter();                
         spinner.setAttribute("hidden", "");  
@@ -524,6 +539,13 @@
                 searchParams.delete(name);
                 changeURL();
             }                        
+        });
+        
+        $(window).scroll(function() {                        
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                pagenum += 3;
+                loadpage(arrayproducts,pagenum);
+            }
         });                                                           
     });        
 </script>
