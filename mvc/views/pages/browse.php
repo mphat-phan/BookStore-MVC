@@ -265,7 +265,7 @@
         var results = document.getElementById("amountproducts");
         //results.innerHTML = 'Showing 1–3 of ' + Object.keys(arrayproducts.data).length + ' results';
     }  
-    const changeURL = async() => {            
+    async function changeURL(){            
         //var sort = '', category = '', price = '', language = '', esrb = '', publisher = '', sale = '';
         if(searchParams.has('sort'))
         {
@@ -308,15 +308,18 @@
         
         await filter();            
     }
-    const filter = async() => {
+    async function filter(){
         spinner.removeAttribute("hidden");
         arrayfilter = arrayproducts;                  
         if(searchURL !== '')
         {
             if(searchParams.has('sort'))
             { 
-                //console.log(searchParams.get('sort'));                        
+                //console.log(searchParams.get('sort'));     
+                
                 arrayfilter = await sortarr(searchParams.get('sort'),arrayfilter);
+                           
+                
             }
             // if(searchParams.has('category'))
             // {
@@ -352,6 +355,7 @@
             cardProduct(arrayfilter);            
         }
         spinner.setAttribute("hidden", "");
+        alert("hello")
     }
     async function sortarr(by,arrayproducts){   
         
@@ -498,7 +502,7 @@
         arrayproducts = products;
         loadpage(products,pagenum);
         showresults();        
-        filter();                
+        await filter();                
     })();    
     $(function(){        
         
