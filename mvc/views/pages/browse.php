@@ -361,96 +361,92 @@
         //console.log(searchURL);            
         history.replaceState(paramsString.href, '', paramsString.origin+paramsString.pathname + '?' + searchURL);
         
-        await filter();            
+        filter();     
     }
     async function filter(){
-        spinner.removeAttribute("hidden");
+        spinner.style.display = "block";
         arrayfilter = arrayproducts;                  
         if(searchURL !== '')
         {
             if(searchParams.has('sort'))
             { 
-                //console.log(searchParams.get('sort'));     
-                
+
                 arrayfilter = await sortarr(searchParams.get('sort'),arrayfilter);
-                           
-                
             }
-            if(searchParams.has('category'))
-            {
-                //console.log(searchParams.get('language'));
-                arrayfilter = languagefilter(searchParams.get('category'),arrayfilter);
-            }
-            if(searchParams.has('price')) 
-            {
-                //console.log(searchParams.get('sort'));                        
-                arrayfilter = pricefilter(searchParams.get('price'),arrayfilter);
-            }           
-            if(searchParams.has('language'))
-            {
-                //console.log(searchParams.get('language'));
-                arrayfilter = languagefilter(searchParams.get('language'),arrayfilter);
-            }
-            if(searchParams.has('esrb'))
-            {
-                //console.log(searchParams.get('language'));
-                arrayfilter = esrbfilter(searchParams.get('esrb'),arrayfilter);
-            }
-            if(searchParams.has('publisher'))
-            {
-                //console.log(searchParams.get('language'));
-                arrayfilter = publisherfilter(searchParams.get('publisher'),arrayfilter);
-            }
-            if(searchParams.has('sale'))
-            {
-                //console.log(searchParams.get('language'));
-                arrayfilter = salefilter(searchParams.get('sale'),arrayfilter);
-            }
+            // if(searchParams.has('category'))
+            // {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await languagefilter(searchParams.get('category'),arrayfilter);
+            // }
+            // if(searchParams.has('price')) 
+            // {
+            //     //console.log(searchParams.get('sort'));                        
+            //     arrayfilter = await pricefilter(searchParams.get('price'),arrayfilter);
+            // }           
+            // if(searchParams.has('language'))
+            // {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await languagefilter(searchParams.get('language'),arrayfilter);
+            // }
+            // if(searchParams.has('esrb'))
+            // {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await esrbfilter(searchParams.get('esrb'),arrayfilter);
+            // }
+            // if(searchParams.has('publisher'))
+            // {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await publisherfilter(searchParams.get('publisher'),arrayfilter);
+            // }
+            // if(searchParams.has('sale'))
+            // {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await salefilter(searchParams.get('sale'),arrayfilter);
+            // }
             loadpage(arrayfilter,pagenum);            
-            // cardproduct.innerHTML = '';
-            // cardProduct(arrayfilter);            
+            cardproduct.innerHTML = '';
+            cardProduct(arrayfilter);     
+                    
         }
-        spinner.setAttribute("hidden", "");        
+        spinner.style.display = "none";
     }
     async function sortarr(by,arrayproducts){   
-        
-        try {
-            var selected = by;
-            var products = arrayproducts.data;        
-            if(selected === "nameASC")
-            {   
-                products.sort(function (a, b) {
-                    return a.name.localeCompare(b.name);
-                });                
-                    
-            }
-            else if (selected === "nameDESC")
-            {
-                products.sort(function (a, b) {
-                    return b.name.localeCompare(a.name);
-                });
-            }
-            else if (selected === "priceASC")
-            {
-                products.sort(function (a, b) {
-                    return (a.price-((a.price*a.saleID.discount)/100)) - (b.price-((b.price*b.saleID.discount)/100));
-                });
-            }
-            else
-            {
-                products.sort(function (a, b) {
-                    return (b.price-((b.price*b.saleID.discount)/100)) - (a.price-((a.price*a.saleID.discount)/100));
-                });
-            }        
-            filterarr.data = products;        
-            return filterarr;
-        } catch (error) {
-            console.log(error)
-        }    
-        return data.items || data.results;            
-        
+        return new Promise(resolve => { 
+            setTimeout(function() {
+                var selected = by;
+                var products = arrayproducts.data;        
+                if(selected === "nameASC")
+                {   
+                    products.sort(function (a, b) {
+                        return a.name.localeCompare(b.name);
+                    });                
+                        
+                }
+                else if (selected === "nameDESC")
+                {
+                    products.sort(function (a, b) {
+                        return b.name.localeCompare(a.name);
+                    });
+                }
+                else if (selected === "priceASC")
+                {
+                    products.sort(function (a, b) {
+                        return (a.price-((a.price*a.saleID.discount)/100)) - (b.price-((b.price*b.saleID.discount)/100));
+                    });
+                }
+                else
+                {
+                    products.sort(function (a, b) {
+                        return (b.price-((b.price*b.saleID.discount)/100)) - (a.price-((a.price*a.saleID.discount)/100));
+                    });
+                }        
+                filterarr.data = products;        
+                resolve(filterarr);
+            });
+        });       
+                
     }
-    function pricefilter(value, arrayproducts){       
+    async function pricefilter(value, arrayproducts){       
         var arrprice = value.split(',');        
         let min = arrprice[0].replace(/[^0-9]/g, '');
         let max = arrprice[1].replace(/[^0-9]/g, '');                                                                                    
@@ -479,7 +475,7 @@
         filterarr.data = array;                
         return filterarr;        
     }
-    function languagefilter(selected,arrayproducts) {        
+    async function languagefilter(selected,arrayproducts) {        
         var array = [];    
         var i=0;                   
         arrayproducts.data.forEach(element => {
@@ -491,7 +487,7 @@
         filterarr.data = array;                
         return filterarr;                
     }
-    function esrbfilter(selected,arrayproducts) {        
+    async function esrbfilter(selected,arrayproducts) {        
         var arr = selected.split('_');
         var array = [];    
         var i=0;                   
@@ -507,7 +503,7 @@
         filterarr.data = array;                
         return filterarr;                   
     }
-    function publisherfilter(selected,arrayproducts) {
+    async function publisherfilter(selected,arrayproducts) {
         var arr = selected.split('_');
         var array = [];    
         var i=0;                   
@@ -523,7 +519,7 @@
         filterarr.data = array;                
         return filterarr;
     }
-    function salefilter(selected,arrayproducts) {
+    async function salefilter(selected,arrayproducts) {
         var arr = selected.split('_');
         var array = [];    
         var i=0;                   
@@ -562,8 +558,9 @@
         cardPublisher(publisher);
         cardSale(sale);
         loadpage(products,pagenum);
-        showresults();        
-        await filter();                
+        showresults();  
+        await filter();
+        await hiddenSpinner();  
     })();    
     $(function(){        
         
@@ -572,6 +569,7 @@
             if(searchParams.has('sort') || !searchParams.has('sort'))
             {                
                 searchParams.set('sort', selected);
+                spinner.removeAttribute("hidden");
                 changeURL();
             }                                    
         });
@@ -614,8 +612,10 @@
             }                        
         });
         
-        $(window).scroll(function() {                        
-            if($(window).scrollTop() > $(document).height() - $(window).height()) {                
+        $(window).scroll(function() {    
+         
+            if($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
+                console.log("Hello");
                 pagenum += 3;
                 loadpage(arrayproducts,pagenum);
                 filter();
