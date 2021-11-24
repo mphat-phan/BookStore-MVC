@@ -93,7 +93,7 @@ class Home extends Controller{
             if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
             {
                 $sqlcart = "SELECT * FROM `cart`,`user` WHERE `cart`.`username` = `user`.`username` AND `user`.`username` = '$txtusername'";
-                $cart = mysqli_fetch_array($this->Home->selectQuery($sqlcart));                
+                $cart = mysqli_fetch_array($this->Home->getToCheckLogin($sqlcart));                
                 if(isset($cart["id"]))
                 {                    
                     $_SESSION['cart'] =  $cart["id"];                    
