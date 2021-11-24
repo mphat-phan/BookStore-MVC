@@ -410,8 +410,7 @@
             // cardproduct.innerHTML = '';
             // cardProduct(arrayfilter);            
         }
-        spinner.setAttribute("hidden", "");
-        alert("hello")
+        spinner.setAttribute("hidden", "");        
     }
     async function sortarr(by,arrayproducts){   
         
@@ -616,8 +615,7 @@
         });
         
         $(window).scroll(function() {                        
-            if($(window).scrollTop() == $(document).height() - $(window).height()) {
-                alert("hello")
+            if($(window).scrollTop() > $(document).height() - $(window).height()) {                
                 pagenum += 3;
                 loadpage(arrayproducts,pagenum);
                 filter();
