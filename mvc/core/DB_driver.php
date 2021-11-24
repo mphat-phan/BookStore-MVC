@@ -67,7 +67,6 @@ class DB_driver
  
         // Vì sau vòng lặp các biến $field_list và $value_list sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
         $sql = 'INSERT INTO '.$table. '('.trim($field_list, ',').') VALUES ('.trim($value_list, ',').') ON DUPLICATE KEY UPDATE quantity=quantity+VALUES(quantity)';
-        echo $sql;
         return mysqli_query($this->__conn, $sql);
     }
     // Hàm Update

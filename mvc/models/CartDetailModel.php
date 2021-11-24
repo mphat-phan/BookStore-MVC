@@ -11,25 +11,26 @@
                   
                   // Gọi hàm khởi tạo cha
                   parent::__construct();
-            }
-            public function getAll()
-            {   
-                  return $this->selectAll('*');
             }	
-            public function getID($id)
+            public function getID()
             {   
-                  return $this->select_by_id('*',$id);
+                  $this->_key = 'cartID';
+                  $id = $_SESSION['cart'];
+                  return $this->selectOrderBy('*',$id,'productID','DESC');
             }
-
             public function add($data){
                   return $this->add_new_advanced($data);
             }
-            public function updateByID($data,$id){
-                  return $this->update_by_id($data, $id);
+            public function updateByID($quantity,$id){
+                  $cartID = $_SESSION['cart'];
+                  $sql ="UPDATE `cartdetail` set `quantity`='$quantity' where `cartID` ='$cartID' and `productID` = '$id'";                              
+                  return $this->selectQuery($sql);
+                           
             }
             public function delete($id){
-                  return $this->delete_by_id($id);
-
+                  $cartID = $_SESSION['cart'];
+                  $sql ="DELETE from `cartdetail` where `cartID` ='$cartID' and `productID` = '$id'";                                
+                  return $this->selectQuery($sql);
             }
 	}
 ?> 

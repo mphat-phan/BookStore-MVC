@@ -310,13 +310,18 @@
                 type: "POST",
                 url: '<?php echo constant('URL') ?>cartdetail/add',
                 data:{
-                    "cartID" : "2",
                     "productID" : id,
                     "quantity" : $("#quantity").val()
                 },
                 success: function(data){
                     console.log(data);
-                    sweetAlertCRUD(data, "Add");
+                    if(data==1){
+                       sweetAlertCRUD(data, "Thêm vào giỏ hàng thành công"); 
+                    }
+                    else{
+                        sweetAlertCRUD(data, "Hết hàng"); 
+                    }
+                    
                 }
             });
         })
