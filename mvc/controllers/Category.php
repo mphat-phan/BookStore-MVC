@@ -21,6 +21,38 @@ class Category extends Controller{
     function getAll(){
         $list = $this->category->getAll();
         echo $list;
+    }    
+    function buildTree($elements, $parentId = NULL) {
+        $branch = array();
+        //echo $elements['data'][0]['parentID'];
+        //echo count($elements['data']);
+        for($i=0; $i < count($elements['data']); $i++) {
+            if ($elements['data'][$i]['parentID'] == $parentId) {
+                $children = $this->buildTree($elements, $elements['data'][$i]['id']);
+                if ($children) {
+                    $elements['data'][$i]['children'] = $children;
+                }
+                else
+                {
+                    $elements['data'][$i]['children'] = NULL;
+                }
+                $branch[] = $elements['data'][$i];
+            }
+        }
+
+        return $branch;
+        //print_r($elements);
+    }
+    function getbuildTree() {
+        $category = json_decode($this->category->getAll(), true);
+        // echo '<pre>';
+        // print_r($category);        
+        // echo '</pre>';        
+        $tree = $this->buildTree($category);
+        //echo '<pre>';
+        //echo json_encode(["data" => $tree],JSON_PRETTY_PRINT);
+        echo json_encode($tree,JSON_PRETTY_PRINT);
+
     }
     function getCategoryProduct($id) {
         $sql="SELECT * FROM `category_product` WHERE `productID`='$id'";

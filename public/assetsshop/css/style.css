@@ -4058,3 +4058,14 @@ label:not(.form-check-label):not(.custom-file-label){
 #checkboxes input[type=checkbox]:checked + .whatever{
     font-weight: bold!important;
 }
+
+#check {
+	padding: 20px;
+  }
+#check ul { 
+	list-style: none;
+	margin: 5px 20px;
+}
+#check li {
+	margin: 10px 0;
+}
