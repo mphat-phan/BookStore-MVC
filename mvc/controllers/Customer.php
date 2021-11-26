@@ -42,13 +42,13 @@ class Customer extends Controller{
             $email= $_POST['txtEmail'];
             $address= $_POST['txtAddress'];
             $birth= $_POST['txtBirth'];
-            //neu co username add them username
+            //neu co username add them usernam
             if(empty($_POST['txtUsername'])){
-                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);                
+                $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth);
+                
             }
-            else
-            {
-                $username = $_POST['txtUsername'];
+            else{
+                $username = $_POST['txtUsername'] ;
                 $array = array('name' => $name, "phone" => $phone, 'address'=>$address, 'email'=>$email, 'birth'=>$birth, 'username'=>$username);
             }
             if($this->customer->add($array)==1){

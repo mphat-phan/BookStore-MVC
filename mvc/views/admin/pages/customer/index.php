@@ -254,7 +254,7 @@
         });
 
         $("#formAdd").submit(function (e) {
-            //e.preventDefault();
+            e.preventDefault();
             var form = $(this);
             var url = form.attr('action');
             $.ajax({
