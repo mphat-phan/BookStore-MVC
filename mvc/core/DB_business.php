@@ -53,6 +53,10 @@ class DB_business extends DB_driver
         $sql = "select $select from ".$this->_table_name." where ".$this->_key.'='."'".$id."'";
         return $this->get_row($sql);
     }
+    function selectOrderBy($select, $id, $columm, $dir){
+        $sql = "select $select from ".$this->_table_name." where ".$this->_key." = ".(int)$id." order by ".$columm." $dir";
+        return $this->get_row($sql);
+    }
     function selectAll($select){
         $sql = "select $select from ".$this->_table_name;
         return $this->get_row($sql);

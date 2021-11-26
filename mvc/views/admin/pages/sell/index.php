@@ -275,7 +275,6 @@
             }
         });
     }
-  
     $(document).ready(function() {
         
         setInterval(fetchProduct(selectProduct.value),2000); //set số lượng realtime trong 2s
