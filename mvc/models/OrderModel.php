@@ -20,6 +20,12 @@
             {   
                   return $this->select_by_id('*',$id);
             }
+            public function getUser()
+            {   
+                  $this->_key = 'customer_username';
+                  $user = $_SESSION['username'];
+                  return $this->select_by_id('*',$user);
+            }
             public function add($data){
                   return $this->add_new($data);
             }

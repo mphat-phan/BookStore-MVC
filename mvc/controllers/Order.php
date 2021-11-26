@@ -26,6 +26,10 @@ class Order extends Controller{
         $list = $this->order->getID($id);
         echo $list;
     }
+    function getByUser(){
+        $list = $this->order->getUser();
+        echo $list;
+    }
     function getLastID(){
         $list = $this->order->selectLast();
         echo $list;
