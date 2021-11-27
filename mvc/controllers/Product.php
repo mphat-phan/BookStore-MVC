@@ -26,34 +26,39 @@ class Product extends Controller{
     function getAll($number=null){
         $product = json_decode($this->product->getAll());
         
-        for($i=0 ; $i< count($product->data) ; $i++ ){
-
-            $author = $product->data[$i]->authorID; // id author
-            $publisher = $product->data[$i]->publisherID; // id publisher
-            $sale = $product->data[$i]->saleID;
-            $esrb = $product->data[$i]->esrbID;
-            
-            if(isset($author)){
-                $authorobj = json_decode($this->author->getID($author));
-                $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
+        for($i=0 ; $i< count($product->data) ; $i++ ){            
+            if($product->data[$i]->status == "1") {
+                $author = $product->data[$i]->authorID; // id author
+                $publisher = $product->data[$i]->publisherID; // id publisher
+                $sale = $product->data[$i]->saleID;
+                $esrb = $product->data[$i]->esrbID;
+                
+                if(isset($author)){
+                    $authorobj = json_decode($this->author->getID($author));
+                    $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
+                }
+                if(isset($publisher)){
+                    $publisherobj = json_decode($this->publisher->getID($publisher));
+                    $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
+                }
+                if(isset($esrb)){
+                    $esrbobj = json_decode($this->esrb->getID($esrb));
+                    $product->data[$i]->esrbID = array("id" => $esrbobj->data[0]->id,"name" => $esrbobj->data[0]->name);
+                }
+                if(isset($sale)){
+                    $saleobj = json_decode($this->sale->getID($sale));
+                    $product->data[$i]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount , "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
+                }
+                else{
+                    $product->data[$i]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
+                }
             }
-            if(isset($publisher)){
-                $publisherobj = json_decode($this->publisher->getID($publisher));
-                $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
-            }
-            if(isset($esrb)){
-                $esrbobj = json_decode($this->esrb->getID($esrb));
-                $product->data[$i]->esrbID = array("id" => $esrbobj->data[0]->id,"name" => $esrbobj->data[0]->name);
-            }
-            if(isset($sale)){
-                $saleobj = json_decode($this->sale->getID($sale));
-                $product->data[$i]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount , "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
-            }
-            else{
-                $product->data[$i]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
+            else
+            {
+                unset($product->data[$i]);
             }
         }
-        
+        //echo '<pre>';
         echo json_encode(["data" => $product->data],JSON_PRETTY_PRINT);
         
 

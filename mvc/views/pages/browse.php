@@ -1,10 +1,6 @@
 <?php
     $cart = $_SESSION['cart'];
 ?>
-<form class="categorycheckbox cardcategory" data-name="category" id="check">
-    <!-- <div class="nice-scroll cardcategory" id="check">                                                    
-                                                </div> -->
-</form>
 <section class="shop spad">
     <div class="container">
         <div class="row">
@@ -30,12 +26,12 @@
                                     <h4 data-toggle="collapse" data-target="#collapseOne">Categories</h4>
                                 </div>
 
-                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">                                    
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
-                                            <form class="formchange cardcategory" data-name="category" id="check">
-                                                <!-- <div class="nice-scroll cardcategory" id="check">                                                    
-                                                </div> -->
+                                            <form class="categorycheckbox cardcategory" data-name="category" id="check">
+                                                <div class="nice-scroll cardcategory" id="check">                                                    
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -228,12 +224,14 @@
         var arrayload = {};
         var i = 0;
         var arraypage = [];
+        //console.log(arr.data);
         arr.data.forEach(element => {
             if (i < pagenum) {
-                arraypage[i++] = element;
+                arraypage[i++] = element;                
             }
         });
         arrayload.data = arraypage;
+        //console.log(arrayload);
         cardproduct.innerHTML = '';
         cardProduct(arrayload);
     }
@@ -313,10 +311,8 @@
                 return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
             };
             var salehtml, pricehtml;
-            if (currentDate.getTime() >= startDateSale.getTime() && currentDate.getTime() <= endDateSale
-                .getTime()) {
-                var priceSale = parseInt(product.price - (product.price * (product.saleID.discount / 100)))
-                    .format();
+            if (currentDate.getTime() >= startDateSale.getTime() && currentDate.getTime() <= endDateSale.getTime()) {
+                var priceSale = parseInt(product.price - (product.price * (product.saleID.discount / 100))).format();
                 var price = parseInt(product.price).format();
                 salehtml = `<div class="ribbon-wrapper ribbon">
                                 <div class="ribbon bg-danger text">
@@ -361,37 +357,37 @@
         if (searchParams.has('sort')) {
             var sort = '&sort=' + searchParams.get('sort');
         } else {
-            var sort = ''
+            var sort = '';
         }
         if (searchParams.has('category')) {
             var category = '&category=' + searchParams.get('category');
         } else {
-            var category = ''
+            var category = '';
         }
         if (searchParams.has('price')) {
             var price = '&price=' + searchParams.get('price');
         } else {
-            var price = ''
+            var price = '';
         }
         if (searchParams.has('language')) {
             var language = '&language=' + searchParams.get('language');
         } else {
-            var language = ''
+            var language = '';
         }
         if (searchParams.has('esrb')) {
             var esrb = '&esrb=' + searchParams.get('esrb');
         } else {
-            var esrb = ''
+            var esrb = '';
         }
         if (searchParams.has('publisher')) {
             var publisher = '&publisher=' + searchParams.get('publisher');
         } else {
-            var publisher = ''
+            var publisher = '';
         }
         if (searchParams.has('sale')) {
             var sale = '&sale=' + searchParams.get('sale');
         } else {
-            var sale = ''
+            var sale = '';
         }
         searchURL = sort + category + price + language + esrb + publisher + sale;
         //console.log(searchURL);            
@@ -407,10 +403,10 @@
 
                 arrayfilter = await sortarr(searchParams.get('sort'), arrayfilter);
             }
-            if (searchParams.has('category')) {
-                //console.log(searchParams.get('language'));
-                arrayfilter = await languagefilter(searchParams.get('category'), arrayfilter);
-            }
+            // if (searchParams.has('category')) {
+            //     //console.log(searchParams.get('language'));
+            //     arrayfilter = await languagefilter(searchParams.get('category'), arrayfilter);
+            // }
             if (searchParams.has('price')) {
                 //console.log(searchParams.get('sort'));                        
                 arrayfilter = await pricefilter(searchParams.get('price'), arrayfilter);
@@ -430,10 +426,10 @@
             if (searchParams.has('sale')) {
                 //console.log(searchParams.get('language'));
                 arrayfilter = await salefilter(searchParams.get('sale'), arrayfilter);
-            }
+            }            
             loadpage(arrayfilter, pagenum);
-            // cardproduct.innerHTML = '';
-            // cardProduct(arrayfilter);                         
+            //cardproduct.innerHTML = '';
+            //cardProduct(arrayfilter);                         
         }
         spinner.style.display = "none";
     }
@@ -453,13 +449,11 @@
                     });
                 } else if (selected === "priceASC") {
                     products.sort(function (a, b) {
-                        return (a.price - ((a.price * a.saleID.discount) / 100)) - (b
-                            .price - ((b.price * b.saleID.discount) / 100));
+                        return (a.price - ((a.price * a.saleID.discount) / 100)) - (b.price - ((b.price * b.saleID.discount) / 100));
                     });
                 } else {
                     products.sort(function (a, b) {
-                        return (b.price - ((b.price * b.saleID.discount) / 100)) - (a
-                            .price - ((a.price * a.saleID.discount) / 100));
+                        return (b.price - ((b.price * b.saleID.discount) / 100)) - (a.price - ((a.price * a.saleID.discount) / 100));
                     });
                 }
                 filterarr.data = products;
@@ -483,10 +477,8 @@
                     var endDateSale = new Date(saleEndDate);
                     var currentDate = new Date();
                     var saleprice;
-                    if (currentDate.getTime() >= startDateSale.getTime() && currentDate
-                        .getTime() <= endDateSale.getTime()) {
-                        saleprice = element.price - ((element.price * element.saleID
-                            .discount) / 100);
+                    if (currentDate.getTime() >= startDateSale.getTime() && currentDate.getTime() <= endDateSale.getTime()) {
+                        saleprice = element.price - ((element.price * element.saleID.discount) / 100);
                     } else {
                         saleprice = element.price;
                     }
@@ -646,8 +638,14 @@
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
                 pagenum += 3;
-                //loadpage(arrayproducts,pagenum);
-                filter();
+                if(searchURL !== '')
+                {
+                    filter();
+                }            
+                else
+                {
+                    loadpage(arrayproducts,pagenum);                
+                }                    
             }
         });
 
@@ -777,7 +775,4 @@
     inputRight.oninput = function () {
         inputmax.value = this.value + "đ";
     }
-</script>
-<script>
-    
 </script>
