@@ -27,7 +27,7 @@ class Product extends Controller{
         $product = json_decode($this->product->getAll());
         
         for($i=0 ; $i< count($product->data) ; $i++ ){            
-            if($product->data[$i]->status == "1") {
+            //if($product->data[$i]->status == "1") {
                 $author = $product->data[$i]->authorID; // id author
                 $publisher = $product->data[$i]->publisherID; // id publisher
                 $sale = $product->data[$i]->saleID;
@@ -52,7 +52,7 @@ class Product extends Controller{
                 else{
                     $product->data[$i]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
                 }
-            }           
+            //  }           
         }
         //echo '<pre>';
         echo json_encode(["data" => $product->data],JSON_PRETTY_PRINT);
