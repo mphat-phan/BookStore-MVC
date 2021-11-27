@@ -204,7 +204,7 @@
     const cardsale = document.querySelector('.cardsale');
     const spinner = document.querySelector('.spinner');
 
-    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus1';
+    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
     let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getbuildTree';
     let URL_API_ESRB = '<?php echo constant('URL')?>esrb/getall';
     let URL_API_PUBLISHER = '<?php echo constant('URL')?>publisher/getall';
@@ -220,20 +220,25 @@
     var filterarr = {};
     var pagenum = 12;
 
-    function loadpage(arr, pagenum) {
-        var arrayload = {};
-        var i = 0;
-        var arraypage = [];
-        //console.log(arr.data);
-        arr.data.forEach(element => {
-            if (i < pagenum) {
-                arraypage[i++] = element;                
-            }
+    async function loadpage(arr, pagenum) {
+        return new Promise(resolve => {
+            setTimeout(function () {
+                var arrayload = {};
+                var i = 0;
+                var arraypage = [];
+                //console.log(arr.data);
+                arr.data.forEach(element => {
+                    if (i < pagenum) {
+                        arraypage[i++] = element;                
+                    }
+                });
+                arrayload.data = arraypage;
+                cardproduct.innerHTML = '';
+                //console.log(arrayload);
+                cardProduct(arrayload);
+                resolve('resolved');
+            },1000);
         });
-        arrayload.data = arraypage;
-        //console.log(arrayload);
-        cardproduct.innerHTML = '';
-        cardProduct(arrayload);
     }
 
     function buildCategoryTree(arr) {
@@ -397,8 +402,10 @@
     }
     async function filter() {
         spinner.style.display = "block";
+        
         arrayfilter = arrayproducts;
         if (searchURL !== '') {
+            cardproduct.innerHTML = '';
             if (searchParams.has('sort')) {
 
                 arrayfilter = await sortarr(searchParams.get('sort'), arrayfilter);
@@ -427,7 +434,7 @@
                 //console.log(searchParams.get('language'));
                 arrayfilter = await salefilter(searchParams.get('sale'), arrayfilter);
             }            
-            loadpage(arrayfilter, pagenum);
+            await loadpage(arrayfilter, pagenum);
             //cardproduct.innerHTML = '';
             //cardProduct(arrayfilter);                         
         }
@@ -587,7 +594,7 @@
         cardEsrb(esrb);
         cardPublisher(publisher);
         cardSale(sale);
-        loadpage(products, pagenum);
+        await loadpage(products, pagenum);
         showresults();
         await filter();
         await hiddenSpinner();
@@ -637,14 +644,20 @@
 
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
-                pagenum += 3;
+                pagenum += 3;console.log(pagenum)
                 if(searchURL !== '')
                 {
+                    
                     filter();
                 }            
                 else
                 {
-                    loadpage(arrayproducts,pagenum);                
+                    (async () => {
+                        spinner.style.display = "block";
+                        await loadpage(arrayproducts,pagenum);       
+                        spinner.style.display = "none";
+                    })();
+                             
                 }                    
             }
         });

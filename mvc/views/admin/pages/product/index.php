@@ -541,7 +541,7 @@
                         }
                         else{
                             return( 
-                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' value="+status+" ></label></div></div>"
+                            "<div class='form-group'> <div class='form-check'> <label class='form-check-label'> <input type='checkbox' class='form-check-input' data_id='"+id+"' value="+status+" ></label></div></div>"
                             );
                         }
                         

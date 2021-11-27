@@ -20,6 +20,11 @@
             {   
                   return $this->select_by_id('*',$id);
             }
+            public function getStatus()
+            {   
+                  $this->_key = 'status';
+                  return $this->select_by_id('*',1);
+            }
             public function add($data){
                   return $this->add_new($data);
             }
