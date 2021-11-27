@@ -204,7 +204,7 @@
     const cardsale = document.querySelector('.cardsale');
     const spinner = document.querySelector('.spinner');
 
-    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getall';
+    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus1';
     let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getbuildTree';
     let URL_API_ESRB = '<?php echo constant('URL')?>esrb/getall';
     let URL_API_PUBLISHER = '<?php echo constant('URL')?>publisher/getall';
