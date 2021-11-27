@@ -210,16 +210,16 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Update</h3>
+                    <h3 class="card-title">Reset Password</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form id="formUpdate" action="" method="POST">
                     
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">User Password</label>
-                            <input name='txtUserPassword' value="" type="password" class="form-control formUpdateInput" placeholder="Enter " required>
+                        <div class="form-check">
+                            <input name="checkResetPass" id="checkResetPass" type="checkbox" class="form-check-input" required>
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -261,36 +261,60 @@
                     "render": function (data, type, full) {                        
                         var username = full.username;
                         var status = full.status;
-                        if(status==1)
+                        if(username != 'admin')
                         {
-                            return (                                
-                                "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#LockModal' data_id='"+ username +"'>Lock</button>"
-                            );
+                            if(status==1)
+                            {
+                                return (                                
+                                    "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#LockModal' data_id='"+ username +"'>Lock</button>"
+                                );
+                            }
+                            else if (status==0)
+                            {
+                                return (
+                                    "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#UnlockModal' data_id='"+ username +"'>Unlock</button>"
+                                );
+                            }
                         }
-                        else if (status==0)
+                        else
                         {
                             return (
-                                "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm mr-1' role='button'data-toggle='modal' data-target='#UnlockModal' data_id='"+ username +"'>Unlock</button>"
-                            );
-                        }                        
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                            "Lock" +
+                            "</button>"
+                                );
+                        }                                                                    
                     }
                 },                
                 {                    
                     "data": "username",                    
                     //"defaultContent": "<a onclick='openModal()' href='#' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target='#UpdateModal'>Update</a>"
-                    "render": function (data, type, row, meta) {                        
-                        return (                            
-                            "<button onclick='openModal(this)' class='btn btn-info btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
-                            data + "'>" +
-                            "Reset Password" +
-                            "</button>" +
-                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm mr-1' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
-                            data + "'>" +
-                            "Delete" +
-                            "</button>" +                            
-                            "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm' role='button'data-toggle='modal' data-target='#AddModal' data_id='" + data + "'>Role</button>"
-                            
-                        );
+                    "render": function (data, type, row, meta) {
+                        if(data != 'admin')
+                        {
+                            return (                            
+                                "<button onclick='openModal(this)' class='btn btn-info btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                                data + "'>" +
+                                "Reset Password" +
+                                "</button>" +
+                                "<button onclick='openModal(this)' class='btn btn-danger btn-sm mr-1' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                                data + "'>" +
+                                "Delete" +
+                                "</button>" +                            
+                                "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm' role='button'data-toggle='modal' data-target='#AddModal' data_id='" + data + "'>Role</button>"                                
+                            );
+                        }
+                        else
+                        {
+                            return (
+                                    "<button onclick='openModal(this)' class='btn btn-info btn-sm mr-1' role='button' data-toggle='modal' data-target='#UpdateModal' data_id='" +
+                                    data + "'>" +
+                                    "Reset Password" +
+                                    "</button>" +
+                                    "<button onclick='' class='btn btn-secondary btn-sm mr-1' role='button' data-toggle='modal' data-target=''>Delete</button>" +                            
+                                    "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm' role='button'data-toggle='modal' data-target='#AddModal' data_id='" + data + "'>Role</button>"
+                                );
+                        }
                     }
                 }                
             ],

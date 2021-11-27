@@ -30,7 +30,9 @@
                   return $this->delete_by_id($id);
 
             }
-
+            public function updateSql($sql) {
+                  return $this->selectQuery($sql);
+            }
 
 	}
 ?> 
