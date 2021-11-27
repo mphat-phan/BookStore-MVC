@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 14, 2021 at 03:33 PM
+-- Generation Time: Nov 26, 2021 at 02:39 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -39,12 +39,13 @@ CREATE TABLE `author` (
 --
 
 INSERT INTO `author` (`id`, `name`, `detail`, `image`) VALUES
-(3, 'Haha', 'Chi tiết lịch sử', 'landmark81.jpg'),
 (4, 'Phan Minh Phát 2', '123123123', NULL),
 (5, 'alex', 'alex', NULL),
 (6, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
 (9, 'Lịch sử', 'Chi tiết lịch sử', '2447228.jpg'),
-(10, '', '<b>étfsfsfsrfsf</b>', '');
+(10, '', '<b>étfsfsfsrfsf</b>', ''),
+(11, 'Khaled Hosseini', '<h1 id=\"firstHeading\" class=\"firstHeading\" style=\"color: rgb(0, 0, 0); margin-right: 0px; margin-bottom: 0.25em; margin-left: 0px; padding: 0px; overflow: visible; border-bottom: 1px solid rgb(162, 169, 177); font-size: 1.8em; font-family: &quot;Linux Libertine&quot;, Georgia, Times, serif; line-height: 1.3;\">Khaled Hosseini</h1><div id=\"bodyContent\" class=\"vector-body\" style=\"font-size: calc(0.875em); line-height: 1.6; position: relative; z-index: 0; color: rgb(32, 33, 34); font-family: sans-serif;\"><div id=\"siteSub\" class=\"noprint\" style=\"font-size: 16.1px;\">From Wikipedia, the free encyclopedia</div><div id=\"siteSub\" class=\"noprint\" style=\"font-size: 16.1px;\"><p style=\"margin: 0.5em 0px; font-size: 17.5px;\"><b>Khaled Hosseini</b>&nbsp;(<a href=\"https://en.wikipedia.org/wiki/Persian_language\" title=\"Persian language\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Persian</a>:&nbsp;<span lang=\"fa\" dir=\"rtl\">خالد حسینی</span>‎&nbsp;<small style=\"font-size: 14.875px;\"></small><span title=\"Representation in the International Phonetic Alphabet (IPA)\" class=\"IPA\"><a href=\"https://en.wikipedia.org/wiki/Help:IPA/Persian\" title=\"Help:IPA/Persian\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[ˈxɒled hoˈsejni]</a></span>;&nbsp;<span class=\"rt-commentedText nowrap\" style=\"white-space: nowrap;\"><span class=\"IPA nopopups noexcerpt\"><a href=\"https://en.wikipedia.org/wiki/Help:IPA/English\" title=\"Help:IPA/English\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">/<span style=\"border-bottom: 1px dotted;\"><span title=\"/ˈ/: primary stress follows\">ˈ</span><span title=\"\'h\' in \'hi\'\">h</span><span title=\"/ɑː/: \'a\' in \'father\'\">ɑː</span><span title=\"\'l\' in \'lie\'\">l</span><span title=\"/ɛ/: \'e\' in \'dress\'\">ɛ</span><span title=\"\'d\' in \'dye\'\">d</span></span><span class=\"wrap\" style=\"white-space: normal;\">&nbsp;</span><span style=\"border-bottom: 1px dotted;\"><span title=\"\'h\' in \'hi\'\">h</span><span title=\"/oʊ/: \'o\' in \'code\'\">oʊ</span><span title=\"/ˈ/: primary stress follows\">ˈ</span><span title=\"\'s\' in \'sigh\'\">s</span><span title=\"/eɪ/: \'a\' in \'face\'\">eɪ</span><span title=\"\'n\' in \'nigh\'\">n</span><span title=\"/i/: \'y\' in \'happy\'\">i</span></span>/</a></span></span>; born 4 March 1965) is an&nbsp;<a href=\"https://en.wikipedia.org/wiki/Afghan_Americans\" title=\"Afghan Americans\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Afghan-American</a>&nbsp;novelist and&nbsp;<a href=\"https://en.wikipedia.org/wiki/United_Nations_High_Commissioner_for_Refugees\" title=\"United Nations High Commissioner for Refugees\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">UNHCR</a>&nbsp;goodwill ambassador.<sup id=\"cite_ref-1\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-1\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[1]</a></sup><sup id=\"cite_ref-2\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-2\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[2]</a></sup>&nbsp;His&nbsp;<a href=\"https://en.wikipedia.org/wiki/Debut_novel\" title=\"Debut novel\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">debut novel</a>&nbsp;<i><a href=\"https://en.wikipedia.org/wiki/The_Kite_Runner\" title=\"The Kite Runner\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">The Kite Runner</a></i>&nbsp;(2003) was a critical and commercial success; the book, as well as his subsequent novels, have all been at least partially set in&nbsp;<a href=\"https://en.wikipedia.org/wiki/Afghanistan\" title=\"Afghanistan\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Afghanistan</a>&nbsp;and have featured an&nbsp;<a href=\"https://en.wikipedia.org/wiki/Afghans\" title=\"Afghans\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Afghan</a>&nbsp;as the protagonist.</p><p style=\"margin: 0.5em 0px; font-size: 17.5px;\">Born in&nbsp;<a href=\"https://en.wikipedia.org/wiki/Kabul\" title=\"Kabul\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Kabul</a>, Afghanistan, to a diplomat father, Hosseini spent some time living in&nbsp;<a href=\"https://en.wikipedia.org/wiki/Iran\" title=\"Iran\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Iran</a>&nbsp;and&nbsp;<a href=\"https://en.wikipedia.org/wiki/France\" title=\"France\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">France</a>. When Hosseini was 15, his family applied for asylum in the&nbsp;<a href=\"https://en.wikipedia.org/wiki/United_States\" title=\"United States\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">United States</a>, where he later became a naturalized citizen. Hosseini did not return to Afghanistan until 2003<sup id=\"cite_ref-3\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-3\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[3]</a></sup>&nbsp;when he was 38, an experience similar to that of the protagonist in&nbsp;<i>The Kite Runner</i>. In later interviews, Hosseini admitted to feeling&nbsp;<a href=\"https://en.wikipedia.org/wiki/Survivor_guilt\" title=\"Survivor guilt\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">survivor\'s guilt</a>&nbsp;for having been able to leave the country prior to the&nbsp;<a href=\"https://en.wikipedia.org/wiki/Soviet_invasion_in_Afghanistan\" class=\"mw-redirect\" title=\"Soviet invasion in Afghanistan\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Soviet invasion</a>&nbsp;and&nbsp;<a href=\"https://en.wikipedia.org/wiki/Soviet%E2%80%93Afghan_War\" title=\"Soviet–Afghan War\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">subsequent</a>&nbsp;<a href=\"https://en.wikipedia.org/wiki/War_in_Afghanistan_(2001%E2%80%93present)\" class=\"mw-redirect\" title=\"War in Afghanistan (2001–present)\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">wars</a>.</p><p style=\"margin: 0.5em 0px; font-size: 17.5px;\">After graduating from college, Hosseini worked as a physician in&nbsp;<a href=\"https://en.wikipedia.org/wiki/California\" title=\"California\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">California</a>, a situation he likened to \"an arranged marriage\".<sup id=\"cite_ref-dmiller_4-0\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-dmiller-4\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[4]</a></sup>&nbsp;The success of&nbsp;<i>The Kite Runner</i>&nbsp;meant he was able to retire from medicine in order to write full-time. His three novels have all reached various levels of critical and commercial success.<sup id=\"cite_ref-5\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-5\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[5]</a></sup>&nbsp;<i>The Kite Runner</i>&nbsp;spent 101 weeks on&nbsp;<a href=\"https://en.wikipedia.org/wiki/The_New_York_Times_Best_Seller_list\" title=\"The New York Times Best Seller list\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\"><i>The New York Times</i>&nbsp;Best Seller list</a>, including three weeks at number one.<sup id=\"cite_ref-6\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-6\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[6]</a></sup>&nbsp;His second novel,&nbsp;<i><a href=\"https://en.wikipedia.org/wiki/A_Thousand_Splendid_Suns\" title=\"A Thousand Splendid Suns\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">A Thousand Splendid Suns</a></i>&nbsp;(2007), spent 103 weeks on the chart, including 15 at number one<sup id=\"cite_ref-7\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-7\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[7]</a></sup><sup id=\"cite_ref-8\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-8\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[8]</a></sup>&nbsp;while his third novel,&nbsp;<i>And the Mountains Echoed</i>&nbsp;(2013), remained on the chart for 33 weeks.<sup id=\"cite_ref-9\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-9\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[9]</a></sup><sup id=\"cite_ref-10\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-10\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[10]</a></sup>&nbsp;In addition to writing, Hosseini has advocated for refugees, including establishing with the UNHCR the Khaled Hosseini Foundation to support Afghan refugees returning to Afghanistan.<sup id=\"cite_ref-:0_11-0\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Khaled_Hosseini#cite_note-:0-11\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[11]</a></sup></p></div></div>                                       \r\n                                    ', 'uSAIvyK3_400x400.jpg'),
+(12, 'Phan Minh Phát', '<b>dfsdfs</b>', 'Untitled Diagram-Use Case.drawio.png');
 
 -- --------------------------------------------------------
 
@@ -62,8 +63,9 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `username`) VALUES
-(1, 'minhphat'),
-(4, 'minhphat123');
+(6, 'hello'),
+(8, 'minhphat'),
+(9, 'phanminhphat');
 
 -- --------------------------------------------------------
 
@@ -74,8 +76,22 @@ INSERT INTO `cart` (`id`, `username`) VALUES
 CREATE TABLE `cartdetail` (
   `cartID` int(11) NOT NULL,
   `productID` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `cartdetail`
+--
+DELIMITER $$
+CREATE TRIGGER `insertCartDetail` BEFORE INSERT ON `cartdetail` FOR EACH ROW BEGIN
+  IF NEW.quantity > (SELECT quantity FROM product WHERE NEW.productID = id)
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -96,7 +112,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `detail`, `parentID`, `image`) VALUES
-(4, 'Phan Minh Phát', '                                       \r\n                                    ', NULL, '');
+(4, 'Phan Minh Phát', '                                       \r\n                                    ', NULL, ''),
+(5, 'Lịch sử', 'fsf', NULL, ''),
+(6, 'Lịch sử Việt Nam', 'fsf', 5, '');
 
 -- --------------------------------------------------------
 
@@ -114,7 +132,9 @@ CREATE TABLE `category_product` (
 --
 
 INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
-(4, 17);
+(4, 17),
+(4, 19),
+(4, 20);
 
 -- --------------------------------------------------------
 
@@ -137,7 +157,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `address`, `birth`, `username`) VALUES
-(14, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'sfgdfgydfg', '2021-11-17', 'minhphat');
+(15, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'ưetrfwe', '2021-11-26', 'minhphat'),
+(16, 'Phan Minh Phát', '0707061515', 'myphan2710@gmail.com', '', NULL, 'phanminhphat');
 
 -- --------------------------------------------------------
 
@@ -161,7 +182,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
-(7, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'sdfsdf', '2021-11-06', '2021-11-06', 'minhphat');
+(8, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', '123', '2021-11-26', '2021-11-26', 'minhphat');
 
 -- --------------------------------------------------------
 
@@ -201,12 +222,13 @@ CREATE TABLE `import` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `import`
+-- Triggers `import`
 --
-
-INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
-(21, '2021-11-06', 500000, 'minhphat'),
-(22, '2021-11-13', 2000000, 'minhphat');
+DELIMITER $$
+CREATE TRIGGER `deleteImport` BEFORE DELETE ON `import` FOR EACH ROW DELETE FROM orderdetail
+WHERE orderID = OLD.id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -220,6 +242,16 @@ CREATE TABLE `importdetail` (
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `importdetail`
+--
+DELIMITER $$
+CREATE TRIGGER `insertImportDetail` BEFORE INSERT ON `importdetail` FOR EACH ROW UPDATE product
+   SET quantity = quantity + 		NEW.quantity
+   WHERE id = NEW.productID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -235,6 +267,28 @@ CREATE TABLE `orderdetail` (
   `subtotal` double NOT NULL,
   `discount` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `orderdetail`
+--
+DELIMITER $$
+CREATE TRIGGER `deleteOrderDetail` BEFORE DELETE ON `orderdetail` FOR EACH ROW UPDATE product
+   SET quantity = quantity + 		OLD.quantity
+   WHERE id = OLD.productID
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insertOrderDetail` BEFORE INSERT ON `orderdetail` FOR EACH ROW BEGIN
+  IF NEW.quantity > (SELECT quantity FROM product WHERE NEW.productID = id)
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+UPDATE product
+   SET quantity = quantity - 		NEW.quantity
+   WHERE id = NEW.productID;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -258,35 +312,13 @@ CREATE TABLE `ordertb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ordertb`
+-- Triggers `ordertb`
 --
-
-INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
-(48, '2021-11-10', 550000, 0, 150000, 400000, 'minhphat', NULL, NULL, 4, 400000, 0),
-(49, '2021-11-11', 550000, 0, 50000, 500000, 'minhphat', NULL, 14, 4, 500000, 0),
-(50, '2021-11-11', 550000, 0, 0, 550000, 'minhphat', NULL, 14, 4, 555555, 5555),
-(51, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, 14, 4, 50000, 0),
-(52, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(53, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(54, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(55, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(56, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(57, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(58, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(59, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(60, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(61, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(62, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(63, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(64, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(65, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(66, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(67, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(68, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, NULL, 4, 50000, 0),
-(69, '2021-11-11', 50000, 0, 0, 50000, 'minhphat', NULL, 14, 4, 50000, 0),
-(70, '2021-11-12', 2540225, 0, 200000, 2340225, 'minhphat', NULL, 14, 4, 2340225, 0),
-(71, '2021-11-12', 90000, 0, 0, 90000, 'minhphat', NULL, NULL, 4, 100000, 10000),
-(72, '2021-11-12', 4500225, 0, 200000, 4300225, 'minhphat', NULL, 14, 4, 7000000, 2699775);
+DELIMITER $$
+CREATE TRIGGER `deleteOrder` BEFORE DELETE ON `ordertb` FOR EACH ROW DELETE FROM orderdetail
+WHERE orderID = OLD.id
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -337,7 +369,8 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
 (17, '10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '', 5, 14, 'discount50', 1),
-(18, '10 vạn câu hỏi vì sao 2', 'sdafsdfsf', 0, 500000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 0);
+(19, 'Ngàn Mặt Trời Rực Rỡ', '<h1 id=\"firstHeading\" class=\"firstHeading\" style=\"color: rgb(0, 0, 0); margin-right: 0px; margin-bottom: 0.25em; margin-left: 0px; padding: 0px; overflow: visible; border-bottom: 1px solid rgb(162, 169, 177); font-size: 1.8em; font-family: &quot;Linux Libertine&quot;, &quot;Palatino Linotype&quot;, &quot;EB Garamond&quot;, &quot;Times New Roman&quot;, Times, serif; line-height: 1.3;\"><i>Ngàn mặt trời rực rỡ</i></h1><div id=\"bodyContent\" class=\"vector-body\" style=\"font-size: calc(0.875em); line-height: 1.6; position: relative; z-index: 0;\"><div id=\"siteSub\" class=\"noprint\" style=\"display: inline; font-size: 16.1px;\">Bách khoa toàn thư mở Wikipedia</div><div id=\"contentSub\" style=\"font-size: 14.7px; line-height: 1.2em; margin: 0px 0px 1.4em 1em; color: rgb(84, 89, 93); width: auto;\"></div><div id=\"contentSub2\" style=\"font-size: 14.7px; line-height: 1.2em; margin: 0px 0px 1.4em 1em; color: rgb(84, 89, 93); width: auto;\"></div><div id=\"jump-to-nav\"></div><a class=\"mw-jump-link\" href=\"https://vi.wikipedia.org/wiki/Ng%C3%A0n_m%E1%BA%B7t_tr%E1%BB%9Di_r%E1%BB%B1c_r%E1%BB%A1#mw-head\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; display: block; clip: rect(1px, 1px, 1px, 1px); width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; position: absolute !important;\">Bước tới điều hướng</a><a class=\"mw-jump-link\" href=\"https://vi.wikipedia.org/wiki/Ng%C3%A0n_m%E1%BA%B7t_tr%E1%BB%9Di_r%E1%BB%B1c_r%E1%BB%A1#searchInput\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; display: block; clip: rect(1px, 1px, 1px, 1px); width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; position: absolute !important;\">Bước tới tìm kiếm</a><div id=\"mw-content-text\" class=\"mw-body-content mw-content-ltr\" lang=\"vi\" dir=\"ltr\" style=\"direction: ltr;\"><div class=\"mw-parser-output\"><table class=\"infobox\" style=\"font-size: 0.88em; border: 1px solid rgb(170, 170, 170); border-spacing: 5px; background-color: rgb(249, 249, 249); margin: 5px 0px 5px 10px; color: black; float: right; clear: right; line-height: 1.25em; overflow-wrap: break-word; font-family: sans-serif; width: 22em;\"><tbody><tr><th colspan=\"2\" style=\"vertical-align: middle; text-align: center; padding: 12px; line-height: 1.1em; font-size: 20.79px; background: rgb(167, 219, 216); font-style: italic;\">Ngàn mặt trời rực rỡ</th></tr><tr><td colspan=\"2\" style=\"vertical-align: top; text-align: center;\">A Thousand Splendid Suns</td></tr><tr><th colspan=\"2\" style=\"vertical-align: super; text-align: center; padding: 5px; background: rgb(167, 219, 216); line-height: 1.5em;\">Thông tin sách</th></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Tác giả</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/Khaled_Hosseini\" title=\"Khaled Hosseini\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Khaled Hosseini</a></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Quốc gia</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/Hoa_K%E1%BB%B3\" title=\"Hoa Kỳ\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Hoa Kỳ</a></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Ngôn ngữ</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/Ti%E1%BA%BFng_Anh\" title=\"Tiếng Anh\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Tiếng Anh</a></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Thể loại</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/Ti%E1%BB%83u_thuy%E1%BA%BFt\" title=\"Tiểu thuyết\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Tiểu thuyết</a></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Nhà xuất bản</th><td style=\"vertical-align: top;\">Riverhead Books</td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Ngày phát hành</th><td style=\"vertical-align: top;\">22 tháng 5 năm 2007</td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Kiểu sách</th><td style=\"vertical-align: top;\">In (bìa cứng &amp; bìa mềm)<br>Sách nói</td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\"><a href=\"https://vi.wikipedia.org/wiki/ISBN\" title=\"ISBN\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">ISBN</a></th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/%C4%90%E1%BA%B7c_bi%E1%BB%87t:Ngu%E1%BB%93n_s%C3%A1ch/978-1-59448-950-1\" title=\"Đặc biệt:Nguồn sách/978-1-59448-950-1\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">978-1-59448-950-1</a></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Cuốn trước</th><td style=\"vertical-align: top;\"><i><a href=\"https://vi.wikipedia.org/wiki/Ng%C6%B0%E1%BB%9Di_%C4%91ua_di%E1%BB%81u\" title=\"Người đua diều\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Người đua diều</a></i></td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Cuốn sau</th><td style=\"vertical-align: top;\"><i>And the Mountains Echoed</i></td></tr><tr><th colspan=\"2\" style=\"vertical-align: super; text-align: center; padding: 5px; background: rgb(167, 219, 216); line-height: 1.5em;\">Bản tiếng Việt</th></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Người dịch</th><td style=\"vertical-align: top;\">Nguyễn Thị Hương Thảo</td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Nhà&nbsp;xuất&nbsp;bản</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/Nh%C3%A3_Nam_(c%C3%B4ng_ty)\" title=\"Nhã Nam (công ty)\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Nhã Nam</a><br>Nhà xuất bản Văn học</td></tr><tr><th scope=\"row\" style=\"vertical-align: top; text-align: left; max-width: 140px; overflow-wrap: normal; padding-right: 0.8em; width: 8em;\">Ngày&nbsp;phát&nbsp;hành</th><td style=\"vertical-align: top;\"><a href=\"https://vi.wikipedia.org/wiki/2010\" title=\"2010\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">2010</a></td></tr></tbody></table><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-family: sans-serif;\"><i><b>Ngàn mặt trời rực rỡ</b></i>&nbsp;là tiểu thuyết thứ hai phát hành năm&nbsp;<a href=\"https://vi.wikipedia.org/wiki/2007\" title=\"2007\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">2007</a>&nbsp;của nhà văn&nbsp;<a href=\"https://vi.wikipedia.org/wiki/Khaled_Hosseini\" title=\"Khaled Hosseini\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Khaled Hosseini</a>, một người&nbsp;<a href=\"https://vi.wikipedia.org/wiki/M%C4%A9\" class=\"mw-redirect\" title=\"Mĩ\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Mĩ</a>&nbsp;gốc&nbsp;<a href=\"https://vi.wikipedia.org/wiki/Afghanistan\" title=\"Afghanistan\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Afghanistan</a>. Cuốn sách nhanh chóng trở thành tác phẩm bán chạy, tiếp nối sự thành công của tiểu thuyết&nbsp;<i><a href=\"https://vi.wikipedia.org/wiki/Ng%C6%B0%E1%BB%9Di_%C4%91ua_di%E1%BB%81u\" title=\"Người đua diều\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Người đua diều</a></i>&nbsp;năm&nbsp;<a href=\"https://vi.wikipedia.org/wiki/2003\" title=\"2003\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">2003</a>&nbsp;của ông. Cả hai cuốn tiểu thuyết gộp lại bán được 38 triệu bản trên toàn thế giới. Năm&nbsp;<a href=\"https://vi.wikipedia.org/wiki/2010\" title=\"2010\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">2010</a>,&nbsp;<i>Ngàn mặt trời rực rỡ</i>&nbsp;được dịch sang&nbsp;<a href=\"https://vi.wikipedia.org/wiki/Ti%E1%BA%BFng_Vi%E1%BB%87t\" title=\"Tiếng Việt\" style=\"color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">tiếng Việt</a>.</p><div><br></div></div></div></div>                                       \r\n                                    ', 50, 100000, 522, '2021-11-10', 'Vietnamese', 2, 'image_181761.jpg', 11, 15, NULL, 0),
+(20, '10 vạn câu hỏi vì sao', 'sdjghsjfhsdjg', 0, 50000, 2000, '2021-11-26', 'Vietnamese', 1, 'Untitled Diagram-Use Case.drawio.png', 4, 14, 'discount20', 0);
 
 -- --------------------------------------------------------
 
@@ -368,11 +401,13 @@ INSERT INTO `publisher` (`id`, `name`, `detail`, `image`) VALUES
 --
 
 CREATE TABLE `rating` (
+  `id` int(11) NOT NULL,
+  `orderID` int(11) NOT NULL,
   `productID` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
   `rating` tinyint(4) NOT NULL,
   `comment` text NOT NULL,
-  `date` date NOT NULL
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -454,14 +489,6 @@ CREATE TABLE `sale_order` (
   `saleID` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `sale_order`
---
-
-INSERT INTO `sale_order` (`orderID`, `saleID`) VALUES
-(70, 'SN2021'),
-(72, 'SN2021');
-
 -- --------------------------------------------------------
 
 --
@@ -493,8 +520,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
-('minhphat', '$2y$10$lUt3jDUtcW6UZkIMBPM3POoO4CIT.pOAyuoDTu1O7JsPes5wamGbK', 'phanminhphat2001@gmail.com', '2021-11-06', 1, NULL),
-('minhphat123', '123', '324123', '2021-11-13', 1, NULL);
+('hello', 'hello', 'hello@gmail.com', '2021-11-20', 1, NULL),
+('minhphat', 'minhphat', 'ưdrfsdf', '2021-11-26', 1, NULL),
+('minhphat123', '123', '324123', '2021-11-13', 1, NULL),
+('phanminhphat', '$2y$10$r7c2fuHg5z0nIqQCv4IOdOkrspTcWx9YCJ2FadebbvF.U30XmQZpO', 'myphan2710@gmail.com', '2021-11-26', 1, NULL);
+
+--
+-- Triggers `user`
+--
+DELIMITER $$
+CREATE TRIGGER `addUser` AFTER INSERT ON `user` FOR EACH ROW INSERT INTO `cart` (`id`, `username`) VALUES (NULL, NEW.username)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -513,8 +550,7 @@ CREATE TABLE `userrole` (
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
 ('minhphat', 'admin'),
-('minhphat', 'customer'),
-('minhphat', 'staff.product');
+('phanminhphat', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -530,7 +566,7 @@ ALTER TABLE `author`
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`,`username`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
@@ -630,8 +666,10 @@ ALTER TABLE `publisher`
 -- Indexes for table `rating`
 --
 ALTER TABLE `rating`
-  ADD PRIMARY KEY (`productID`,`username`),
-  ADD KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `orderID` (`orderID`,`productID`),
+  ADD KEY `username` (`username`),
+  ADD KEY `productID` (`productID`);
 
 --
 -- Indexes for table `role`
@@ -688,31 +726,31 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `esrb`
@@ -724,13 +762,13 @@ ALTER TABLE `esrb`
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -742,13 +780,19 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `publisher`
 --
 ALTER TABLE `publisher`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `rating`
+--
+ALTER TABLE `rating`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -833,8 +877,9 @@ ALTER TABLE `product`
 -- Constraints for table `rating`
 --
 ALTER TABLE `rating`
-  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `orderdetail` (`orderID`),
+  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `orderdetail` (`productID`),
+  ADD CONSTRAINT `rating_ibfk_3` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `role_permission`

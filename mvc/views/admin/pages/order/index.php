@@ -428,7 +428,7 @@ $(document).ready(function () {
             });
 
         })
-    });
+});
     function openDetail(e){
         
         id=$(e).attr('data_id');

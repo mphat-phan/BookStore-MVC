@@ -112,7 +112,7 @@
   <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <script src="<?php echo constant('URL') ?>public/assets/js/main.js"></script>
-  <script src="<?php echo constant('URL') ?>public/assets/js/modal.js"></script>
+
   <!-- Select2 -->
   <script src="<?php echo constant('URL') ?>public/assets/plugins/select2/js/select2.full.min.js"></script>
   <!-- test -->  
