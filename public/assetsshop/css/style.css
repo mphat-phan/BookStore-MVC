@@ -4091,3 +4091,10 @@ input[type=number]::-webkit-outer-spin-button {
   height: 3rem;
   text-align: center;
 }
+
+.cart__close:hover{
+	background-color: darkgray;
+}
+.cart__close{
+	cursor: pointer;
+}

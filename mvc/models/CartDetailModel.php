@@ -29,7 +29,7 @@
             }
             public function delete($id){
                   $cartID = $_SESSION['cart'];
-                  $sql ="DELETE from `cartdetail` where `cartID` ='$cartID' and `productID` = '$id'";                                
+                  $sql ="DELETE from `cartdetail` where `cartID` ='$cartID' and `productID` = '$id'";                             
                   return $this->selectQuery($sql);
             }
 	}
