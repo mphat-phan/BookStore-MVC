@@ -701,7 +701,6 @@
     //tính tổng = số lượng * giá
     function keyupCalculate(element){
        
-
         var row = element.parentNode.parentNode.rowIndex; // trả về hàng của table
        
         var c0 = document.getElementById("ordertable").rows[row].cells.item(0);
