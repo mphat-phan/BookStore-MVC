@@ -1,6 +1,42 @@
 <?php
     $cart = $_SESSION['cart'];
 ?>
+<style>
+.cardcategory ol {
+    margin: 5px 30px;
+    counter-reset: item
+}
+.cardcategory li {
+  display: block;
+}
+.cardcategory li:before {
+  content: counters(item, ".") " ";
+  counter-increment:item;
+}
+
+.cardcategory ol li::before {
+    margin-right: 0.5rem;
+    background: #ff6f00;
+    color: white;
+    min-width:1.2em;
+    height: 1.2em;
+    border-radius:10%;
+    display: inline-grid;
+    place-items: center;
+    line-height: 1.2em;
+}
+.cardcategory ol ol li::before {
+    background: darkorchid;
+}
+.cardcategory ol ol ol li::before {
+    background:blue ;
+}
+.cardcategory ol ol ol ol li::before {
+    background:green ;
+}
+    
+
+</style>
 <section class="shop spad">
     <div class="container">
         <div class="row">
@@ -28,12 +64,10 @@
 
                                 <div id="collapseOne" class="collapse show" data-parent="#accordionExample">                                    
                                     <div class="card-body">
-                                        <div class="shop__sidebar__categories">
-                                            <form class="categorycheckbox cardcategory" data-name="category" id="check">
-                                                <div class="nice-scroll cardcategory" id="check">                                                    
-                                                </div>
-                                            </form>
-                                        </div>
+                                
+                                            <button type="button" onclick="" href="#" class="btn btn-success btn-sm mr-1"
+                                            role="button" data-toggle="modal" data-target="#CategoryModal">Show more</button>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -191,6 +225,31 @@
         </div>
     </div>
 </section>
+<div class="modal" id="CategoryModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Category</h3>
+                </div>
+                <div class="card-body cardcategory" id="checkboxes">
+
+                </div>
+                <div class="card-footer">
+                    <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const cardproduct = document.querySelector('.cardproduct');
@@ -248,21 +307,22 @@
             } else {
                 htmlchild = "";
             }
-            return `<ul> 
+            return `
                         <li>
-                            <input type="checkbox" name="${category.id}" id="${category.id}">
-                            <label for="${category.id}">${category.name}</label>` +
-                htmlchild +
-                `</li>
-                    </ul>`;
+                            <input class="listCheckbox" type="checkbox" name="${category.id}" id="${category.id}">
+                            <label class="whatever" for="${category.id}">${category.name}</label>` 
+                                +htmlchild +
+                                `
+                        </li>
+                    `;
         }).join('');
         htmlchild = "";
-        return html;
+        return `<ol>`+html+`</ol>`;
     }
 
     function cardCategory(arr) {
-        //console.log(buildCategoryTree(arr));
         const html = buildCategoryTree(arr);
+        console.log(html);
         cardcategory.innerHTML = html;
     }
 
@@ -601,7 +661,6 @@
         await loadpage(products, pagenum);
         showresults();
         await filter();
-        await hiddenSpinner();
     })();
     $(function () {
 
@@ -676,60 +735,54 @@
         //                 spinner.style.display = "none";
         //             })();
                              
-        //         }                    
-        //     }
-        // });
-
-        $('.categorycheckbox').change(function (e) {
-
+                }                    
+            }
+        });
+        $(document).on('change', '.listCheckbox', function (e) {
             var checked = $(this).prop("checked"),
-                container = $(this).parent(),
-                siblings = container.siblings();
+            container = $(this).parent(),
+            siblings = container.siblings();
 
-            container.find('.categorycheckbox').prop({
+            container.find('.listCheckbox').prop({
                 indeterminate: false,
                 checked: checked
-        });
-                
-        function checkSiblings(el) {
-
-            var parent = el.parent().parent(),
-                all = true;
-
-            el.siblings().each(function () {
-                let returnValue = all = ($(this).children('.categorycheckbox').prop("checked") ===checked);
-                return returnValue;
             });
 
-            if (all && checked) {
+            function checkSiblings(el) {
 
-                parent.children('.categorycheckbox').prop({
-                    indeterminate: false,
-                    checked: checked
+                var parent = el.parent().parent(),
+                    all = true;
+
+                el.siblings().each(function() {
+                let returnValue = all = ($(this).children('.listCheckbox').prop("") === checked);
+                return returnValue;
+                });
+                
+                if (all && checked) {
+
+                parent.children('.listCheckbox').prop({
+                    indeterminate: false
+                    //checked: checked
                 });
 
                 checkSiblings(parent);
 
-            } else if (all && !checked) {
+                } else {
 
-                parent.children('.categorycheckbox').prop("checked", checked);
-                parent.children('.categorycheckbox').prop("indeterminate", (parent.find(
-                    'input[type="checkbox"]:checked').length > 0));
-                checkSiblings(parent);
-
-            } else {
-
-                el.parents("li").children('.categorycheckbox').prop({
+                el.parents("li").children('.listCheckbox').prop({
                     indeterminate: true,
                     checked: false
                 });
 
+                }
+
             }
 
-        }
+            checkSiblings(container);  
 
-        checkSiblings(container);
         });
+
+    
     });
 </script>
 <script>

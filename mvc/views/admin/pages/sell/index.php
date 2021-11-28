@@ -243,7 +243,7 @@
 </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    var orderdetail = []   ;
+    var orderdetail = [];
     var selectProduct = document.getElementById('selectProduct'); // selectProduct 
     var productNumberRealtime; //biến lưu số lượng sản phẩm realtime sau 2s
     
@@ -701,7 +701,6 @@
     //tính tổng = số lượng * giá
     function keyupCalculate(element){
        
-
         var row = element.parentNode.parentNode.rowIndex; // trả về hàng của table
        
         var c0 = document.getElementById("ordertable").rows[row].cells.item(0);

@@ -31,12 +31,10 @@ class cartdetail extends Controller{
         echo 0;
     }
     function delete($id){
-        if(isset($_POST['checkDelete']) && $_POST['productID']){
-            
-            if($this->cartdetail->delete($id)==1){
-                echo 1;
-                return;
-            }
+      
+        if(isset($id) && $this->cartdetail->delete($id)==1){
+            echo 1;
+            return;
         }
         echo 0;
     }  
