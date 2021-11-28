@@ -296,7 +296,6 @@
             },1000);
         });
     }
-
     function buildCategoryTree(arr) {
         var categories = arr;
         var htmlchild = "";
@@ -735,9 +734,9 @@
         //                 spinner.style.display = "none";
         //             })();
                              
-                }                    
-            }
-        });
+        //         }                    
+        //     }
+        // });
         $(document).on('change', '.listCheckbox', function (e) {
             var checked = $(this).prop("checked"),
             container = $(this).parent(),

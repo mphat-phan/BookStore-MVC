@@ -19,6 +19,7 @@
                   return $this->selectOrderBy('*',$id,'productID','DESC');
             }
             public function add($data){
+                  
                   return $this->add_new_advanced($data);
             }
             public function updateByID($quantity,$id){
