@@ -3,7 +3,8 @@ class User extends Controller{
     
     function __construct(){
         $this->User = $this->model("UserModel");                
-        $this->UserRole = $this->model("UserRoleModel"); 
+        $this->UserRole = $this->model("UserRoleModel");
+        $this->Employee = $this->model("EmployeeModel"); 
         if($this->UserRole->checkRole("admin")!=1)
         {
             $this->page500();
@@ -64,7 +65,20 @@ class User extends Controller{
         }
         echo 0;
     }
-
+    function update($username) {
+        if(isset($_POST['checkResetPass']))
+        {            
+            $employee = json_decode($this->Employee->getUsername($username));
+            $birth = $employee->data[0]->birth;
+            $password = str_replace( '-', '', $birth );
+            $array = array('password' => password_hash($password, PASSWORD_BCRYPT));
+            if($this->User->update_by_stringID($array,$username)==1){
+                echo 1;
+                return;
+            }
+        }        
+        echo 1;
+    }
     function updateImage($username){
         
         if(isset($_FILES["txtImage"]["name"])){

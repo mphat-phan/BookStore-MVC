@@ -144,6 +144,32 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="AddCategoryModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Category</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formAddCategory" action="" method="post">
+                        
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Category Parent</label>
+                                <select class="form-control select2" name="selectRole[]" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" id="selectCategory" style="width: 100%;">                                                              
+                                </select>                         
+                            </div>                                               
+                            <!-- /.card-body -->                        
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="modal" id="UpdateModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -259,10 +285,12 @@
                             data + "'>" +
                             "Update" +
                             "</button>" +
-                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                            "<button onclick='openModal(this)' class='btn btn-danger btn-sm mr-1' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
                             data + "'>" +
                             "Delete" +
-                            "</button>"
+                            "</button>" +
+                            "</button>" +                            
+                            "<button type='button' onclick='openModal(this)' href='#' class='btn btn-primary btn-sm' role='button'data-toggle='modal' data-target='#AddCategoryModal' data_id='" + data + "'>Category</button>"
                         );
 
                     }
@@ -346,8 +374,72 @@
         $formUpdate = document.querySelector("#formUpdate");
         $formDelete = document.querySelector("#formDelete");
         $formAdd = document.querySelector("#formAdd");
+        $formAddCategory = document.querySelector("#formAddCategory");
+
         $formAdd.action =  $getCurrentUrl+"/add";
+        $formAddCategory.action =  $getCurrentUrl+"/updateParentID/"+id;
         $formUpdate.action = $getCurrentUrl+"/update/"+id;
         $formDelete.action = $getCurrentUrl+"/delete/"+id;
+
+        var selectCategory = document.getElementById('selectCategory');
+        var category;                         
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>category/getAll',
+                dataType: 'json',
+                success: function(data){                                        
+                    category = data['data'];                    
+                    Object.keys(category).forEach(key => {                                                                    
+                        selectCategory.options[key] = new Option(category[key].name, category[key].id)
+                    });                            
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php //echo constant('URL') ?>category/getByID/'+id,
+                        dataType: 'json',
+                        success: function(data){                                    
+                            var categorychild = data['data'];                                                        
+                            if(categorychild !== undefined)
+                            {
+                                Object.keys(category).forEach(key1 => {                                
+                                    Object.keys(categorychild).forEach(key2 => {                                    
+                                        if(categorychild[key2].parentID == category[key1].id)
+                                        {                                        
+                                            category[key1]['selected'] = 'selected';
+                                        }                                    
+                                    })
+                                    category['id'] = id;                                    
+                                });                                                                                        
+                                Object.keys(category).forEach(key => {                                
+                                    if(category[key]['selected'] == 'selected' && category['id'] == id)
+                                    {
+                                        selectCategory.options[key] = new Option(category[key].name, category[key].id,false,true);
+                                    }
+                                    else if(role['username'] == id)
+                                    {
+                                        selectCategory.options[key] = new Option(category[key].name, category[key].id,false,false);
+                                    }
+                                });                                                                                                
+                            }                                                        
+                        }                                                    
+                    });                    
+                }                
+            });                                      
+        $('#selectCategory').change(function(e) {            
+            var selected = $(e.target).val();
+            if(selected == '')
+            {
+                selected[0] = 'NULL';
+            }
+            //console.log(selected);            
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>category/updateParentID/'+id,
+                data: {selected:selected}, // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");
+                    categorytable.ajax.reload();
+                }
+            });
+        });
     }
 </script>

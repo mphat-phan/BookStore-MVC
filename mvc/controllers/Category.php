@@ -86,6 +86,47 @@ class Category extends Controller{
         }
         echo 0;
     }
+    function updateParentID($id){
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)        
+        {
+            echo 2;
+            return;
+        }        
+        $name = $_POST['selected'];        
+        $fag = 0;                  
+        if(isset($_POST['selected']) && !empty($_POST['selected']))
+        {                   
+            foreach($name as $value)
+            {   
+                if($value != 'NULL')                         
+                {
+                    $array = array('id' => $id, "parentID" => $value);
+                    if($this->category->updateByID($array,$id)==1)
+                    {
+                        $fag = 1;
+                    }
+                    else
+                    {
+                        $fag = 0;
+                    }                  
+                }
+                else
+                {
+                    $sql = "UPDATE `category` SET `parentID` = NULL WHERE `category`.`id` = $id";
+                    if($this->category->updateSql($sql))
+                    {
+                        $fag = 1;
+                    }                
+                }
+            }                        
+        }        
+        if($fag == 1)
+        {
+            echo 1;        
+            return;
+        }
+        echo 0;
+    }
     function addCategoryProduct($productID){
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
         {

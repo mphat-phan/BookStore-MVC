@@ -217,12 +217,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__pagination">
-                            <a class="active" href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <span>...</span>
-                            <a href="#">21</a>
-                        </div>
+                            <button type="button" class="btn btn-primary loadmore">Load More</button>
+                        </div>                         
                     </div>
                 </div>
             </div>
@@ -295,6 +291,7 @@
                 cardproduct.innerHTML = '';
                 //console.log(arrayload);
                 cardProduct(arrayload);
+                showresults();
                 resolve('resolved');
             },1000);
         });
@@ -411,12 +408,19 @@
             }
         }).join('');
         cardproduct.innerHTML += html;
-    }
-
+    }    
     function showresults() {
         var results = document.getElementById("amountproducts");
-        //results.innerHTML = 'Showing 1–3 of ' + Object.keys(arrayproducts.data).length + ' results';
-    }
+        if(pagenum >= Object.keys(arrayproducts.data).length)
+        {
+            results.innerHTML = 'Showing 1-'+ Object.keys(arrayproducts.data).length +' of ' + Object.keys(arrayproducts.data).length + ' results'; 
+            document.querySelector('.loadmore').style.display ="none";
+        }
+        else
+        {
+            results.innerHTML = 'Showing 1-'+ pagenum +' of ' + Object.keys(arrayproducts.data).length + ' results';
+        }
+    }    
     async function changeURL() {
         //var sort = '', category = '', price = '', language = '', esrb = '', publisher = '', sale = '';
         if (searchParams.has('sort')) {
@@ -465,7 +469,7 @@
         
         arrayfilter = arrayproducts;
         if (searchURL !== '') {
-            cardproduct.innerHTML = '';
+            //cardproduct.innerHTML = '';
             if (searchParams.has('sort')) {
 
                 arrayfilter = await sortarr(searchParams.get('sort'), arrayfilter);
@@ -700,22 +704,36 @@
                 changeURL();
             }
         });
-
-        $(window).scroll(function () {
-            if ($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
-                pagenum += 3;console.log(pagenum)
-                if(searchURL !== '')
-                {
+        $(document).on('click','.loadmore', function(e){
+            pagenum += 3;//console.log(pagenum)
+            if(searchURL !== '')
+            {
+                filter();
+            }            
+            else
+            {
+                (async () => {
+                    spinner.style.display = "block";
+                    await loadpage(arrayproducts,pagenum);       
+                    spinner.style.display = "none";
+                })();
+            }             
+        });        
+        // $(window).scroll(function () {
+        //     if ($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
+        //         pagenum += 3;//console.log(pagenum)
+        //         if(searchURL !== '')
+        //         {
                     
-                    filter();
-                }            
-                else
-                {
-                    (async () => {
-                        spinner.style.display = "block";
-                        await loadpage(arrayproducts,pagenum);       
-                        spinner.style.display = "none";
-                    })();
+        //             filter();
+        //         }            
+        //         else
+        //         {
+        //             (async () => {
+        //                 spinner.style.display = "block";
+        //                 await loadpage(arrayproducts,pagenum);       
+        //                 spinner.style.display = "none";
+        //             })();
                              
                 }                    
             }
