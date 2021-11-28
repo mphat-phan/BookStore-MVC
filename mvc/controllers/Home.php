@@ -4,6 +4,7 @@ class Home extends Controller{
     function __construct(){
         $this->Home = $this->model("UserModel");        
         $this->Customer = $this->model("CustomerModel"); 
+        $this->Employee = $this->model("EmployeeModel");
     }
     function index(){
         $this->view("layoutHome",array(
@@ -153,6 +154,26 @@ class Home extends Controller{
             }
         }
         echo 0;        
+    }
+    function getUser() {    
+        $fullname = '';
+        if(isset($_POST['username']))
+        {
+            $username = $_POST['username'];
+            $listcustomer = $this->Customer->getUsername($username);
+            $listemployee = $this->Employee->getUsername($username);
+            if(!empty($listcustomer))            
+            {                
+                $customer = json_decode($listcustomer);
+                $fullname = $customer->data[0]->name;
+            }
+            else
+            {
+                $employee = json_decode($listemployee);
+                $fullname = $employee->data[0]->name;
+            }            
+        }
+        echo $fullname;    
     }        
     function pages() {
         $this->view("pages/404");

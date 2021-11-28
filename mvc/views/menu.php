@@ -1,3 +1,13 @@
+<?php
+    if(isset($_SESSION['username']))
+    {
+        $username = $_SESSION['username'];
+    }
+    else
+    {
+        $username = '';
+    }
+?>
 <!-- Navigation -->
 <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top " aria-label="Main navigation">
         <div class="container">
@@ -46,9 +56,35 @@
                     </li>
                 </ul>
                 <span class="nav-item">
-                    <a class="btn-outline-sm" href="log-in.html">Log in</a>
+                    <a class="btn-outline-sm" href="#" id="hidden-username"><span><i class="fas fa-user"></i> <span id="username"></span></span></a>
+                    <a class="btn-outline-sm" href="<?php echo constant('URL')?>home/login" id="hidden-login">Log in</a>
+                    <a class="btn-outline-sm" href="<?php echo constant('URL')?>home/logout" id="hidden-logout">Log out</a>
                 </span>
             </div> <!-- end of navbar-collapse -->
         </div> <!-- end of container -->
     </nav> <!-- end of navbar -->
     <!-- end of navigation -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function (){
+        var username = '<?php echo $username ?>';        
+        if(username != '')
+        {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL')?>home/getUser',
+                data: {username:username},
+                success: function(data)
+                {                                            
+                    document.getElementById("username").innerHTML = data;
+                    document.getElementById("hidden-login").style.display = "none";                        
+                }
+            });
+        }
+        else
+        {        
+            document.getElementById("hidden-username").style.display = "none";
+            document.getElementById("hidden-logout").style.display = "none";
+        }
+    })
+</script>
