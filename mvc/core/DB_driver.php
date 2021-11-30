@@ -104,7 +104,6 @@ class DB_driver
         $this->connect();
          
         $result = mysqli_query($this->__conn, $sql);
- 
         if (!$result){
             die ('Câu truy vấn bị sai');
         }

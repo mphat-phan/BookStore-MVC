@@ -400,7 +400,7 @@
                             <h7>${product.name}</h7>
                         </figcaption>` +
                     pricehtml +
-                    `<a href="#" class="add-to-cart">
+                    `<a class="add-to-cart" data_id="${product.id}">
                             Add to Cart<i class="ion-android-checkbox-outline"></i></a>
                     </figure> 
                 `;
@@ -662,7 +662,29 @@
         await filter();
     })();
     $(function () {
-
+        $(document).on('click', '.add-to-cart', function (e) {
+            e.preventDefault();
+            id=$(e.target).attr('data_id');
+            
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>cartdetail/add',
+                data:{
+                    "productID" : id,
+                    "quantity" : 1
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data==1){
+                       sweetAlertCRUD(data, "Thêm vào giỏ hàng thành công"); 
+                    }
+                    else{
+                        sweetAlertCRUD(data, "Hết hàng"); 
+                    }
+                    
+                }
+            });
+        })
         $(document).on('change', '#selectSort', function (e) {
             var selected = $(e.target).val();
             if (searchParams.has('sort') || !searchParams.has('sort')) {

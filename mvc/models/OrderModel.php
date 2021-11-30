@@ -34,7 +34,6 @@
             }
             public function delete($id){
                   return $this->delete_by_id($id);
-
             }
             public function selectLast(){
                   $sql = "SELECT Max(id) as id FROM ordertb";

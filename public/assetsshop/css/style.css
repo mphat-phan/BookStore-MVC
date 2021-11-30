@@ -2354,6 +2354,7 @@ ol {
 .cart__total {
 	background: #f3f2ee;
 	padding: 35px 40px 40px;
+	min-height: 299.5px;
 }
 
 .cart__total h6 {
@@ -4007,6 +4008,7 @@ input[type=range]::-webkit-slider-thumb {
 	font-weight: 500;
 	line-height: 48px;
 	letter-spacing: 1px;
+	cursor: pointer;
 }
 
 .snip1396 .price {
@@ -4055,12 +4057,33 @@ input[type=range]::-webkit-slider-thumb {
 #checkboxes input[type=checkbox]{
     display: none;
 }
+
 label:not(.form-check-label):not(.custom-file-label){
 	font-weight: lighter!important;
 }
 
 #checkboxes input[type=checkbox]:checked + .whatever{
     font-weight: bold!important;
+}
+
+.checkRadioBox{
+	background-color: #0173b2;
+}
+
+.checkRadio > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.labl{
+    cursor:pointer;
+    border:2px solid transparent;
+}
+.checkRadio>input:checked+span::before{ /* (RADIO CHECKED) DIV STYLES */
+	content:"Đã chọn";
+    visibility: visible;
+	border-radius: 30%;
+	color: #000000;
+	font-weight: bold;
 }
 
 
