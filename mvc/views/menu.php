@@ -36,7 +36,7 @@
                         <a class="nav-link" href="<?php echo constant('URL') ?>cart">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo constant('URL') ?>">Me</a>
+                        <a class="nav-link" href="<?php echo constant('URL') ?>profile">Me</a>
                     </li>
                 
                     <li class="nav-item dropdown">
@@ -56,9 +56,9 @@
                     </li>
                 </ul>
                 <span class="nav-item">
-                    <a class="btn-outline-sm" href="#" id="hidden-username"><span><i class="fas fa-user"></i> <span id="username"></span></span></a>
+                    <a class="btn-outline-sm d-none" href="#" id="hidden-username"><span><i class="fas fa-user"></i> <span id="username"></span></span></a>
                     <a class="btn-outline-sm" href="<?php echo constant('URL')?>home/login" id="hidden-login">Log in</a>
-                    <a class="btn-outline-sm" href="<?php echo constant('URL')?>home/logout" id="hidden-logout">Log out</a>
+                    <a class="btn-outline-sm d-none" href="<?php echo constant('URL')?>home/logout" id="hidden-logout">Log out</a>
                 </span>
             </div> <!-- end of navbar-collapse -->
         </div> <!-- end of container -->
@@ -75,16 +75,14 @@
                 url: '<?php echo constant('URL')?>home/getUser',
                 data: {username:username},
                 success: function(data)
-                {                                            
-                    document.getElementById("username").innerHTML = data;
+                {                       
+                    var arr = JSON.parse(data);                    
+                    document.getElementById("username").innerHTML = arr.data[0].name;
+                    $("#hidden-username").even().removeClass( "d-none" );
+                    $("#hidden-logout").even().removeClass( "d-none" );
                     document.getElementById("hidden-login").style.display = "none";                        
                 }
             });
-        }
-        else
-        {        
-            document.getElementById("hidden-username").style.display = "none";
-            document.getElementById("hidden-logout").style.display = "none";
-        }
+        }        
     })
 </script>

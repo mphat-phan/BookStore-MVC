@@ -3,12 +3,10 @@
     <div class="card card-widget widget-user">
         <!-- Add the bg color to the header using any of the bg-* classes -->
         <div class="widget-user-header bg-info">
-            <h3 class="widget-user-username">Alexander Pierce</h3>
-            <h5 class="widget-user-desc">Founder & CEO</h5>
+            <h3 class="widget-user-username"><span id="showusername"></span></h3>
+            <h6 class="widget-user-desc">Welcome To Our Shop</h6>
         </div>
-        <div class="widget-user-image">
-            <img class="img-circle elevation-2"
-                src="<?php echo constant('URL') ?>public/assets/dist/img/user1-128x128.jpg" alt="User Avatar">
+        <div class="widget-user-image" id="showavatar">            
         </div>
         <div class="card-footer">
             <div class="row ">
@@ -273,7 +271,7 @@
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        var order =function () {
+        var order = function () {
             var tmp = null;
             $.ajax({
                 url: '<?php echo constant('URL') ?>order/getbyuser',
@@ -402,7 +400,20 @@
 
         })
 
-
+        var username = '<?php echo $username ?>';        
+        if(username != '')
+        {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL')?>home/getUser',
+                data: {username:username},
+                success: function(data)
+                {                                            
+                    document.getElementById("showusername").innerHTML = JSON.parse(data).data[0].name; 
+                    document.getElementById("showavatar").innerHTML =  '<img class="img-circle elevation-2" src="<?php echo constant('URL') ?>public/assets/dist/img/'+ JSON.parse(data).data[0].image +'" alt="User Avatar">';                   
+                }
+            });
+        }
     })
 
     function openDetail(e) {
@@ -482,4 +493,6 @@
         $formDelete.action = $getCurrentUrl + "/delete/" + id;
         $formUpdate.action = $getCurrentUrl + "/update/" + id;
     }
+
+
 </script>

@@ -6,16 +6,28 @@ class cart extends Controller{
         $this->cart = $this->model("CartModel");
     }
     function index(){
+        if(!isset($_SESSION['username']))
+        {
+            header("Location: home/login");
+        }
         $this->view("layoutHome",array(
             "Page" => "cart"
         ));
     }
     function checkout(){
+        if(!isset($_SESSION['username']))
+        {
+            header("Location: ../home/login");
+        }
         $this->view("layoutHome",array(
             "Page" => "checkout"
         ));
     }
     function history(){
+        if(!isset($_SESSION['username']))
+        {
+            header("Location: ../home/login");
+        }
         $this->view("layoutHome",array(
             "Page" => "carthistory"
         ));
