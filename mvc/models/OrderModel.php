@@ -24,7 +24,7 @@
             {   
                   $this->_key = 'customer_username';
                   $user = $_SESSION['username'];
-                  return $this->select_by_id('*',$user);
+                  return $this->select_by_stringID('*',$user);
             }
             public function add($data){
                   return $this->add_new($data);

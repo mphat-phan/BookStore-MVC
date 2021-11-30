@@ -5,12 +5,16 @@ class Admin extends Controller{
         $this->Admin = $this->model("UserModel");        
         $this->Employee = $this->model("EmployeeModel"); 
     }
-    function index(){
+    function index(){        
         $this->view("layoutHome",array(
             "Page" => "index"
         ));
     }
-    function Login(){        
+    function Login(){
+        if(isset($_SESSION['username']))
+        {
+            header("Location: ../Dashboard");
+        }                
         $this->view("admin/layout2",array(
             "Page" => "login/login"
         ));

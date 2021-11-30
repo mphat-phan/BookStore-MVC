@@ -5,18 +5,27 @@ class Home extends Controller{
         $this->Home = $this->model("UserModel");        
         $this->Customer = $this->model("CustomerModel"); 
         $this->Employee = $this->model("EmployeeModel");
+        $this->User = $this->model("UserModel");
     }
     function index(){
         $this->view("layoutHome",array(
             "Page" => "home"
         ));
     }
-    function Login(){        
+    function Login(){
+        if(isset($_SESSION['username']))
+        {
+            header("Location: ./index");
+        }        
         $this->view("layoutHome",array(
             "Page" => "login"
         ));
     }
     function Register(){        
+        if(isset($_SESSION['username']))
+        {
+            header("Location: ./index");
+        }
         $this->view("layoutHome",array(
             "Page" => "signup"
         ));
@@ -155,25 +164,19 @@ class Home extends Controller{
         }
         echo 0;        
     }
-    function getUser() {    
-        $fullname = '';
+    function getUser() {            
         if(isset($_POST['username']))
         {
-            $username = $_POST['username'];
-            $listcustomer = $this->Customer->getUsername($username);
-            $listemployee = $this->Employee->getUsername($username);
-            if(!empty($listcustomer))            
-            {                
-                $customer = json_decode($listcustomer);
-                $fullname = $customer->data[0]->name;
+            $username = $_POST['username'];            
+            if(count(json_decode($this->User->getInfo('customer',$username))->data)==1)
+            {   
+                echo $this->User->getInfo('customer',$username);
             }
-            else
+            else if (count(json_decode($this->User->getInfo('employee',$username))->data)==1)
             {
-                $employee = json_decode($listemployee);
-                $fullname = $employee->data[0]->name;
-            }            
-        }
-        echo $fullname;    
+                echo $this->User->getInfo('employee',$username);
+            }
+        }         
     }        
     function pages() {
         $this->view("pages/404");

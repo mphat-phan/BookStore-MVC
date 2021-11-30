@@ -5,7 +5,11 @@ class profile extends Controller{
                                                                       
     }
 
-    function index(){       
+    function index(){
+        if(!isset($_SESSION['username']))
+        {
+            header("Location: Home/login");
+        }       
         $this->view("layoutHome",array(
 			"Page" => "profile"       
 		));        
