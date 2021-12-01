@@ -3,7 +3,8 @@ class Sale extends Controller{
     
     function __construct(){
         $this->sale = $this->model("SaleModel");
-        $this->UserRole = $this->model("UserRoleModel");                                 
+        $this->UserRole = $this->model("UserRoleModel");     
+        $this->SaleUser = $this->model("SaleUserModel");                           
     }
 
     function index(){
@@ -16,6 +17,7 @@ class Sale extends Controller{
 			"Page" => "sale"    
 		));        
     }
+    //Sale
     function getAll(){
         $list = $this->sale->getAll();
         echo $list;
@@ -24,6 +26,23 @@ class Sale extends Controller{
         $list = $this->sale->getID($id);
         echo $list;
     } 
+    function getSaleByType($id){
+        $list = $this->sale->getType($id);
+        echo $list;
+    }
+    //Sale User
+    function getSaleUserByType($id){
+        $list = $this->SaleUser->getType($id);
+        echo $list;
+    }
+    function getSaleUser(){
+        $list = $this->SaleUser->getAll();
+        echo $list;
+    }
+    function getSaleUserByID($id){
+        $list = $this->SaleUser->getID($id);
+        echo $list;
+    }
     function add(){
         
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","add")!=1)        
@@ -51,7 +70,6 @@ class Sale extends Controller{
         echo 0;
 
     }
-
     function update($id){
  
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.product","update")!=1)

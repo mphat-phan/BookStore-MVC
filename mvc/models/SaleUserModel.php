@@ -1,5 +1,5 @@
 <?php	
-	class SaleOrderModel extends DB_business
+	class SaleUserModel extends DB_business
 	{
             function __construct() 
             {
@@ -19,6 +19,12 @@
             public function getID($id)
             {
                   return $this->select_by_stringID('*',$id);
+            }
+            public function getType($id){
+                  $username = $_SESSION['username'];
+                  $sql ="select * from `sale_user`,`sale` where sale_user.saleID = sale.id and sale_user.username = '$username' and sale.type = '$id'";   
+                  
+                  return $this->selectQueryJson($sql);
             }
             public function add($data){
                   return $this->add_new($data);

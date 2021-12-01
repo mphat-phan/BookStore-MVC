@@ -1661,6 +1661,16 @@ a:hover {
 	z-index: 1000;
 }
 
+.spinnerCart {
+	-webkit-animation: rotation 1.35s linear infinite;
+	animation: rotation 1.35s linear infinite;
+	stroke: #272556;
+	position: absolute;
+	left: 39%;
+	top: 58%;
+	z-index: 1000;
+	display: none;
+}
 @-webkit-keyframes rotation {
 	0% {
 		-webkit-transform: rotate(0deg);

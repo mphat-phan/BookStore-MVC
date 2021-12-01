@@ -20,6 +20,10 @@
             {   
                   return $this->select_by_stringID('*',$id);
             }
+            public function getType($id){
+                  $sql ="select * from `sale` where sale.type = '$id'";   
+                  return $this->selectQueryJson($sql);
+            }
             public function add($data){
                   return $this->add_new($data);
             }
