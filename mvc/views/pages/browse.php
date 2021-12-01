@@ -1,6 +1,3 @@
-<?php
-    $cart = $_SESSION['cart'];
-?>
 <style>
 .cardcategory ol {
     margin: 5px 30px;
@@ -44,7 +41,7 @@
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <div class="input-group">
-                            <input type="text" class="form-control" value="<?php echo $cart ?>"
+                            <input type="text" class="form-control" value=""
                                 placeholder="Search this blog">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -233,12 +230,14 @@
                 <div class="card-header">
                     <h3 class="card-title">Category</h3>
                 </div>
-                <div class="card-body cardcategory" id="checkboxes">
+                <form class="formcategory" data-name="category">
+                    <div class="card-body cardcategory" id="checkboxes">
 
-                </div>
-                <div class="card-footer">
-                    <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Filter</button>
-                </div>
+                    </div>
+                    <div class="card-footer">
+                        <button id='addbtn' name="submit" type="button" class="btn btn-primary">Filter</button>
+                    </div>
+                </form>
             </div>
             
 
@@ -321,7 +320,7 @@
 
     function cardCategory(arr) {
         const html = buildCategoryTree(arr);
-        console.log(html);
+        //console.log(html);
         cardcategory.innerHTML = html;
     }
 
@@ -532,6 +531,26 @@
         });
 
     }
+    async function categoryfilter(selected, arrayproducts) {
+        return new Promise(resolve => {
+            setTimeout(function () {
+                var arr = selected.split('_');
+                var array = [];
+                var i = 0;
+                arrayproducts.data.forEach(element => {
+                    arr.forEach(key => {
+                        if (element.saleID.id === key) {
+                            array[i++] = element;
+                        }
+                    });
+                })
+                //console.log(array);                              
+                filterarr.data = array;
+                resolve(filterarr);
+            });
+        });
+
+    }
     async function pricefilter(value, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
@@ -690,6 +709,7 @@
             var arr = $(this).serializeArray();
             var value;
             var name = $(this).attr("data-name");
+            console.log(arr);
             if (arr != '') {
                 arr.forEach(element => {
                     value += '_' + element.value;
@@ -704,7 +724,7 @@
             }
         });
         $(document).on('click','.loadmore', function(e){
-            pagenum += 3;//console.log(pagenum)
+            pagenum += 12;//console.log(pagenum)
             if(searchURL !== '')
             {
                 filter();
@@ -717,6 +737,25 @@
                     spinner.style.display = "none";
                 })();
             }             
+        });
+        $(document).on('click','#addbtn', function () {
+            var selected = $(".formcategory").serializeArray();            
+            var value = '';
+            var name = $(".formcategory").attr("data-name");                        
+            if(selected != '') {
+                selected.forEach(element => {
+                    value += '_' + element.name;                
+                });
+                if (searchParams.has(name) || !searchParams.has(name)) {
+                    searchParams.set(name, value.replace('_', ''));
+                    changeURL();
+                }                        
+            }
+            else
+            {
+                searchParams.delete(name);
+                changeURL();
+            }                                       
         });        
         // $(window).scroll(function () {
         //     if ($(window).scrollTop() > $(".shop").outerHeight() - $(window).height()) {
@@ -740,20 +779,18 @@
         $(document).on('change', '.listCheckbox', function (e) {
             var checked = $(this).prop("checked"),
             container = $(this).parent(),
-            siblings = container.siblings();
-
+            siblings = container.siblings();            
             container.find('.listCheckbox').prop({
                 indeterminate: false,
                 checked: checked
-            });
+            });            
 
             function checkSiblings(el) {
 
                 var parent = el.parent().parent(),
-                    all = true;
-
+                    all = true;            
                 el.siblings().each(function() {
-                let returnValue = all = ($(this).children('.listCheckbox').prop("") === checked);
+                let returnValue = all = ($(this).children('.listCheckbox').prop("") === checked);            
                 return returnValue;
                 });
                 
@@ -780,7 +817,6 @@
             checkSiblings(container);  
 
         });
-
     
     });
 </script>

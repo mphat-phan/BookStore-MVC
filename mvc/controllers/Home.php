@@ -168,15 +168,15 @@ class Home extends Controller{
         if(isset($_POST['username']))
         {
             $username = $_POST['username'];            
-            if(count(json_decode($this->User->getInfo('customer',$username))->data)==1)
+            if($this->User->getInfo('customer',$username))
             {   
                 echo $this->User->getInfo('customer',$username);
             }
-            else if (count(json_decode($this->User->getInfo('employee',$username))->data)==1)
+            else if ($this->User->getInfo('employee',$username))
             {
                 echo $this->User->getInfo('employee',$username);
             }
-        }         
+        }              
     }        
     function pages() {
         $this->view("pages/404");

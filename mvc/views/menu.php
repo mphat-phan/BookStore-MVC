@@ -67,7 +67,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function (){
-        var username = '<?php echo $username ?>';        
+        var username = '<?php echo $username ?>';
+        console.log(username);
         if(username != '')
         {
             $.ajax({
@@ -75,8 +76,10 @@
                 url: '<?php echo constant('URL')?>home/getUser',
                 data: {username:username},
                 success: function(data)
-                {                       
-                    var arr = JSON.parse(data);                    
+                {                    
+                    console.log(data);
+                    var arr = JSON.parse(data);
+                    console.log(arr);
                     document.getElementById("username").innerHTML = arr.data[0].name;
                     $("#hidden-username").even().removeClass( "d-none" );
                     $("#hidden-logout").even().removeClass( "d-none" );

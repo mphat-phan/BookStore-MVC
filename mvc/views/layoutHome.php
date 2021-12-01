@@ -69,6 +69,7 @@
   <?php require dirname(__FILE__) .'\menu.php'?>
   <!-- Header -->
   <?php require dirname(__FILE__) .'\pages\\'.$data['Page'].'.php'?>
+  
   <?php require dirname(__FILE__) .'\footer.php'?>
 
   <!-- Scripts -->
