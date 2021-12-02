@@ -31,6 +31,10 @@
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
             }
+            public function updateByUsername($data, $username) {
+                  $this->_key = 'username';
+                  return $this->update_by_stringID($data, $username);
+            }
             public function delete($id){
                   return $this->delete_by_id($id);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Nov 27, 2021 at 09:16 AM
+-- Generation Time: Dec 01, 2021 at 07:30 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -42,7 +42,8 @@ INSERT INTO `author` (`id`, `name`, `detail`, `image`) VALUES
 (3, 'Tô Hoài', 'Chi tiết', 'tacgiatohoai.jpg'),
 (4, 'Hồ Anh Thái', 'Chi tiết', 'tacgiahoanhthai.jpg'),
 (5, 'Kishimoto Masashi', 'Chi tiết', 'tacgiakishimoto.jpg'),
-(6, 'Gotōge Koyoharu', 'Chi tiết', 'tacgiakoyoharu.jpg');
+(6, 'Gotōge Koyoharu', 'Chi tiết', 'tacgiakoyoharu.jpg'),
+(25, 'Hans Christian Andersen', '                                       \r\n                                    ', 'tacgiaHansChristianAndersen.jpg');
 
 -- --------------------------------------------------------
 
@@ -138,7 +139,10 @@ CREATE TABLE `category_product` (
 --
 
 INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
-(1, 17);
+(7, 41),
+(25, 42),
+(26, 43),
+(26, 44);
 
 -- --------------------------------------------------------
 
@@ -161,7 +165,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `address`, `birth`, `username`) VALUES
-(16, 'Nguyễn Văn A', '0123456789', 'khachhang@gmai.com', '', NULL, 'khachhang');
+(16, 'Nguyễn Văn A', '0123456789', 'khachhang@gmai.com', '', NULL, 'khachhang'),
+(24, 'Đoàn Chí Quang', '0909112233', 'chiquang12312@gmail.com', '213123', '2021-11-01', 'nguyenvana');
 
 -- --------------------------------------------------------
 
@@ -255,13 +260,6 @@ CREATE TABLE `orderdetail` (
   `discount` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `orderdetail`
---
-
-INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtotal`, `discount`) VALUES
-(74, 17, 1, 50000, 50000, 50);
-
 -- --------------------------------------------------------
 
 --
@@ -288,7 +286,10 @@ CREATE TABLE `ordertb` (
 --
 
 INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
-(74, '2021-11-22', 25000, 0, 0, 25000, 'admin', NULL, NULL, 4, 25000, 0);
+(74, '2021-11-22', 25000, 0, 0, 25000, 'admin', NULL, NULL, 4, 25000, 0),
+(75, '2021-11-29', 123, 12, 0, 135, NULL, 'khachhang', 16, 1, 135, 0),
+(76, '2021-11-28', 123, 10, 0, 133, NULL, 'nguyenvana', 24, 0, 123, 0),
+(77, '2021-11-30', 2525000, 0, 0, 2525000, 'admin', NULL, NULL, 4, 2525000, 0);
 
 -- --------------------------------------------------------
 
@@ -338,27 +339,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
-(17, 'a - 10 vạn câu hỏi vì sao', 'Haha', 100, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(18, 'c -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(19, 'b -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(20, 'd -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(21, 'e -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(22, 'f - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(23, 'g -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(24, 'h -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(25, 'i -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(26, 'j -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(27, 'a - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(28, 'c -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(29, 'b -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(30, 'd -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(31, 'e -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(32, 'f - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(33, 'g -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(34, 'h -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(35, 'i -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(36, 'j -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(38, 'Đoàn Chí Quang', '                                       \r\n                                    ', 0, 123, 12313, '2021-11-27', 'Viedsdaa', 1, '', 3, 14, 'discount20', 0);
+(41, 'Naruto', '', 100, 12000, 100, '2021-11-30', 'Vietnamese', 2, 'naruto.jpg', 5, 15, 'discount20', 1),
+(42, 'Bạch Tuyết và Bảy Chú Lùn', '                                       \r\n                                    ', 100, 20000, 23, '2021-11-30', 'Vietnamese', 1, 'bachtuyetva7chulun.jpg', 3, 15, 'discount20', 1),
+(43, 'Cô Bé Bán Diêm', '                                       \r\n                                    ', 100, 17000, 23, '2021-11-30', 'Vietnamese', 1, 'cobebandiem.jpg', 25, 15, 'discount20', 1),
+(44, 'Những Giấc Mơ Xanh', '                                       \r\n                                    ', 100, 30000, 45, '2021-12-01', 'Vietnamese', 1, 'nhunggiacmoxanh.jpg', 3, 14, 'discount20', 1);
 
 -- --------------------------------------------------------
 
@@ -378,8 +362,8 @@ CREATE TABLE `publisher` (
 --
 
 INSERT INTO `publisher` (`id`, `name`, `detail`, `image`) VALUES
-(14, 'NXB Hà Nội', '214234', NULL),
-(15, 'NXB TH HCM', 'Chi tiết lịch sử', NULL);
+(14, 'NXB Hà Nội', 'Address', NULL),
+(15, 'NXB TH HCM', 'Address', NULL);
 
 -- --------------------------------------------------------
 
@@ -543,9 +527,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
-('admin', '$2y$10$GzNaFKxX8r8aMiF4LtjSIOVtviFN47NANXxKvQ8up5ZASxpvKoRbq', 'dzeamtechie@gmail.com', '2021-11-14', 1, NULL),
+('admin', '$2y$10$xBD7vwPfFFKoawf40GAgje1FdsAW.81QnDd1nzTS5xgQZCcg3okXm', 'dzeamtechie@gmail.com', '2021-11-14', 1, NULL),
 ('chiquang', '$2y$10$o8FRAijSWv3lCYmGDyEkWeG.GGkx692Ab2uapvvwyAEqMIX3Y2xFO', 'chiquang127@gmail.com', '2021-11-14', 1, NULL),
-('khachhang', '$2y$10$fEaOkSRDcCvBgp9qB9jUFO5NKKBcXemXh/2IGjaltDTeKrE73lx5S', 'khachhang@gmai.com', '2021-11-21', 1, NULL),
+('khachhang', '$2y$10$fEaOkSRDcCvBgp9qB9jUFO5NKKBcXemXh/2IGjaltDTeKrE73lx5S', 'khachhang@gmai.com', '2021-11-21', 1, 'user1-128x128.jpg'),
 ('minhphat', '$2y$10$fBBYoXiIIyyDVKEJUQ/Y5ef3HF/Kp1TMSx.kfymymRP1uAN6csbdW', 'phanminhphat2001@gmail.com', '2021-11-14', 0, NULL),
 ('nguyenvana', '$2y$10$/9v0INkZnTFomnoblHPpqu2ye3Ih0CTHJzcSTsGwL.AxsZFm8mPpu', 'nguyenvana@gmail.com', '2021-11-25', 0, NULL);
 
@@ -741,7 +725,7 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -759,7 +743,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -783,19 +767,19 @@ ALTER TABLE `import`
 -- AUTO_INCREMENT for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `publisher`

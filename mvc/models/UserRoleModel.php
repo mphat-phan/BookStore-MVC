@@ -36,7 +36,7 @@
             public function checkRole($role){
                   if(!isset($_SESSION['username']))
                   {
-                        header("Location: Admin/Login");
+                        header("Location: ".constant('URL')."Admin/Login");
                   }
                   else
                   {

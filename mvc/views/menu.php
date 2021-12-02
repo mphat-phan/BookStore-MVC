@@ -75,7 +75,7 @@
                 url: '<?php echo constant('URL')?>home/getUser',
                 data: {username:username},
                 success: function(data)
-                {                       
+                {                                        
                     var arr = JSON.parse(data);                    
                     document.getElementById("username").innerHTML = arr.data[0].name;
                     $("#hidden-username").even().removeClass( "d-none" );

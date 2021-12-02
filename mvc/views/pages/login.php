@@ -32,7 +32,7 @@
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="mb-4 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" checked required>
                             <label class="form-check-label" for="exampleCheck1">I agree with the site's stated <a
                                     href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms &
                                     Conditions</a></label>

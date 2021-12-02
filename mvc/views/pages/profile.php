@@ -12,7 +12,7 @@
             <div class="row ">
                 <ul class="nav nav-tabs">
                     <li class="nav-item col-sm-2">
-                        <a class="nav-link active" data-toggle="tab" href="#confirm">
+                        <a class="nav-link tabclick active" data-toggle="tab" data-name="confirm" href="#confirm">
                             <div class="description-block">
                                 <h5 class="description-header">3,200</h5>
                                 <span class="description-text">Chờ xác nhận</span>
@@ -20,7 +20,7 @@
                         </a>
                     </li>
                     <li class="nav-item col-sm-2">
-                        <a class="nav-link" data-toggle="tab" href="#shipping">
+                        <a class="nav-link tabclick" data-toggle="tab" data-name="waiting" href="#waiting">
                             <div class="description-block">
                                 <h5 class="description-header">3,200</h5>
                                 <span class="description-text">Đang giao</span>
@@ -28,7 +28,7 @@
                         </a>
                     </li>
                     <li class="nav-item col-sm-2">
-                        <a class="nav-link" data-toggle="tab" href="#rating">
+                        <a class="nav-link tabclick" data-toggle="tab" href="#rating">
                             <div class="description-block">
                                 <h5 class="description-header">3,200</h5>
                                 <span class="description-text">Đánh giá</span>
@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li class="nav-item col-sm-2">
-                        <a class="nav-link" data-toggle="tab" href="#history">
+                        <a class="nav-link tabclick" data-toggle="tab" href="#allorder">
                             <div class="description-block">
                                 <h5 class="description-header">3,200</h5>
                                 <span class="description-text">Lịch sử đơn hàng</span>
@@ -58,7 +58,39 @@
     </div>
     <div class="tab-content">
         <div id="confirm" class=" tab-pane active"><br>
-            <table id="ordertable" class="table table-striped dt-responsive nowrap display">
+            <table id="ordertableconfirm" class="table table-striped dt-responsive nowrap display">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Date</th>
+                        <th>SubTotal</th>
+                        <th>Shipping fee</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>#</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>id</th>
+                        <th>Date</th>
+                        <th>SubTotal</th>
+                        <th>Shipping fee</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>#</th>
+                        <th>Detail</th>
+                    </tr>
+
+                </tfoot>
+            </table>
+        </div>    
+        <div id="waiting" class=" tab-pane fade"><br>
+            <table id="ordertablewaiting" class="table table-striped dt-responsive nowrap display">
                 <thead>
                     <tr>
                         <th>id</th>
@@ -90,31 +122,46 @@
 
             </table>
         </div>
-        <div id="shipping" class=" tab-pane fade"><br>
-            <table id="shippingTable">
+        <div id="rating" class=" tab-pane fade"><br>
+            <p>Rating</p>
+        </div>
+        <div id="allorder" class=" tab-pane fade"><br>
+            <table id="ordertable" class="table table-striped dt-responsive nowrap display">
                 <thead>
-                    <tr>Hello</tr>
-                    <tr>Hello</tr>
-                    <tr>Hello</tr>
+                    <tr>
+                        <th>id</th>
+                        <th>Date</th>
+                        <th>SubTotal</th>
+                        <th>Shipping fee</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>#</th>
+                        <th>Detail</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr>Hello</tr>
-                    <tr>Hello</tr>
-                    <tr>Hello</tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="rating" class=" tab-pane fade"><br>
-            <h3>Menu 2</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                rem aperiam.</p>
-        </div>
-        <div id="history" class=" tab-pane fade"><br>
-            <table id="historyTable">
 
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>id</th>
+                        <th>Date</th>
+                        <th>SubTotal</th>
+                        <th>Shipping fee</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>#</th>
+                        <th>Detail</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
-    </div>
+        <div id="setting" class="tab-pane fade">
+            
+        </div>
+    </div>    
 </div>
 <div class="modal" id="DeleteModal">
     <div class="modal-dialog">
@@ -285,85 +332,383 @@
             });
             return tmp;
 	    };
-        ordertable = $('#ordertable').DataTable({
-            "scrollY": "500px",
-            "scrollCollapse": true,
-            "ajax": function (d, cb) {
-                // fetch('<?php echo constant('URL') ?>order/getbyuser')
-                //     .then(response => response.json())
-                //     .then(data => cb(data));
-                var data = null;
-                $.ajax({
-                    url: '<?php echo constant('URL') ?>order/getbyuser',
-                    type: 'post',
-                    async: false,
-                    global: false,
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log(data);
-                        cb(data) = data;
-                        
-                    }
-                });
-            },
-            "columns": [{
-                    "data": "id"
+        order = $('#ordertable').DataTable({
+                "scrollY": "500px",
+                "scrollCollapse": true,
+                "ajax": function (d, cb) {
+                    // fetch('<?php //echo constant('URL') ?>order/getbyuser')
+                    //     .then(response => response.json())
+                    //     .then(data => cb(data));
+                    var data = null;
+                    $.ajax({
+                        url: '<?php echo constant('URL') ?>order/getbyuser',
+                        type: 'post',
+                        async: false,
+                        global: false,
+                        dataType: 'json',
+                        success: function(data) {
+                            //console.log(data);
+                            cb(data) = data;                        
+                        }
+                    });
                 },
-                {
-                    "data": "date"
-                },
-                {
-                    "data": "subtotal"
-                },
-                {
-                    "data": "shippingfee"
-                },
-                {
-                    "data": "discount"
-                },
-                {
-                    "data": "total"
-                },
-                {
-
-                    "data": null,
-                    "render": function (data, type, full) {
-                        var id = full.id;
-                        var status = full.status;
-                        if (status >= 0 && status <= 2) {
+                "columns": [{
+                        "data": "id"
+                    },
+                    {
+                        "data": "date"
+                    },
+                    {
+                        "data": "subtotal"
+                    },
+                    {
+                        "data": "shippingfee"
+                    },
+                    {
+                        "data": "discount"
+                    },
+                    {
+                        "data": "total"
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full) {
+                            var id = full.id;
+                            var status = full.status;
+                            if (status == 0) {
+                                return (
+                                    "<button onclick='' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                                    "Chưa xác nhận" +
+                                    "</button>"
+                                );
+                            }
+                            else if (status == 1)
+                            {
+                                return (
+                                    "<button onclick='' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                                    "Đã xác nhận" +
+                                    "</button>"
+                                );
+                            }
+                            else if (status == 2)
+                            {
+                                return (
+                                    "<button onclick='' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                                    "Đã thanh toán" +
+                                    "</button>"
+                                );
+                            }
+                            else if (status == 3)
+                            {
+                                return (
+                                    "<button onclick='' class='btn btn-warning btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                                    "Đang giao" +
+                                    "</button>"
+                                );
+                            }
+                            else if (status == 4)
+                            {
+                                return (
+                                    "<button onclick='' class='btn btn-success btn-sm' role='button' data-toggle='modal' data-target=''>" +
+                                    "Đã giao" +
+                                    "</button>"
+                                );
+                            }
+                            else
+                            {
+                                return (
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Đã hủy" +
+                                "</button>"
+                                );    
+                            }
                             return (
-                                "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "" +
+                                "</button>"
+                            );
+
+                        }
+                    },
+                    {
+
+                        "data": null,
+                        "render": function (data, type, full) {
+                            var id = full.id;
+                            var status = full.status;
+                            if (status == 0) {
+                                return (
+                                    "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                                    id + "'>" +
+                                    "Hủy đơn hàng" +
+                                    "</button>"
+                                );
+                            }                            
+                            return (
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
                                 id + "'>" +
                                 "Hủy đơn hàng" +
                                 "</button>"
                             );
+
                         }
-                        return (
-                            "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
-                            id + "'>" +
-                            "Hủy đơn hàng" +
-                            "</button>"
-                        );
+                    },
+                    {
 
+                        "data": null,
+                        "render": function (data, type, full) {
+                            var id = full.id;
+
+                            return (
+                                "<button onclick='openDetail(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#InfoOrder' data_id='" +
+                                id + "'>" +
+                                "Show Detail Order" +
+                                "</button>"
+                            );
+
+                        }
                     }
+                ],
+
+            });        
+        function ordertable(action, status) {                    
+            $('#ordertable'+action).DataTable({
+                "scrollY": "500px",
+                "scrollCollapse": true,
+                "ajax": function (d, cb) {
+                    // fetch('<?php //echo constant('URL') ?>order/getbyuser')
+                    //     .then(response => response.json())
+                    //     .then(data => cb(data));
+                    var data = null;
+                    $.ajax({
+                        url: '<?php echo constant('URL') ?>order/getOrderByStatus/'+status,
+                        type: 'post',
+                        async: false,
+                        global: false,
+                        dataType: 'json',
+                        success: function(data) {
+                            //console.log(data);
+                            cb(data) = data;                        
+                        }
+                    });
                 },
-                {
+                "columns": [{
+                        "data": "id"
+                    },
+                    {
+                        "data": "date"
+                    },
+                    {
+                        "data": "subtotal"
+                    },
+                    {
+                        "data": "shippingfee"
+                    },
+                    {
+                        "data": "discount"
+                    },
+                    {
+                        "data": "total"
+                    },
+                    {
 
-                    "data": null,
-                    "render": function (data, type, full) {
-                        var id = full.id;
+                        "data": null,
+                        "render": function (data, type, full) {
+                            var id = full.id;
+                            var status = full.status;
+                            if (status == 0) {
+                                return (
+                                    "<button onclick='openModal(this)' class='btn btn-danger btn-sm' role='button' data-toggle='modal' data-target='#DeleteModal' data_id='" +
+                                    id + "'>" +
+                                    "Hủy đơn hàng" +
+                                    "</button>"
+                                );
+                            }
+                            else if (status == 3)
+                            {
+                                return (
+                                    "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                    id + "'>" +
+                                    "Hủy đơn hàng" +
+                                    "</button>"
+                                );
+                            }
+                            return (
+                                "<button onclick='' class='btn btn-secondary btn-sm' role='button' data-toggle='modal' data-target='' data_id='" +
+                                id + "'>" +
+                                "Hủy đơn hàng" +
+                                "</button>"
+                            );
 
-                        return (
-                            "<button onclick='openDetail(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#InfoOrder' data_id='" +
-                            id + "'>" +
-                            "Show Detail Order" +
-                            "</button>"
-                        );
+                        }
+                    },
+                    {
 
+                        "data": null,
+                        "render": function (data, type, full) {
+                            var id = full.id;
+
+                            return (
+                                "<button onclick='openDetail(this)' class='btn btn-primary btn-sm' role='button' data-toggle='modal' data-target='#InfoOrder' data_id='" +
+                                id + "'>" +
+                                "Show Detail Order" +
+                                "</button>"
+                            );
+
+                        }
                     }
-                }
-            ],
+                ],
 
+            });
+        }                            
+        ordertable('confirm',0);
+        ordertable('waiting',3);
+        // $(".tabclick").on("click", function() {
+        //     var name = $(this).attr("data-name");
+        //     if(name == 'confirm')
+        //     {
+        //         ordertable(name,0);
+        //     }
+        //     else if(name == 'waiting')
+        //     {
+        //         ordertable(name,3);
+        //     }
+        // }); 
+        function settingprofile() {
+            $.ajax({
+                type: 'post',
+                url: '<?php echo constant('URL') ?>home/getUser',
+                data: {username:username},
+                success: function (data) {
+                    document.getElementById("setting").innerHTML = `<div class="container bootstrap snippet">
+                                    <div class="row">
+                                        <div class="col-sm-10 ml-4"><h1>`+ JSON.parse(data).data[0].username +`</h1></div>    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3"><!--left col-->        
+                                            <div class="text-center">
+                                                <img src="<?php echo constant('URL') ?>public/assets/dist/img/`+ JSON.parse(data).data[0].image +`" class="avatar img-circle img-thumbnail" alt="avatar">                                                
+                                                <input type="file" class="text-center center-block file-upload">                                                
+                                            </div></hr><br>                         
+                                        </div>
+                                        <div class="col-sm-5">                                    
+                                            <hr>
+                                            <form class="form" action="" method="post" id="profilesetting">
+                                                <div class="form-group">
+                                                    <label for="Changepassword"><h2>Profile setting</h2></label>
+                                                </div>                      
+                                                <div class="form-group">                        
+                                                    <div class="col-xs-3">
+                                                        <label for="last_name"><h4>Full Name</h4></label>
+                                                        <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Full name" value="`+ JSON.parse(data).data[0].name +`" title="enter your name if any.">
+                                                    </div>
+                                                </div>          
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="phone"><h4>Phone</h4></label>
+                                                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter phone" value="`+ JSON.parse(data).data[0].phone +`" title="enter your phone number if any.">
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="date"><h4>Birth</h4></label>
+                                                        <input type="date" class="form-control" name="birth" id="birth" placeholder="Enter birth" value="`+ JSON.parse(data).data[0].birth +`" title="enter your date">
+                                                    </div>
+                                                </div>                                
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="email"><h4>Email</h4></label>
+                                                        <input type="email" class="form-control" name="email" id="email" placeholder="your@gmail.com" value="`+ JSON.parse(data).data[0].email +`" title="enter your email.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="address"><h4>Location</h4></label>
+                                                        <input type="address" class="form-control" name="address" id="location" placeholder="somewhere" value="`+ JSON.parse(data).data[0].address +`" title="enter a location">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                            <br>
+                                                            <button class="btn btn-lg btn-success" id="save" type="button"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>                               	
+                                                        </div>
+                                                </div>                      
+                                            </form>
+                                        
+                                        <hr>
+                                        
+                                        </div><!--/tab-pane-->
+                                        <div class="col-sm-4">                                    
+                                            <hr>
+                                            <form class="form" action="" method="post" id="accountsetting">                      
+                                                <div class="form-group">
+                                                    <label for="Changepassword"><h2>Change Password</h2></label>
+                                                </div>
+                                                <div id="message"></div>
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="password"><h4>Password</h4></label>
+                                                        <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">                          
+                                                    <div class="col-xs-6">
+                                                        <label for="password2"><h4>Retype Password</h4></label>
+                                                        <input type="password" class="form-control" name="retypepassword" id="password2" placeholder="password2" title="enter your password2.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12">
+                                                            <br>
+                                                            <button class="btn btn-lg btn-success" type="button" id="savepassword"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>                               	
+                                                        </div>
+                                                </div>
+                                            </form>
+                                        
+                                        <hr>
+                                        
+                                        </div><!--/tab-pane-->                           
+                                    </div><!--/col-9-->
+                                </div><!--/row-->`
+                }
+            })
+        }
+        $(document).on('click','#save', function () {                    
+            var form = $('#profilesetting');                        
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>home/updateprofile',
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    sweetAlertCRUD(data, "Update");                    
+                }
+            });
+        });
+        $(document).on('click','#savepassword', function () {                    
+            var password = $('#password').val();
+            var retypepassword = $('#password2').val();
+            if(password == retypepassword && (password != '' || retypepassword != ''))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo constant('URL') ?>home/UpdatePassword',
+                    data: {password:password,retypepassword:retypepassword},
+                    success: function (data) {
+                        sweetAlertCRUD(data, "Update");                    
+                    }
+                });                
+            }
+            else if(password == '' || retypepassword == '')
+            {
+                $('#message').html('<p class="alert alert-danger"><strong>Please input</p>');
+            }
+            else
+            {
+                $('#message').html('<p class="alert alert-warning"><strong>Your password do not match</p>');
+            }
+            
         });
         $("#formUpdate").submit(function (e) {
 
@@ -399,6 +744,7 @@
             });
 
         })
+        
 
         var username = '<?php echo $username ?>';        
         if(username != '')
@@ -414,6 +760,7 @@
                 }
             });
         }
+        settingprofile();
     })
 
     function openDetail(e) {

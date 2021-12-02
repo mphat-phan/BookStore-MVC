@@ -15,7 +15,7 @@ class Home extends Controller{
     function Login(){
         if(isset($_SESSION['username']))
         {
-            header("Location: ./index");
+            header("Location: ".constant('URL')."home/index");
         }        
         $this->view("layoutHome",array(
             "Page" => "login"
@@ -24,7 +24,7 @@ class Home extends Controller{
     function Register(){        
         if(isset($_SESSION['username']))
         {
-            header("Location: ./index");
+            header("Location: ".constant('URL')."home/index");
         }
         $this->view("layoutHome",array(
             "Page" => "signup"
@@ -32,7 +32,7 @@ class Home extends Controller{
     }    
     function Logout(){                        
         session_destroy();
-        header("Location: Login");
+        header("Location: ".constant('URL')."home/Login");
     }
     // function register(){
     //     $this->view("layout",array(
@@ -168,16 +168,34 @@ class Home extends Controller{
         if(isset($_POST['username']))
         {
             $username = $_POST['username'];            
-            if(count(json_decode($this->User->getInfo('customer',$username))->data)==1)
+            if($this->User->getInfo('customer',$username))
             {   
                 echo $this->User->getInfo('customer',$username);
             }
-            else if (count(json_decode($this->User->getInfo('employee',$username))->data)==1)
+            else if ($this->User->getInfo('employee',$username))
             {
                 echo $this->User->getInfo('employee',$username);
             }
-        }         
-    }        
+        }              
+    }
+    function updateprofile() {
+        if(isset($_POST['fullname']) && isset($_POST['phone']) && isset($_POST['birth']) && isset($_POST['email']) && isset($_POST['address']))
+        {
+            $name = $_POST['fullname'];
+            $phone = $_POST['phone'];
+            $birth = $_POST['birth'];
+            $email = $_POST['email']; 
+            $address = $_POST['address'];
+            $username = $_SESSION['username'];
+            $array = array('name' => $name, "phone" => $phone, "email" => $email, "address" => $address, "birth" => $birth);
+            if($this->Customer->updateByUsername($array,$username)==1)
+            {
+                echo 1; 
+                return;
+            }            
+        }
+        echo 0;
+    }           
     function pages() {
         $this->view("pages/404");
     }

@@ -43,7 +43,18 @@
                   }
 
             }
-
+            public function selectstatus($status) {                              
+                  $username = $_SESSION['username'];
+                  $sql = "SELECT `ordertb`.`id`,
+                                 `ordertb`.`date`,
+                                 `ordertb`.`subtotal`,
+                                 `ordertb`.`shippingfee`,
+                                 `ordertb`.`discount`,
+                                 `ordertb`.`total`,
+                                 `ordertb`.`status` 
+                          FROM `ordertb`,`user` WHERE `ordertb`.`customer_username` = `user`.`username` AND `user`.`username` = '$username' AND `ordertb`.`status` = '$status'";
+                  return $this->selectQueryJson($sql);
+            }
 
 	}
 ?> 

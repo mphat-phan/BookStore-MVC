@@ -29,7 +29,13 @@
                   return $this->selectQuery($sql);
             }
             public function getInfo($table,$username) {
-                  $sql = "SELECT `user`.`username`,`user`.`image`,`$table`.`name`  FROM `user`, `$table` WHERE `user`.`username` = `$table`.`username` AND `user`.`username` = '$username'";
+                  $sql = "SELECT `user`.`username`,
+                                 `user`.`image`,
+                                 `$table`.`name`,
+                                 `$table`.`phone`,
+                                 `$table`.`email`,
+                                 `$table`.`address`,
+                                 `$table`.`birth`  FROM `user`, `$table` WHERE `user`.`username` = `$table`.`username` AND `user`.`username` = '$username'";
                   return $this->selectQueryJson($sql);
             }                                          
 	}
