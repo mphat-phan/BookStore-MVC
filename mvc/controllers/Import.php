@@ -76,13 +76,15 @@ class Import extends Controller{
         if(isset($_FILES["txtExcelImport"]["tmp_name"])){
             //Đường dẫn file
             $file = './public/assets/images/'.basename($_FILES["txtExcelImport"]["name"]);
+            echo $file;
+            
             //Tiến hành xác thực file
-            $objFile = PHPExcel_IOFactory::identify($file);
+            $objFile = PHPExcel_IOFactory::identify($file);            
             $objData = PHPExcel_IOFactory::createReader($objFile);
             
             //Chỉ đọc dữ liệu
             $objData->setReadDataOnly(true);
-
+            
             // Load dữ liệu sang dạng đối tượng
             $objPHPExcel = $objData->load($file);
 

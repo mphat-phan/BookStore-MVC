@@ -432,6 +432,7 @@
                 cache: false,
                 processData:false,
                 success: function (data) {
+                    console.log(data);
                     sweetAlertCRUD(data, "Add");
                     if(data==1){
                         alert("Nhập hàng thành công");
