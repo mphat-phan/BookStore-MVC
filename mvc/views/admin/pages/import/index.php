@@ -433,8 +433,8 @@
                 processData:false,
                 success: function (data) {
                     sweetAlertCRUD(data, "Add");
-                    alert("Nhập hàng thành công");
                     if(data==1){
+                        alert("Nhập hàng thành công");
                         location.reload();
                     }
                 }
