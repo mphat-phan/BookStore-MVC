@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Dec 02, 2021 at 01:29 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: localhost:3307
+-- Generation Time: Dec 02, 2021 at 02:52 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,8 @@ INSERT INTO `author` (`id`, `name`, `detail`, `image`) VALUES
 (3, 'Tô Hoài', 'Chi tiết', 'tacgiatohoai.jpg'),
 (4, 'Hồ Anh Thái', 'Chi tiết', 'tacgiahoanhthai.jpg'),
 (5, 'Kishimoto Masashi', 'Chi tiết', 'tacgiakishimoto.jpg'),
-(6, 'Gotōge Koyoharu', 'Chi tiết', 'tacgiakoyoharu.jpg');
+(6, 'Gotōge Koyoharu', 'Chi tiết', 'tacgiakoyoharu.jpg'),
+(25, 'Hans Christian Andersen', '                                       \r\n                                    ', 'tacgiaHansChristianAndersen.jpg');
 
 -- --------------------------------------------------------
 
@@ -60,9 +61,11 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `username`) VALUES
-(6, 'hello'),
-(8, 'minhphat'),
-(9, 'phanminhphat');
+(15, 'admin'),
+(16, 'chiquang'),
+(17, 'khachhang'),
+(18, 'minhphat'),
+(19, 'nguyenvana');
 
 -- --------------------------------------------------------
 
@@ -76,13 +79,6 @@ CREATE TABLE `cartdetail` (
   `quantity` int(11) NOT NULL,
   `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `cartdetail`
---
-
-INSERT INTO `cartdetail` (`cartID`, `productID`, `quantity`, `date`) VALUES
-(9, 17, 3, '2021-12-02 15:48:32');
 
 --
 -- Triggers `cartdetail`
@@ -165,16 +161,6 @@ CREATE TABLE `category_product` (
   `productID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `category_product`
---
-
-INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
-(1, 17),
-(1, 19),
-(3, 19),
-(5, 19);
-
 -- --------------------------------------------------------
 
 --
@@ -196,9 +182,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `address`, `birth`, `username`) VALUES
-(15, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'ưetrfwe', '2021-11-26', 'minhphat'),
-(16, 'Phan Minh Phát', '0707061515', 'myphan2710@gmail.com', '', NULL, 'phanminhphat'),
-(17, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'fsfeesdffe', '2021-12-01', 'minhphat123');
+(16, 'Tên Khách Hàng', '0123456789', 'khachhang@gmail.com', '', NULL, 'khachhang'),
+(24, 'Nguyễn Văn A', '0909112233', 'nguyenvana@gmail.com', '213123', '2021-11-01', 'nguyenvana');
 
 -- --------------------------------------------------------
 
@@ -222,9 +207,9 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
-(8, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', '123', '2021-11-26', '2021-11-26', 'minhphat'),
-(9, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', 'fdsfsd', '2021-12-01', '2021-12-01', 'minhphat123'),
-(10, 'Phan Minh Phát', '0707061515', 'phan@gmail.com', '4535345', '2021-12-02', '2021-12-02', 'phanminhphat');
+(8, 'Dzeam Techie', '0707061515', 'dzeamtechie@gmail.com', 'Hồ Chí Minh', '2001-01-01', '2021-11-01', 'admin'),
+(9, 'Đoàn Chí Quang', '0384327229', 'chiquang127@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2021-11-03', 'chiquang'),
+(10, 'Phan Minh Phát', '0909112233', 'phanminhphat2001@gmail.com', 'Hồ Chí Minh', '2001-09-14', '2021-11-07', 'minhphat');
 
 -- --------------------------------------------------------
 
@@ -264,22 +249,6 @@ CREATE TABLE `import` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `import`
---
-
-INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
-(31, '2021-12-01', 500000, 'minhphat123'),
-(32, '2021-12-01', 200000, 'minhphat123'),
-(33, '2021-12-02', 4000000, 'minhphat123'),
-(34, '2021-12-02', 4000000, 'minhphat123'),
-(35, '2021-12-02', 2000000, 'minhphat123'),
-(36, '2021-12-02', 10000, 'minhphat123'),
-(37, '2021-12-02', 10000, 'minhphat123'),
-(40, '2021-12-02', 2786000, 'phanminhphat'),
-(41, '2021-12-02', 2786000, 'phanminhphat'),
-(42, '2021-12-02', 2786000, 'phanminhphat');
-
---
 -- Triggers `import`
 --
 DELIMITER $$
@@ -301,28 +270,6 @@ CREATE TABLE `importdetail` (
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `importdetail`
---
-
-INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
-(33, 17, 10, 200000),
-(34, 17, 10, 200000),
-(35, 17, 10, 200000),
-(37, 1123, 1, 10000),
-(40, 3, 10, 20000),
-(40, 4, 10, 23000),
-(40, 5, 4, 300000),
-(40, 6, 34, 34000),
-(41, 3, 10, 20000),
-(41, 4, 10, 23000),
-(41, 5, 4, 300000),
-(41, 6, 34, 34000),
-(42, 3, 10, 20000),
-(42, 4, 10, 23000),
-(42, 5, 4, 300000),
-(42, 6, 34, 34000);
-
 -- --------------------------------------------------------
 
 --
@@ -338,21 +285,6 @@ CREATE TABLE `orderdetail` (
   `discount` double DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `orderdetail`
---
-
-INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtotal`, `discount`, `status`) VALUES
-(79, 17, 1, 50000, 50000, 50, 0),
-(80, 17, 39, 50000, 1950000, 50, 0),
-(80, 38, 1, 123, 123, 20, 0),
-(81, 17, 39, 50000, 1950000, 50, 0),
-(81, 38, 1, 123, 123, 20, 0),
-(82, 17, 40, 50000, 2000000, 50, 0),
-(82, 38, 1, 123, 123, 20, 0),
-(83, 17, 40, 50000, 2000000, 50, 0),
-(83, 38, 1, 123, 123, 20, 0);
 
 --
 -- Triggers `orderdetail`
@@ -371,6 +303,9 @@ CREATE TRIGGER `insertOrderDetail` BEFORE INSERT ON `orderdetail` FOR EACH ROW B
   END IF;
 UPDATE product
    SET quantity = quantity - 		NEW.quantity
+   WHERE id = NEW.productID;
+UPDATE product
+   SET sold = sold + 		NEW.quantity
    WHERE id = NEW.productID;
 END
 $$
@@ -398,17 +333,6 @@ CREATE TABLE `ordertb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ordertb`
---
-
-INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
-(79, '2021-12-01', 25000, 0, 0, 25000, 'minhphat123', 'phanminhphat', NULL, 4, 25000, 0),
-(80, '2021-12-01', 975099, 0, 0, 975099, NULL, 'phanminhphat', NULL, 0, NULL, NULL),
-(81, '2021-12-01', 975099, 25000, 0, 975099, NULL, 'phanminhphat', NULL, 0, NULL, NULL),
-(82, '2021-12-01', 1000099, 0, 200000, 800099, NULL, 'phanminhphat', NULL, 0, NULL, NULL),
-(83, '2021-12-01', 1000099, 0, 210000, 790099, NULL, 'phanminhphat', NULL, 0, NULL, NULL);
-
---
 -- Triggers `ordertb`
 --
 DELIMITER $$
@@ -433,9 +357,9 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`id`, `permission`) VALUES
-(2, 'add'),
-(3, 'update'),
-(4, 'delete');
+(1, 'add'),
+(2, 'delete'),
+(3, 'update');
 
 -- --------------------------------------------------------
 
@@ -454,6 +378,7 @@ CREATE TABLE `product` (
   `language` varchar(50) DEFAULT NULL,
   `esrbID` int(11) DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
+  `sold` int(11) NOT NULL,
   `authorID` int(11) DEFAULT NULL,
   `publisherID` int(11) DEFAULT NULL,
   `saleID` varchar(100) DEFAULT NULL,
@@ -464,33 +389,11 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
-(3, 'Tô Hoài', NULL, 30, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, 'Hồ Anh Thái', NULL, 30, 23000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(5, 'Kishimoto Masashi', NULL, 12, 300000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 'Gotōge Koyoharu', NULL, 102, 34000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(17, 'a - 10 vạn câu hỏi vì sao', 'Haha', 60, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(18, 'c -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(19, 'b -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(20, 'd -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(21, 'e -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(22, 'f - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(23, 'g -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(24, 'h -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(25, 'i -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(26, 'j -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(27, 'a - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(28, 'c -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(29, 'b -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(30, 'd -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(31, 'e -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(32, 'f - 10 vạn câu hỏi vì sao', 'Haha', 0, 50000, 200, '2021-11-17', 'Vietnamese', 5, '1620484.jpg', 5, 14, 'discount50', 1),
-(33, 'g -10 vạn câu hỏi vì sao', 'sdafsdfsf', 0, 100000, 200, '2021-11-09', 'Vietnamese', 1, '1952560.jpg', 3, 14, 'discount20', 1),
-(34, 'h -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(35, 'i -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(36, 'j -10 vạn câu hỏi vì sao', 'ewqeqe', 0, 10000, 100, '2021-11-19', 'English', 5, '1952560.jpg', 5, 14, 'discount20', 1),
-(38, 'Đoàn Chí Quang', '                                       \r\n                                    ', 3, 123, 12313, '2021-11-27', 'Viedsdaa', 1, '', 3, 14, 'discount20', 0),
-(1123, 'Phanvsadjfhsdjkf', '', 1, 10000, 200, '2021-12-02', 'Vietnamese', 1, 'Untitled Diagram-Use Case.drawio.png', 3, 14, '121231344', 0);
+INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `sold`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
+(41, 'Naruto', '', 100, 12000, 100, '2021-11-30', 'Vietnamese', 2, 'naruto.jpg', 0, 5, 15, 'discount20', 1),
+(42, 'Bạch Tuyết và Bảy Chú Lùn', '                                       \r\n                                    ', 100, 20000, 23, '2021-11-30', 'Vietnamese', 1, 'bachtuyetva7chulun.jpg', 0, 3, 15, 'discount20', 1),
+(43, 'Cô Bé Bán Diêm', '                                       \r\n                                    ', 100, 17000, 23, '2021-11-30', 'Vietnamese', 1, 'cobebandiem.jpg', 0, 25, 15, 'discount20', 1),
+(44, 'Những Giấc Mơ Xanh', '                                       \r\n                                    ', 100, 30000, 45, '2021-12-01', 'Vietnamese', 1, 'nhunggiacmoxanh.jpg', 0, 3, 14, 'discount20', 1);
 
 -- --------------------------------------------------------
 
@@ -510,9 +413,8 @@ CREATE TABLE `publisher` (
 --
 
 INSERT INTO `publisher` (`id`, `name`, `detail`, `image`) VALUES
-(14, 'Lịch sử', '214234', NULL),
-(15, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL),
-(16, 'Phan Minh Phát', 'Chi tiết lịch sử', NULL);
+(14, 'NXB Hà Nội', 'Address', NULL),
+(15, 'NXB TH HCM', 'Address', NULL);
 
 -- --------------------------------------------------------
 
@@ -528,15 +430,6 @@ CREATE TABLE `rating` (
   `comment` text NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `rating`
---
-
-INSERT INTO `rating` (`id`, `orderID`, `productID`, `rating`, `comment`, `date`) VALUES
-(18, 79, 17, 5, 'sdfsfsfs', '2021-12-01 14:25:27'),
-(19, 79, 38, 5, 'đầ', '2021-12-02 12:27:28'),
-(20, 83, 17, 3, 'aaaaaaaaaaaaa', '2021-12-07 13:10:51');
 
 -- --------------------------------------------------------
 
@@ -554,10 +447,24 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`name`, `detail`) VALUES
-('admin', 'admin'),
-('customer', 'customer'),
-('staff.product', '...'),
-('staff.user', 'Chi tiết lịch sử');
+('admin', 'Quản lý cấp cao'),
+('staff.import', 'Quản lý bên bộ phận nhập hàng'),
+('staff.import.add', 'Nhân viên bên khu nhập hàng có chức năng thêm'),
+('staff.import.delete', 'Nhân viên bên khu nhập hàng có chức năng xóa'),
+('staff.import.update', 'Nhân viên bên khu nhập hàng có chức năng sửa'),
+('staff.product', 'Quản lý bên bộ phận sản phẩm'),
+('staff.product.add', 'Nhân viên bên khu sản phẩm có chức năng thêm'),
+('staff.product.delete', 'Nhân viên bên khu sản phẩm có chức năng xóa'),
+('staff.product.update', 'Nhân viên bên khu sản phẩm có chức năng sửa'),
+('staff.receipt', 'Quản lý bên bộ phận hóa đơn'),
+('staff.receipt.add', 'Nhân viên bên khu hóa đơn có chức năng thêm'),
+('staff.receipt.delete', 'Nhân viên bên khu hóa đơn có chức năng xóa'),
+('staff.receipt.update', 'Nhân viên bên khu hóa đơn có chức năng sửa'),
+('staff.sell', 'Quản lý bên bộ phận bán hàng'),
+('staff.user', 'Quản lý bên bộ phận thông tin người dùng'),
+('staff.user.add', 'Nhân viên bên khu thông tin người dùng có chức năn'),
+('staff.user.delete', 'Nhân viên bên khu thông tin người dùng có chức năn'),
+('staff.user.update', 'Nhân viên bên khu thông tin người dùng có chức năn');
 
 -- --------------------------------------------------------
 
@@ -575,9 +482,33 @@ CREATE TABLE `role_permission` (
 --
 
 INSERT INTO `role_permission` (`rolename`, `permissionID`) VALUES
-('customer', 2),
+('staff.import', 1),
+('staff.import', 2),
+('staff.import', 3),
+('staff.import.add', 1),
+('staff.import.delete', 2),
+('staff.import.update', 3),
+('staff.product', 1),
 ('staff.product', 2),
-('staff.product', 3);
+('staff.product', 3),
+('staff.product.add', 1),
+('staff.product.delete', 2),
+('staff.product.update', 3),
+('staff.receipt', 1),
+('staff.receipt', 2),
+('staff.receipt', 3),
+('staff.receipt.add', 1),
+('staff.receipt.delete', 2),
+('staff.receipt.update', 3),
+('staff.sell', 1),
+('staff.sell', 2),
+('staff.sell', 3),
+('staff.user', 1),
+('staff.user', 2),
+('staff.user', 3),
+('staff.user.add', 1),
+('staff.user.delete', 2),
+('staff.user.update', 3);
 
 -- --------------------------------------------------------
 
@@ -602,10 +533,8 @@ CREATE TABLE `sale` (
 --
 
 INSERT INTO `sale` (`id`, `name`, `quantity`, `discount`, `startdate`, `enddate`, `minorder`, `maxsale`, `type`) VALUES
-('121231344', '121231344', 22, 30, '2021-11-30', '2021-12-10', 20000, 10000, 3),
-('121855184', 'voucher121855184', 5, 20, '2021-11-17', '2021-12-16', 100000, 20000, 3),
-('discount20', 'giảm 20%', 0, 20, '2021-11-01', '2021-12-04', 0, 0, 0),
-('discount50', 'Giam gia 50%', 0, 50, '2021-11-10', '2021-12-03', 0, 0, 0),
+('discount20', 'Giảm 20%', 0, 20, '2021-11-01', '2021-12-04', 0, 0, 0),
+('discount50', 'Giảm 50%', 0, 50, '2021-11-10', '2021-12-03', 0, 0, 0),
 ('freeshipping', 'Miễn phí vận chuyển', 4, NULL, '2021-11-16', '2021-12-10', 100000, NULL, 1),
 ('freeshipping-12', 'Free Shipping tháng 12', 50, NULL, '2021-11-30', '2021-11-04', 50000, NULL, 1),
 ('SN2021', 'Sinh nhật 2021', 8, 50, '2021-10-05', '2021-12-17', 1000000, 200000, 2);
@@ -620,18 +549,6 @@ CREATE TABLE `sale_order` (
   `orderID` int(11) NOT NULL,
   `saleID` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `sale_order`
---
-
-INSERT INTO `sale_order` (`orderID`, `saleID`) VALUES
-(80, 'freeshipping'),
-(82, 'freeshipping'),
-(82, 'SN2021'),
-(83, '121231344'),
-(83, 'freeshipping'),
-(83, 'SN2021');
 
 --
 -- Triggers `sale_order`
@@ -654,13 +571,6 @@ CREATE TABLE `sale_user` (
   `saleID` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `sale_user`
---
-
-INSERT INTO `sale_user` (`username`, `saleID`) VALUES
-('phanminhphat', 'SN2021');
-
 -- --------------------------------------------------------
 
 --
@@ -681,10 +591,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
-('hello', 'hello', 'hello@gmail.com', '2021-11-20', 1, '1620484.jpg'),
-('minhphat', 'minhphat', 'ưdrfsdf', '2021-11-26', 1, NULL),
-('minhphat123', '123', '324123', '2021-11-13', 1, NULL),
-('phanminhphat', '$2y$10$r7c2fuHg5z0nIqQCv4IOdOkrspTcWx9YCJ2FadebbvF.U30XmQZpO', 'myphan2710@gmail.com', '2021-11-26', 1, '1620484.jpg');
+('admin', '$2y$10$xBD7vwPfFFKoawf40GAgje1FdsAW.81QnDd1nzTS5xgQZCcg3okXm', 'dzeamtechie@gmail.com', '2021-11-14', 1, NULL),
+('chiquang', '$2y$10$o8FRAijSWv3lCYmGDyEkWeG.GGkx692Ab2uapvvwyAEqMIX3Y2xFO', 'chiquang127@gmail.com', '2021-11-14', 1, NULL),
+('khachhang', '$2y$10$fEaOkSRDcCvBgp9qB9jUFO5NKKBcXemXh/2IGjaltDTeKrE73lx5S', 'khachhang@gmai.com', '2021-11-21', 1, 'user1-128x128.jpg'),
+('minhphat', '$2y$10$fBBYoXiIIyyDVKEJUQ/Y5ef3HF/Kp1TMSx.kfymymRP1uAN6csbdW', 'phanminhphat2001@gmail.com', '2021-11-14', 0, NULL),
+('nguyenvana', '$2y$10$/9v0INkZnTFomnoblHPpqu2ye3Ih0CTHJzcSTsGwL.AxsZFm8mPpu', 'nguyenvana@gmail.com', '2021-11-25', 0, NULL);
 
 --
 -- Triggers `user`
@@ -710,8 +621,9 @@ CREATE TABLE `userrole` (
 --
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
-('minhphat', 'admin'),
-('phanminhphat', 'admin');
+('admin', 'admin'),
+('chiquang', 'staff.product.add'),
+('minhphat', 'staff.product');
 
 --
 -- Indexes for dumped tables
@@ -886,13 +798,13 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -904,13 +816,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `esrb`
@@ -922,7 +834,7 @@ ALTER TABLE `esrb`
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `ordertb`

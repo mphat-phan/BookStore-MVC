@@ -76,13 +76,15 @@ class Import extends Controller{
         if(isset($_FILES["txtExcelImport"]["tmp_name"])){
             //Đường dẫn file
             $file = './public/assets/images/'.basename($_FILES["txtExcelImport"]["name"]);
+            echo $file;
+            
             //Tiến hành xác thực file
-            $objFile = PHPExcel_IOFactory::identify($file);
+            $objFile = PHPExcel_IOFactory::identify($file);            
             $objData = PHPExcel_IOFactory::createReader($objFile);
-
+            
             //Chỉ đọc dữ liệu
             $objData->setReadDataOnly(true);
-
+            
             // Load dữ liệu sang dạng đối tượng
             $objPHPExcel = $objData->load($file);
 
@@ -112,7 +114,7 @@ class Import extends Controller{
             for($i = 0 ; $i < count($data) ; $i++){
                 $total+=$data[$i][2]*$data[$i][3];
             }
-            $user = $_SESSION['username'];
+            $user = $_SESSION['username'];            
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $date = date('Y-m-d', time());
 
