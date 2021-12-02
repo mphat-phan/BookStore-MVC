@@ -10,6 +10,7 @@
     var lastURLSegment = pageURL.substr(pageURL.lastIndexOf('/') + 1);
     const spinner = document.querySelector('.spinner');
     const displayproduct = document.querySelector('.displayproduct');
+    const cardComment = document.querySelector('.card-comments');
 
     function slider() {
         $('.owl-carousel').owlCarousel({
@@ -39,237 +40,222 @@
     }
 
     function display(arr) {
-        var products = arr.data;
-        var htmlsale;
-        var currentdate = new Date();
-        Number.prototype.format = function(n, x) {
-            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-            return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
-        };   
-        const html = products.map(product => {
-            var enddate = new Date(product.saleID.enddate);
-            var startdate = new Date(product.saleID.startdate);
-            var salePrice = parseInt(product.price) - parseInt(product.price*product.saleID.discount/100);
-            if(product.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){     
-                htmlsale = `
-                    <div>
-                        <span style="font-size:50px">${parseInt(salePrice).format()}đ</span>
-                        <span style="text-decoration: line-through; vertical-align: top; color:gray;">${parseInt(product.price).format()}đ</span>
-                        <span class="badge badge-danger">${'Sale '+product.saleID.discount+'%'}</span>
-                    </div>
-                `
-            }
-            else{
-                htmlsale = `
-                    <div>
-                        <span style="font-size:50px">${parseInt(product.price).format()}đ</span>  
-                    </div>
-                `
-            }
-            return `
-            <div class="container header">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="<?php echo constant('URL')?>public/assets/images/${product.image}"
-                            class="custom-img img-responsive wp-post-image jetpack-lazy-image--handled" alt="Frozen II">
-                    </div>
-                    <div class="col-md-9">
+        return new Promise(resolve => { 
+            setTimeout(function() {
+                if(!arr){
+                    displayproduct.innerHTML = "Không tồn tại sản phẩm";
+                    //carttable.innerHTML = "Không có sản trong giỏ hàng"+"<a href='<?php echo constant('URL') ?>browse'>Continue Shopping</a>"
+                    resolve('resolved');
+                }
+                var products = arr.data;
+                var htmlsale;
+                var currentdate = new Date();
+                Number.prototype.format = function(n, x) {
+                    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+                    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
+                };   
+                const html = products.map(product => {
+                    var enddate = new Date(product.saleID.enddate);
+                    var startdate = new Date(product.saleID.startdate);
+                    var salePrice = parseInt(product.price) - parseInt(product.price*product.saleID.discount/100);
+                    if(product.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){     
+                        htmlsale = `
+                            <div>
+                                <span style="font-size:50px">${parseInt(salePrice).format()}đ</span>
+                                <span style="text-decoration: line-through; vertical-align: top; color:gray;">${parseInt(product.price).format()}đ</span>
+                                <span class="badge badge-danger">${'Sale '+product.saleID.discount+'%'}</span>
+                            </div>
+                        `
+                    }
+                    else{
+                        htmlsale = `
+                            <div>
+                                <span style="font-size:50px">${parseInt(product.price).format()}đ</span>  
+                            </div>
+                        `
+                    }
+                    return `
+                    <div class="container header">
                         <div class="row">
-                            <h1>${product.name}</h1>
+                            <div class="col-md-3">
+                                <img src="<?php echo constant('URL')?>public/assets/images/${product.image}"
+                                    class="custom-img img-responsive wp-post-image jetpack-lazy-image--handled" alt="Frozen II">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <h1>${product.name}</h1>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        `+htmlsale+`
+                                    </div>
+                                </div>
+                                <div class="row w-50">
+                                    <div class="input-group">
+                                        <input id="quantity" type="number" min=1 value="1" class="form-control w-25">
+                                        <div class="input-group-append">
+                                            <a id="addtocart" class="btn-solid-sm" data_id="${product.id}">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="owl-carousel owl-theme">
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Language</h4>
+                                        <i class="fas fa-globe-americas"></i>
+                                        <p>${product.language}</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Page Number</h4>
+                                        <i class="fas fa-file-alt"></i>
+                                        <p>${product.pagenumber}</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Publish Date</h4>
+                                        <i class="fas fa-calendar-minus"></i>
+                                        <p>${product.publishdate}</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Rated</h4>
+                                        <i class="fas fa-globe-americas"></i>
+                                        <p>${product.esrbID.name}</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Publisher</h4>
+                                        <i class="fas fa-user-tie"></i>
+                                        <p>${product.publisherID.name}</p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div style="justify-content: center;">
+                                        <h4>Category</h4>
+                                        <i class="fas fa-user-tie"></i>
+                                        <p>Action , Cartoon , Film</p>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div>
-                                `+htmlsale+`
+                                <h1>Review</h1>
+                                <a href="#review" class="btn btn-primary" data-toggle="collapse">View more</a>
                             </div>
-                        </div>
-                        <div class="row w-50">
-                            <div class="input-group">
-                                <input id="quantity" type="number" min=1 value="1" class="form-control w-25">
-                                <div class="input-group-append">
-                                    <a id="addtocart" class="btn-solid-sm" data_id="${product.id}">Add to cart</a>
+                            <div class="collapse" id="review">
+                                <div class="container">
+                                    ${product.description}
                                 </div>
+                                
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Language</h4>
-                                <i class="fas fa-globe-americas"></i>
-                                <p>${product.language}</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Page Number</h4>
-                                <i class="fas fa-file-alt"></i>
-                                <p>${product.pagenumber}</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Publish Date</h4>
-                                <i class="fas fa-calendar-minus"></i>
-                                <p>${product.publishdate}</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Rated</h4>
-                                <i class="fas fa-globe-americas"></i>
-                                <p>${product.esrbID.name}</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Publisher</h4>
-                                <i class="fas fa-user-tie"></i>
-                                <p>${product.publisherID.name}</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div style="justify-content: center;">
-                                <h4>Category</h4>
-                                <i class="fas fa-user-tie"></i>
-                                <p>Action , Cartoon , Film</p>
 
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <h1>Rating</h1>
-                            <div class="row">
-                                <div class="side">
-                                    <div>5 star</div>
-                                </div>
-                                <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-5"></div>
-                                    </div>
-                                </div>
-                                <div class="side right">
-                                    <div>150</div>
-                                </div>
-                                <div class="side">
-                                    <div>4 star</div>
-                                </div>
-                                <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-4"></div>
-                                    </div>
-                                </div>
-                                <div class="side right">
-                                    <div>63</div>
-                                </div>
-                                <div class="side">
-                                    <div>3 star</div>
-                                </div>
-                                <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-3"></div>
-                                    </div>
-                                </div>
-                                <div class="side right">
-                                    <div>15</div>
-                                </div>
-                                <div class="side">
-                                    <div>2 star</div>
-                                </div>
-                                <div class="middle">
-                                    <div class="bar-container">
-                                        <div class="bar-2"></div>
-                                    </div>
-                                </div>
-                                <div class="side right">
-                                    <div>6</div>
-                                </div>
-                                <div class="side">
-                                    <div>1 star</div>
-                                </div>
-                                <div class="middle  ">
-                                    <div class="bar-container">
-                                        <div class="bar-1"></div>
-                                    </div>
-                                </div>
-                                <div class="side right">
-                                    <div>20</div>
-                                </div>
+                        <div class="row">
+                            <h1>Rating</h1>
+                            <div class="row cardRating">
+                                
                             </div>
-                </div>
-                <div class="row">
-                    <div>
-                        <h1>Review</h1>
-                        <a href="#review" class="btn btn-primary" data-toggle="collapse">View more</a>
-                    </div>
-                    <div class="collapse" id="review">
-                        <div class="container">
-                            ${product.description}
                         </div>
                         
-                    </div>
+                        <div class="row">
+                            <h1>Comment</h1>
+                            <div class="comment">
+                            <div class="col"> 
+                                <div class="card card-widget"> 
+                                    <div class="card-footer card-comments">
 
-                </div>
-                <div class="row">
-                    <h1>Comment</h1>
-                    <div class="comment">
-                    <div class="col">
-                      
-                            <div class="card card-widget">
-                            
-                            <div class="card-footer card-comments">
-
-                                <div class="card-comment">
-                                    <img class="img-circle img-sm" src="<?php echo constant('URL')?>public/assets/dist/img/user3-128x128.jpg" alt="User Image">
-                                    <div class="comment-text">
-                                        <span class="username">
-                                        Maria Gonzales
-                                        <span class="text-muted float-right">8:03 PM Today</span>
-                                        </span><!-- /.username -->
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
                                     </div>
                                 </div>
-
-                                <div class="card-comment">
-                                    <img class="img-circle img-sm" src="<?php echo constant('URL')?>public/assets/dist/img/user4-128x128.jpg" alt="User Image">
-                                    <div class="comment-text">
-                                        <span class="username">
-                                        Luna Stark
-                                        <span class="text-muted float-right">8:03 PM Today</span>
-                                        </span><!-- /.username -->
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                    </div>
-                                </div>
-               
                             </div>
-
-                            <!-- /.card-footer -->
-                            <div class="card-footer">
-                                <form action="#" method="post">
-                                <img class="img-fluid img-circle img-sm" src="<?php echo constant('URL')?>public/assets/dist/img/user4-128x128.jpg" alt="Alt Text">
-                                <!-- .img-push is used to add margin to elements next to floating images -->
-                                <div class="img-push">
-                                    <input type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
-                                </div>
-                                </form>
-                            </div>
-                            <!-- /.card-footer -->
-                            </div>
-                            <!-- /.card -->
                         </div>
                     </div>
-                </div>
-            </div>
+                        `;
+                }).join('');
+                displayproduct.innerHTML += html;
+                resolve('resolved');
+            });
+        });   
+    }
+    function displayComment(arr){
+        return new Promise(resolve => { 
+            setTimeout(function() {
+                var cardComment = document.querySelector('.card-comments');
+                var cardRating = document.querySelector('.cardRating');
+                if(!arr){
+                    cardComment.innerHTML = "Chưa có bình luận";
+                    cardRating.innerHTML = "Chưa có đánh giá";
+                    //carttable.innerHTML = "Không có sản trong giỏ hàng"+"<a href='<?php echo constant('URL') ?>browse'>Continue Shopping</a>"
+                    resolve('resolved');
+                }
+                
+                var ratings = arr.data;
+                var star1 = 0;
+                var star2 = 0;
+                var star3 = 0;
+                var star4 = 0;
+                var star5 = 0;
+                const html = ratings.map(rating => {
+                    switch(parseInt(rating.rating)) {
+                        case 1:
+                            star1++;
+                            break;
+                        case 2:
+                            star2++;
+                            break;
+                        case 3:
+                            star3++;
+                            break;
+                        case 4:
+                            star4++;
+                            break;
+                        case 5:
+                            star5++;
+                            break;
+                    }
+                    return `
+                        <div class="card-comment">
+                            <img class="img-circle img-sm" src="<?php echo constant('URL')?>public/assets/images/${rating.image}" alt="User Image" style="height:40px; width:40px!important;-webkit-border-radius: 100%;-moz-border-radius: 100%;object-fit: cover;overflow: hidden>
+                                <div class="comment-text">
+                                    <span class="username">
+                                        ${rating.name}
+                                            <span>
+                                                <div class="Stars" style="--rating: ${rating.rating};" aria-label="Rating of this product is 2.3 out of 5."></div>
+                                            </span>
+                                            <span class="text-muted float-right">
+                                                ${rating.date}
+                                            </span>
+                                    </span>
+                                    ${rating.comment}
+                                </div>
+                        </div>
+                        `;
+                }).join('');
+                cardComment.innerHTML += html;
+                cardRating.innerHTML = `
+                    <div class="Stars" style="--rating: 1; --star-size: 50px;" aria-label="Rating of this product is 2.3 out of 5.">${star1}</div>
+                    <div class="Stars" style="--rating: 2; --star-size: 50px;" aria-label="Rating of this product is 2.3 out of 5.">${star2}</div>
+                    <div class="Stars" style="--rating: 3; --star-size: 50px;" aria-label="Rating of this product is 2.3 out of 5.">${star3}</div>
+                    <div class="Stars" style="--rating: 4; --star-size: 50px;" aria-label="Rating of this product is 2.3 out of 5.">${star4}</div>
+                    <div class="Stars" style="--rating: 5; --star-size: 50px;" aria-label="Rating of this product is 2.3 out of 5.">${star5}</div>
                 `;
-        }).join('');
-        displayproduct.innerHTML += html;
+                console.log(html)
+                resolve('resolved');
+
+            });
+        });   
     }
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getbyid/'+ lastURLSegment;
-
+    let URL_API_RATING = '<?php echo constant('URL')?>rating/getByProduct/'+ lastURLSegment;
     async function fetchProduct(urlEndpoint) {
         let data;
         try {
@@ -278,14 +264,16 @@
             return (data);
         } catch (error) {
             console.log(error);
+            return;
         }
-        // return data.data;
-        return data.items || data.results;
+        return
     }
 
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
-        display(products);
+        const ratings = await fetchProduct(URL_API_RATING);
+        await display(products);
+        await displayComment(ratings);
         spinner.setAttribute("hidden", "");
         slider();
     })();

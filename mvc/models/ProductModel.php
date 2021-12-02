@@ -26,7 +26,7 @@
                   return $this->select_by_id('*',1);
             }
             public function add($data){
-                  return $this->add_new($data);
+                  return $this->add_new_advanced($data);
             }
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);

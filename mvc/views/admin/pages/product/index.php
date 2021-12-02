@@ -468,7 +468,7 @@
         //select sale
         $.ajax({
             type: "POST",
-            url: '<?php echo constant('URL') ?>sale/getall',
+            url: '<?php echo constant('URL') ?>sale/getSaleByType/0',
             dataType: 'json',
             success: function(data){
                 var sale = data['data'];

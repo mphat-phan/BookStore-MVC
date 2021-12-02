@@ -34,13 +34,6 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="cart__discount">
-                    <h6>Discount codes</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Coupon code">
-                        <button type="submit">Apply</button>
-                    </form>
-                </div>
                 <div class="cart__total">
                     <svg class="spinnerCart" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
                         <circle class="circle" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
@@ -52,7 +45,7 @@
                         <li>Discount <span id="discount">0đ</span></li>
                         <li>Total <span id="total">0đ</span></li>
                     </ul>
-                    <a role="button" data-toggle="modal" data-target="#checkout" class="primary-btn">Proceed to checkout</a>
+                    <a role="button" data-toggle="modal" data-target="#checkout" class="primary-btn" id="proceedtocheckout">Proceed to checkout</a>
                 </div>
             </div>
         </div>
@@ -60,6 +53,35 @@
 </section>
 <!-- jQuery -->
 <div class="modal" id="checkout">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    
+                    <div class="card-header">
+                        <h3 class="card-title">Add</h3>
+                    </div>
+
+                    <div class="container">
+                        <div class="checkoutTable">
+        
+                        </div>
+                        <div class="checkoutOrder">
+
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary buyorder">Đặt hàng</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</div>
+<div class="modal" id="checkoutSale">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
@@ -86,19 +108,25 @@
                                 <form action="#">
                                     <input name="txtSale" type="text" class="form-control" id="txtSale"
                                             placeholder="">
-                                    <span id="saleError" style="color: red">Không tìm thấy</span>
-                                    <div id="acceptSale"></div>
+                                    <button id="submitSale" type="submit">Apply</button>
                                 </form>
                             </div>
                             </div>
                         </div>
+                        <h4>Voucher</h4>
+                        <div class="owl-carousel owl-theme cardSaleVoucher container">
+
+                        </div>
                     </div>
-                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
 
             </div>
         </div>
 </div>
+
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 
 <script>
@@ -108,7 +136,8 @@
     const cardSaleShipping = document.querySelector('.cardSaleShipping');
     const cardSaleEvent = document.querySelector('.cardSaleEvent');
     const cardSaleVoucher = document.querySelector('.cardSaleVoucher');
-
+    const checkoutTable = document.querySelector('.checkoutTable');
+    const checkoutOrder = document.querySelector('.checkoutOrder');
     const carttable = document.querySelector('#carttable tbody');
     Number.prototype.format = function(n, x) {
                     var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
@@ -151,83 +180,332 @@
 		return tmp;
 	};
     var cartdetailAll=[];
-    var total=0;
-    var discount=0;
-    var subtotal=0;
-    var saleList = [];
+    var saleShipping=[];
+    var saleEvent=[];
+    var voucherList = [];
+    var htmlSale="";
+    class Order {
+        constructor(subtotal, discount, total, shipping) {
+            this.subtotal = subtotal;
+            this.discount = discount;
+            this.total = total;
+            this.shipping = shipping;
+        }
+    }
+    var order = new Order(0,0,0,25000);
     $(document).ready(function() {
-        $("#acceptSale").click(function(){
-                if(checkDuplicateSale($("#txtSale").val())){
-                    sweetAlertCRUD(0, "Bị trùng mã sale : ");
-                    return;
-                }
-                var saleID = $("#txtSale").val();
-                discountByID = parseInt(discount);
-                saleList.push(saleID); 
-        });
         function checkDuplicateSale(id){
-            for(let i=0;i<saleList.length;i++){
-                if(saleList[i].saleID==id){
+            for(let i=0;i<voucherList.length;i++){
+                if(voucherList[i].id==id){
                     return 1;
                 }
             }
             return 0;
         }
-        $('#txtSale').on('keyup', function() {
+        $('#submitSale').click(function(e){
+            e.preventDefault();
             $.ajax({
-                    type: "POST",
-                    url: '<?php echo constant('URL') ?>sale/getSaleByType/3',
-                    dataType: 'json',
-                    success: function(data){
-                        console.log(data);
-                        var sale = data['data'];
-                        for(let i=0;i<sale.length;i++){
-                            if(sale[i].id==$('#txtSale').val()){
-                                minorder = sale[i].minorder;
-                                maxsale = sale[i].maxsale;
-                                discount = sale[i].discount;
+                type: "POST",
+                url: '<?php echo constant('URL') ?>sale/getSaleByType/3',
+                dataType: 'json',
+                success: function(data){
+                    var sale = data['data'];
+                    for(let i=0;i<sale.length;i++){
+                        if(sale[i].id==$('#txtSale').val()){
+                            id = sale[i].id;
+                            name = sale[i].name;
+                            quantity = sale[i].quantity;
+                            discount = sale[i].discount;
+                            minorder = sale[i].minorder;
+                            maxsale = sale[i].maxsale;
+                            startdate = sale[i].startdate;
 
-                                startdate = sale[i].startdate;
-                                enddate = sale[i].enddate;
-                                today = getDate();
+                            enddate = sale[i].enddate;
+                            today = getDate();
+                            
+                            var from = new Date(startdate.replace(/-/g,'/'));  
+                            var to = new Date(enddate.replace(/-/g,'/'));  
+                            var check = new Date(today.replace(/-/g,'/'));
+                            if(checkDuplicateSale(sale[i].id)){
+                                sweetAlertCRUD(0, "Bị trùng mã sale : "); 
+                                return;
+                            }
+                            else if(parseInt(minorder)>parseInt(order.subtotal))
+                            {
+                                sweetAlertCRUD(0, "Đơn tối thiểu để áp dụng mã là "+minorder+" | "+"Giảm tối đa "+maxsale);
+                                return;
+                            }
+                            else if(check < from || check > to){
+                                sweetAlertCRUD(0, "Mã đã hết hạn");
+                                return;
+                            }
+                            else{
+                                sweetAlertCRUD(1, "Ok");
+                                salePrice = parseInt(order.subtotal) - parseInt(order.subtotal*discount/100);
+                                if(salePrice>maxsale){
+                                    salePrice=maxsale;
+                                }
+                                order.discount+= parseInt(salePrice);
+                                reloadSumOrder();
+                                voucherList.push(id);
+                                htmlSale+=`<label class="item col labl" id="radiobox">
+                                                <div class="row" style="align-items:center!important;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;background: linear-gradient(45deg,cornsilk, cornflowerblue);border-radius: 12px;">
+                                                    
+                                                    <div class="col-3 checkRadio"> 
+                                                        <input class="" type="checkbox" name="voucherCode" value ="${id}">
+                                                        <span><span>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="row">
+                                                            <div style="text-align:center">${name}</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div style="text-align:center;font-size:20px;color:red">Giảm ${discount}%</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div style="text-align:center;font-size:20px;color:red">Còn ${quantity}</div>
+                                                        </div>
+                                    
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <div class="row">
+                                                        <span style="font-size:10px">Thời hạn</span>
+                                                        <span style="font-size:20px">${startdate} - ${enddate}</span>
+                                                        </div>
+                                        
+                                                        <div class="row">
+                                                        <span style="font-size:10px">Đơn tối thiểu</span>
+                                                        <span style="font-size:20px">${parseInt(minorder).format()}đ</span>
+                                                        </div>
+                                                        <div class="row">
+                                                        <span style="font-size:10px">Giảm tối đa</span>
+                                                        <span style="font-size:20px">${parseInt(maxsale).format()}đ</span>
+                                                        </div>
+                                                    </div>  
+                                                </div>                   
+                                            </label>`;
                                 
-                                var from = new Date(startdate.replace(/-/g,'/'));  
-                                var to = new Date(enddate.replace(/-/g,'/'));  
-                                var check = new Date(today.replace(/-/g,'/'));
-
-                                ///hàm tính tính tiền sell
-                                if(parseInt(minorder)>parseInt($("#txtSubTotal").val()))
-                                {
-                                    $('#saleError').html("Đơn tối thiểu để áp dụng mã là "+minorder+" | "+"Giảm tối đa "+maxsale);
-                                
-                                    return;
-                                }
-                                else if(check < from || check > to){
-                                    $('#saleError').html("Mã đã hết hạn");
-                                    return;
-                                }
-                                else{
-                                    $('#saleError').html("Giảm tối đa "+maxsale+" | "+"Mã giảm "+discount+"%");
-                                    $('#acceptSale').html("<div id='confirmSale' type='button' class='btn btn-outline-primary'>Áp dụng mã</div>");
-                                    return;
-                                }
-                                $('#saleError').html("");
+                                cardSaleVoucher.innerHTML=htmlSale;
                                 
                                 return;
                             }
-                            
+                            return;
                         }
-                        $('#saleError').html("Không tìm thấy");
-                        $('#acceptSale').html("");
+                        else{
+                            sweetAlertCRUD(0, "Không tồn tại mã code");
+                        }
                     }
+                    
+                    
+                }
             })
-        });
+        })
+        $('#proceedtocheckout').click(function(e){
+            $('input[name="shippingCode"]').each(function() { 
+			    this.checked = false; 
+                saleShipping = [];
+		    });
+            $('input[name="eventCode"]').each(function() { 
+			    this.checked = false; 
+                saleEvent = [];
+		    });
+            $('input[name="voucherCode"]').each(function() { 
+			    this.checked = false; 
+		    });
+            (async () => {
+                spinner.style.display = "block";
+                checkoutTable.innerHTML = "";
+                checkoutOrder.innerHTML = "";
+                order.discount = 0;
+                order.shipping = 25000;
+                if(checkboxList.length>0){
+                    const cart = await cartdetail();
+                    await displayCheckout(cart);
+                }
+                else{
+                    sweetAlertCRUD(0,"Vui lòng chọn sản phẩm");
+                    checkoutTable.innerHTML = "Vui lòng chọn sản phẩm";
+                }
+                spinner.style.display = "none";
+                slider();
+            })();
+
+        })
+        $(document).on('change', 'input[name="shippingCode"]', function (e) {
+            saleShipping=[];
+            order.shipping = 25000;
+            var id = $(this).val()
+            var thisinput = $(this);
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>sale/getbyid/'+id,
+                dataType: 'json',
+                success: function(data){
+                    var sale = data['data'];
+                        if(sale[0].id==id){
+                            id = sale[0].id;
+                            name = sale[0].name;
+                            quantity = sale[0].quantity;
+                            discount = sale[0].discount;
+                            minorder = sale[0].minorder;
+                            maxsale = sale[0].maxsale;
+                            startdate = sale[0].startdate;
+                            enddate = sale[0].enddate;
+                            today = getDate();
+                            
+                            var from = new Date(startdate.replace(/-/g,'/'));  
+                            var to = new Date(enddate.replace(/-/g,'/'));  
+                            var check = new Date(today.replace(/-/g,'/'));
+                            if(parseInt(minorder)>parseInt(order.subtotal))
+                            {
+                                sweetAlertCRUD(0, "Đơn tối thiểu để áp dụng mã là "+minorder+" | "+"Giảm tối đa "+maxsale);
+                                thisinput.prop("checked",false);
+                            
+                            }
+                            else if(check < from || check > to){
+                                sweetAlertCRUD(0, "Mã đã hết hạn");
+                                thisinput.prop("checked",false);
+                               
+                            }
+                            else{
+                                saleShipping=[]; 
+                                saleShipping.push(id);
+                                order.shipping = 0;
+                                sweetAlertCRUD(1, "Choose");
+                              
+                            }
+                        }
+                        else{
+                            sweetAlertCRUD(0, "Không tồn tại mã code");
+                            thisinput.prop("checked",false);
+                        }        
+                        reloadSumOrder();
+                }
+            })
+
+        }); 
+        $(document).on('change', 'input[name="eventCode"]', function (e) {
+            saleEvent=[];
+            var id = $(this).val()
+            var thisinput = $(this);
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>sale/getbyid/'+id,
+                dataType: 'json',
+                success: function(data){
+                    var sale = data['data'];
+                        if(sale[0].id==id){
+                            id = sale[0].id;
+                            name = sale[0].name;
+                            quantity = sale[0].quantity;
+                            discount = sale[0].discount;
+                            minorder = sale[0].minorder;
+                            maxsale = sale[0].maxsale;
+                            startdate = sale[0].startdate;
+                            enddate = sale[0].enddate;
+                            today = getDate();
+                            var from = new Date(startdate.replace(/-/g,'/'));  
+                            var to = new Date(enddate.replace(/-/g,'/'));  
+                            var check = new Date(today.replace(/-/g,'/'));
+                         
+                            if(parseInt(minorder)>parseInt(order.subtotal))
+                            {
+                                sweetAlertCRUD(0, "Đơn tối thiểu để áp dụng mã là "+minorder+" | "+"Giảm tối đa "+maxsale);
+                                thisinput.prop("checked",false);
+                            }
+                            else if(check < from || check > to){
+                                sweetAlertCRUD(0, "Mã đã hết hạn");
+                                thisinput.prop("checked",false);
+                            }
+                            else if(quantity==0){
+                                sweetAlertCRUD(0, "Mã đã hết");
+                                thisinput.prop("checked",false);
+                            }
+                            else{
+                                saleEvent=[]; 
+                                saleEvent.push(id);
+
+                                salePrice = parseInt(order.subtotal) - parseInt(order.subtotal*discount/100);
+                                if(salePrice>maxsale){
+                                    salePrice=maxsale;
+                                }
+                                order.discount+= parseInt(salePrice)
+                                sweetAlertCRUD(1, "Choose");
+                            }
+                            reloadSumOrder();
+                        }
+                        else{
+                            sweetAlertCRUD(0, "Không tồn tại mã code");
+                            thisinput.prop("checked",false);
+                        }
+                        reloadSumOrder();   
+                }
+            })
+        }); 
+        $('.buyorder').click(function(e){
+            e.preventDefault();
+            if(checkboxList.length==0){
+                sweetAlertCRUD(0,"Vui lòng chọn sản phẩm");
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: '<?php echo constant('URL') ?>order/addOnline',
+                data:{
+                    'productID' : JSON.stringify(checkboxList),
+                    'saleShipping' : JSON.stringify(saleShipping),
+                    'saleEvent' : JSON.stringify(saleEvent),
+                    'voucherList' : JSON.stringify(voucherList),
+                    'order' : JSON.stringify(order)
+                },
+                success: function(data){
+                    alert("Đặt hàng thành công");
+                    window.location="<?php echo constant('URL') ?>profile";
+                }
+            })
+        })
+        
     })
+    function reloadSumOrder(){
+        $(".sumorder").html(`
+            <div class="row">
+                <div class="col">Tổng tiền hàng</div>
+                    <div class="col">${parseInt(order.subtotal).format()}đ</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Tổng tiền phí vận chuyển</div>
+                        <div class="col">${parseInt(order.shipping).format()}đ</div>
+                    </div>
+                    <div class="row">
+                                <div class="col">Giảm</div>
+                                <div class="col">${parseInt(order.discount).format()}đ</div>
+                            </div>
+                 <div class="row">
+                  <div class="col"><h5>Tổng thanh toán<h5></div>
+                    <div class="col">${parseInt(order.total-order.discount+order.shipping).format()}đ</div>
+                     </div>
+                                `)
+    }
+    function checkDuplicateCheckbox(id){
+            for(let i=0;i<checkboxList.length;i++){
+                if(checkboxList[i]==id){
+                    return 1;
+                }
+            }
+            return 0;
+    }
+    function removeArr(id){
+        for(let i=0;i<voucherList.length;i++){
+            if(voucherList[i]==id){
+                voucherList.splice(i, 1);
+                return 1;
+            }
+        }
+        return 0;
+    }
     function getDate(){
         var today = new Date();
         return today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
-
-
     }
     async function display(arr) {
         return new Promise(resolve => { 
@@ -325,6 +603,107 @@
         });   
           
     }
+    async function displayCheckout(arr) {
+        return new Promise(resolve => { 
+            setTimeout(function() {
+                var cart = arr;
+                var currentdate = new Date();
+                const html = cart.map(cartdetail => {
+                    if(checkDuplicateCheckbox(cartdetail.productID.id)==0){
+                        return;
+                    }
+                    var enddate = new Date(cartdetail.productID.saleID.enddate);
+                    var startdate = new Date(cartdetail.productID.saleID.startdate);
+                    var salePrice = parseInt(cartdetail.productID.price) - parseInt(cartdetail.productID.price*cartdetail.productID.saleID.discount/100);
+                    var total = cartdetail.quantity*salePrice;
+                    var productID = cartdetail.productID.id;
+                    var quantity = cartdetail.quantity;
+                    var price = cartdetail.productID.price;
+                    var subtotal = quantity*price;
+                    var discount = cartdetail.productID.saleID.discount;
+                    return `
+                    <div class="row align-items-center mb-3 border p-2">
+                            <div class="col-2">
+                                <img class="justify-content-center" style="height:100px; width:70px!important;-webkit-border-radius: 13px;-moz-border-radius: 13px;object-fit: cover;overflow: hidden;" src="<?php echo constant('URL') ?>public/assets/images/${cartdetail.productID.image}" alt="">
+                            </div>
+                            <div class="col-6">
+                                <div class="row"><h5>${cartdetail.productID.name}<h5></div>
+                                <div class="row">
+                                    <div class="col">${parseInt(salePrice).format()}đ</div>
+                                    <div class="col">x${cartdetail.quantity}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">Tổng tiền</div>
+                                    <div class="col">${parseInt(total).format()}đ</div>
+                                </div>
+                            </div>
+                            
+                    </div>  
+                    `;
+                }).join('');
+                checkoutTable.innerHTML += html;
+                checkoutOrder.innerHTML = `
+                <div class="row border p-2">
+                            <div class="col border p-2 ">
+                                <div class="row">
+                                    <div class="col">Mã giảm giá</div>
+                                <div class="col">
+                                    <button type="button" data-toggle="modal" data-target="#checkoutSale" class="btn btn-outline-primary">Chọn mã</button>
+                                </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col border p-2 ">
+                                <div class="form-group">
+                                        <label>Phương thức thanh toán</label>
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" value="cash" checked>
+                                            <label class="form-check-label">Cash</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" value="cash">
+                                            <label class="form-check-label">Card</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment" value="wallet">
+                                            <label class="form-check-label">Wallet</label>
+                                            </div>
+                                        </div>
+                            </div>  
+                            
+                        </div>
+                        </div>
+                        <div class="col sumorder">
+                            <div class="row">
+                                <div class="col">Tổng tiền hàng</div>
+                                <div class="col">${parseInt(order.subtotal).format()}đ</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">Tổng tiền phí vận chuyển</div>
+                                <div class="col">${parseInt(order.shipping).format()}đ</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">Giảm</div>
+                                <div class="col">${parseInt(order.discount).format()}đ</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><h5>Tổng thanh toán<h5></div>
+                                <div class="col">${parseInt(order.total-order.discount+order.shipping).format()}đ</div>
+                            </div>
+                </div>
+                
+                `
+                resolve('resolved');
+            });
+        });   
+          
+    }
     async function displaySale(arr) {
         return new Promise(resolve => { 
             setTimeout(function() {
@@ -335,7 +714,7 @@
                     if(saledetail.type==1){
                         htmlCardShipping+= `
                         <label class="item col labl" id="radiobox">
-                            <div class="row" style="align-items:center!important;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;background: linear-gradient(45deg, brown, transparent);">
+                            <div class="row" style="align-items:center!important;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;background: linear-gradient(45deg, brown, transparent);border-radius: 12px;">
                                 
                                 <div class="col-3 checkRadio"> 
                                     <input class="" type="radio" name="shippingCode" value ="${saledetail.id}">
@@ -363,7 +742,7 @@
                     else if(saledetail.type==2){
                         htmlCardEvent+= `
                         <label class="item col labl" id="radiobox">
-                            <div class="row" style="align-items:center!important;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;background: linear-gradient(45deg,cornsilk, cornflowerblue)">
+                            <div class="row" style="align-items:center!important;box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;background: linear-gradient(45deg,cornsilk, cornflowerblue);border-radius: 12px;">
                                 
                                 <div class="col-3 checkRadio"> 
                                     <input class="" type="radio" name="eventCode" value ="${saledetail.id}">
@@ -430,6 +809,7 @@
     $("#checkAll").click(function () {
         total=0;
         subtotal=0;
+        discount=0;
         $('input:checkbox').not(this).prop('checked', this.checked);
         $("input[type='checkbox']:disabled").prop("checked",false);
         if($(this).prop("checked") == true){
@@ -467,13 +847,16 @@
             calculateOrder();
         }
         
-    });
+    }); 
     async function displayOrder(subtotal,discount,total){
         return new Promise(resolve => {
             setTimeout(function () {
                 $("#subtotal").html(parseInt(subtotal).format()+"đ");
                 $("#discount").html(parseInt(discount).format()+"đ");
                 $("#total").html(parseInt(total).format()+"đ");
+                order.subtotal=subtotal;
+                order.discount=discount;
+                order.total=total;
                 resolve('resolved')
             });
         });
@@ -517,6 +900,7 @@
         var currentdate = new Date();
         var total=0;
         var subtotal=0;
+        var discount = 0;
         (async () => {
             var cart = await cartdetail();
             for(let i=0;i<checkboxList.length;i++){
@@ -650,7 +1034,6 @@
             return data.items || data.results;
     }
     (async () => {
-            //cartdetail = await fetchProduct('<?php echo constant('URL') ?>cartdetail/getbyid');
             const cart = await cartdetail();
             const sale = await fetchProduct('<?php echo constant('URL') ?>sale/getall');
             await display(cart);

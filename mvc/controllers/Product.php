@@ -37,13 +37,22 @@ class Product extends Controller{
                     $authorobj = json_decode($this->author->getID($author));
                     $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
                 }
+                else{
+                    $product->data[$i]->authorID = array("id" => "Null" , "name" => "Null");
+                }
                 if(isset($publisher)){
                     $publisherobj = json_decode($this->publisher->getID($publisher));
                     $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
                 }
+                else{
+                    $product->data[$i]->publisherID = array("id" => "Null" , "name" => "Null");
+                }
                 if(isset($esrb)){
                     $esrbobj = json_decode($this->esrb->getID($esrb));
                     $product->data[$i]->esrbID = array("id" => $esrbobj->data[0]->id,"name" => $esrbobj->data[0]->name);
+                }
+                else{
+                    $product->data[$i]->esrbID = array("id" => "Null" , "name" => "Null");
                 }
                 if(isset($sale)){
                     $saleobj = json_decode($this->sale->getID($sale));

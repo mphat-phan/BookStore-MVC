@@ -42,12 +42,12 @@
                                     <div class="form-group">
                                         <label>Quantity</label>
                                         <input min=0 name="" type="number" class="form-control" id="txtQuantity"
-                                            placeholder=" " >
+                                            placeholder=" " value=1>
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
                                         <input min=0 name="" type="number" class="form-control" id="txtPrice"
-                                            placeholder=" " >
+                                            placeholder=" " value=10000>
                                     </div>
 
                                 </div>
@@ -60,10 +60,11 @@
                                         role="button" data-toggle="modal" data-target="#saveModel">Save</button>
                                     <button type="button" onclick='' href="#" id = "addImport"
                                         class="btn btn-primary btn-sm float-left mr-1">Add</button>
-                                    
+                                    <button type="button" onclick='' href="#" id = "addImport"
+                                        class="btn btn-primary btn-sm float-left mr-1" data-toggle="modal" data-target="#AddModal">Add New</button>
                                     <button type="button" onclick="" href="#"
                                         class="btn btn-success btn-sm float-right mr-1" role="button"
-                                        data-toggle="modal" data-target="#">Import</button>
+                                        data-toggle="modal" data-target="#importExcel">Import</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -104,7 +105,36 @@
     </section>
     <!-- /.content -->
 
+<div class="modal" id="importExcel">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add Import</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAddExcel" action="" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product Image</label>
+                                <input name="txtExcelImport" id="txtExcelImport" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control "
+                                    placeholder="Enter " required>
+                            </div>
+                            <!-- /.card-body -->
+                            
+                        </div>
+                        <div class="card-footer">
+                            <button id="btnImportExcel" name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </form>
+               
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="modal" id="saveModel">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -143,6 +173,51 @@
         </div>
     </div>
 </div>
+<div class="modal"  id="AddModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="formAdd" action="" method="post">
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product ID</label>
+                                <input name="txtIDNew" type="text" class="form-control " id="txtIDNew"
+                                    placeholder="Enter " required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product Name</label>
+                                <input name="txtNameNew" type="text" class="form-control " id="txtNameNew"
+                                    placeholder="Enter " required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product Price</label>
+                                <input name="txtPriceNew" type="number" class="form-control " id="txtPriceNew"
+                                    placeholder="Enter " value=10000 required>
+                            </div>  
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product Quantity</label>
+                                <input name="txtQuantityNew" type="number" class="form-control " id="txtQuantityNew"
+                                    placeholder="Enter " value=1 required>
+                            </div> 
+                            <!-- /.card-body -->
+                            
+                        </div>
+                        <div class="card-footer">
+                                <button id='addbtn' name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
 <script>
     var importdetail = []   ;
@@ -265,7 +340,7 @@
                 }, // serializes the form's elements.
                 success: function (data) {
                     sweetAlertCRUD(data, "Add");
-                    console.log(data);
+                    alert("Nhập hàng thành công");
                     if(data==1){
                         location.reload();
                     }
@@ -273,7 +348,98 @@
             });
 
         })
+        $("#addbtn").click(function(e){
+            e.preventDefault();
+            productID = $("#txtIDNew").val();
+            quantity = $("#txtQuantityNew").val();
+            price = $("#txtPriceNew").val();   
+            name = $("#txtNameNew").val();   
+            //name = $("#txtNameNew").val();  
+            total = quantity*price;
+            console.log(productID);
+            if(checkDuplicate(productID)==1){
+                sweetAlertCRUD(0, "Bị trùng mã sản phẩm : ");
+                return;
+            }
+            sweetAlertCRUD(1, "Add");
+            importdetail.push({productID,quantity,price,total,name});
+     
+            let nhaphangtable=$('#nhaphangtable').DataTable( {
+            "data": importdetail,
+            //define the columns and set the data property for each column
+            "columns": [
+                { 
+                    "title": "ProductID",  "data": "productID" 
+                },
+                { 
+                    "title": "Quantity", "data": "quantity",
+                    "render": function (data, type, row, meta) {
+                        return(
+                            "<input onkeyup='keyupCalculate(this)' name='txtQuantityDetail' type='number' class='form-control' value='"+data+"'>"
+                        )
+                    }
+                
+                },
+                { 
+                    "title": "Price", "data": "price",
+                    "render": function (data, type, row, meta) {
+                        return(
+                            "<input onkeyup='keyupCalculate(this)' name='txtPriceDetail' type='number' class='form-control' value='"+data+"'>"
+                        )
+                    }
+                
+                },
+                { 
+                    "title": "Total", "data": null,
+                    "render": function (data, type, full) {
+                        var quantity = full.quantity;
+                        var price = full.price;
+                        var total = quantity*price;
+                        return(
+                            "<input name='txtTotal' type='number' class='form-control' value='"+total+"' disabled >"
+                        )
 
+                    }
+                
+                },
+                { 
+                    "title": "Remove", "data": null,
+                    "render": function (data, type, full) {
+                        var id = full.productID;
+                        return(
+                            "<button onclick='removeRow(this)' id='removeRow' class='btn btn-danger btn-sm' role='button'  data_id='" +
+                            id + "'>" +
+                            "Remove" +
+                            "</button>"
+                        )
+
+                    }
+                
+                },
+            ]
+            } );
+            nhaphangtable.destroy();
+        })
+        $("#formAddExcel").submit(function(e){
+            e.preventDefault();
+            var url = "<?php echo constant('URL') ?>import/addExcel";
+            console.log(url);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:  new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function (data) {
+                    sweetAlertCRUD(data, "Add");
+                    alert("Nhập hàng thành công");
+                    if(data==1){
+                        location.reload();
+                    }
+                }
+            });
+        })
       
     });
     function removeRow(e){

@@ -5,8 +5,10 @@ class Order extends Controller{
         $this->order = $this->model("OrderModel");
         $this->orderdetail = $this->model("OrderDetailModel");
         $this->saleorder = $this->model("SaleOrderModel");
-        
-        $this->UserRole = $this->model("UserRoleModel");                                
+        $this->sale = $this->model("SaleModel");
+        $this->product = $this->model("ProductModel");
+        $this->UserRole = $this->model("UserRoleModel");     
+        $this->cartdetail = $this->model("CartDetailModel");  
     }
     function index(){
         if($this->UserRole->checkRole("staff.sell")!=1 && $this->UserRole->checkRole("admin")!=1)
@@ -43,7 +45,6 @@ class Order extends Controller{
         $arr;
         if(isset($_POST['orderdetail'])){ 
             $date = $_POST['txtDate'];
-           
             $subtotal= $_POST['txtSubTotal'];
             $shippingfee= $_POST['txtShippingfee'];
             $discount = $_POST['txtDiscount'];
@@ -92,6 +93,80 @@ class Order extends Controller{
         }
         echo 0;
     }
+    function addOnline(){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $today = date('Y-m-d', time());
+
+        //order//
+        $order = json_decode($_POST['order']);
+        $user = $_SESSION['username'];
+        $arr = array('date' => $today , "subtotal" => $order->subtotal , "shippingfee" => $order->shipping , "discount" => $order->discount , "total" => $order->total - $order->discount + $order->shipping  , "customer_username" => $user, "status" => "0");
+        
+        $this->order->add($arr);
+        $orderID = $this->order->selectLast();
+
+        //cart
+        $cart = json_decode($this->cartdetail->getID());
+
+        //order detail
+        $productID = json_decode($_POST['productID']);
+        $orderdetail = array();
+        if(isset($productID) && !empty($productID)){
+            for($i = 0 ; $i < count($productID) ; $i++){
+                
+                $product = json_decode($this->product->getID($productID[$i]));
+                
+                $id = $product->data[0]->id;
+                $price = $product->data[0]->price;
+                //sale
+                $sale = json_decode($this->sale->getID($product->data[0]->saleID));
+                $startdate = $sale->data[0]->startdate;
+                $enddate = $sale->data[0]->enddate;
+                $discount = $sale->data[0]->discount;
+
+                if($startdate<$today && $today<$enddate){
+                    $discountProduct =  $price - $price*$discount/100;       
+                }
+                
+                for($e=0 ; $e < count($cart->data) ; $e++){
+                    if($cart->data[$e]->productID==$id){
+                        $quantity = $cart->data[$e]->quantity;
+                    }
+                }
+                $subtotal = $quantity*$price;
+                $arrayproduct = array('orderID' => $orderID ,'productID' => $id, "quantity" => $quantity , "price" => $price , "subtotal" => $subtotal , "discount" => $discount);
+                $this->orderdetail->add($arrayproduct);
+                $this->cartdetail->delete($id);
+            }   
+        }
+
+        //Sale//
+        $saleShipping = json_decode($_POST['saleShipping']);
+        $saleEvent = json_decode($_POST['saleEvent']);
+        $voucherList = json_decode($_POST['voucherList']);
+        $saleList = array();
+        if(!empty($saleShipping)){
+            array_push($saleList, $saleShipping[0]);
+        }
+        if(!empty($saleEvent)){
+            array_push($saleList, $saleEvent[0]);
+        }
+        if(!empty($voucherList)){
+            for($i = 0 ; $i < count($voucherList) ; $i++){
+                array_push($saleList, $voucherList[$i]);
+            }   
+        }
+     
+        if(!empty($saleList)){
+            for($z = 0 ; $z < count($saleList) ; $z++){
+                $arraySale = array('orderID' => $orderID ,'saleID' => $saleList[$z]);
+                $this->saleorder->add($arraySale);
+            }
+        }
+        
+       
+     
+    }
     function update($id){
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","update")!=1)
         {
@@ -126,7 +201,7 @@ class Order extends Controller{
     }
     function printInvoice($id){
         $this->view("admin/layout2",array(
-			"Page" => "printInvoice"
+			"Page" => "printInvoice\index"
 		));  
     }
     function pages() {

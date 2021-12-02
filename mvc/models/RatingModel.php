@@ -20,9 +20,35 @@
             {   
                   return $this->select_by_id('*',$id);
             }
+            public function getByProduct($id)
+            {   
+                  $sql ="select rating.*,customer.name,user.image from `rating`,`ordertb`,`customer`,`user` where user.username = ordertb.customer_username and ordertb.customer_username=customer.username and rating.orderID = ordertb.id and rating.productID = '$id' order by rating.date desc";   
+                  return $this->selectQueryJson($sql);
+            }
+            public function getByRating($rate)
+            {   
+                  $this->_key = 'rating';
+                  return $this->select_by_id('*',$rate);
+            }
+            public function getByUser()
+            {   
+                  $username = $_SESSION['username'];
+                  $sql ="select * from `rating`,`ordertb` where rating.orderID = ordertb.id and ordertb.customer_username = '$username'";   
+                  return $this->selectQueryJson($sql);
+            }
+
+            public function getByUserAndRating($rate)
+            {   
+                  $username = $_SESSION['username'];
+                  $sql ="select * from `rating`,`ordertb` where rating.orderID = ordertb.id and ordertb.customer_username = '$username' and rating.rating = '$rate' ";   
+                  return $this->selectQueryJson($sql);
+            }
 
             public function add($data){
                   return $this->add_new($data);
+            }
+            public function updateStatus($data,$id){
+                  
             }
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
