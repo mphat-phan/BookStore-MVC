@@ -13,7 +13,7 @@ class Admin extends Controller{
     function Login(){
         if(isset($_SESSION['username']))
         {
-            header("Location: ../Dashboard");
+            header("Location: ".constant('URL')."Dashboard");
         }                
         $this->view("admin/layout2",array(
             "Page" => "login/login"
@@ -21,7 +21,7 @@ class Admin extends Controller{
     }    
     function Logout(){                        
         session_destroy();
-        header("Location: Login");
+        header("Location: ".constant('URL')."admin/Login");
     }
     // function register(){
     //     $this->view("layout",array(

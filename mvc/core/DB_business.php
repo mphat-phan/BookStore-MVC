@@ -68,7 +68,7 @@ class DB_business extends DB_driver
     function selectQueryJson($sql){
 
         return $this->get_row($sql);
-    }
+    }    
 }
 
 ?>

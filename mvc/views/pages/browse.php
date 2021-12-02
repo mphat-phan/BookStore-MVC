@@ -474,7 +474,7 @@
             }
             // if (searchParams.has('category')) {
             //     //console.log(searchParams.get('language'));
-            //     arrayfilter = await languagefilter(searchParams.get('category'), arrayfilter);
+            //     arrayfilter = await categoryfilter(searchParams.get('category'), arrayfilter);
             // }
             if (searchParams.has('price')) {
                 //console.log(searchParams.get('sort'));                        
@@ -536,7 +536,7 @@
             setTimeout(function () {
                 var arr = selected.split('_');
                 var array = [];
-                var i = 0;
+                var i = 0;                
                 arrayproducts.data.forEach(element => {
                     arr.forEach(key => {
                         if (element.saleID.id === key) {
@@ -683,8 +683,7 @@
     $(function () {
         $(document).on('click', '.add-to-cart', function (e) {
             e.preventDefault();
-            id=$(e.target).attr('data_id');
-            
+            id=$(e.target).attr('data_id');            
             $.ajax({
                 type: "POST",
                 url: '<?php echo constant('URL') ?>cartdetail/add',
@@ -693,9 +692,12 @@
                     "quantity" : 1
                 },
                 success: function(data){
-                    console.log(data);
+                    //console.log(data);
                     if(data==1){
                        sweetAlertCRUD(data, "Thêm vào giỏ hàng thành công"); 
+                    }
+                    else if(data==3){
+                        sweetAlertCRUD(data,""); 
                     }
                     else{
                         sweetAlertCRUD(data, "Hết hàng"); 

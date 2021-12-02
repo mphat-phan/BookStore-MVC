@@ -34,6 +34,10 @@ class Order extends Controller{
         $list = $this->order->selectLast();
         echo $list;
     }
+    function getOrderByStatus($status) {
+        $list = $this->order->selectstatus($status);
+        echo $list;
+    }
     function add(){
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
         {
