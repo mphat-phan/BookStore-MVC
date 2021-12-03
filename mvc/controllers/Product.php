@@ -34,7 +34,7 @@ class Product extends Controller{
                 
                 if(isset($author)){
                     $authorobj = json_decode($this->author->getID($author));
-                    $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
+                    $product->data[$i]->authorID = array("id" => $authorobj->data[0]->id,"name" => $authorobj->data[0]->name);                    
                 }
                 else{
                     $product->data[$i]->authorID = array("id" => "Null" , "name" => "Null");
@@ -79,7 +79,7 @@ class Product extends Controller{
                 
                 if(isset($author)){
                     $authorobj = json_decode($this->author->getID($author));
-                    $product->data[$i]->authorID = array("name" => $authorobj->data[0]->name);
+                    $product->data[$i]->authorID = array("id" => $authorobj->data[0]->id,"name" => $authorobj->data[0]->name);
                 }
                 if(isset($publisher)){
                     $publisherobj = json_decode($this->publisher->getID($publisher));
