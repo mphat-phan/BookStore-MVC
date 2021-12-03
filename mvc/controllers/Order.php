@@ -40,6 +40,7 @@ class Order extends Controller{
         $list = $this->order->selectstatus($status);
         echo $list;
     }
+    
     function add(){
         if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
         {
@@ -193,14 +194,21 @@ class Order extends Controller{
             echo 2;
             return;
         }
-        if(isset($_POST['checkDelete'])){
+        //if(isset($_POST['checkDelete'])){
             $status = -1;
             $array = array('status' => $status);
             if($this->order->updateByID($array,$id)==1){
+                $orderdetail = json_decode($this->orderdetail->getID($id));
+                for($i=0 ; $i< count($orderdetail->data) ; $i++ ){
+                    $id = $orderdetail->data[$i]->productID;
+                    $quantity = $orderdetail->data[$i]->quantity;
+                    $this->product->resetQuantityByID($id,$quantity);
+                    $this->product->resetSoldByID($id,$quantity);
+                }
                 echo 1;
                 return;
             }
-        }
+        //}
         echo 0;
     }
     function printInvoice($id){

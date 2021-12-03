@@ -33,7 +33,7 @@
                                 data-target="#AddModal">Add</button>
 
                             <button type="button" onclick="" href="#" class="btn btn-success btn-sm float-right mr-1"
-                                role="button" data-toggle="modal" data-target="#">Import</button>
+                                role="button" data-toggle="modal" data-target="#importExcel">Import</button>
                         </div>
 
 
@@ -44,12 +44,11 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
+                                        <th>Status</th>
                                         <th>PageNumber</th>
                                         <th>Publish Date</th>
-                                        <th>Status</th>
                                         <th>Language</th>
                                         <th>Esrb</th>
                                         <th>Image</th>
@@ -57,6 +56,7 @@
                                         <th>Author</th>
                                         <th>Publisher</th>
                                         <th>SaleID</th>
+                                        <th>Description</th>
                                         <th>#</th>
 
                                     </tr>
@@ -68,12 +68,11 @@
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
+                                        <th>Status</th>
                                         <th>PageNumber</th>
                                         <th>Publish Date</th>
-                                        <th>Status</th>
                                         <th>Language</th>
                                         <th>Esrb</th>
                                         <th>Image</th>
@@ -81,6 +80,7 @@
                                         <th>Author</th>
                                         <th>Publisher</th>
                                         <th>SaleID</th>
+                                        <th>Description</th>
                                         <th>#</th>
                                     </tr>
                                     
@@ -358,6 +358,36 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="importExcel">
+        <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add Import</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form id="formAddExcel" action="" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Product Image</label>
+                                <input name="txtExcelImport" id="txtExcelImport" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control "
+                                    placeholder="Enter " required>
+                            </div>
+                            <!-- /.card-body -->
+                            
+                        </div>
+                        <div class="card-footer">
+                            <button id="btnImportExcel" name="submit" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </form>
+               
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 <!-- jQuery -->
 <script src="<?php echo constant('URL') ?>public/assets/plugins/jquery/jquery.min.js"></script>
@@ -377,6 +407,7 @@
         });
     })
     $(document).on('click', 'input[type="checkbox"]', function(event){
+            thisCheckbox = $(this);
             id=$(this).attr('data_id');
             if($(this).prop("checked") == true){
                 
@@ -393,7 +424,14 @@
                     'txtStatus' : $(this).val()
                 },
                 success: function(data){
-                    sweetAlertCRUD(data, "Update status");
+                    
+                    if(data==0){
+                        sweetAlertCRUD(data, "Số lượng sản phẩm không đủ để publish");
+                        thisCheckbox.prop("checked",false);
+                    }
+                    else{
+                        sweetAlertCRUD(data, "Update status");
+                    }
                 }
             });
        
@@ -413,7 +451,26 @@
         $("#imageProductAdd").fadeIn("fast").attr('src',URL.createObjectURL(e.target.files[0]));
             
     });
-   
+    $("#formAddExcel").submit(function(e){
+            e.preventDefault();
+            var url = "<?php echo constant('URL') ?>product/addExcel";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data:  new FormData(this),
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function (data) {
+                    console.log(data);
+                    sweetAlertCRUD(data, "Add");
+                    if(data==1){
+                        sweetAlertCRUD(data, "Update");
+                        producttable.ajax.reload();
+                    }
+                }
+            });
+    })
 
     //select author
     var selectAuthor = document.getElementById('selectAuthor'); 
@@ -510,24 +567,10 @@
                     "data": "name"
                 },
                 {
-                    "data": null,
-                    "render": function (data, type, full) {
-                        return(
-                            "...see more in update"
-                        )
-                    }
-                },
-                {
                     "data": "quantity"
                 },
                 {
                     "data": "price"
-                },
-                {
-                    "data": "pagenumber"
-                },
-                {
-                    "data": "publishdate"
                 },
                 {
                     "data": "status",
@@ -546,6 +589,12 @@
                         }
                         
                     }
+                },
+                {
+                    "data": "pagenumber"
+                },
+                {
+                    "data": "publishdate"
                 },
                 {
                     "data": "language"
@@ -611,6 +660,14 @@
                         return(
                             data.id
                         );
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, type, full) {
+                        return(
+                            "...see more in update"
+                        )
                     }
                 },
                 {

@@ -28,10 +28,20 @@
             public function add($data){
                   return $this->add_new_advanced($data);
             }
+            public function addExcel($data){
+                  return $this->add_new_excel($data);
+            }
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
             }
-            
+            public function resetQuantityByID($id,$quantity){
+                  $sql ="UPDATE `product` set `quantity`=quantity + '$quantity' where `id` ='$id'";                              
+                  return $this->selectQueryJson($sql);
+            }
+            public function resetSoldByID($id,$quantity){
+                  $sql ="UPDATE `product` set `sold`= sold - '$quantity' where `id` ='$id'";                              
+                  return $this->selectQueryJson($sql);
+            }
             public function delete($id){
                   return $this->delete_by_id($id);
 

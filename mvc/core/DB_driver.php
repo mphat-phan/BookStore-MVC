@@ -70,6 +70,28 @@ class DB_driver
 
         return mysqli_query($this->__conn, $sql);
     }
+    function insertExcel($table, $data)
+    {
+
+        // Kết nối
+        $this->connect();
+
+        // Lưu trữ danh sách field
+        $field_list = '';
+        // Lưu trữ danh sách giá trị tương ứng với field
+        $value_list = '';
+ 
+        // Lặp qua data
+        foreach ($data as $key => $value){
+            $field_list .= ",$key";
+            $value_list .= ",'".mysqli_real_escape_string($this->__conn,$value)."'";
+        }
+ 
+        // Vì sau vòng lặp các biến $field_list và $value_list sẽ thừa một dấu , nên ta sẽ dùng hàm trim để xóa đi
+        $sql = 'INSERT IGNORE INTO '.$table. '('.trim($field_list, ',').') VALUES ('.trim($value_list, ',').')';
+     
+        return mysqli_query($this->__conn, $sql);
+    }
     // Hàm Update
     function update($table, $data, $where)
     {
