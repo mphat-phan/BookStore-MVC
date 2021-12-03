@@ -44,7 +44,7 @@ class DB_business extends DB_driver
     function select_by_id($select, $id){
         $sql = "select $select from ".$this->_table_name." where ".$this->_key." = ".(int)$id;        
         return $this->get_row($sql);
-    }
+    }    
     function select_by_id2($select, $id){
         $sql = "select $select from ".$this->_table_name." where ".$this->_key." = ".(int)$id;
         return $this->get_row2($sql);

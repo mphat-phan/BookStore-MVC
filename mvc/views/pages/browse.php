@@ -41,10 +41,10 @@
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
                         <div class="input-group">
-                            <input type="text" class="form-control" value=""
+                            <input type="text" class="form-control searchtxt" value=""
                                 placeholder="Search this blog">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary searchbtn" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -156,12 +156,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--author-->
+                            <div class="card">
+                                <div class="card-heading">
+                                    <h4 data-toggle="collapse" data-target="#collapseSix">Author</h4>
+                                </div>
+                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                    <!-- <form class="formchange" data-name="sale">
+                                        <input type="checkbox" name="sale" value="discount20">
+                                        <label>Sale 20%</label>
+                                        <input type="checkbox" name="sale" value="discount50">
+                                        <label>Sale 50%</label>                                                                                
+                                    </form> -->
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <form class="formchange" data-name="author">
+                                                <ul class="nice-scroll cardauthor" id="checkboxes">
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!--sale-->
                             <div class="card">
                                 <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseSix">Sale</h4>
+                                    <h4 data-toggle="collapse" data-target="#collapseSeven">Sale</h4>
                                 </div>
-                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                <div id="collapseSeven" class="collapse show" data-parent="#accordionExample">
                                     <!-- <form class="formchange" data-name="sale">
                                         <input type="checkbox" name="sale" value="discount20">
                                         <label>Sale 20%</label>
@@ -202,6 +224,9 @@
                                     <option value="nameDESC">High To Low By Name</option>
                                     <option value="priceASC">Low To High By Price</option>
                                     <option value="priceDESC">High To Low By Price</option>
+                                    <option value="bestSeller">Best Seller</option>
+                                    <option value="hot">Hot</option>
+                                    <option value="newRelease">New Release</option>
                                 </select>
                             </div>
                         </div>
@@ -256,13 +281,16 @@
     const cardesrb = document.querySelector('.cardesrb');
     const cardpublisher = document.querySelector('.cardpublisher');
     const cardsale = document.querySelector('.cardsale');
+    const cardauthor = document.querySelector('.cardauthor');
     const spinner = document.querySelector('.spinner');
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
     let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getbuildTree';
+    let URL_API_CATEGORY_PRODUCT = '<?php echo constant('URL')?>category/getCategoryProductAll';
     let URL_API_ESRB = '<?php echo constant('URL')?>esrb/getall';
     let URL_API_PUBLISHER = '<?php echo constant('URL')?>publisher/getall';
-    let URL_API_SALE = '<?php echo constant('URL')?>sale/getall';
+    let URL_API_SALE = '<?php echo constant('URL')?>sale/getSaleByType/0';
+    let URL_API_AUTHOR = '<?php echo constant('URL')?>author/getall';
     const paramsString = window.location;
     let searchParams = new URLSearchParams(paramsString.search);
     // for (let p of searchParams) {
@@ -271,6 +299,7 @@
     var searchURL = paramsString.search;
 
     var arrayproducts;
+    var arraycategory_product;
     var filterarr = {};
     var pagenum = 12;
 
@@ -354,6 +383,16 @@
         cardsale.innerHTML += html;
     }
 
+    function cardAuthor(arr) {
+        var authors = arr.data;
+        const html = authors.map(author => {
+            return ` 
+                        <li><input type="checkbox" name="author" value="${author.id}" id="author_${author.id}" /><label class="whatever" for="author_${author.id}">${author.name}</label></li>                                                    
+                        `;
+        }).join('');
+        cardauthor.innerHTML += html;
+    }
+
     function cardProduct(arr) {
         var products = arr.data;
         const html = products.map(product => {
@@ -371,7 +410,9 @@
                 return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&.');
             };
             var salehtml, pricehtml;
-            if (currentDate.getTime() >= startDateSale.getTime() && currentDate.getTime() <= endDateSale.getTime()) {
+            if(product.quantity != 0)
+            {
+                if (currentDate.getTime() >= startDateSale.getTime() && currentDate.getTime() <= endDateSale.getTime()) {
                 var priceSale = parseInt(product.price - (product.price * (product.saleID.discount / 100))).format();
                 var price = parseInt(product.price).format();
                 salehtml = `<div class="ribbon-wrapper ribbon">
@@ -382,13 +423,27 @@
                 pricehtml = `<div class="price">
                                 <s>${price}đ</s>${priceSale}đ
                             </div>`;
-            } else {
+                } else {
+                    var price = parseInt(product.price).format();
+                    salehtml = ``;
+                    pricehtml = `<div class="price">
+                                    ${price}đ
+                                </div>`;
+                }
+            }
+            else
+            {
                 var price = parseInt(product.price).format();
-                salehtml = ``;
+                salehtml = `<div class="ribbon-wrapper ribbon">
+                                <div class="ribbon bg-danger text">
+                                    Hết Hàng
+                                </div>
+                            </div>`;
                 pricehtml = `<div class="price">
                                 ${price}đ
                             </div>`;
             }
+            
             if (product.status != 0) {
                 return `                
                     <figure class="snip1396">
@@ -418,6 +473,15 @@
         {
             results.innerHTML = 'Showing 1-'+ pagenum +' of ' + Object.keys(arrayproducts.data).length + ' results';
         }
+    }
+    function unique(arr) {
+        var newArr = []
+        for (var i = 0; i < arr.length; i++) {
+            if (!newArr.includes(arr[i])) {
+            newArr.push(arr[i])
+            }
+        }
+        return newArr
     }    
     async function changeURL() {
         //var sort = '', category = '', price = '', language = '', esrb = '', publisher = '', sale = '';
@@ -446,6 +510,11 @@
         } else {
             var esrb = '';
         }
+        if (searchParams.has('author')) {
+            var author = '&author=' + searchParams.get('author');
+        } else {
+            var author = '';
+        }
         if (searchParams.has('publisher')) {
             var publisher = '&publisher=' + searchParams.get('publisher');
         } else {
@@ -456,10 +525,15 @@
         } else {
             var sale = '';
         }
-        searchURL = sort + category + price + language + esrb + publisher + sale;
+        if (searchParams.has('search')) {
+            var search = '&search=' + searchParams.get('search');
+        } else {
+            var search = '';
+        }
+        searchURL = sort + category + price + language + esrb + publisher + author + sale + search;
         //console.log(searchURL);            
         history.replaceState(paramsString.href, '', paramsString.origin + paramsString.pathname + '?' + searchURL);
-
+        
         filter();
     }
     async function filter() {
@@ -472,10 +546,10 @@
 
                 arrayfilter = await sortarr(searchParams.get('sort'), arrayfilter);
             }
-            // if (searchParams.has('category')) {
-            //     //console.log(searchParams.get('language'));
-            //     arrayfilter = await categoryfilter(searchParams.get('category'), arrayfilter);
-            // }
+            if (searchParams.has('category')) {
+                //console.log(searchParams.get('language'));
+                arrayfilter = await categoryfilter(searchParams.get('category'), arrayfilter);
+            }
             if (searchParams.has('price')) {
                 //console.log(searchParams.get('sort'));                        
                 arrayfilter = await pricefilter(searchParams.get('price'), arrayfilter);
@@ -492,21 +566,33 @@
                 //console.log(searchParams.get('language'));
                 arrayfilter = await publisherfilter(searchParams.get('publisher'), arrayfilter);
             }
+            if (searchParams.has('author')) {
+                //console.log(searchParams.get('language'));
+                arrayfilter = await authorfilter(searchParams.get('author'), arrayfilter);
+            }
             if (searchParams.has('sale')) {
                 //console.log(searchParams.get('language'));
                 arrayfilter = await salefilter(searchParams.get('sale'), arrayfilter);
+            }
+            if (searchParams.has('search')) {
+                //console.log(searchParams.get('language'));
+                arrayfilter = await searchfilter(searchParams.get('search'), arrayfilter);
             }            
             await loadpage(arrayfilter, pagenum);
             //cardproduct.innerHTML = '';
             //cardProduct(arrayfilter);                         
         }
+        else
+        {
+            await loadpage(arrayfilter, pagenum);   
+        }        
         spinner.style.display = "none";
     }
     async function sortarr(by, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
                 var selected = by;
-                var products = arrayproducts.data;
+                var products = arrayproducts.data;                
                 if (selected === "nameASC") {
                     products.sort(function (a, b) {
                         return a.name.localeCompare(b.name);
@@ -520,9 +606,19 @@
                     products.sort(function (a, b) {
                         return (a.price - ((a.price * a.saleID.discount) / 100)) - (b.price - ((b.price * b.saleID.discount) / 100));
                     });
-                } else {
+                } else if (selected === "priceDESC") {
                     products.sort(function (a, b) {
                         return (b.price - ((b.price * b.saleID.discount) / 100)) - (a.price - ((a.price * a.saleID.discount) / 100));
+                    });
+                } else if (selected === "bestSeller") {
+                    products.sort(function (a, b) {
+                        return b.sold - a.sold;
+                    });                    
+                } else if (selected === "hot") {
+                    // chưa xong
+                } else {
+                    products.sort(function (a, b) {                        
+                        return new Date(b.publishdate) - new Date(a.publishdate);
                     });
                 }
                 filterarr.data = products;
@@ -534,22 +630,31 @@
     async function categoryfilter(selected, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
-                var arr = selected.split('_');
+                var arr = selected.split('_');                
                 var array = [];
-                var i = 0;                
-                arrayproducts.data.forEach(element => {
-                    arr.forEach(key => {
-                        if (element.saleID.id === key) {
-                            array[i++] = element;
+                var arrayout = [];
+                var i = 0;
+                arraycategory_product.data.forEach(element => {
+                    //console.log(element.categoryID);
+                    arr.forEach(key => {                        
+                        if (element.categoryID === key) {                            
+                            array[i++] = element.productID;                            
                         }
                     });
-                })
-                //console.log(array);                              
-                filterarr.data = array;
+                });
+                var array = unique(array);                
+                arrayproducts.data.forEach(element => {                    
+                    array.forEach(key => {                        
+                        if (element.id === key) {
+                            arrayout[i++] = element;
+                        }
+                    });
+                });
+                console.log(arrayout);                                              
+                filterarr.data = arrayout;
                 resolve(filterarr);
             });
         });
-
     }
     async function pricefilter(value, arrayproducts) {
         return new Promise(resolve => {
@@ -633,6 +738,27 @@
             });
         });
     }
+    async function authorfilter(selected, arrayproducts) {
+        return new Promise(resolve => {
+            setTimeout(function () {
+                var arr = selected.split('_');
+                var array = [];
+                var i = 0;
+                // console.log(arr);
+                arrayproducts.data.forEach(element => {
+                    arr.forEach(key => { 
+                        // console.log(element.authorID.id);
+                        if (element.authorID.id === key) {
+                            array[i++] = element;
+                        }
+                    });
+                })
+                // console.log(array);                              
+                filterarr.data = array;
+                resolve(filterarr);
+            });
+        });
+    }
     async function salefilter(selected, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
@@ -647,6 +773,22 @@
                     });
                 })
                 //console.log(array);                              
+                filterarr.data = array;
+                resolve(filterarr);
+            });
+        });
+    }
+    async function searchfilter(value, arrayproducts) {
+        return new Promise(resolve => {
+            setTimeout(function () {                
+                var array = [];
+                var i = 0;
+                arrayproducts.data.forEach(element => {                                        
+                    if (element.name.includes(value)) {
+                        array[i++] = element;
+                    }                    
+                })
+                console.log(array);                              
                 filterarr.data = array;
                 resolve(filterarr);
             });
@@ -671,10 +813,14 @@
         const publisher = await fetchProduct(URL_API_PUBLISHER);
         const sale = await fetchProduct(URL_API_SALE);
         const category = await fetchProduct(URL_API_CATEGORY);
+        const author = await fetchProduct(URL_API_AUTHOR);
+        const categoy_product = await fetchProduct(URL_API_CATEGORY_PRODUCT);
         arrayproducts = products;
+        arraycategory_product = categoy_product;
         cardCategory(category);
         cardEsrb(esrb);
         cardPublisher(publisher);
+        cardAuthor(author);
         cardSale(sale);
         await loadpage(products, pagenum);
         showresults();
@@ -733,10 +879,10 @@
             var arr = $(this).serializeArray();
             var value;
             var name = $(this).attr("data-name");
-            console.log(arr);
+            //console.log(arr);
             if (arr != '') {
                 arr.forEach(element => {
-                    value += '_' + element.value;
+                    value += '_' + element.value;                    
                 });
                 if (searchParams.has(name) || !searchParams.has(name)) {
                     searchParams.set(name, value.replace('undefined_', ''));
@@ -776,7 +922,7 @@
                 }                        
             }
             else
-            {
+            {                
                 searchParams.delete(name);
                 changeURL();
             }                                       
@@ -841,7 +987,13 @@
             checkSiblings(container);  
 
         });
-    
+        $(document).on('click', '.searchbtn', function (e) {
+            var search = $('.searchtxt').val();
+            if (searchParams.has('search') || !searchParams.has('search')) {
+                searchParams.set('search', search);
+                changeURL();
+            }                        
+        })
     });
 </script>
 <script>

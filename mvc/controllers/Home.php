@@ -147,13 +147,31 @@ class Home extends Controller{
         echo 1;
     }
     function addRegister() {        
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['name']) && isset($_POST['phone'])){
+        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['retypepassword']) && isset($_POST['name']) && isset($_POST['phone'])){
+            if($_POST['password'] != $_POST['retypepassword'])
+            {
+                echo 4;
+                return;
+            }
             $username = $_POST['username'];
             $email = $_POST['email']; 
             $name = $_POST['name'];
             $phone = $_POST['phone'];
             $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            $date = date("Y-m-d");            
+            $date = date("Y-m-d");
+
+            $sql1 = "SELECT * FROM `user` WHERE `username` = '$username' LIMIT 1";
+            if(mysqli_num_rows($this->Home->getToCheckLogin($sql1))==1)
+            {                
+                echo 2;
+                return;
+            }
+            $sql2 = "SELECT * FROM `user` WHERE `email` = '$email' LIMIT 1";
+            if(mysqli_num_rows($this->Home->getToCheckLogin($sql2))==1)
+            {                
+                echo 3;
+                return;
+            }
 
             $arrayuser = array("username" => $username, "password" => $password, "email" => $email, "date" => $date, "status" => "1");
             $arraycustomer = array("name" => $name, "phone" => $phone, "email" => $email, "username" => $username);

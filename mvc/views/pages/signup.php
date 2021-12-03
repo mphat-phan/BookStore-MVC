@@ -18,8 +18,8 @@
             <div class="col-xl-6 offset-xl-3">
                 <div class="text-box mt-0 mb-5">
                     <p class="mb-4">Fill out the form below to sign up for the service. Already signed up? Then just <a
-                            class="blue" href="log-in.html">Log In</a></p>
-
+                            class="blue" href="<?php echo constant('URL') ?>home/login">Log In</a></p>
+                    <div id="message"></div>
                     <!-- Sign Up Form -->
                     <form action="" method="post" id="formRequest">
                         <div class="mb-4 form-floating">
@@ -73,10 +73,22 @@
             url: url,
             data: form.serialize(),
             success: function(data)
-            {
+            {                      
                 if(data==0)
                 {
-                    $('#loginmessage').html('<p class="alert alert-danger"><strong>Sign up fail</strong></p>');
+                    $('#message').html('<p class="alert alert-danger"><strong>Sign up fail!</strong></p>');
+                }
+                else if(data==2)
+                {
+                    $('#message').html('<p class="alert alert-danger"><strong>This username has already registered!</strong></p>');
+                }
+                else if(data==3)
+                {
+                    $('#message').html('<p class="alert alert-danger"><strong>This email has already registered!</strong></p>');
+                }
+                else if(data==4)
+                {
+                    $('#message').html('<p class="alert alert-warning"><strong>Your password do not match!</strong></p>');
                 }
                 else if(data==1)
                 {

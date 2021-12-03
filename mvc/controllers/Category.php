@@ -21,6 +21,10 @@ class Category extends Controller{
     function getAll(){
         $list = $this->category->getAll();
         echo $list;
+    }
+    function getCategoryProductAll() {
+        $list = $this->categoryproduct->getAll();
+        echo $list;
     }    
     function buildTree($elements, $parentId = NULL) {
         $branch = array();

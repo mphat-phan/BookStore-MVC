@@ -188,6 +188,9 @@
 
     function cardBestSeller(arr) {
         var products = arr.data;
+        products.sort(function (a, b) {
+            return b.sold - a.sold;
+        });
         const html = products.map(product => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';
@@ -233,6 +236,9 @@
 
     function cardNewRelease(arr) {
         var products = arr.data;
+        products.sort(function (a, b) {                        
+            return new Date(b.publishdate) - new Date(a.publishdate);
+        });
         const html = products.map(product => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';
@@ -344,7 +350,7 @@
         cardauthor.innerHTML += html;
 
     }
-
+    
     
     async function fetchProduct(urlEndpoint) {
         let data;
