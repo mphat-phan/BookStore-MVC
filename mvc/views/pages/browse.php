@@ -225,7 +225,7 @@
                                     <option value="priceASC">Low To High By Price</option>
                                     <option value="priceDESC">High To Low By Price</option>
                                     <option value="bestSeller">Best Seller</option>
-                                    <option value="hot">Hot</option>
+                                    <!-- <option value="hot">Hot</option> -->
                                     <option value="newRelease">New Release</option>
                                 </select>
                             </div>
@@ -633,14 +633,14 @@
                 var arr = selected.split('_');                
                 var array = [];
                 var arrayout = [];
-                var i = 0;
+                var i = 0;                                
                 arraycategory_product.data.forEach(element => {
                     //console.log(element.categoryID);
                     arr.forEach(key => {                        
                         if (element.categoryID === key) {                            
                             array[i++] = element.productID;                            
                         }
-                    });
+                    });                    
                 });
                 var array = unique(array);                
                 arrayproducts.data.forEach(element => {                    
