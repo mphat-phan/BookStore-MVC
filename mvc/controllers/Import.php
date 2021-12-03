@@ -111,10 +111,12 @@ class Import extends Controller{
                 }
             }
             $total = 0;
+    
             for($i = 0 ; $i < count($data) ; $i++){
                 $total+=$data[$i][2]*$data[$i][3];
             }
-            $user = $_SESSION['username'];            
+            $user = $_SESSION['username'];
+
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $date = date('Y-m-d', time());
 
