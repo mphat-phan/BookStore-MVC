@@ -33,7 +33,7 @@
             public function getByUser()
             {   
                   $username = $_SESSION['username'];
-                  $sql ="select * from `rating`,`ordertb` where rating.orderID = ordertb.id and ordertb.customer_username = '$username'";   
+                  $sql ="select rating.*,product.name as productname,product.image,customer.name from `rating`,`ordertb`,`product`,`customer` where customer.username = ordertb.customer_username and rating.productID = product.id and rating.orderID = ordertb.id and ordertb.customer_username = '$username' order by rating.date desc";   
                   return $this->selectQueryJson($sql);
             }
 
@@ -43,7 +43,6 @@
                   $sql ="select * from `rating`,`ordertb` where rating.orderID = ordertb.id and ordertb.customer_username = '$username' and rating.rating = '$rate' ";   
                   return $this->selectQueryJson($sql);
             }
-
             public function add($data){
                   return $this->add_new($data);
             }

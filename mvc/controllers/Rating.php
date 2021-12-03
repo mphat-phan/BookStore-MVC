@@ -33,17 +33,14 @@ class rating extends Controller{
         echo $list;
     }
     
-    function add(){
-        if(isset($_POST['txtRating']) && $_POST['txtComment'] && $_POST['txtOrderID'] && $_POST['txtProductID']){
+    function add($orderID,$productID){
+        if(isset($_POST['rating']) && $_POST['txtComment']){
             
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $today = date('Y-m-d', time());
-
-            $orderID = $_POST['txtOrderID'];
-            $productID = $_POST['txtProductID'];
-            $rating = $_POST['txtRating'];
+            $today = date('Y-m-d G:i:s', time());
+            $rating = $_POST['rating'];
             $comment = $_POST['txtComment'];
-
+        
             $array = array('orderID' => $orderID, "productID" => $productID , "rating" => $rating,  "comment" => $comment , 
             "date" =>$today);
             

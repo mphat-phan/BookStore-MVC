@@ -11,6 +11,10 @@ class OrderDetail extends Controller{
         $list = $this->orderdetail->getAll();
         echo $list;
     }
+    function getAllByUser(){
+        $list = $this->orderdetail->getAllByUser();
+        echo $list;
+    }
     function getByID($id){
         $list = json_decode($this->orderdetail->getID($id));
         

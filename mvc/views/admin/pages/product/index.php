@@ -558,7 +558,6 @@
         producttable = $('#producttable').DataTable({
             dom: 'Bfrtip',
             "scrollY":"500px",
-           
             "ajax": "<?php echo constant('URL') ?>Product/getall",
             "columns": [{
                     "data": "id"

@@ -16,6 +16,13 @@
             {   
                   return $this->selectAll('*');
             }
+            public function getAllByUser()
+            {  
+                  $user = $_SESSION['username']; 
+                  $sql ="select orderdetail.*,ordertb.id,product.name,product.image from `orderdetail`,`ordertb`,`product` where orderdetail.productID = product.id and ordertb.id = orderdetail.orderID and ordertb.customer_username = '$user' and ordertb.status=4";   
+              
+                  return $this->selectQueryJson($sql);
+            }
             public function getID($id)
             {   
                   return $this->select_by_id('*',$id);
