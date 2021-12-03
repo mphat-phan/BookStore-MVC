@@ -737,6 +737,7 @@
                 url: url,
                 data: form.serialize(), // serializes the form's elements.
                 success: function (data) {
+                    console.log(data);
                     sweetAlertCRUD(data, "Delete");
                     ordertable.ajax.reload();
 

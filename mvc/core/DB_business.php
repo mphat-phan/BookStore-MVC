@@ -24,6 +24,9 @@ class DB_business extends DB_driver
     function add_new_advanced($data){
         return parent::insertAdvanced($this->_table_name, $data);
     }
+    function add_new_excel($data){
+        return parent::insertExcel($this->_table_name, $data);
+    }
     // Hàm xóa theo id
     function delete_by_id($id){
         return $this->remove($this->_table_name, $this->_key.'='.(int)$id);

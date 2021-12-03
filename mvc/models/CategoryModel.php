@@ -23,6 +23,9 @@
             {   
                   return $this->select_by_id('*',$id);
             }
+            public function addExcel($data){
+                  return $this->add_new_excel($data);
+            }
             public function updateByID($data,$id){
                   return $this->update_by_id($data, $id);
             }

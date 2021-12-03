@@ -20,7 +20,9 @@
             {   
                   return $this->select_by_id('*',$id);
             }
-
+            public function addExcel($data){
+                  return $this->add_new_excel($data);
+            }
             public function add($data){
                   return $this->add_new($data);
             }
