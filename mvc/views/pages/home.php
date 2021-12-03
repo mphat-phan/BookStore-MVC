@@ -48,13 +48,13 @@
     </div>
 </div>
 
-<div class="moviewpb-section">
+<!-- <div class="moviewpb-section">
     <div class="container-fluid">
         <h1>Hot</h1>
     </div>
     <div class="owl-carousel owl-theme cardhot" id="">
     </div>
-</div>
+</div> -->
 
 <div class="moviewpb-section">
     <div class="container-fluid">
@@ -85,8 +85,7 @@
             </div>
             <div class="modal-body quickview_content">                
             </div>
-            <div class="modal-footer">
-                <a class="btn-solid-sm" href="sign-up.html">Add to cart</a>
+            <div class="modal-footer quickview_footer">                
             </div>
         </div>
     </div>
@@ -102,7 +101,7 @@
     const quickview = document.querySelector('.exampleModal');
 
     const spinner = document.querySelector('.spinner');
-
+    
     function slider() {
         $('.owl-carousel').owlCarousel({
             loop: false,
@@ -131,10 +130,11 @@
     }
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
-    let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getall';
+    let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getall';    
+    let URL_API_CATEGORYTREE = '<?php echo constant('URL')?>category/getbuildTree';
     let URL_API_AUTHOR = '<?php echo constant('URL')?>author/getall';
     var arrayproducts;
-
+    var arraycategory;
     function cardBestSeller(arr) {
         var products = arr.data;
         products.sort(function (a, b) {
@@ -200,7 +200,7 @@
                                     <div class="content">
                                         <div class="cardheader"> 
                                             <span class="headertitle">
-                                                <h1 class="title"><a href="">${product.name}</a></h1>
+                                                <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                             </span> 
                                             <span class="genre">
                                                 ${product.authorID.name}
@@ -289,7 +289,7 @@
                                     <div class="content">
                                         <div class="cardheader"> 
                                             <span class="headertitle">
-                                                <h1 class="title"><a href="">${product.name}</a></h1>
+                                                <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                             </span> 
                                             <span class="genre">
                                                 ${product.authorID.name}
@@ -379,7 +379,7 @@
                                         <div class="content">
                                             <div class="cardheader"> 
                                                 <span class="headertitle">
-                                                    <h1 class="title"><a href="">${product.name}</a></h1>
+                                                    <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                                 </span> 
                                                 <span class="genre">
                                                     ${product.authorID.name}
@@ -405,13 +405,15 @@
 
     }
 
-    function cardCategory(arr) {
-        var categorys = arr.data;
+    function categoryparent(arr) {    
+        
+    }    
+    function cardCategory(arr) {        
+        var categorys = arr.data;        
         const html = categorys.map(category => {
             //let title = movie.title || movie.name;
             //let isMovieOrTv = (movie.title) ? 'movie' : 'tv';
-            return `
-                    
+            return `                    
                     <div class="item moviewrap">
                         
                         <div class="genrecard card1">
@@ -421,7 +423,7 @@
                                     <div class="content">
                                         <div class="cardheader"> 
                                             <span class="headertitle">
-                                                <h1 class="title"><a href="">${category.name}</a></h1>
+                                                <h1 class="title"><a href="<?php echo constant('URL') ?>browse?&category=${category.id}">${category.name}</a></h1>
                                             </span> 
                                            
                                         </div>
@@ -456,7 +458,7 @@
                                     <div class="content">
                                         <div class="cardheader"> 
                                             <span class="headertitle">
-                                                <h1 class="title"><a href="">${author.name}</a></h1>
+                                                <h1 class="title"><a href="<?php echo constant('URL') ?>browse?&author=${author.id}">${author.name}</a></h1>
                                             </span> 
                                            
                                         </div>
@@ -488,14 +490,15 @@
     
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
-        const categorys = await fetchProduct(URL_API_CATEGORY);
-        const authors = await fetchProduct(URL_API_AUTHOR);
-
+        const categories = await fetchProduct(URL_API_CATEGORY);
+        const categoriestree = await fetchProduct(URL_API_CATEGORYTREE);        
+        const authors = await fetchProduct(URL_API_AUTHOR);        
         arrayproducts = products;
+        arraycategory = categoriestree;        
         cardBestSeller(products);
         cardSale(products);
         cardNewRelease(products);
-        cardCategory(categorys);
+        cardCategory(categories);
         cardAuthor(authors);
         slider();
         spinner.setAttribute("hidden","");
@@ -624,6 +627,7 @@
                                                         </div>
 
                                                     </div>`);
+                    $('.quickview_footer').html(`<a class="btn-solid-sm add-to-cart" data_id="${element.id}" href="sign-up.html">Add to cart</a>`);
                 }
             });                
         })
