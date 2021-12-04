@@ -521,11 +521,17 @@
                 var currentdate = new Date();
                 var htmlQuantity;
                 var htmlCheckBox;
+                var salePrice;
                 const html = cart.map(cartdetail => {
                     cartdetailAll.push(cartdetail.productID.id);
                     var enddate = new Date(cartdetail.productID.saleID.enddate);
                     var startdate = new Date(cartdetail.productID.saleID.startdate);
-                    var salePrice = parseInt(cartdetail.productID.price) - parseInt(cartdetail.productID.price*cartdetail.productID.saleID.discount/100);
+                    if(startdate<=currentdate && currentdate<=enddate){
+                        salePrice = parseInt(cartdetail.productID.price) - parseInt(cartdetail.productID.price*cartdetail.productID.saleID.discount/100);
+                    }
+                    else{
+                        salePrice = parseInt(cartdetail.productID.price);
+                    }
                     var total = cartdetail.quantity*salePrice;
                     if(cartdetail.productID.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){     
                         htmlsale = `
@@ -877,6 +883,9 @@
                                     if(cartdetail.productID.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){  
                                         salePrice = parseInt(cartdetail.productID.price) - parseInt(cartdetail.productID.price*cartdetail.productID.saleID.discount/100);
                                     }
+                                    else{
+                                        salePrice = parseInt(cartdetail.productID.price);
+                                    }
                                     subtotal+= cartdetail.quantity*salePrice;
                                     console.log(subtotal)
                                     e.prop("checked",true);
@@ -912,6 +921,9 @@
                             var salePrice = 0;
                             if(cartdetail.productID.saleID.discount>0 && (startdate<=currentdate && currentdate<=enddate )){  
                                 salePrice = parseInt(cartdetail.productID.price) - parseInt(cartdetail.productID.price*cartdetail.productID.saleID.discount/100);
+                            }
+                            else{
+                                salePrice = parseInt(cartdetail.productID.price);
                             }
                             subtotal+= cartdetail.quantity*salePrice;
                         }
