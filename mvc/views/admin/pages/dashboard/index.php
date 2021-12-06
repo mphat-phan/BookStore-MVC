@@ -311,7 +311,7 @@
         }
         return 0;
     }
-    function getTop(top,sort){
+    function getTop(top,sort,columm){
         topArr=[];
         var count = 1;
         for(var i=0;i<sort.length;i++){
@@ -320,7 +320,7 @@
                 topArr.push(sort[i]);
                 continue;
             }
-            if(checkDuplicate2(sort[i][columm],columm)){
+            if(checkDuplicate(sort[i][columm],columm)){
                 continue;
             }
 
