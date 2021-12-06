@@ -44,7 +44,6 @@
             }
             public function delete($id){
                   return $this->delete_by_id($id);
-
             }
             public function selectQuery($sql){
                   return $this->selectQueryJson($sql);
