@@ -15,7 +15,7 @@ class Dashboard extends Controller{
         $this->view("admin/layout",array(
 			"Page" => "dashboard",
 		));        
-    }
+    }    
     function pages() {
         $this->view("pages/404");
     }

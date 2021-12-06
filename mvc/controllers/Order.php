@@ -27,6 +27,67 @@ class Order extends Controller{
     function getByID($id){
         $list = $this->order->getID($id);
         echo $list;
+    }    
+    function getSortRevenueByYear() {
+        $list = json_decode($this->order->selectSortRevenue());
+        $year = $list->data[0]->year;
+        $arrlength = count($list->data);    
+        for($i=0; $i<$arrlength; $i++)        
+        {                                     
+            if($list->data[$i]->year - $year > 0)
+            {
+                $num = $list->data[$i]->year - $year;                
+                for($j=0; $j<$num; $j++)
+                {                    
+                    array_push($list->data,["year"=>"$year","total"=>"0"]);
+                    $year++;
+                }
+            }
+            $year++;           
+        }        
+        echo json_encode($list);                
+        // echo '<pre>';                
+        // var_dump($list);
+    }
+    function get12month($listmonth) {        
+        $k=1;$h=12;
+        $year = $listmonth->data[0]->year;
+        $arrlength = count($listmonth->data);
+        for($i=0; $i<$arrlength; $i++)
+        {
+            if($listmonth->data[$i]->month - $k > 0)
+            {
+                $num = $listmonth->data[$i]->month - $k;                
+                for($j=0; $j<$num; $j++)
+                {
+                    array_push($listmonth->data,["year"=>"$year","month"=>"$k","total"=>"0"]);
+                    $k++;                    
+                }                
+            }
+            $k++;
+        }        
+        if($h - $listmonth->data[$i-1]->month != 0)
+        {   
+            $num = $h - $listmonth->data[$i-1]->month;
+            $year = $listmonth->data[$i-1]->year;
+            $k = $listmonth->data[$i-1]->month;
+            for($i=0; $i<$num; $i++)
+            {
+                ++$k;
+                array_push($listmonth->data,["year"=>"$year","month"=>"$k","total"=>"0"]);
+            }            
+        }
+        return $listmonth;
+    }    
+    function getSortRevenueByMonth() {
+        $list = json_decode($this->order->selectSortRevenue());                        
+        for($i=0; $i<count($list->data); $i++) {                                    
+            $listmonth = json_decode($this->order->selectSortByMonth($list->data[$i]->year));            
+            $arr[$i] = $this->get12month($listmonth)->data;                        
+        }
+        // echo '<pre>';
+        // var_dump($arr);        
+        echo json_encode($arr);        
     }
     function getByUser(){
         $list = $this->order->getUser();

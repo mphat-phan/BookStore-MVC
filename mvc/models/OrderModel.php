@@ -43,6 +43,20 @@
                   }
 
             }
+            public function selectSortRevenue() {
+                  $sql = "    SELECT YEAR(`ordertb`.`date`) as year, SUM(`ordertb`.`total`) as total
+                              FROM `ordertb`
+                              WHERE `ordertb`.`status` = 4
+                              GROUP BY YEAR(`ordertb`.`date`)";
+                  return $this->selectQueryJson($sql);
+            }
+            public function selectSortByMonth($year) {
+                  $sql = "    SELECT YEAR(`ordertb`.`date`) as year, MONTH(`ordertb`.`date`) as month, SUM(`ordertb`.`total`) as total 
+                              FROM `ordertb` 
+                              WHERE YEAR(`ordertb`.`date`) = '$year' AND `ordertb`.`status` = 4
+                              GROUP BY MONTH(`ordertb`.`date`)";
+                  return $this->selectQueryJson($sql);
+            }
             public function selectstatus($status) {                              
                   $username = $_SESSION['username'];
                   $sql = "SELECT `ordertb`.`id`,

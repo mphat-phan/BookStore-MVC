@@ -131,7 +131,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a id="" href="<?php echo constant('URL') ?>import" class="nav-link">
+                    <a id="" href="<?php echo constant('URL') ?>importmanagement" class="nav-link">
                         <i class="nav-icon fas fa-file-invoice"></i>
                         <p>
                             Quản lý nhập hàng
@@ -147,7 +147,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="" href="<?php echo constant('URL') ?>importmanagement" class="nav-link">
+                    <a id="" href="<?php echo constant('URL') ?>import" class="nav-link">
                         <i class="nav-icon fas fa-truck-loading"></i>
                         <p>
                             Nhập hàng

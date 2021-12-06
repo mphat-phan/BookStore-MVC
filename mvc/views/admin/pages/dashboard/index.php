@@ -25,8 +25,7 @@
             <div class="col">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Doanh thu Chart</h3>
-
+                        <h3 class="card-title">Doanh thu Chart</h3>                        
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -37,6 +36,19 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div>
+                            <label for="">Show by:</label>
+                            <select id="selectby">                                                              
+                                <option value="year" selected>Year</option>
+                                <option value="month">Month</option>                                                              
+                            </select>                                
+                        </div>           
+                        <!-- <div>
+                            <label for="">Filter:</label>
+                            <input type="date" name="startdate" id="">
+                            <input type="date" name="enddate" id="">                                                        
+                        </div>              -->
+                        <hr>
                         <div class="chart">
                             <canvas id="lineChart"
                                 style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
@@ -176,8 +188,12 @@
         //--------------
         var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
         var lineChartOptions = $.extend(true, {}, areaChartOptions)
-        var lineChartData = $.extend(true, {}, areaChartData)
+        var lineChartData = $.extend(true, {}, areaChartData)        
         lineChartData.datasets[0].fill = false;
+<<<<<<< HEAD
+        lineChartData.datasets[1].fill = false;        
+        lineChartOptions.datasetFill = false;
+=======
         lineChartData.datasets[1].fill = false;
         lineChartOptions.datasetFill = false
 
@@ -186,7 +202,16 @@
             data: lineChartData,
             options: lineChartOptions
         })
+>>>>>>> adc4a07afe9b234616c4b25d97e2000f56952ea6
 
+        var lineChart = function() {
+            new Chart(lineChartCanvas, {
+                type: 'line',
+                data: lineChartData,
+                options: lineChartOptions
+            })
+        } 
+        // lineChart();
         //-------------
         //- DONUT CHART -
         //-------------
@@ -281,7 +306,141 @@
         //     type: 'bar',
         //     data: stackedBarChartData,
         //     options: stackedBarChartOptions
-        // })
+        // })                       
+        // function getRevenueByYear(arryear, arrtotal) {                        
+        //     areaChartData = {
+        //         labels: arryear,
+        //         datasets: [{
+        //                 label: 'Revenue',
+        //                 backgroundColor: 'rgba(60,141,188,0.9)',
+        //                 borderColor: 'rgba(60,141,188,0.8)',
+        //                 pointRadius: false,
+        //                 pointColor: '#3b8bba',
+        //                 pointStrokeColor: 'rgba(60,141,188,1)',
+        //                 pointHighlightFill: '#fff',
+        //                 pointHighlightStroke: 'rgba(60,141,188,1)',
+        //                 data: arrtotal
+        //             },                    
+        //         ]
+        //     }            
+        //     lineChartOptions = $.extend(true, {}, areaChartOptions)
+        //     lineChartData = $.extend(true, {}, areaChartData)        
+        //     lineChartData.datasets[0].fill = false;                  
+        //     lineChartOptions.datasetFill = false;
+        //     lineChart();
+        // }
+        function ShowLineChartBy(bytime) {
+            if(bytime === 'year')
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo constant('URL')?>order/getSortRevenueByYear',
+                    // data: {value:value},
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        data.data.sort(function (a,b){
+                            return a.year - b.year;
+                        })                                        
+                        var arryear = [],arrtotal = [], i=0,j=0;
+                        data.data.forEach(element => {                        
+                            arryear[i++] = element.year;
+                            arrtotal[j++] = element.total;
+                        });                        
+                        // console.log(arryear);
+                        // console.log(arrtotal);
+                        areaChartData = {
+                            labels: arryear,
+                            datasets: [{
+                                    label: 'Revenue',
+                                    backgroundColor: 'rgba(60,141,188,0.9)',
+                                    borderColor: 'rgba(60,141,188,0.8)',
+                                    pointRadius: false,
+                                    pointColor: '#3b8bba',
+                                    pointStrokeColor: 'rgba(60,141,188,1)',
+                                    pointHighlightFill: '#fff',
+                                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                                    data: arrtotal
+                                },                                                                                    
+                            ]
+                        }                                     
+                        lineChartOptions = $.extend(true, {}, areaChartOptions)
+                        lineChartData = $.extend(true, {}, areaChartData)        
+                        lineChartData.datasets[0].fill = false;                        
+                        lineChartOptions.datasetFill = false;
+                        lineChart();                    
+                    }
+                });
+            }
+            else
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo constant('URL')?>order/getSortRevenueByMonth',
+                    // data: {value:value},
+                    dataType: "JSON",
+                    success: function(data)
+                    {                                        
+                        var arr = [],i=0;
+                        data.forEach(element => {
+                            color = random_rgba();                            
+                            var arrdata = getdata(element);
+                            arr[i++] = {
+                                    label: 'Revenue in ' + element[0].year,
+                                    backgroundColor: color,
+                                    borderColor: color,
+                                    pointRadius: false,
+                                    pointColor: '#3b8bba',
+                                    pointStrokeColor: 'rgba(60,141,188,1)',
+                                    pointHighlightFill: '#fff',
+                                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                                    data: arrdata
+                                }                                
+                        });                                        
+                        // console.log(arryear);
+                        // console.log(arrtotal);
+                        areaChartData = {
+                            labels: ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec'],
+                            datasets: arr
+                        }                                   
+                        lineChartOptions = $.extend(true, {}, areaChartOptions)
+                        lineChartData = $.extend(true, {}, areaChartData)                                
+                        var z=0;
+                        data.forEach(element => {
+                            lineChartData.datasets[z++].fill = false;
+                        })                  
+                        lineChartOptions.datasetFill = false;
+                        lineChart();                    
+                    }
+                });
+            }            
+        }
+        function getdata(element) {
+            element.sort(function(a,b){
+                return a.month - b.month;
+            });
+            var arr = [], i=0;
+            element.forEach(element => {
+                arr[i++] = element.total;
+            });
+            return arr;
+        }
+        function random_rgba() {
+            var o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',0.9)';
+        }        
+        ShowLineChartBy('year');        
+        $(document).on('change', '#selectby', function (e){
+            var value = $(e.target).val();                        
+            if(value === 'year')
+            {
+                ShowLineChartBy(value); 
+            }
+            else
+            {
+                ShowLineChartBy(value); 
+            }   
+        });                      
     })
     async function fetchProduct(urlEndpoint) {
         let data;
