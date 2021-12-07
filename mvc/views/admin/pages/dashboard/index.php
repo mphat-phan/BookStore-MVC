@@ -429,4 +429,94 @@
             }   
         });                      
     })
+    async function fetchProduct(urlEndpoint) {
+        let data;
+        try {
+            const response = await fetch(urlEndpoint);
+            data = await response.json();
+            return (data);
+        } catch (error) {
+            console.log(error);
+        }
+        // return data.data;
+        return data.items || data.results;
+    }
+    function checkDuplicate(id,columm){
+        for(let i=0;i<topArr.length;i++){
+            if(topArr[i][columm]==id){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    function checkDuplicate2(id,columm){
+        for(let i=0;i<topArr.length;i++){
+            if(topArr[i][columm].id==id){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    function getTop(top,sort,columm){
+        topArr=[];
+        var count = 1;
+        for(var i=0;i<sort.length;i++){
+            
+            if(topArr.length==0){ //add mảng đầu tiên
+                topArr.push(sort[i]);
+                continue;
+            }
+            if(checkDuplicate(sort[i][columm],columm)){
+                continue;
+            }
+
+            //nếu thỏa điều kiện thì push và tăng count 
+            topArr.push(sort[i]);
+            count+=1;
+            console.log(count)
+            if(count==top){ //nếu đủ thì dừng vòng lặp
+                break; 
+            }
+        }
+        return topArr;
+    }
+    function getTop2(top,sort,columm){
+        topArr=[];
+        var count = 1;
+        for(var i=0;i<sort.length;i++){
+            
+            if(topArr.length==0){ //add mảng đầu tiên
+                topArr.push(sort[i]);
+                continue;
+            }
+            if(checkDuplicate2(sort[i][columm].id,columm)){
+                continue;
+            }
+
+            //nếu thỏa điều kiện thì push và tăng count 
+            topArr.push(sort[i]);
+            count+=1;
+            console.log(count)
+            if(count==top){ //nếu đủ thì dừng vòng lặp
+                break; 
+            }
+        }
+        return topArr;
+    }
+    (async () => {
+        const products = await fetchProduct(URL_API_PRODUCT);
+        sort = await sortSold(products);
+
+    })();
+    async function sortSold(arrayproducts) {
+        return new Promise(resolve => {
+            setTimeout(function () {
+                var products = arrayproducts.data;     
+                products.sort(function (a, b) {
+                    return b.sold - a.sold;
+                });     
+                resolve(products);
+            });
+        });
+    }
 </script>
