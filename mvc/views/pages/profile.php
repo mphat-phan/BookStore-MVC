@@ -1001,6 +1001,7 @@
             e.preventDefault();
             var form = $(this);
             var url = form.attr('action');
+            console.log(url);
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -1014,9 +1015,7 @@
                                 await displayRated(rated);
                             })();
                             $('#RatingModal').modal('hide');
-                        }
-
-                        
+                        }                        
                     }
                 });
 
@@ -1256,7 +1255,7 @@
                 console.log(error);
             }
             // return data.data;
-            return data.items || data.results;
+            //return data.items || data.results;
     }
     (async () => {
         const order = await fetchProduct('<?php echo constant('URL') ?>orderdetail/getAllByUser');

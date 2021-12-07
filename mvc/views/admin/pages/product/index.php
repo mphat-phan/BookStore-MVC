@@ -825,16 +825,32 @@
                 }                
             });                                      
         $('#selectCategory').change(function(e) {            
-            var selected = $(e.target).val();            
+            var selected = $(this).val();            
             console.log(selected);
-            $.ajax({
-                type: "POST",
-                url: '<?php echo constant('URL') ?>category/addCategoryProduct/'+id,
-                data: {selected:selected}, // serializes the form's elements.
-                success: function (data) {
-                    sweetAlertCRUD(data, "Update");                    
-                }
-            });
+            if(selected!='')
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo constant('URL') ?>category/addCategoryProduct/'+id,
+                    data: {selected:selected}, // serializes the form's elements.
+                    success: function (data) {
+                        console.log(data);
+                        sweetAlertCRUD(data, "Update");                    
+                    }
+                });
+            }      
+            else
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo constant('URL') ?>category/addCategoryProduct/'+id,
+                    data: {selected:selected}, // serializes the form's elements.
+                    success: function (data) {
+                        console.log(data);
+                        sweetAlertCRUD(data, "Update");                    
+                    }
+                });
+            }                  
         });
     }
     

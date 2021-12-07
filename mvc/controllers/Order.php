@@ -11,7 +11,7 @@ class Order extends Controller{
         $this->cartdetail = $this->model("CartDetailModel");  
     }
     function index(){
-        if($this->UserRole->checkRole("staff.sell")!=1 && $this->UserRole->checkRole("admin")!=1)
+        if($this->UserRole->checkRole("staff.order")!=1 && $this->UserRole->checkRole("admin")!=1)
         {
             $this->page500();
             exit();
@@ -103,7 +103,7 @@ class Order extends Controller{
     }
     
     function add(){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.add","add")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","add")!=1)        
         {
             echo 2;
             return;
@@ -234,7 +234,7 @@ class Order extends Controller{
      
     }
     function update($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","update")!=1)
+        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.order.update","update")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.order","update")!=1)
         {
             echo 2;
             return;
@@ -250,26 +250,26 @@ class Order extends Controller{
         echo 0;
     }
     function delete($id){
-        if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell.delete","delete")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.sell","delete")!=1)        
-        {
-            echo 2;
-            return;
-        }
-        //if(isset($_POST['checkDelete'])){
+        // if($this->UserRole->checkRole("admin")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.order.delete","delete")!=1 && $this->UserRole->checkPermission($_SESSION['username'],"staff.order","delete")!=1)        
+        // {
+        //     echo 2;
+        //     return;
+        // }
+        if(isset($_POST['checkDelete'])){
             $status = -1;
             $array = array('status' => $status);
             if($this->order->updateByID($array,$id)==1){
                 $orderdetail = json_decode($this->orderdetail->getID($id));
                 for($i=0 ; $i< count($orderdetail->data) ; $i++ ){
-                    $id = $orderdetail->data[$i]->productID;
+                    $idproduct = $orderdetail->data[$i]->productID;
                     $quantity = $orderdetail->data[$i]->quantity;
-                    $this->product->resetQuantityByID($id,$quantity);
-                    $this->product->resetSoldByID($id,$quantity);
+                    $this->product->resetQuantityByID($idproduct,$quantity);
+                    $this->product->resetSoldByID($idproduct,$quantity);
                 }
                 echo 1;
                 return;
             }
-        //}
+        }
         echo 0;
     }
     function printInvoice($id){

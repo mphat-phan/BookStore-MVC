@@ -83,6 +83,7 @@
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Bar Chart</h3>
+
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -123,9 +124,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo constant('URL') ?>public/assets/dist/js/demo.js"></script>
 <script>
-    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAll';
-    var sort;
-    var topArr=[];
     $(function () {
         //var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -190,19 +188,8 @@
         var lineChartOptions = $.extend(true, {}, areaChartOptions)
         var lineChartData = $.extend(true, {}, areaChartData)        
         lineChartData.datasets[0].fill = false;
-<<<<<<< HEAD
         lineChartData.datasets[1].fill = false;        
         lineChartOptions.datasetFill = false;
-=======
-        lineChartData.datasets[1].fill = false;
-        lineChartOptions.datasetFill = false
-
-        new Chart(lineChartCanvas, {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        })
->>>>>>> adc4a07afe9b234616c4b25d97e2000f56952ea6
 
         var lineChart = function() {
             new Chart(lineChartCanvas, {
@@ -442,94 +429,4 @@
             }   
         });                      
     })
-    async function fetchProduct(urlEndpoint) {
-        let data;
-        try {
-            const response = await fetch(urlEndpoint);
-            data = await response.json();
-            return (data);
-        } catch (error) {
-            console.log(error);
-        }
-        // return data.data;
-        return data.items || data.results;
-    }
-    function checkDuplicate(id,columm){
-        for(let i=0;i<topArr.length;i++){
-            if(topArr[i][columm]==id){
-                return 1;
-            }
-        }
-        return 0;
-    }
-    function checkDuplicate2(id,columm){
-        for(let i=0;i<topArr.length;i++){
-            if(topArr[i][columm].id==id){
-                return 1;
-            }
-        }
-        return 0;
-    }
-    function getTop(top,sort){
-        topArr=[];
-        var count = 1;
-        for(var i=0;i<sort.length;i++){
-            
-            if(topArr.length==0){ //add mảng đầu tiên
-                topArr.push(sort[i]);
-                continue;
-            }
-            if(checkDuplicate2(sort[i][columm],columm)){
-                continue;
-            }
-
-            //nếu thỏa điều kiện thì push và tăng count 
-            topArr.push(sort[i]);
-            count+=1;
-            console.log(count)
-            if(count==top){ //nếu đủ thì dừng vòng lặp
-                break; 
-            }
-        }
-        return topArr;
-    }
-    function getTop2(top,sort,columm){
-        topArr=[];
-        var count = 1;
-        for(var i=0;i<sort.length;i++){
-            
-            if(topArr.length==0){ //add mảng đầu tiên
-                topArr.push(sort[i]);
-                continue;
-            }
-            if(checkDuplicate2(sort[i][columm].id,columm)){
-                continue;
-            }
-
-            //nếu thỏa điều kiện thì push và tăng count 
-            topArr.push(sort[i]);
-            count+=1;
-            console.log(count)
-            if(count==top){ //nếu đủ thì dừng vòng lặp
-                break; 
-            }
-        }
-        return topArr;
-    }
-    (async () => {
-        const products = await fetchProduct(URL_API_PRODUCT);
-        sort = await sortSold(products);
-
-    })();
-    async function sortSold(arrayproducts) {
-        return new Promise(resolve => {
-            setTimeout(function () {
-                var products = arrayproducts.data;     
-                products.sort(function (a, b) {
-                    return b.sold - a.sold;
-                });     
-                resolve(products);
-            });
-        });
-    }
 </script>
