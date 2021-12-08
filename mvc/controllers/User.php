@@ -69,7 +69,15 @@ class User extends Controller{
         if(isset($_POST['checkResetPass']))
         {            
             $employee = json_decode($this->Employee->getUsername($username));
-            $birth = $employee->data[0]->birth;
+            $customer = json_decode($this->Customer->getUsername($username));
+            if(isset($employee->data[0]->birth))
+            {
+                $birth = $employee->data[0]->birth;
+            }
+            else
+            {
+                $birth = $customer->data[0]->birth;
+            }
             $password = str_replace( '-', '', $birth );
             $array = array('password' => password_hash($password, PASSWORD_BCRYPT));
             if($this->User->update_by_stringID($array,$username)==1){
