@@ -190,10 +190,6 @@
         var lineChartOptions = $.extend(true, {}, areaChartOptions)
         var lineChartData = $.extend(true, {}, areaChartData)        
         lineChartData.datasets[0].fill = false;
-<<<<<<< HEAD
-        lineChartData.datasets[1].fill = false;        
-        lineChartOptions.datasetFill = false;
-=======
         lineChartData.datasets[1].fill = false;
         lineChartOptions.datasetFill = false
 
@@ -202,7 +198,6 @@
             data: lineChartData,
             options: lineChartOptions
         })
->>>>>>> adc4a07afe9b234616c4b25d97e2000f56952ea6
 
         var lineChart = function() {
             new Chart(lineChartCanvas, {
