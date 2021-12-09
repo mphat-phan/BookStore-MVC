@@ -90,15 +90,15 @@ class Admin extends Controller{
             $txtpassword = $_POST['txtPassword'];            
             $sql = "SELECT * FROM `user` WHERE (`username` = '$txtusername' OR `email` = '$txtusername') AND `status`=1 LIMIT 1";            
             if(mysqli_num_rows($this->Admin->getToCheckLogin($sql))==1)
-            {
-                $_SESSION['username'] =  $txtusername;
-                if(isset($_POST['checkremember']))
-                {
-                    setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
-                }                
+            {                                
                 $result = mysqli_fetch_array($this->Admin->getToCheckLogin($sql));                
                 if(password_verify($txtpassword, $result['password']))
                 {
+                    $_SESSION['username'] =  $txtusername;
+                    if(isset($_POST['checkremember']))
+                    {
+                        setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
+                    }
                     echo 1;
                     return;
                 }                

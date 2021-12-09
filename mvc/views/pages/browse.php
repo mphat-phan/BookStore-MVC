@@ -537,8 +537,7 @@
         filter();
     }
     async function filter() {
-        spinner.style.display = "block";
-        
+        spinner.style.display = "block";        
         arrayfilter = arrayproducts;
         if (searchURL !== '') {
             //cardproduct.innerHTML = '';
@@ -547,8 +546,8 @@
                 arrayfilter = await sortarr(searchParams.get('sort'), arrayfilter);
             }
             if (searchParams.has('category')) {
-                //console.log(searchParams.get('language'));
-                arrayfilter = await categoryfilter(searchParams.get('category'), arrayfilter);
+                // console.log(searchParams.get('category'));
+                arrayfilter = await categoryfilter(searchParams.get('category'), arrayfilter);                
             }
             if (searchParams.has('price')) {
                 //console.log(searchParams.get('sort'));                        
@@ -633,7 +632,8 @@
                 var arr = selected.split('_');                
                 var array = [];
                 var arrayout = [];
-                var i = 0;                                
+                var i = 0;
+                console.log(arraycategory_product);                                                
                 arraycategory_product.data.forEach(element => {
                     //console.log(element.categoryID);
                     arr.forEach(key => {                        
@@ -641,7 +641,7 @@
                             array[i++] = element.productID;                            
                         }
                     });                    
-                });
+                });                
                 var array = unique(array);                
                 arrayproducts.data.forEach(element => {                    
                     array.forEach(key => {                        
@@ -804,7 +804,7 @@
             console.log(error);
         }
         // return data.data;
-        return data.items || data.results;
+        //return data.items || data.results;
     }
 
     (async () => {
@@ -814,9 +814,9 @@
         const sale = await fetchProduct(URL_API_SALE);
         const category = await fetchProduct(URL_API_CATEGORY);
         const author = await fetchProduct(URL_API_AUTHOR);
-        const categoy_product = await fetchProduct(URL_API_CATEGORY_PRODUCT);
+        const category_product = await fetchProduct(URL_API_CATEGORY_PRODUCT);
         arrayproducts = products;
-        arraycategory_product = categoy_product;
+        arraycategory_product = category_product;
         cardCategory(category);
         cardEsrb(esrb);
         cardPublisher(publisher);

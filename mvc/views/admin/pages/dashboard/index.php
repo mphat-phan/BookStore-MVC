@@ -83,6 +83,7 @@
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Bar Chart</h3>
+
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -123,9 +124,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo constant('URL') ?>public/assets/dist/js/demo.js"></script>
 <script>
-    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAll';
-    var sort;
-    var topArr=[];
     $(function () {
         //var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
@@ -190,14 +188,8 @@
         var lineChartOptions = $.extend(true, {}, areaChartOptions)
         var lineChartData = $.extend(true, {}, areaChartData)        
         lineChartData.datasets[0].fill = false;
-        lineChartData.datasets[1].fill = false;
-        lineChartOptions.datasetFill = false
-
-        new Chart(lineChartCanvas, {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        })
+        lineChartData.datasets[1].fill = false;        
+        lineChartOptions.datasetFill = false;
 
         var lineChart = function() {
             new Chart(lineChartCanvas, {

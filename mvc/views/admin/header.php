@@ -25,7 +25,7 @@
                 <a href="#" class="dropdown-item">
                     <i class="fas fa-user"></i> Profile
                 </a>
-                <a href="<?php echo constant('URL') ?>Admin/Logout" class="dropdown-item">
+                <a href="<?php echo constant('URL') ?>home/Logout" class="dropdown-item">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>

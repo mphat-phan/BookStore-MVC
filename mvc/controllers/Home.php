@@ -13,7 +13,7 @@ class Home extends Controller{
         ));
     }
     function Login(){
-        if(isset($_SESSION['username']))
+        if(isset($_SESSION['username']) && isset($_SESSION['password']))
         {
             header("Location: ".constant('URL')."home/index");
         }        
@@ -22,7 +22,7 @@ class Home extends Controller{
         ));
     }
     function Register(){        
-        if(isset($_SESSION['username']))
+        if(isset($_SESSION['username']) && isset($_SESSION['password']))
         {
             header("Location: ".constant('URL')."home/index");
         }
@@ -101,21 +101,22 @@ class Home extends Controller{
             $txtpassword = $_POST['txtPassword'];            
             $sql = "SELECT * FROM `user` WHERE (`username` = '$txtusername' OR `email` = '$txtusername') AND `status`=1 LIMIT 1";            
             if(mysqli_num_rows($this->Home->getToCheckLogin($sql))==1)
-            {
-                $sqlcart = "SELECT * FROM `cart`,`user` WHERE `cart`.`username` = `user`.`username` AND `user`.`username` = '$txtusername'";
-                $cart = mysqli_fetch_array($this->Home->getToCheckLogin($sqlcart));                
-                if(isset($cart["id"]))
-                {                    
-                    $_SESSION['cart'] =  $cart["id"];                    
-                }
-                $_SESSION['username'] =  $txtusername;
-                if(isset($_POST['checkremember']))
-                {
-                    setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
-                }                
+            {                                
                 $result = mysqli_fetch_array($this->Home->getToCheckLogin($sql));                
-                if(password_verify($txtpassword, $result['password']))
+                if(password_verify($txtpassword, $result['password']))                
                 {
+                    $sqlcart = "SELECT * FROM `cart`,`user` WHERE `cart`.`username` = `user`.`username` AND (`user`.`username` = '$txtusername' OR `user`.`email` = '$txtusername')";
+                    $cart = mysqli_fetch_array($this->Home->getToCheckLogin($sqlcart));                
+                    if(isset($cart["id"]))
+                    {                    
+                        $_SESSION['cart'] =  $cart["id"];                    
+                    }
+                    $_SESSION['username'] = $txtusername;
+                    $_SESSION['password'] = $txtpassword;
+                    if(isset($_POST['checkremember']))
+                    {
+                        setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
+                    }
                     echo 1;
                     return;
                 }                

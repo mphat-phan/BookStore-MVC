@@ -36,11 +36,11 @@
             }
             public function resetQuantityByID($id,$quantity){
                   $sql ="UPDATE `product` set `quantity`=quantity + '$quantity' where `id` ='$id'";                              
-                  return $this->selectQueryJson($sql);
+                  return $this->update_by_sql($sql);
             }
             public function resetSoldByID($id,$quantity){
-                  $sql ="UPDATE `product` set `sold`= sold - '$quantity' where `id` ='$id'";                              
-                  return $this->selectQueryJson($sql);
+                  $sql ="UPDATE `product` SET `sold`= `sold` - '$quantity' WHERE `id` = '$id'";
+                  return $this->update_by_sql($sql);
             }
             public function delete($id){
                   return $this->delete_by_id($id);

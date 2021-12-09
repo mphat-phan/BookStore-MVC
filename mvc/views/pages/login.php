@@ -17,8 +17,8 @@
         <div class="row">
             <div class="col-xl-6 offset-xl-3">
                 <div class="text-box mt-5 mb-5">
-                    <p class="mb-4">You don't have a password? Then please <a class="blue" href="sign-up.html">Sign
-                            Up</a></p>
+                    <p class="mb-4">You don't have a password? Then please <a class="blue" href="<?php echo constant('URL')?>home/register">Sign
+                            Up</a> or <a href="<?php echo constant('URL')?>admin/forgotpassword">Forgot Password</a></p>
 
                     <!-- Log In Form -->
                     <form action="" method="post" id="formRequest">

@@ -108,7 +108,10 @@ class DB_driver
 
         return mysqli_query($this->__conn, $sql);
     }
- 
+    function updatebysql($sql) {
+        $this->connect();
+        return mysqli_query($this->__conn, $sql);
+    }
     // Hàm delete
     function remove($table, $where){
         // Kết nối

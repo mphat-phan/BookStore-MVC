@@ -1,11 +1,13 @@
 <?php
-    if(isset($_SESSION['username']))
+    if(isset($_SESSION['username']) && isset($_SESSION['password']))
     {
         $username = $_SESSION['username'];
+        $password = $_SESSION['password'];
     }
     else
     {
         $username = '';
+        $password = '';
     }
 ?>
 <!-- Navigation -->
@@ -67,8 +69,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function (){
-        var username = '<?php echo $username ?>';        
-        if(username != '')
+        var username = '<?php echo $username ?>';
+        var password = '<?php echo $password ?>';        
+        if(username != '' && password !='')
         {
             $.ajax({
                 type: "POST",

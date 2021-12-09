@@ -21,7 +21,7 @@
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
-              <a href="<?php echo constant('URL') ?>admin/login">Back to login</a>
+              <a href="<?php echo constant('URL') ?>home/login">Back to login</a>
             </div>
           </div>
         </form>              

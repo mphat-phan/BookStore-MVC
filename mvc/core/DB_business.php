@@ -42,7 +42,9 @@ class DB_business extends DB_driver
     function update_by_stringID($data, $id){
         return $this->update($this->_table_name, $data, $this->_key.'='."'".$id."'");
     }
- 
+    function update_by_sql($sql) {
+        return $this->updatebysql($sql);
+    }
     // hàm select theo id
     function select_by_id($select, $id){
         $sql = "select $select from ".$this->_table_name." where ".$this->_key." = ".(int)$id;        
