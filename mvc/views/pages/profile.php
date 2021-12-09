@@ -1254,8 +1254,7 @@
             } catch (error) {
                 console.log(error);
             }
-            // return data.data;
-            //return data.items || data.results;
+         
     }
     (async () => {
         const order = await fetchProduct('<?php echo constant('URL') ?>orderdetail/getAllByUser');
