@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Dec 06, 2021 at 05:46 PM
+-- Generation Time: Dec 09, 2021 at 02:38 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -61,13 +61,15 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `username`) VALUES
-(16, 'chiquang'),
-(17, 'khachhang'),
-(18, 'minhphat'),
-(19, 'nguyenvana'),
-(24, 'chiquang01'),
-(25, 'chithien'),
-(26, 'admin');
+(20, 'admin'),
+(21, 'chiquang'),
+(22, 'chiquang01'),
+(23, 'chithien'),
+(24, 'khachhang'),
+(25, 'minhphat'),
+(27, 'tom'),
+(28, 'chiquang02'),
+(29, 'nguyenvanb');
 
 -- --------------------------------------------------------
 
@@ -87,6 +89,7 @@ CREATE TABLE `cartdetail` (
 --
 
 INSERT INTO `cartdetail` (`cartID`, `productID`, `quantity`, `date`) VALUES
+(20, 4, 1, '2021-12-08 22:32:51'),
 (24, 1, 1, '2021-12-06 19:50:48'),
 (25, 41, 1, '2021-12-06 20:23:32'),
 (25, 44, 1, '2021-12-06 20:23:34');
@@ -184,6 +187,7 @@ INSERT INTO `category_product` (`categoryID`, `productID`) VALUES
 (3, 6),
 (3, 14),
 (3, 32),
+(3, 10016),
 (5, 2),
 (5, 9),
 (5, 19),
@@ -252,11 +256,11 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `phone`, `email`, `address`, `birth`, `username`) VALUES
-(16, 'Tên Khách Hàng', '0123456789', 'khachhang@gmail.com', 'Quận 10, TP Hồ Chí Minh', '0000-00-00', 'khachhang'),
-(24, 'Nguyễn Văn A', '0909112233', 'nguyenvana@gmail.com', '213123', '2021-11-01', 'nguyenvana'),
+(16, 'Tên Khách Hàng', '0123456789', 'khachhang@gmail.com', 'Quận 10, TP Hồ Chí Minh', '2001-09-12', 'khachhang'),
 (29, 'Đoàn Chí Quang', '0384327229', 'chiquang321@gmail.com', '', NULL, 'chiquang01'),
-(30, 'Nguyễn Chí Thiện', '0384327229', 'nguyenchithien@gmail.com', '', NULL, 'chithien'),
-(31, 'Dzeam Techie', '0384327229', 'dzeamtechie@gmail.com', 'Hồ Chí Minh', '2001-07-12', 'admin');
+(30, 'Nguyễn Chí Thiện', '0384327229', 'nguyenchithien@gmail.com', '', '2001-01-01', 'chithien'),
+(31, 'Dzeam Techie', '0384327229', 'dzeamtechie@gmail.com', 'Hồ Chí Minh', '2001-07-12', 'admin'),
+(32, 'Đoàn Chí Quang', '0384327229', 'doanchiquang@gmai.com', '', NULL, 'chiquang02');
 
 -- --------------------------------------------------------
 
@@ -282,7 +286,9 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`id`, `name`, `phone`, `email`, `address`, `birth`, `joindate`, `username`) VALUES
 (9, 'Đoàn Chí Quang', '0384327229', 'chiquang127@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2021-11-03', 'chiquang'),
 (10, 'Phan Minh Phát', '0909112233', 'phanminhphat2001@gmail.com', 'Hồ Chí Minh', '2001-09-14', '2021-11-07', 'minhphat'),
-(12, 'Dzeam Techie', '0384327229', 'dzeamtechie@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2018-01-01', 'admin');
+(12, 'Dzeam Techie', '0384327229', 'dzeamtechie@gmail.com', 'Hồ Chí Minh', '2001-07-12', '2018-01-01', 'admin'),
+(13, 'Tom Hiddleston', '0384327221', 'tomhid@gmail.com', 'Hồ Chí Minh', '2002-01-01', '2021-12-07', 'tom'),
+(14, 'Nguyễn Văn B', '0384327229', 'nguyenvanb@gmail.com', 'Hồ Chí Minh', '2001-01-01', '2021-12-07', 'nguyenvanb');
 
 -- --------------------------------------------------------
 
@@ -322,6 +328,16 @@ CREATE TABLE `import` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `import`
+--
+
+INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
+(50, '2021-12-07', 10000, 'admin'),
+(51, '2021-12-07', 1500000, 'admin'),
+(52, '2021-12-07', 1500000, 'admin'),
+(53, '2021-12-07', 15000, 'admin');
+
+--
 -- Triggers `import`
 --
 DELIMITER $$
@@ -342,6 +358,15 @@ CREATE TABLE `importdetail` (
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `importdetail`
+--
+
+INSERT INTO `importdetail` (`importID`, `productID`, `quantity`, `price`) VALUES
+(50, 1, 1, 10000),
+(52, 10016, 100, 15000),
+(53, 10016, 10, 1500);
 
 -- --------------------------------------------------------
 
@@ -394,10 +419,30 @@ INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtota
 (166, 1, 1, 10000, 10000, 20, 1),
 (167, 31, 1, 100000, 100000, 20, 1),
 (168, 1, 1, 10000, 10000, 20, 1),
-(168, 2, 1, 10000, 10000, 20, 0),
-(169, 1, 1, 10000, 10000, 20, 0),
+(168, 2, 1, 10000, 10000, 20, 1),
+(169, 1, 1, 10000, 10000, 20, 1),
 (170, 1, 1, 10000, 10000, 20, 0),
-(171, 1, 1, 10000, 10000, 20, 0);
+(171, 1, 1, 10000, 10000, 20, 1),
+(172, 41, 1, 12000, 12000, 20, 1),
+(173, 41, 1, 12000, 12000, 20, 0),
+(174, 4, 40, 92000, 3680000, 20, 0),
+(175, 4, 1, 92000, 92000, 20, 0),
+(176, 6, 1, 34000, 34000, 20, 0),
+(177, 41, 1, 12000, 12000, 20, 0),
+(178, 41, 2, 12000, 24000, 20, 0),
+(179, 41, 4, 12000, 48000, 20, 0),
+(180, 4, 1, 92000, 92000, 20, 0),
+(181, 5, 1, 32000, 32000, 50, 0),
+(182, 5, 1, 32000, 32000, 50, 0),
+(183, 5, 1, 32000, 32000, 50, 0),
+(184, 4, 1, 92000, 92000, 20, 0),
+(185, 1, 1, 10000, 10000, 20, 0),
+(185, 2, 1, 10000, 10000, 50, 0),
+(185, 4, 4, 92000, 368000, 20, 0),
+(186, 1, 10, 10000, 100000, 20, 0),
+(186, 2, 2, 10000, 20000, 50, 0),
+(189, 41, 1, 12000, 12000, 20, 0),
+(192, 1, 1, 10000, 10000, 20, 0);
 
 --
 -- Triggers `orderdetail`
@@ -418,7 +463,7 @@ UPDATE product
    SET quantity = quantity - 		NEW.quantity
    WHERE id = NEW.productID;
 UPDATE product
-   SET sold = sold + 		NEW.quantity
+   SET sold = sold + NEW.quantity
    WHERE id = NEW.productID;
 END
 $$
@@ -468,14 +513,51 @@ INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `tot
 (168, '2021-12-06', 16000, 25000, 0, 41000, NULL, 'chithien', NULL, 4, NULL, NULL),
 (169, '2021-12-06', 8000, 25000, 0, 33000, NULL, 'chithien', NULL, 4, NULL, NULL),
 (170, '2021-12-06', 8000, 0, 0, 8000, 'chiquang', NULL, NULL, 4, 8000, 0),
-(171, '2021-12-06', 8000, 25000, 0, 33000, NULL, 'admin', NULL, 4, NULL, NULL);
+(171, '2021-12-06', 8000, 25000, 0, 33000, NULL, 'admin', NULL, 4, NULL, NULL),
+(172, '2021-12-07', 9600, 25000, 0, 34600, NULL, 'admin', NULL, 4, NULL, NULL),
+(173, '2021-12-07', 9600, 25000, 0, 34600, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(174, '2021-12-07', 2944000, 0, 200000, 2744000, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(175, '2021-12-07', 73600, 25000, 0, 98600, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(176, '2021-12-07', 27200, 25000, 0, 52200, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(177, '2021-12-07', 9600, 25000, 0, 34600, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(178, '2021-12-07', 19200, 25000, 0, 44200, NULL, 'chithien', NULL, -1, NULL, NULL),
+(179, '2021-12-07', 38400, 25000, 0, 63400, NULL, 'chithien', NULL, -1, NULL, NULL),
+(180, '2021-12-07', 73600, 25000, 0, 98600, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(181, '2021-12-07', 16000, 25000, 0, 41000, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(182, '2021-12-07', 16000, 25000, 0, 41000, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(183, '2021-12-07', 16000, 25000, 0, 41000, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(184, '2021-12-07', 73600, 25000, 0, 98600, NULL, 'chiquang01', NULL, -1, NULL, NULL),
+(185, '2021-12-07', 307400, 0, 20000, 287400, NULL, 'chiquang02', NULL, -1, NULL, NULL),
+(186, '2021-12-07', 90000, 0, 0, 90000, 'admin', NULL, NULL, 4, 90000, 0),
+(187, '2021-12-07', 80000, 25000, 0, 105000, NULL, 'chiquang02', NULL, 0, NULL, NULL),
+(188, '2021-12-07', 80000, 25000, 0, 105000, NULL, 'admin', NULL, 0, NULL, NULL),
+(189, '2021-12-07', 9600, 25000, 0, 34600, NULL, 'admin', NULL, 0, NULL, NULL),
+(190, '2021-12-07', 80000, 25000, 0, 105000, NULL, 'admin', NULL, 0, NULL, NULL),
+(191, '2021-12-07', 50000, 25000, 0, 75000, NULL, 'admin', NULL, 0, NULL, NULL),
+(192, '2021-12-07', 8000, 25000, 0, 33000, NULL, 'admin', NULL, 0, NULL, NULL),
+(193, '2021-12-07', 72000, 25000, 0, 97000, NULL, 'admin', NULL, 0, NULL, NULL);
 
 --
 -- Triggers `ordertb`
 --
 DELIMITER $$
+CREATE TRIGGER `cancelOrder` AFTER UPDATE ON `ordertb` FOR EACH ROW BEGIN
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
 CREATE TRIGGER `deleteOrder` BEFORE DELETE ON `ordertb` FOR EACH ROW DELETE FROM orderdetail
 WHERE orderID = OLD.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updateOrder` BEFORE UPDATE ON `ordertb` FOR EACH ROW BEGIN
+  IF NEW.status = -1 AND NEW.status = OLD.status 
+THEN
+SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Đã hủy đơn không thể hủy nữa!';
+  END IF;
+END
 $$
 DELIMITER ;
 
@@ -509,18 +591,18 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0,
   `price` double NOT NULL,
   `pagenumber` int(11) DEFAULT NULL,
   `publishdate` date DEFAULT NULL,
   `language` varchar(50) DEFAULT NULL,
   `esrbID` int(11) DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
-  `sold` int(11) NOT NULL,
+  `sold` int(11) NOT NULL DEFAULT 0,
   `authorID` int(11) DEFAULT NULL,
   `publisherID` int(11) DEFAULT NULL,
   `saleID` varchar(100) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL
+  `status` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -528,50 +610,64 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `language`, `esrbID`, `image`, `sold`, `authorID`, `publisherID`, `saleID`, `status`) VALUES
-(1, 'Hành Trình Của Người Bán Hàng Vĩ Đại', '<div class=\"product_view_tab_content_ad\" style=\"margin: 0px; padding: 0px; overflow: hidden; max-height: 600px; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px;\"><div id=\"product_tabs_description_contents\" style=\"margin: 20px 0px 0px; padding: 0px; line-height: 25px;\"><div id=\"desc_content\" class=\"std\" style=\"margin: 0px; padding: 0px;\"><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">“Hành Trình Của Người Bán Hàng Vĩ Đại” là một câu chuyện và cũng là một hành trình về một chàng thanh niên trẻ trong sự nghiệp chinh phục chính mình trở thành một “người bán hàng vĩ đại”.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tại sao lại là người bán hàng vĩ đại? Bởi vì thứ mặt hàng chàng thanh niên ấy bán không chỉ là những thứ vật chất có thể cầm nắm và định giá dễ dàng, mà đó là công cuộc “bán mình” – bán giá trị của chính mình. Đó là một câu chuyện với ngôn ngữ giản dị, những cuộc đối thoại chân thật với những thông điệp gần gũi, dễ tiếp nhận và dễ vận dụng. Đọc xong trang cuối cùng của cuốn sách, tôi đã có thể mỉm cười và hài lòng với những thông điệp mà mình nhận được từ tác giả cuốn sách - anh Nguyễn Anh Dũng cũng là người Sáng lập Sbooks.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Cuốn sách sẽ giúp bạn giải quyết được những câu hỏi mà dường như bạn còn rối rắm trong quá trình bán hàng và phát triển bản thân mình, và nếu bạn đang còn những băn khoăn như “Hạnh phúc là gì? Phải làm sao để có được hạnh phúc? Tôi có thể trở thành một người bán hàng vĩ đại không? Giá trị thật sự của tôi nằm ở đâu?”</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Những câu hỏi ấy không chỉ được đặt ra để bỏ lửng ở đó, tác giả cuốn sách “Hành Trình Của Người Bán Hàng Vĩ Đại” thông qua đó cũng đã định hướng giúp độc giả đến với cách trả lời các câu hỏi ấy bằng mô hình 7S với 7 từ khóa cô đọng, hữu ích và bằng những ví dụ thực tiễn nhất,… Bạn sẽ biết mình cần chuẩn bị những gì để bước chân vào thương trường, những quy luật tất yếu, những mánh khóe gian xảo và cả cách để đối mặt với chúng mà không làm mất đi giá trị cốt lõi của doanh nghiệp mình hướng đến. Quan trọng nhất là bạn sẽ được nghe về câu chuyện thực tế của một chàng trai trẻ được nhắc đến trong sách có hành trình xây dựng doanh nghiệp tầm cỡ quốc tế với sứ mệnh cao cả, để từ đó bạn dễ dàng trở nên đột phá trên hành trình của chính bạn. Mỗi sự gặp gỡ trong đời đều mang đến cho ta những trải nghiệm giá trị. Nhưng không phải ai cũng có cơ may để có những sự gặp gỡ giá trị, và cuộc gặp gỡ với “Hành Trình Của Người Bán Hàng Vĩ Đại” có thể sẽ chính là cuộc gặp gỡ “định mệnh” khiến bạn thay đổi nhiều mặt về bản thân bạn lẫn cho sự nghiệp kinh doanh của bạn và cho chính cuộc đời của bạn.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tất cả đã sẵn sàng, hành động hay không là phụ thuộc vào quyền của bạn. Chúc bạn nhận được nhiều giá trị từ “Hành Trình Của Người Bán Hàng Vĩ Đại”.</p><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both; font-size: 1em;\"></div></div></div></div><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px;\"></div><div style=\"margin: 0px; padding: 0px; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px; overflow-y: hidden;\"><div class=\"product_view_tab_content_ad_more\" style=\"margin: -600px 0px 0px; padding: 0px;\"><div class=\"product_view_tab_content_additional\" style=\"margin: 0px; padding: 0px; border-bottom: 1px solid rgb(193, 193, 193);\"><table class=\"data-table table-additional\" style=\"margin: 10px 0px; padding: 0px; border-spacing: 0px; max-width: 100%; background: transparent; border: none; empty-cells: show; width: 1200px; box-shadow: none;\"><colgroup style=\"margin: 0px; padding: 0px;\"><col width=\"25%\" style=\"margin: 0px; padding: 0px;\"><col style=\"margin: 0px; padding: 0px;\"></colgroup><tbody style=\"margin: 0px; padding: 0px;\"><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Mã hàng</th><td class=\"data_sku\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">9786047776245</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Nhà Cung Cấp</th><td class=\"data_supplier_list\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\"><a class=\"xem-chi-tiet\" href=\"https://www.fahasa.com/all-category.html?supplier_list=1228062&amp;fhs_campaign=ATTRIBUTE_PRODUCT\" style=\"margin: 0px; padding: 0px; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(36, 137, 244); transition: all 300ms ease-in 0s;\">CÔNG TY TNHH PHÁT HÀNH S BOOKS</a></td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Tác giả</th><td class=\"data_author\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">Nguyễn Anh Dũng</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">NXB</th><td class=\"data_publisher\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">NXB Thế Giới</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Năm XB</th><td class=\"data_publish_year\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">2020</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Trọng lượng (gr)</th><td class=\"data_weight\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">250</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Kích Thước Bao Bì</th><td class=\"data_size\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">20 x 13 cm</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Số trang</th><td class=\"data_qty_of_page\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">220</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Hình thức</th><td class=\"data_book_layout\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">Bìa Cứng</td></tr></tbody></table></div><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both;\"></div><div id=\"product_tabs_description_contents\" style=\"margin: 20px 0px 0px; padding: 0px; line-height: 25px;\"><div id=\"desc_content\" class=\"std\" style=\"margin: 0px; padding: 0px;\"><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">“Hành Trình Của Người Bán Hàng Vĩ Đại” là một câu chuyện và cũng là một hành trình về một chàng thanh niên trẻ trong sự nghiệp chinh phục chính mình trở thành một “người bán hàng vĩ đại”.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tại sao lại là người bán hàng vĩ đại? Bởi vì thứ mặt hàng chàng thanh niên ấy bán không chỉ là những thứ vật chất có thể cầm nắm và định giá dễ dàng, mà đó là công cuộc “bán mình” – bán giá trị của chính mình. Đó là một câu chuyện với ngôn ngữ giản dị, những cuộc đối thoại chân thật với những thông điệp gần gũi, dễ tiếp nhận và dễ vận dụng. Đọc xong trang cuối cùng của cuốn sách, tôi đã có thể mỉm cười và hài lòng với những thông điệp mà mình nhận được từ tác giả cuốn sách - anh Nguyễn Anh Dũng cũng là người Sáng lập Sbooks.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Cuốn sách sẽ giúp bạn giải quyết được những câu hỏi mà dường như bạn còn rối rắm trong quá trình bán hàng và phát triển bản thân mình, và nếu bạn đang còn những băn khoăn như “Hạnh phúc là gì? Phải làm sao để có được hạnh phúc? Tôi có thể trở thành một người bán hàng vĩ đại không? Giá trị thật sự của tôi nằm ở đâu?”</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Những câu hỏi ấy không chỉ được đặt ra để bỏ lửng ở đó, tác giả cuốn sách “Hành Trình Của Người Bán Hàng Vĩ Đại” thông qua đó cũng đã định hướng giúp độc giả đến với cách trả lời các câu hỏi ấy bằng mô hình 7S với 7 từ khóa cô đọng, hữu ích và bằng những ví dụ thực tiễn nhất,… Bạn sẽ biết mình cần chuẩn bị những gì để bước chân vào thương trường, những quy luật tất yếu, những mánh khóe gian xảo và cả cách để đối mặt với chúng mà không làm mất đi giá trị cốt lõi của doanh nghiệp mình hướng đến. Quan trọng nhất là bạn sẽ được nghe về câu chuyện thực tế của một chàng trai trẻ được nhắc đến trong sách có hành trình xây dựng doanh nghiệp tầm cỡ quốc tế với sứ mệnh cao cả, để từ đó bạn dễ dàng trở nên đột phá trên hành trình của chính bạn. Mỗi sự gặp gỡ trong đời đều mang đến cho ta những trải nghiệm giá trị. Nhưng không phải ai cũng có cơ may để có những sự gặp gỡ giá trị, và cuộc gặp gỡ với “Hành Trình Của Người Bán Hàng Vĩ Đại” có thể sẽ chính là cuộc gặp gỡ “định mệnh” khiến bạn thay đổi nhiều mặt về bản thân bạn lẫn cho sự nghiệp kinh doanh của bạn và cho chính cuộc đời của bạn.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tất cả đã sẵn sàng, hành động hay không là phụ thuộc vào quyền của bạn. Chúc bạn nhận được nhiều giá trị từ “Hành Trình Của Người Bán Hàng Vĩ Đại”.</p></div></div></div></div>', 16, 10000, 200, '2021-11-29', 'Vietnamese', 1, 'hanhtrinhcuanguoibanhangvidai.jpg', 36, 3, 14, 'discount20', 1),
-(2, 'Nhà Giả Kim (Tái Bản 2020)', '', 149, 10000, 200, '2021-12-06', 'Vietnamese', 1, 'nhagiakim.jpg', 1, 3, 14, 'discount20', 1),
-(3, 'Nghĩ Giàu & Làm Giàu (Tái Bản 2020)', '', 27, 88000, 151, '2021-12-06', 'Vietnamese', 1, 'nghigiaulamgiau_110k-01_bia-1.jpg', 8, 3, 14, 'discount20', 1),
-(4, 'D. Trump - Nghệ Thuật Đàm Phán (Tái Bản 2020)', '', 74, 92000, 545, '2021-11-28', 'Vietnamese', 1, 'image_195509_1_49918.jpg', 6, 3, 14, 'discount20', 1),
-(5, 'Bách Khoa Thư Trẻ Em - Cuốn Sách Lí Giải Vạn Vật', '', 32, 32000, 122, '2021-12-06', 'Vietnamese', 1, 'bach-khoa-thu-tia-1.jpg', 0, 3, 14, 'discount20', 1),
-(6, 'Ngữ Văn 10 - Tập 1 (2021)', '', 101, 34000, 545, '2044-02-04', 'Vietnamese', 1, 'image_242931.jpg', 1, 3, 14, 'discount20', 1),
-(7, 'Bách Khoa Vũ Trụ - Mở Mang Kiến Thức, Khơi Dậy Tiềm Năng', '', 99, 43000, 321, '2021-11-28', 'Vietnamese', 1, '8936071672629.jpg', 1, 3, 14, 'discount20', 1),
-(8, 'Who? Chuyện Kể Về Danh Nhân Thế Giới: Vincent Van Gogh (Tái Bản 2019)', '', 97, 123000, 121, '2021-12-07', 'Vietnamese', 1, 'image_182456.jpg', 3, 3, 14, 'discount20', 1),
-(9, 'Lãnh Đạo Bằng Câu Hỏi', '', 95, 240000, 545, '2043-10-05', 'Vietnamese', 1, '94efc3aa91376fc18e8e580396369f0f.jpg', 5, 3, 14, 'discount20', 1),
+(1, 'Hành Trình Của Người Bán Hàng Vĩ Đại', '<div class=\"product_view_tab_content_ad\" style=\"margin: 0px; padding: 0px; overflow: hidden; max-height: 600px; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px;\"><div id=\"product_tabs_description_contents\" style=\"margin: 20px 0px 0px; padding: 0px; line-height: 25px;\"><div id=\"desc_content\" class=\"std\" style=\"margin: 0px; padding: 0px;\"><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">“Hành Trình Của Người Bán Hàng Vĩ Đại” là một câu chuyện và cũng là một hành trình về một chàng thanh niên trẻ trong sự nghiệp chinh phục chính mình trở thành một “người bán hàng vĩ đại”.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tại sao lại là người bán hàng vĩ đại? Bởi vì thứ mặt hàng chàng thanh niên ấy bán không chỉ là những thứ vật chất có thể cầm nắm và định giá dễ dàng, mà đó là công cuộc “bán mình” – bán giá trị của chính mình. Đó là một câu chuyện với ngôn ngữ giản dị, những cuộc đối thoại chân thật với những thông điệp gần gũi, dễ tiếp nhận và dễ vận dụng. Đọc xong trang cuối cùng của cuốn sách, tôi đã có thể mỉm cười và hài lòng với những thông điệp mà mình nhận được từ tác giả cuốn sách - anh Nguyễn Anh Dũng cũng là người Sáng lập Sbooks.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Cuốn sách sẽ giúp bạn giải quyết được những câu hỏi mà dường như bạn còn rối rắm trong quá trình bán hàng và phát triển bản thân mình, và nếu bạn đang còn những băn khoăn như “Hạnh phúc là gì? Phải làm sao để có được hạnh phúc? Tôi có thể trở thành một người bán hàng vĩ đại không? Giá trị thật sự của tôi nằm ở đâu?”</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Những câu hỏi ấy không chỉ được đặt ra để bỏ lửng ở đó, tác giả cuốn sách “Hành Trình Của Người Bán Hàng Vĩ Đại” thông qua đó cũng đã định hướng giúp độc giả đến với cách trả lời các câu hỏi ấy bằng mô hình 7S với 7 từ khóa cô đọng, hữu ích và bằng những ví dụ thực tiễn nhất,… Bạn sẽ biết mình cần chuẩn bị những gì để bước chân vào thương trường, những quy luật tất yếu, những mánh khóe gian xảo và cả cách để đối mặt với chúng mà không làm mất đi giá trị cốt lõi của doanh nghiệp mình hướng đến. Quan trọng nhất là bạn sẽ được nghe về câu chuyện thực tế của một chàng trai trẻ được nhắc đến trong sách có hành trình xây dựng doanh nghiệp tầm cỡ quốc tế với sứ mệnh cao cả, để từ đó bạn dễ dàng trở nên đột phá trên hành trình của chính bạn. Mỗi sự gặp gỡ trong đời đều mang đến cho ta những trải nghiệm giá trị. Nhưng không phải ai cũng có cơ may để có những sự gặp gỡ giá trị, và cuộc gặp gỡ với “Hành Trình Của Người Bán Hàng Vĩ Đại” có thể sẽ chính là cuộc gặp gỡ “định mệnh” khiến bạn thay đổi nhiều mặt về bản thân bạn lẫn cho sự nghiệp kinh doanh của bạn và cho chính cuộc đời của bạn.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tất cả đã sẵn sàng, hành động hay không là phụ thuộc vào quyền của bạn. Chúc bạn nhận được nhiều giá trị từ “Hành Trình Của Người Bán Hàng Vĩ Đại”.</p><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both; font-size: 1em;\"></div></div></div></div><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px;\"></div><div style=\"margin: 0px; padding: 0px; color: rgb(51, 51, 51); font-family: sans-serif; font-size: 13px; overflow-y: hidden;\"><div class=\"product_view_tab_content_ad_more\" style=\"margin: -600px 0px 0px; padding: 0px;\"><div class=\"product_view_tab_content_additional\" style=\"margin: 0px; padding: 0px; border-bottom: 1px solid rgb(193, 193, 193);\"><table class=\"data-table table-additional\" style=\"margin: 10px 0px; padding: 0px; border-spacing: 0px; max-width: 100%; background: transparent; border: none; empty-cells: show; width: 1200px; box-shadow: none;\"><colgroup style=\"margin: 0px; padding: 0px;\"><col width=\"25%\" style=\"margin: 0px; padding: 0px;\"><col style=\"margin: 0px; padding: 0px;\"></colgroup><tbody style=\"margin: 0px; padding: 0px;\"><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Mã hàng</th><td class=\"data_sku\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">9786047776245</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Nhà Cung Cấp</th><td class=\"data_supplier_list\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\"><a class=\"xem-chi-tiet\" href=\"https://www.fahasa.com/all-category.html?supplier_list=1228062&amp;fhs_campaign=ATTRIBUTE_PRODUCT\" style=\"margin: 0px; padding: 0px; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(36, 137, 244); transition: all 300ms ease-in 0s;\">CÔNG TY TNHH PHÁT HÀNH S BOOKS</a></td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Tác giả</th><td class=\"data_author\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">Nguyễn Anh Dũng</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">NXB</th><td class=\"data_publisher\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">NXB Thế Giới</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Năm XB</th><td class=\"data_publish_year\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">2020</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Trọng lượng (gr)</th><td class=\"data_weight\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">250</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Kích Thước Bao Bì</th><td class=\"data_size\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">20 x 13 cm</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Số trang</th><td class=\"data_qty_of_page\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">220</td></tr><tr style=\"margin: 0px; padding: 0px;\"><th class=\"table-label\" style=\"margin: 0px; padding: 4px; text-align: left; vertical-align: baseline; font-weight: normal; border: none; line-height: 1.6; white-space: nowrap; color: rgb(119, 119, 119); font-size: 1.1em;\">Hình thức</th><td class=\"data_book_layout\" style=\"margin: 0px; padding: 4px; vertical-align: top; border: none; font-size: 1.1em;\">Bìa Cứng</td></tr></tbody></table></div><div class=\"clear\" style=\"margin: 0px; padding: 0px; clear: both;\"></div><div id=\"product_tabs_description_contents\" style=\"margin: 20px 0px 0px; padding: 0px; line-height: 25px;\"><div id=\"desc_content\" class=\"std\" style=\"margin: 0px; padding: 0px;\"><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">“Hành Trình Của Người Bán Hàng Vĩ Đại” là một câu chuyện và cũng là một hành trình về một chàng thanh niên trẻ trong sự nghiệp chinh phục chính mình trở thành một “người bán hàng vĩ đại”.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tại sao lại là người bán hàng vĩ đại? Bởi vì thứ mặt hàng chàng thanh niên ấy bán không chỉ là những thứ vật chất có thể cầm nắm và định giá dễ dàng, mà đó là công cuộc “bán mình” – bán giá trị của chính mình. Đó là một câu chuyện với ngôn ngữ giản dị, những cuộc đối thoại chân thật với những thông điệp gần gũi, dễ tiếp nhận và dễ vận dụng. Đọc xong trang cuối cùng của cuốn sách, tôi đã có thể mỉm cười và hài lòng với những thông điệp mà mình nhận được từ tác giả cuốn sách - anh Nguyễn Anh Dũng cũng là người Sáng lập Sbooks.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Cuốn sách sẽ giúp bạn giải quyết được những câu hỏi mà dường như bạn còn rối rắm trong quá trình bán hàng và phát triển bản thân mình, và nếu bạn đang còn những băn khoăn như “Hạnh phúc là gì? Phải làm sao để có được hạnh phúc? Tôi có thể trở thành một người bán hàng vĩ đại không? Giá trị thật sự của tôi nằm ở đâu?”</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Những câu hỏi ấy không chỉ được đặt ra để bỏ lửng ở đó, tác giả cuốn sách “Hành Trình Của Người Bán Hàng Vĩ Đại” thông qua đó cũng đã định hướng giúp độc giả đến với cách trả lời các câu hỏi ấy bằng mô hình 7S với 7 từ khóa cô đọng, hữu ích và bằng những ví dụ thực tiễn nhất,… Bạn sẽ biết mình cần chuẩn bị những gì để bước chân vào thương trường, những quy luật tất yếu, những mánh khóe gian xảo và cả cách để đối mặt với chúng mà không làm mất đi giá trị cốt lõi của doanh nghiệp mình hướng đến. Quan trọng nhất là bạn sẽ được nghe về câu chuyện thực tế của một chàng trai trẻ được nhắc đến trong sách có hành trình xây dựng doanh nghiệp tầm cỡ quốc tế với sứ mệnh cao cả, để từ đó bạn dễ dàng trở nên đột phá trên hành trình của chính bạn. Mỗi sự gặp gỡ trong đời đều mang đến cho ta những trải nghiệm giá trị. Nhưng không phải ai cũng có cơ may để có những sự gặp gỡ giá trị, và cuộc gặp gỡ với “Hành Trình Của Người Bán Hàng Vĩ Đại” có thể sẽ chính là cuộc gặp gỡ “định mệnh” khiến bạn thay đổi nhiều mặt về bản thân bạn lẫn cho sự nghiệp kinh doanh của bạn và cho chính cuộc đời của bạn.</p><p style=\"margin-right: 0px; margin-bottom: 10px; margin-left: 0px; padding: 0px; font-size: 1em; text-align: justify;\">Tất cả đã sẵn sàng, hành động hay không là phụ thuộc vào quyền của bạn. Chúc bạn nhận được nhiều giá trị từ “Hành Trình Của Người Bán Hàng Vĩ Đại”.</p></div></div></div></div>', 9, 10000, 200, '2021-11-29', 'Vietnamese', 1, 'hanhtrinhcuanguoibanhangvidai.jpg', 64, 3, 14, 'discount20', 1),
+(2, 'Nhà Giả Kim (Tái Bản 2020)', '', 10, 10000, 200, '2021-12-06', 'Vietnamese', 1, 'nhagiakim.jpg', 47, 3, 14, 'discount50', 1),
+(3, 'Nghĩ Giàu & Làm Giàu (Tái Bản 2020)', '', 97, 88000, 151, '2021-12-06', 'Vietnamese', 1, 'nghigiaulamgiau_110k-01_bia-1.jpg', 11, 3, 14, 'discount20', 1),
+(4, 'D. Trump - Nghệ Thuật Đàm Phán (Tái Bản 2020)', '', 94, 92000, 545, '2021-11-28', 'Vietnamese', 1, 'image_195509_1_49918.jpg', 54, 3, 14, 'discount20', 1),
+(5, 'Bách Khoa Thư Trẻ Em - Cuốn Sách Lí Giải Vạn Vật', '', 100, 32000, 122, '2021-12-06', 'Vietnamese', 1, 'bach-khoa-thu-tia-1.jpg', 1, 3, 14, 'discount50', 1),
+(6, 'Ngữ Văn 10 - Tập 1 (2021)', '', 99, 34000, 545, '2044-02-04', 'Vietnamese', 1, 'image_242931.jpg', 3, 3, 14, 'discount20', 1),
+(7, 'Bách Khoa Vũ Trụ - Mở Mang Kiến Thức, Khơi Dậy Tiềm Năng', '', 99, 43000, 321, '2021-11-28', 'Vietnamese', 1, '8936071672629.jpg', 2, 3, 14, 'discount20', 1),
+(8, 'Who? Chuyện Kể Về Danh Nhân Thế Giới: Vincent Van Gogh (Tái Bản 2019)', '', 97, 123000, 121, '2021-12-07', 'Vietnamese', 1, 'image_182456.jpg', 6, 3, 14, 'discount50', 1),
+(9, 'Lãnh Đạo Bằng Câu Hỏi', '', 95, 240000, 545, '2043-10-05', 'Vietnamese', 1, '94efc3aa91376fc18e8e580396369f0f.jpg', 10, 3, 14, 'discount20', 1),
 (10, 'Danh Nhân Thế Giới: Sutơ (Tái Bản 2019)', '', 100, 500000, 215, '2043-10-09', 'Vietnamese', 1, 'image_181943.jpg', 0, 3, 14, 'discount20', 1),
 (11, 'Who? Chuyện Kể Về Danh Nhân Thế Giới: Steve Jobs (Tái Bản 2019)', NULL, 100, 21000, 545, '0000-00-00', 'Vietnamese', 1, 'image_187127.jpg', 0, 3, 14, 'discount20', 1),
 (12, '10 Vạn Câu Hỏi Vì Sao - Khám Phá Trái Đất (Tái Bản 2018)', NULL, 100, 23000, 235, '0000-00-00', 'Vietnamese', 1, '10cauhoi.jpg', 0, 3, 14, 'discount20', 1),
 (13, 'Geography Encyclopedia - Bách Khoa Toàn Thư Về Địa Lý', NULL, 100, 67500, 566, '0000-00-00', 'Vietnamese', 1, 'image_195509_1_18112.jpg', 0, 3, 14, 'discount20', 1),
 (14, 'Sự Trỗi Dậy Và Suy Tàn Của Đế Chế Thứ Ba - Lịch Sử Đức Quốc Xã (Tái Bản)', NULL, 100, 34500, 878, '0000-00-00', 'Vietnamese', 1, 'image_244718_1_4985.jpg', 0, 3, 14, 'discount20', 1),
-(15, 'Khoa Học & Nghệ Thuật Của Việc Ra Quyết Định', NULL, 99, 57600, 694, '2044-01-08', 'Vietnamese', 1, '8ec379f2d6649317cee9b11cf5922708.jpg', 1, 3, 14, 'discount20', 1),
+(15, 'Khoa Học & Nghệ Thuật Của Việc Ra Quyết Định', NULL, 99, 57600, 694, '2044-01-08', 'Vietnamese', 1, '8ec379f2d6649317cee9b11cf5922708.jpg', 2, 3, 14, 'discount20', 1),
 (16, 'Danh Tướng Việt Nam Trong Lịch Sử - Tập 2', NULL, 100, 55000, 242, '0000-00-00', 'Vietnamese', 1, 'image_244718_1_3333.jpg', 0, 3, 14, 'discount20', 1),
 (17, 'Tuổi Trẻ Đáng Giá Bao Nhiêu (Tái Bản 2021)', NULL, 100, 45000, 854, '0000-00-00', 'Vietnamese', 1, 'image_239651.jpg', 0, 3, 14, 'discount20', 1),
 (18, 'Đời Ngắn Đừng Ngủ Dài (Tái Bản 2018)', '', 100, 45000, 987, '2021-12-06', 'Vietnamese', 1, 'image_180164jpg.jpg', 0, 3, 15, 'discount20', 1),
-(19, 'Đắc Nhân Tâm (Khổ Lớn) (Tái Bản)', NULL, 98, 60000, 654, '2044-01-06', 'Vietnamese', 1, '9558a365adde6688d4c71a200d78310c.jpg', 2, 3, 14, 'discount20', 1),
+(19, 'Đắc Nhân Tâm (Khổ Lớn) (Tái Bản)', NULL, 98, 60000, 654, '2044-01-06', 'Vietnamese', 1, '9558a365adde6688d4c71a200d78310c.jpg', 4, 3, 14, 'discount20', 1),
 (20, 'Đàn Ông Sao Hỏa Đàn Bà Sao Kim', NULL, 100, 34000, 87, '0000-00-00', 'Vietnamese', 1, 'image_183259.jpg', 0, 3, 14, 'discount20', 1),
 (21, 'Tôi Tự Học (Tái Bản 2021)', NULL, 100, 455000, 354, '0000-00-00', 'Vietnamese', 1, 'image_226326.jpg', 0, 3, 14, 'discount20', 1),
 (22, 'Nhà Quản Lý Linh Hoạt', NULL, 100, 29000, 412, '0000-00-00', 'Vietnamese', 1, 'image_234634.jpg', 0, 3, 14, 'discount20', 1),
 (23, 'The Alchemist (Size:11x17.5cm)', NULL, 100, 110000, 481, '0000-00-00', 'English', 1, 'image_92663.jpg', 0, 3, 14, 'discount20', 1),
-(24, 'P.S. I Love You', NULL, 99, 12000, 211, '0000-00-00', 'English', 1, 'image_128884.jpg', 1, 3, 14, 'discount20', 1),
-(25, '20,000 Leagues Under the Sea', NULL, 99, 50200, 100, '0000-00-00', 'English', 1, 'cover-cust-7150.jpg', 1, 3, 14, 'discount20', 1),
-(26, 'For Whom the Bell Tolls', NULL, 100, 25000, 154, '2044-02-04', 'English', 1, 'image_105432.jpg', 0, 3, 14, 'discount20', 1),
-(27, 'The Most Dangerous Game', NULL, 99, 100000, 655, '0000-00-00', 'English', 1, 'cover-orig-23924.jpg', 1, 3, 14, 'discount20', 1),
-(28, 'The Woman in White', NULL, 98, 112000, 125, '2044-04-07', 'English', 1, 'cover-orig-1809.jpg', 2, 3, 14, 'discount20', 1),
-(29, 'Antonina', NULL, 100, 210000, 221, '0000-00-00', 'English', 1, 'cover-orig-1783.jpg', 0, 3, 14, 'discount20', 1),
-(30, 'Armadale', NULL, 94, 100100, 121, '0000-00-00', 'English', 1, 'cover-orig-1784.jpg', 6, 3, 14, 'discount20', 1),
-(31, 'The Guilty River', NULL, 80, 100000, 328, '0000-00-00', 'English', 1, 'cover-orig-1793.jpg', 20, 3, 14, 'discount20', 1),
-(32, 'The Grammar of English Grammars', NULL, 96, 200000, 218, '0000-00-00', 'English', 1, 'cover-auto-8325.jpg', 4, 3, 14, 'discount20', 1),
-(33, 'At the Mountains of Madness', NULL, 100, 300000, 248, '0000-00-00', 'English', 1, 'cover-orig-13235.jpg', 0, 3, 14, 'discount20', 1),
-(34, 'The Art of War', NULL, 100, 400000, 415, '2044-01-09', 'English', 1, 'cover-cust-7088.jpg', 0, 3, 14, 'discount20', 1),
-(35, 'Paws off the Boss', NULL, 100, 500000, 214, '0000-00-00', 'English', 1, '41mbN6puSFL.jpeg', 0, 3, 14, 'discount20', 1),
+(24, 'P.S. I Love You', NULL, 99, 12000, 211, '0000-00-00', 'English', 1, 'image_128884.jpg', 2, 3, 14, 'discount20', 1),
+(25, '20,000 Leagues Under the Sea', NULL, 99, 50200, 100, '0000-00-00', 'English', 1, 'cover-cust-7150.jpg', 2, 3, 14, 'discount20', 1),
+(26, 'For Whom the Bell Tolls', NULL, 100, 25000, 100, '2044-02-04', 'English', 1, 'image_105432.jpg', 0, 3, 14, 'discount20', 1),
+(27, 'The Most Dangerous Game', NULL, 98, 100000, 100, '0000-00-00', 'English', 1, 'cover-orig-23924.jpg', 2, 3, 14, 'discount20', 1),
+(28, 'The Woman in White', NULL, 96, 112000, 100, '2044-04-07', 'English', 1, 'cover-orig-1809.jpg', 4, 3, 14, 'discount20', 1),
+(29, 'Antonina', NULL, 100, 210000, 100, '0000-00-00', 'English', 1, 'cover-orig-1783.jpg', 0, 3, 14, 'discount20', 1),
+(30, 'Armadale', NULL, 88, 100100, 100, '0000-00-00', 'English', 1, 'cover-orig-1784.jpg', 12, 3, 14, 'discount20', 1),
+(31, 'The Guilty River', NULL, 60, 100000, 100, '0000-00-00', 'English', 1, 'cover-orig-1793.jpg', 40, 3, 14, 'discount20', 1),
+(32, 'The Grammar of English Grammars', NULL, 92, 200000, 100, '0000-00-00', 'English', 1, 'cover-auto-8325.jpg', 8, 3, 14, 'discount20', 1),
+(33, 'At the Mountains of Madness', NULL, 100, 300000, 100, '0000-00-00', 'English', 1, 'cover-orig-13235.jpg', 0, 3, 14, 'discount20', 1),
+(34, 'The Art of War', NULL, 100, 400000, 100, '2044-01-09', 'English', 1, 'cover-cust-7088.jpg', 0, 3, 14, 'discount20', 1),
+(35, 'Paws off the Boss', NULL, 100, 500000, 100, '0000-00-00', 'English', 1, '41mbN6puSFL.jpeg', 0, 3, 14, 'discount20', 1),
 (36, 'Think Big', NULL, 100, 600000, 100, '0000-00-00', 'English', 1, 'think_big_1_2018_08_21_15_04_15.jpg', 0, 3, 14, 'discount20', 1),
-(37, 'Elon Musk: How the Billionaire CEO of SpaceX and Tesla is Shaping our Future', NULL, 100, 250000, 151, '0000-00-00', 'English', 1, 'image_140812.jpg', 0, 3, 14, 'discount20', 1),
-(38, 'Les Simpson - Spécial fêtes - tome 4 Font la nouba ! 4', NULL, 100, 145000, 325, '0000-00-00', 'France', 1, 'image_240361.jpg', 0, 3, 14, 'discount20', 1),
-(39, 'Gaston', '', 100, 15000, 158, '2021-12-03', 'France', 1, 'image_240363.jpg', 0, 3, 14, 'discount20', 1),
-(40, 'Bestiaire indien', NULL, 100, 50000, 54, '0000-00-00', 'France', 1, 'image_232362.jpg', 0, 3, 14, 'discount20', 1),
-(41, 'Naruto', '', 126, 12000, 100, '2021-11-30', 'Vietnamese', 2, 'naruto.jpg', 24, 5, 15, 'discount20', 1),
-(42, 'Bạch Tuyết và Bảy Chú Lùn', '                                       \r\n                                    ', 150, 20000, 23, '2021-11-30', 'Vietnamese', 1, 'bachtuyetva7chulun.jpg', 0, 3, 15, 'discount20', 1),
-(43, 'Cô Bé Bán Diêm', '                                       \r\n                                    ', 150, 17000, 23, '2021-11-30', 'Vietnamese', 1, 'cobebandiem.jpg', 0, 25, 15, 'discount20', 1),
-(44, 'Những Giấc Mơ Xanh', '                                       \r\n                                    ', 150, 30000, 45, '2021-12-01', 'Vietnamese', 1, 'nhunggiacmoxanh.jpg', 0, 3, 14, 'discount20', 1);
+(37, 'Elon Musk: How the Billionaire CEO of SpaceX and Tesla is Shaping our Future', NULL, 100, 250000, 100, '0000-00-00', 'English', 1, 'image_140812.jpg', 0, 3, 14, 'discount20', 1),
+(38, 'Les Simpson - Spécial fêtes - tome 4 Font la nouba ! 4', NULL, 100, 145000, 100, '0000-00-00', 'France', 1, 'image_240361.jpg', 0, 3, 14, 'discount20', 1),
+(39, 'Gaston', '', 100, 15000, 100, '2021-12-03', 'France', 1, 'image_240363.jpg', 0, 3, 14, 'discount20', 1),
+(40, 'Bestiaire indien', NULL, 100, 50000, 100, '0000-00-00', 'France', 1, 'image_232362.jpg', 0, 3, 14, 'discount20', 1),
+(41, 'Naruto', '', 104, 12000, 100, '2021-11-30', 'Vietnamese', 2, 'naruto.jpg', 55, 5, 15, 'discount20', 1),
+(42, 'Bạch Tuyết và Bảy Chú Lùn', '                                       \r\n                                    ', 150, 20000, 100, '2021-11-30', 'Vietnamese', 1, 'bachtuyetva7chulun.jpg', 0, 3, 15, 'discount20', 1),
+(43, 'Cô Bé Bán Diêm', '                                       \r\n                                    ', 150, 17000, 100, '2021-11-30', 'Vietnamese', 1, 'cobebandiem.jpg', 0, 25, 15, 'discount20', 1),
+(44, 'Những Giấc Mơ Xanh', '                                       \r\n                                    ', 150, 30000, 100, '2021-12-01', 'Vietnamese', 1, 'nhunggiacmoxanh.jpg', 0, 3, 14, 'discount20', 1),
+(10016, 'Tiếng Anh lớp 5', '<span style=\"color: rgba(0, 0, 0, 0.8); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, 文泉驛正黑, &quot;WenQuanYi Zen Hei&quot;, &quot;Hiragino Sans GB&quot;, &quot;儷黑 Pro&quot;, &quot;LiHei Pro&quot;, &quot;Heiti TC&quot;, 微軟正黑體, &quot;Microsoft JhengHei UI&quot;, &quot;Microsoft JhengHei&quot;, sans-serif; font-size: 14px; white-space: pre-wrap;\">Sách Tiếng Anh Lớp 5 – tập một do Nhà xuất bản Giáo dục Việt Nam tổ chức biên soạn theo chương trình thí điểm tiếng anh tiểu học do bộ GD-ĐT ban hành, với sự hợp tác chặt chẽ về chuyên môn và kỹ thuật của Nhà xuất bản Macmillan (MPC). Sách được biên soạn theo đường hướng giao tiếp, giúp học sinh bước đầu hình thành và phát triển năng lực giao tiếp bằng tiếng Anh, thông qua 4 kỹ năng nghe, nói, đọc, viết, trong đó ưu tiên phát triển 2 kỹ năng nghe và nói.\r\n-   Mã số: 1H555t9\r\n-  Khổ: 19 x 26.5cm\r\n-  Tác giả: Nhiều tác giả\r\n-  Nhà xuất bản: Giáo dục Việt Nam\r\n-  Năm xuất bản: 2019\r\n-  Số trang: 80</span>                                       \r\n                                    ', 110, 15000, 100, '2021-12-07', 'Vietnamese', 2, 'sachtienganh.jpg', 0, 3, 15, 'discount20', 1);
+
+--
+-- Triggers `product`
+--
+DELIMITER $$
+CREATE TRIGGER `updateProductStatus` BEFORE UPDATE ON `product` FOR EACH ROW BEGIN
+  IF NEW.status = 1 AND NEW.quantity = 0
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -629,7 +725,17 @@ INSERT INTO `rating` (`id`, `orderID`, `productID`, `rating`, `comment`, `date`)
 (56, 167, 31, 3, 'Sách khá hay', '2021-12-06 19:57:03'),
 (58, 168, 2, 4, 'Hay\r\n', '2021-12-06 20:15:08'),
 (59, 169, 1, 4, 'Sách hay', '2021-12-06 20:18:34'),
-(61, 171, 1, 5, 'Quá hay', '2021-12-06 23:43:15');
+(61, 171, 1, 5, 'Quá hay', '2021-12-06 23:43:15'),
+(62, 172, 41, 5, 'Rất hay', '2021-12-07 00:01:09');
+
+--
+-- Triggers `rating`
+--
+DELIMITER $$
+CREATE TRIGGER `insertRating` AFTER INSERT ON `rating` FOR EACH ROW UPDATE orderdetail SET status = 1 WHERE orderID = NEW.orderID
+AND productID = NEW.productID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -652,14 +758,14 @@ INSERT INTO `role` (`name`, `detail`) VALUES
 ('staff.import.add', 'Nhân viên bên khu nhập hàng có chức năng thêm'),
 ('staff.import.delete', 'Nhân viên bên khu nhập hàng có chức năng xóa'),
 ('staff.import.update', 'Nhân viên bên khu nhập hàng có chức năng sửa'),
+('staff.order', 'Quản lý bên bộ phận hóa đơn'),
+('staff.order.add', 'Nhân viên bên khu hóa đơn có chức năng thêm'),
+('staff.order.delete', 'Nhân viên bên khu hóa đơn có chức năng xóa'),
+('staff.order.update', 'Nhân viên bên khu hóa đơn có chức năng sửa'),
 ('staff.product', 'Quản lý bên bộ phận sản phẩm'),
 ('staff.product.add', 'Nhân viên bên khu sản phẩm có chức năng thêm'),
 ('staff.product.delete', 'Nhân viên bên khu sản phẩm có chức năng xóa'),
 ('staff.product.update', 'Nhân viên bên khu sản phẩm có chức năng sửa'),
-('staff.receipt', 'Quản lý bên bộ phận hóa đơn'),
-('staff.receipt.add', 'Nhân viên bên khu hóa đơn có chức năng thêm'),
-('staff.receipt.delete', 'Nhân viên bên khu hóa đơn có chức năng xóa'),
-('staff.receipt.update', 'Nhân viên bên khu hóa đơn có chức năng sửa'),
 ('staff.sell', 'Quản lý bên bộ phận bán hàng'),
 ('staff.user', 'Quản lý bên bộ phận thông tin người dùng'),
 ('staff.user.add', 'Nhân viên bên khu thông tin người dùng có chức năn'),
@@ -688,18 +794,18 @@ INSERT INTO `role_permission` (`rolename`, `permissionID`) VALUES
 ('staff.import.add', 1),
 ('staff.import.delete', 2),
 ('staff.import.update', 3),
+('staff.order', 1),
+('staff.order', 2),
+('staff.order', 3),
+('staff.order.add', 1),
+('staff.order.delete', 2),
+('staff.order.update', 3),
 ('staff.product', 1),
 ('staff.product', 2),
 ('staff.product', 3),
 ('staff.product.add', 1),
 ('staff.product.delete', 2),
 ('staff.product.update', 3),
-('staff.receipt', 1),
-('staff.receipt', 2),
-('staff.receipt', 3),
-('staff.receipt.add', 1),
-('staff.receipt.delete', 2),
-('staff.receipt.update', 3),
 ('staff.sell', 1),
 ('staff.sell', 2),
 ('staff.sell', 3),
@@ -733,9 +839,10 @@ CREATE TABLE `sale` (
 --
 
 INSERT INTO `sale` (`id`, `name`, `quantity`, `discount`, `startdate`, `enddate`, `minorder`, `maxsale`, `type`) VALUES
-('discount20', 'Giảm 20%', 0, 20, '2021-11-01', '2021-12-10', 0, 0, 0),
-('discount50', 'Giảm 50%', 0, 50, '2021-11-10', '2021-12-10', 0, 0, 0),
-('freeshipping', 'Miễn phí vận chuyển', -2, NULL, '2021-11-16', '2021-12-10', 100000, NULL, 1),
+('111234787', 'Voucher-111234787', 8, 20, '2021-12-02', '2021-12-31', 100000, 20000, 3),
+('discount20', 'Giảm 20%', 0, 20, '2021-11-01', '2021-12-17', 0, 0, 0),
+('discount50', 'Giảm 50%', 0, 50, '2021-11-10', '2021-12-17', 0, 0, 0),
+('freeshipping', 'Miễn phí vận chuyển', 0, NULL, '2021-11-16', '2021-12-10', 100000, NULL, 1),
 ('freeshipping-12', 'Free Shipping tháng 12', 50, NULL, '2021-11-30', '2021-11-04', 50000, NULL, 1),
 ('SN2021', 'Sinh nhật 2021', 7, 50, '2021-10-05', '2021-12-17', 1000000, 200000, 2);
 
@@ -755,10 +862,10 @@ CREATE TABLE `sale_order` (
 --
 
 INSERT INTO `sale_order` (`orderID`, `saleID`) VALUES
-(155, 'freeshipping'),
-(157, 'freeshipping'),
-(160, 'SN2021'),
-(163, 'freeshipping');
+(174, 'freeshipping'),
+(174, 'SN2021'),
+(185, '111234787'),
+(185, 'freeshipping');
 
 --
 -- Triggers `sale_order`
@@ -802,12 +909,14 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
 ('admin', '$2y$10$78LgWhbqq6E/EuFBMB3hcOmWVf8y7bdF2kg6MtX.gxFXK88Laqe..', 'dzeamtechie@gmail.com', '2021-12-06', 1, 'user1-128x128.jpg'),
-('chiquang', '$2y$10$o8FRAijSWv3lCYmGDyEkWeG.GGkx692Ab2uapvvwyAEqMIX3Y2xFO', 'chiquang127@gmail.com', '2021-11-14', 1, 'user1-128x128.jpg'),
-('chiquang01', '$2y$10$mY3.jtCoBeNI7KagjjF6QOrFlqDmfx9aMpCCV5/SiP0Vo39Z6sRHy', 'chiquang321@gmail.com', '2021-12-06', 1, 'user1-128x128.jpg'),
+('chiquang', '$2y$10$wk9FVvkudGWXKja4b1CS/.X3FPux2btKqupsfXi4LlsvmUgwx/cVq', 'chiquang127@gmail.com', '2021-11-14', 0, 'user1-128x128.jpg'),
+('chiquang01', '$2y$10$tFFd49M9rb.oEU2kiLLEM.aECr0RE5cSfoWiWpP7VgOCRqQ4.Z3s6', 'chiquang321@gmail.com', '2021-12-06', 1, 'user1-128x128.jpg'),
+('chiquang02', '$2y$10$xfYl64kuPpxlKZII3JeszecMw3tusZH/X9rBaWWgjo5NqaMioswd2', 'doanchiquang@gmai.com', '2021-12-07', 1, NULL),
 ('chithien', '$2y$10$jACncVlIuPu7m9QSVPrsv.i/VElR12uNDKwI7I9d1uuANxdvq4YcG', 'nguyenchithien@gmail.com', '2021-12-06', 1, 'user5-128x128.jpg'),
 ('khachhang', '$2y$10$fEaOkSRDcCvBgp9qB9jUFO5NKKBcXemXh/2IGjaltDTeKrE73lx5S', 'khachhang@gmai.com', '2021-11-21', 1, 'user3-128x128.jpg'),
 ('minhphat', '$2y$10$fBBYoXiIIyyDVKEJUQ/Y5ef3HF/Kp1TMSx.kfymymRP1uAN6csbdW', 'phanminhphat2001@gmail.com', '2021-11-14', 0, 'user4-128x128.jpg'),
-('nguyenvana', '$2y$10$/9v0INkZnTFomnoblHPpqu2ye3Ih0CTHJzcSTsGwL.AxsZFm8mPpu', 'nguyenvana@gmail.com', '2021-11-25', 0, 'user5-128x128.jpg');
+('nguyenvanb', '$2y$10$mFgn3Vbwc3MsGczecEr7meIhNkQ2HNXpBsK5KSPFzP1cUYSIkXL.S', 'nguyenvanb@gmail.com', '2021-12-07', 1, NULL),
+('tom', '$2y$10$QkBJoQq/ONmUxrV.zlwGoOv4Qa09UFe2/U.1UG4PI5kshp33MCOvu', 'tomhid@gmail.com', '2021-12-06', 1, NULL);
 
 --
 -- Triggers `user`
@@ -834,8 +943,10 @@ CREATE TABLE `userrole` (
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
 ('admin', 'admin'),
-('chiquang', 'staff.product.add'),
-('minhphat', 'staff.product');
+('chiquang', 'staff.order'),
+('minhphat', 'staff.product'),
+('nguyenvanb', 'staff.product.add'),
+('tom', 'staff.product.add');
 
 --
 -- Indexes for dumped tables
@@ -1010,13 +1121,13 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -1028,13 +1139,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `esrb`
@@ -1046,13 +1157,13 @@ ALTER TABLE `esrb`
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=194;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -1064,7 +1175,7 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10006;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10017;
 
 --
 -- AUTO_INCREMENT for table `publisher`
@@ -1076,7 +1187,7 @@ ALTER TABLE `publisher`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- Constraints for dumped tables
