@@ -439,7 +439,7 @@
             console.log(error);
         }
         // return data.data;
-        return data.items || data.results;
+        //return data.items || data.results;
     }
     function checkDuplicate(id,columm){
         for(let i=0;i<topArr.length;i++){
@@ -503,10 +503,11 @@
         }
         return topArr;
     }
+    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
         sort = await sortSold(products);
-
+        console.log(sort);
     })();
     async function sortSold(arrayproducts) {
         return new Promise(resolve => {
